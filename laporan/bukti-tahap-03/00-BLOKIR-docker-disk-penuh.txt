@@ -1,0 +1,33 @@
+# BLOKIR Tahap 3 — build image tidak dapat diselesaikan di mesin ini (diagnosa)
+
+## Tiga upaya build (semua gagal pada langkah "COPY --from=deps /app/node_modules")
+1. --no-cache penuh (a-build-log-percobaan-1-gagal.txt): deps selesai 50 s, lalu "ERROR: failed to build: failed to receive status: rpc error: code = Unavailable desc = error reading from server: EOF"; engine Docker mati.
+2. Docker Desktop dinyalakan ulang, build ulang (cache deps): EOF yang sama pada langkah yang sama; engine mati lagi.
+3. Docker Desktop + WSL (wsl --shutdown) dimulai ulang bersih, build ulang: EOF yang sama dalam 23 detik (a-build-log.txt).
+
+## Akar masalah: drive C: PENUH
+$ df -h /c
+C:              220G  219G  1.1G 100% /c
+$ ls -l %LOCALAPPDATA%\Docker\wsl\disk\docker_data.vhdx
+FX506 byte (0 GB)  FX506\AppData\Local/Docker/wsl/disk/docker_data.vhdx
+$ docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          19        6         9.098GB   7.506GB (82%)
+Containers      6         5         11.8MB    81.92kB (0%)
+Local Volumes   7         3         269.1MB   50.17MB (18%)
+Build Cache     120       0         7.314GB   6.353GB
+
+## Log Docker Desktop (host/com.docker.backend.exe.log) saat build ke-3 (14:02 WIB = 07:02Z):
+[2026-09-03T07:02:46.995576500Z][com.docker.backend.exe.wsldistroproxy] Error code: Wsl/Service/0x80072746
+[2026-09-03T07:02:47.002220700Z][com.docker.backend.exe.wsldistroproxy][W] killing wsl proxy in Ubuntu distro: running wslexec: An error occurred while running the command. Wsl/Service/0x80072746: c:\windows\system32\wsl.exe -d ubuntu -u root -e sh -c test -f 
+[2026-09-03T07:02:47.080656300Z][com.docker.backend.exe.wsldistroproxy][W] cleaning up leaked proxies in Ubuntu distro: listing processes: running wslexec: An error occurred while running the command. Wsl/Service/0x80072746: c:\windows\system32\wsl.exe -d ubun
+[2026-09-03T07:03:02.301506300Z][com.docker.backend.exe.engines][E] engine linux/wsl run error: bootstrapping main distribution: running wslexec: An error occurred while running the command. DockerDesktop/Wsl/ExecError: c:\windows\system32\wsl.exe -d docker-de
+[2026-09-03T07:03:02.311435900Z][com.docker.backend.exe.engines][W] wsl-bootstrap failed, restarting: bootstrapping main distribution: running wslexec: An error occurred while running the command. DockerDesktop/Wsl/ExecError: c:\windows\system32\wsl.exe -d doc
+
+## Kesimpulan
+Data Docker (vhdx WSL2) berada di C: yang tersisa 1,1 GB. Menyalin node_modules (±450 MB) antar tahap build + cache BuildKit membuat vhdx tumbuh, C: habis, VM WSL2 ditutup paksa (Wsl/Service/0x80072746) -> BuildKit EOF. Bukan cacat Dockerfile: tiga langkah pertama (deps: apk, COPY package.json, npm ci 425 paket, 0 kerentanan) selesai normal.
+
+## Yang dibutuhkan dari pemilik (di luar repo, tidak boleh dilakukan Claude Code — aturan 8 CLAUDE.md)
+- Kosongkan >= 10 GB di C: (atau pindahkan data Docker Desktop ke D: lewat Settings > Resources > Disk image location), dan/atau
+- docker system prune / docker builder prune (7,5 GB image + 6,1 GB cache build proyek lain terlihat reclaimable — milik proyek lain, tidak dihapus Claude Code).
+- Setelah itu jalankan: docker build --build-arg NEXT_PUBLIC_APP_URL=http://localhost:3000 -t warkop-nusantara:lokal .  lalu  bash laporan/bukti-tahap-03/skrip/uji-b-log-build-bersih.sh  dan  bash laporan/bukti-tahap-03/skrip/uji-container-tahap-03.sh

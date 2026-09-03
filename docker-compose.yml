@@ -1,0 +1,81 @@
+# BERKAS INI HANYA UNTUK PENGUJIAN LOKAL.
+# Di produksi, sistem dijalankan lewat Coolify (lihat PENERAPAN.md).
+#
+# Nilai ${...} diambil Compose dari berkas .env di folder ini (tidak di-commit).
+# Wajib ada di .env: DB_PASSWORD, JWT_SECRET, SEED_ADMIN_EMAIL, SEED_ADMIN_PASSWORD.
+# Opsional: SEED_STAF_PASSWORD (akun staf contoh), STAF_HOST, MARIADB_ROOT_PASSWORD_LOKAL.
+#
+# Jalankan:  docker compose up -d --build
+# Seed:      docker compose exec app node scripts/seed.js   (skema dijalankan otomatis sekali
+#            oleh MariaDB dari ./sql saat volume masih kosong — hanya untuk uji lokal)
+# Hentikan:  docker compose down            (data DB & unggahan tetap di volume)
+#            docker compose down -v         (hapus volume = mulai dari kosong)
+
+name: warkop-lokal
+
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD_LOKAL:-akar-lokal-ganti}
+      MARIADB_DATABASE: warkop_nusantara
+      MARIADB_USER: warkop
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      TZ: UTC   # server DB sengaja UTC — aplikasi menyetel +07:00 per koneksi (aturan 1)
+    volumes:
+      - warkop-compose-db:/var/lib/mysql
+      # skema + seed statis dijalankan MariaDB sekali saat volume kosong (uji lokal saja;
+      # di server dijalankan sadar lewat docker exec — PENERAPAN.md bagian F)
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    # port 3306 TIDAK dipetakan ke host: hanya jaringan internal compose
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      args:
+        # hanya NEXT_PUBLIC_* yang boleh jadi ARG (aturan 2)
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+        NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL:-}
+    image: warkop-nusantara:lokal
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # --- rahasia: hanya runtime, tidak pernah ARG ---
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_USER: warkop
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: warkop_nusantara
+      DB_POOL_LIMIT: "10"
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRY: ${JWT_EXPIRY:-8h}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD}
+      SEED_STAF_PASSWORD: ${SEED_STAF_PASSWORD:-}
+      # --- aplikasi ---
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      TZ: Asia/Jakarta
+      NEXT_TELEMETRY_DISABLED: "1"
+      STAF_HOST: ${STAF_HOST:-}
+      UPLOAD_DIR: /app/public/unggahan
+      UPLOAD_MAX_MB: "20"
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      # unggahan tidak boleh hilang saat container diganti
+      - warkop-compose-unggahan:/app/public/unggahan
+    restart: unless-stopped
+
+volumes:
+  warkop-compose-db:
+  warkop-compose-unggahan:

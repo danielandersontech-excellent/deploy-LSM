@@ -10,8 +10,8 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 |---|---|---|---|
 | 00 Fondasi | LULUS | 75615ca | 15 butir uji a–n + h2, semua berbukti; proxy terbukti di Next 16.3.4 |
 | 01 Basis data | LULUS | 62495b7 | 11 butir uji a–k berbukti; zona waktu selisih 0 detik; buku besar utuh |
-| 02 Autentikasi | SEDANG | | mulai 2026-09-03 |
-| 03 Docker | BELUM | | butir server bisa MENUNGGU PEMILIK |
+| 02 Autentikasi | LULUS | 2356075 | 14 butir uji a–n berbukti; Location tanpa 0.0.0.0; 403 semua peran tak berhak |
+| 03 Docker | SEDANG | | mulai 2026-09-03; butir server akan MENUNGGU PEMILIK (domain belum ada) |
 | 04 Situs publik | BELUM | | |
 | 05 Modul berita | BELUM | | |
 | 06 Modul pengaduan | BELUM | | |
@@ -24,4 +24,4 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 dibutuhkan dari pemilik)
 
 ## Posisi terakhir (bila sesi terputus di tengah tahap)
-Tahap 02 — mulai: membaca TAHAP-02 dan login_staff code.html
+Tahap 03 — mulai: Dockerfile, compose lokal, PENERAPAN.md

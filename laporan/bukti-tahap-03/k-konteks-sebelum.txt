@@ -1,0 +1,13 @@
+# UJI k — ukuran konteks build SEBELUM .dockerignore (Dockerfile.ukur + berkas ignore KOSONG, hanya untuk mengukur)
+$ docker build -f Dockerfile.ukur --no-cache -t warkop-ukur-konteks . 2>&1 | grep -i "transferring context"
+#4 transferring context: 726.05MB 89.5s
+#4 transferring context: 755.32MB 94.5s
+#4 transferring context: 764.16MB 95.9s done
+
+$ du -sh (isi folder kerja, termasuk node_modules/.next/desain/zip)
+771M	.
+457M	node_modules
+281M	.next
+9.1M	desain
+8.6M	Warkop_Nusantara.zip
+5.5M	LSM_WARKOP.png
