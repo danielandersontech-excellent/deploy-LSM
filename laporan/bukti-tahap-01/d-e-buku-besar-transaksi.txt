@@ -1,0 +1,55 @@
+# UJI d (buku besar) + UJI e (transaksi) — WRP-009021
+$ node laporan/bukti-tahap-01/skrip/uji-de-buku-besar.mjs
+Pengaduan WRP-009021 id=1 status awal='baru'
+
+SEBELUM — pengaduan_riwayat (pengaduan_id=1), 1 baris:
+  id | status_sebelum | status_sesudah | oleh_user_id | dibuat_pada         | catatan
+   3 | null           | baru           | null         | 2026-09-02 14:30:00 | Laporan diterima
+
+== UJI d: ubahStatusPengaduan() 3x berturut-turut ==
+  baru -> diverifikasi  (riwayat id 9)
+  diverifikasi -> diproses  (riwayat id 10)
+  diproses -> selesai  (riwayat id 11)
+
+SESUDAH UJI d — pengaduan_riwayat (pengaduan_id=1), 4 baris:
+  id | status_sebelum | status_sesudah | oleh_user_id | dibuat_pada         | catatan
+   3 | null           | baru           | null         | 2026-09-02 14:30:00 | Laporan diterima
+   9 | baru           | diverifikasi   | 4            | 2026-09-03 13:14:06 | Bukti foto sesuai lokasi.
+  10 | diverifikasi   | diproses       | 4            | 2026-09-03 13:14:06 | Koordinasi dengan aparat setempat.
+  11 | diproses       | selesai        | 4            | 2026-09-03 13:14:06 | Pungli berhenti setelah patroli rutin.
+
+Rantai: status_sesudah baris N == status_sebelum baris N+1 untuk seluruh 3 pasangan? YA
+pengaduan.status sekarang = 'selesai' (harus 'selesai', sama dengan status_sesudah terakhir 'selesai')
+
+== UJI e: kegagalan INSERT riwayat (oleh_user_id=999999 melanggar FK) ==
+  galat tertangkap : ER_NO_REFERENCED_ROW_2 Cannot add or update a child row: a foreign key constraint fails (`warkop_nusantara`.`pengaduan_riwayat`, CONSTRAINT `fk_riwayat_oleh` FOREIGN KEY (`oleh_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL)
+  status sebelum='selesai' sesudah='selesai' | riwayat sebelum=4 sesudah=4
+HASIL UJI e: LULUS — UPDATE status ikut dibatalkan (rollback seluruh transaksi)
+
+SESUDAH UJI e (harus sama dengan sesudah uji d) — pengaduan_riwayat (pengaduan_id=1), 4 baris:
+  id | status_sebelum | status_sesudah | oleh_user_id | dibuat_pada         | catatan
+   3 | null           | baru           | null         | 2026-09-02 14:30:00 | Laporan diterima
+   9 | baru           | diverifikasi   | 4            | 2026-09-03 13:14:06 | Bukti foto sesuai lokasi.
+  10 | diverifikasi   | diproses       | 4            | 2026-09-03 13:14:06 | Koordinasi dengan aparat setempat.
+  11 | diproses       | selesai        | 4            | 2026-09-03 13:14:06 | Pungli berhenti setelah patroli rutin.
+exit=0
+
+$ isi tabel pengaduan_riwayat (seluruh baris, lewat klien CLI)
+id	nomor_kasus	status_sebelum	status_sesudah	oleh_user_id	dibuat_pada	catatan
+3	WRP-009021	NULL	baru	NULL	2026-09-02 14:30:00	Laporan diterima
+9	WRP-009021	baru	diverifikasi	4	2026-09-03 13:14:06	Bukti foto sesuai lokasi.
+10	WRP-009021	diverifikasi	diproses	4	2026-09-03 13:14:06	Koordinasi dengan aparat setempat.
+11	WRP-009021	diproses	selesai	4	2026-09-03 13:14:06	Pungli berhenti setelah patroli rutin.
+2	WRP-009018	NULL	baru	NULL	2026-08-30 10:15:00	Laporan diterima
+4	WRP-009018	baru	diverifikasi	4	2026-09-03 13:09:56	Bukti awal lengkap; laporan diverifikasi.
+5	WRP-009018	diverifikasi	diproses	4	2026-09-03 13:09:56	Diteruskan ke tim advokasi wilayah untuk klar
+1	WRP-008994	NULL	baru	NULL	2026-08-08 09:00:00	Laporan diterima
+6	WRP-008994	baru	diverifikasi	4	2026-09-03 13:09:56	Foto kerusakan sesuai dengan laporan warga.
+7	WRP-008994	diverifikasi	diproses	4	2026-09-03 13:09:56	Surat permintaan tindak lanjut dikirim ke pem
+8	WRP-008994	diproses	selesai	4	2026-09-03 13:09:56	Perbaikan jembatan dimulai; pelapor mengonfir
+
+$ status pengaduan sekarang
+id	nomor_kasus	status	anonim
+1	WRP-009021	selesai	1
+2	WRP-009018	diproses	0
+3	WRP-008994	selesai	0

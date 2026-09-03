@@ -8,8 +8,8 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 
 | Tahap | Status | Commit | Catatan |
 |---|---|---|---|
-| 00 Fondasi | SEDANG | | mulai 2026-09-03 |
-| 01 Basis data | BELUM | | |
+| 00 Fondasi | LULUS | 75615ca | 15 butir uji a–n + h2, semua berbukti; proxy terbukti di Next 16.3.4 |
+| 01 Basis data | SEDANG | | mulai 2026-09-03 |
 | 02 Autentikasi | BELUM | | |
 | 03 Docker | BELUM | | butir server bisa MENUNGGU PEMILIK |
 | 04 Situs publik | BELUM | | |
@@ -24,4 +24,4 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 dibutuhkan dari pemilik)
 
 ## Posisi terakhir (bila sesi terputus di tengah tahap)
-(tahap, langkah terakhir, berkas yang sedang dikerjakan)
+Tahap 01 — mulai: membaca desain untuk seed, menulis sql/01-schema.sql

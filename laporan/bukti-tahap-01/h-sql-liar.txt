@@ -1,0 +1,12 @@
+# UJI h — SQL liar: tidak boleh ada SQL di luar lib/db/ (setelah seed.js dipindahkan ke lib/db)
+$ grep -rniE "\b(SELECT|INSERT|UPDATE|DELETE)\b.*\b(FROM|INTO|SET|WHERE)\b" --include=*.js --include=*.mjs --include=*.jsx app components hooks lib proxy.js server.js scripts | grep -v "^lib/db/"
+(nihil)
+
+$ grep -rn "\.execute(\|\.query(\|createConnection\|createPool" --include=*.js app components hooks lib scripts server.js proxy.js | grep -v "^lib/db/index.js"
+(nihil)
+
+$ grep -c "kueri(\|SELECT\|INSERT INTO\|UPDATE " scripts/seed.js   # (1 = kata INSERT di komentar header)
+0
+7://   2. database/seed.sql — data statis (INSERT IGNORE / NOT EXISTS), dijalankan
+
+# SQL statis (database/seed.sql) dijalankan lewat lib/db/index.js jalankanSkripSql(); seed.js hanya membaca berkasnya.

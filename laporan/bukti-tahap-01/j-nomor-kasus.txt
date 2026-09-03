@@ -1,0 +1,26 @@
+# UJI j — nomor kasus
+## (1) generator murni nomorKasusAcak(): sebaran & ketidakterdugaan
+contoh 10 pertama : WRP-598576 WRP-266600 WRP-334017 WRP-489811 WRP-465196 WRP-158255 WRP-757593 WRP-542803 WRP-539466 WRP-060801
+format valid semua: true
+dibangkitkan      : 1000 | unik: 999 | berganda: 1
+selisih konstan?  : tidak (999 nilai selisih berbeda dari 999)
+monoton naik?     : tidak
+sebaran digit 0-9 : 606 545 586 621 590 589 615 628 619 601 (seragam ~600 per digit)
+100.000 nomor     : unik 95318 | tabrakan 4682 (ruang 1.000.000 -> tabrakan acak wajar, ditangani retry pada UNIQUE KEY)
+sumber acak       : crypto.randomInt (CSPRNG), bukan Math.random, bukan id+konstanta
+
+## (2) jalur sungguhan: 1000 buatPengaduan() berturut-turut (UNIQUE KEY + retry), diperiksa di DB
+$ node laporan/bukti-tahap-01/skrip/uji-j-nomor-kasus-db.mjs
+dibuat lewat buatPengaduan(): 1000 dalam 5.6 detik
+contoh 10 pertama : WRP-884958 WRP-112076 WRP-964572 WRP-759653 WRP-258672 WRP-052241 WRP-539671 WRP-754510 WRP-387800 WRP-180211
+unik di memori    : 1000 | berganda: 0
+di DB             : baris 1000 | nomor_kasus unik 1000
+riwayat awal      : 1000 (harus 1000: tidak ada pengaduan tanpa riwayat — aturan 7)
+nomor berikutnya lebih besar dari sebelumnya: 501/999 (acak ≈ 50%; berurutan = 100%)
+
+HASIL: LULUS — 1000 nomor, tidak ada yang berganda, tidak berurutan
+
+bersih-bersih: SELECT COUNT(*) pengaduan uji = 1000
+dihapus: riwayat 1000, pengaduan 1000
+sisa pengaduan di DB: 3 (harus 3 = seed)
+exit=0

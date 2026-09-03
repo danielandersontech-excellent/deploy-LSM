@@ -1,0 +1,45 @@
+# UJI c — ZONA WAKTU (paling penting). Server MariaDB berjalan dengan TZ=UTC (container).
+$ node laporan/bukti-tahap-01/skrip/uji-c-zona-waktu.mjs
+Zona waktu mesin (TZ proses)      : Asia/Jakarta | offset menit -420
+UTC sekarang (JS)                 : 2026-09-03T06:14:06.171Z
+WIB sebenarnya (UTC+7, dari JS)   : 2026-09-03 13:14:06
+
+1) INSERT lewat lib/db/audit.js catatAudit() -> id 1 (dibuat_pada diisi aplikasi = 2026-09-03 13:14:06)
+2) SELECT NOW(), @@session.time_zone (pool aplikasi):
+   NOW()               = 2026-09-03 13:14:06  (Date dari mysql2, ditampilkan WIB)
+   @@session.time_zone = +07:00 | @@global.time_zone = SYSTEM | @@system_time_zone = UTC
+3) SELECT dibuat_pada FROM audit_log ORDER BY id DESC LIMIT 1:
+   tersimpan (CAST CHAR) = 2026-09-03 13:14:06 | dibaca driver -> 2026-09-03 13:14:06
+
+4) Perbandingan dengan WIB sebenarnya 2026-09-03 13:14:06
+   NOW() DB        : 2026-09-03 13:14:06 selisih 0 detik
+   dibuat_pada     : 2026-09-03 13:14:06 selisih 0 detik
+   @@session.time_zone : +07:00
+
+HASIL: LULUS — ketiganya sama dengan jam WIB (tidak ada selisih 7 jam)
+exit=0
+
+$ docker exec warkop-mariadb mariadb ... -e "SELECT @@global.time_zone, @@system_time_zone, NOW(), (baris terakhir audit_log)"   # sesi klien CLI, TANPA hook aplikasi
+zona_global	zona_sistem	zona_sesi_cli	now_sesi_cli	dibuat_pada_tersimpan
+SYSTEM	UTC	SYSTEM	2026-09-03 06:14:06	2026-09-03 13:14:06
+# NOW() pada sesi CLI = UTC (server DB memang UTC); nilai yang TERSIMPAN oleh aplikasi = WIB. Selisih 7 jam antara keduanya justru membuktikan hook SET time_zone per koneksi aplikasi bekerja dan aplikasi mengisi waktu sendiri (aturan 1).
+
+$ TZ=UTC node laporan/bukti-tahap-01/skrip/uji-c-zona-waktu.mjs   # ULANG dengan zona waktu proses = UTC: hasil harus tetap WIB (tidak percaya zona mesin)
+Zona waktu mesin (TZ proses)      : UTC | offset menit 0
+UTC sekarang (JS)                 : 2026-09-03T06:14:39.187Z
+WIB sebenarnya (UTC+7, dari JS)   : 2026-09-03 13:14:39
+
+1) INSERT lewat lib/db/audit.js catatAudit() -> id 2 (dibuat_pada diisi aplikasi = 2026-09-03 13:14:39)
+2) SELECT NOW(), @@session.time_zone (pool aplikasi):
+   NOW()               = 2026-09-03 13:14:39  (Date dari mysql2, ditampilkan WIB)
+   @@session.time_zone = +07:00 | @@global.time_zone = SYSTEM | @@system_time_zone = UTC
+3) SELECT dibuat_pada FROM audit_log ORDER BY id DESC LIMIT 1:
+   tersimpan (CAST CHAR) = 2026-09-03 13:14:39 | dibaca driver -> 2026-09-03 13:14:39
+
+4) Perbandingan dengan WIB sebenarnya 2026-09-03 13:14:39
+   NOW() DB        : 2026-09-03 13:14:39 selisih 0 detik
+   dibuat_pada     : 2026-09-03 13:14:39 selisih 0 detik
+   @@session.time_zone : +07:00
+
+HASIL: LULUS — ketiganya sama dengan jam WIB (tidak ada selisih 7 jam)
+exit=0

@@ -1,0 +1,73 @@
+# UJI f (identitas), g (wilayah), i-aktif (injeksi) — DB_LOG_KUERI=1: baris [SQL] = kueri yang BENAR-BENAR dijalankan
+$ node laporan/bukti-tahap-01/skrip/uji-fgi-penyaringan.mjs
+[SQL] SELECT id, status FROM pengaduan WHERE nomor_kasus = ? LIMIT 1 ["WRP-009018"]
+
+===== UJI f.1: ambilPengaduan(id, {bolehLihatIdentitas: false}) =====
+[SQL] SELECT p.id, p.nomor_kasus, p.anonim, p.kategori_masalah, p.wilayah_id, w.nama AS wilayah_nama, p.lokasi_kejadian, p.deskripsi, p.status, p.petugas_id, u.nama AS petugas_nama, p.dibuat_pada, p.diperbarui_pada FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.id = ? AND p.dihapus_pada IS NULL LIMIT 1 [2]
+kolom hasil: id, nomor_kasus, anonim, kategori_masalah, wilayah_id, wilayah_nama, lokasi_kejadian, deskripsi, status, petugas_id, petugas_nama, dibuat_pada, diperbarui_pada
+identitas di SQL yang dijalankan? TIDAK
+identitas di objek hasil? TIDAK
+
+===== UJI f.2: daftarPengaduan({bolehLihatIdentitas: false}) =====
+[SQL] SELECT COUNT(*) AS jumlah FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL 
+[SQL] SELECT p.id, p.nomor_kasus, p.anonim, p.kategori_masalah, p.wilayah_id, w.nama AS wilayah_nama, p.lokasi_kejadian, p.deskripsi, p.status, p.petugas_id, u.nama AS petugas_nama, p.dibuat_pada, p.diperbarui_pada FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL ORDER BY p.dibuat_pada DESC, p.id DESC LIMIT ? OFFSET ? [5,0]
+baris: 3 | kolom baris pertama: id, nomor_kasus, anonim, kategori_masalah, wilayah_id, wilayah_nama, lokasi_kejadian, deskripsi, status, petugas_id, petugas_nama, dibuat_pada, diperbarui_pada
+identitas di SQL yang dijalankan? TIDAK
+
+===== UJI f.3: ambilPengaduanByNomor() (pelacakan publik) =====
+[SQL] SELECT p.nomor_kasus, p.kategori_masalah, w.nama AS wilayah_nama, p.status, p.dibuat_pada, p.diperbarui_pada FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.nomor_kasus = ? AND p.dihapus_pada IS NULL LIMIT 1 ["WRP-009018"]
+[SQL] SELECT id FROM pengaduan p WHERE p.nomor_kasus = ? LIMIT 1 ["WRP-009018"]
+[SQL] SELECT r.status_sebelum, r.status_sesudah, r.dibuat_pada FROM pengaduan_riwayat r WHERE r.pengaduan_id = ? ORDER BY r.dibuat_pada ASC, r.id ASC [2]
+kolom hasil: nomor_kasus, kategori_masalah, wilayah_nama, status, dibuat_pada, diperbarui_pada, riwayat | riwayat: 3
+identitas di SQL yang dijalankan? TIDAK
+
+===== UJI f.4 (pembanding): ambilPengaduan(id, {bolehLihatIdentitas: true}) — superadmin/verifikator =====
+[SQL] SELECT p.id, p.nomor_kasus, p.anonim, p.kategori_masalah, p.wilayah_id, w.nama AS wilayah_nama, p.lokasi_kejadian, p.deskripsi, p.status, p.petugas_id, u.nama AS petugas_nama, p.dibuat_pada, p.diperbarui_pada, p.nama_pelapor, p.nik_pelapor, p.telepon_pelapor, p.email_pelapor FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.id = ? AND p.dihapus_pada IS NULL LIMIT 1 [2]
+kolom hasil: id, nomor_kasus, anonim, kategori_masalah, wilayah_id, wilayah_nama, lokasi_kejadian, deskripsi, status, petugas_id, petugas_nama, dibuat_pada, diperbarui_pada, nama_pelapor, nik_pelapor, telepon_pelapor, email_pelapor
+identitas di SQL? YA (benar, hanya untuk peran berhak)
+nama_pelapor terisi? ya (nilai tidak dicetak)
+
+===== UJI g.1: daftarPengaduan({wilayahId}) — pimpinan_wilayah Sumatera Utara (kode 12) =====
+[SQL] SELECT id, nama, jenis, induk_id, kode FROM wilayah WHERE kode = ? LIMIT 1 ["12"]
+[SQL] SELECT id, nama, jenis, induk_id, kode FROM wilayah WHERE kode = ? LIMIT 1 ["32"]
+[SQL] SELECT COUNT(*) AS jumlah FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL AND p.wilayah_id = ? [3]
+[SQL] SELECT p.id, p.nomor_kasus, p.anonim, p.kategori_masalah, p.wilayah_id, w.nama AS wilayah_nama, p.lokasi_kejadian, p.deskripsi, p.status, p.petugas_id, u.nama AS petugas_nama, p.dibuat_pada, p.diperbarui_pada FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL AND p.wilayah_id = ? ORDER BY p.dibuat_pada DESC, p.id DESC LIMIT ? OFFSET ? [3,10,0]
+WHERE memuat p.wilayah_id = ? : YA | total pengaduan Sumut = 0 (seed: 0)
+[SQL] SELECT COUNT(*) AS jumlah FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL AND p.wilayah_id = ? [13]
+[SQL] SELECT p.id, p.nomor_kasus, p.anonim, p.kategori_masalah, p.wilayah_id, w.nama AS wilayah_nama, p.lokasi_kejadian, p.deskripsi, p.status, p.petugas_id, u.nama AS petugas_nama, p.dibuat_pada, p.diperbarui_pada FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL AND p.wilayah_id = ? ORDER BY p.dibuat_pada DESC, p.id DESC LIMIT ? OFFSET ? [13,10,0]
+WHERE memuat p.wilayah_id = ? : YA | total pengaduan Jabar = 1 (seed: 1)
+
+===== UJI g.2: ambilArtikelStaf({peran: pimpinan_wilayah, wilayahId}) =====
+[SQL] SELECT COUNT(*) AS jumlah FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.wilayah_id = ? [13]
+[SQL] SELECT a.id, a.judul, a.slug, a.ringkasan, a.gambar_utama, a.status, a.jumlah_dibaca, a.terbit_pada, a.dibuat_pada, a.diperbarui_pada, k.id AS kategori_id, k.nama AS kategori_nama, k.slug AS kategori_slug, u.id AS penulis_id, u.nama AS penulis_nama, w.id AS wilayah_id, w.nama AS wilayah_nama FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.wilayah_id = ? ORDER BY a.diperbarui_pada DESC, a.id DESC LIMIT ? OFFSET ? [13,10,0]
+WHERE memuat a.wilayah_id = ? : YA | artikel Jabar = 3 (seed: 3)
+[SQL] SELECT COUNT(*) AS jumlah FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.penulis_id = ? [2]
+[SQL] SELECT a.id, a.judul, a.slug, a.ringkasan, a.gambar_utama, a.status, a.jumlah_dibaca, a.terbit_pada, a.dibuat_pada, a.diperbarui_pada, k.id AS kategori_id, k.nama AS kategori_nama, k.slug AS kategori_slug, u.id AS penulis_id, u.nama AS penulis_nama, w.id AS wilayah_id, w.nama AS wilayah_nama FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.penulis_id = ? ORDER BY a.diperbarui_pada DESC, a.id DESC LIMIT ? OFFSET ? [2,10,0]
+penulis: WHERE memuat a.penulis_id = ? : YA | artikel milik Budi = 5 (seed: 5)
+[SQL] SELECT COUNT(*) AS total, SUM(CASE WHEN a.dibuat_pada >= ? THEN 1 ELSE 0 END) AS bulan_ini FROM artikel a WHERE a.wilayah_id = ? ["2026-09-01 00:00:00",13]
+[SQL] SELECT SUM(CASE WHEN p.status = 'baru' THEN 1 ELSE 0 END) AS masuk, SUM(CASE WHEN p.status = 'selesai' THEN 1 ELSE 0 END) AS selesai, COUNT(*) AS total FROM pengaduan p WHERE p.dihapus_pada IS NULL AND p.wilayah_id = ? [13]
+statistik pimpinan_wilayah: WHERE wilayah_id di SQL? YA (kedua kueri) {"totalArtikel":3,"artikelBulanIni":0,"pengaduanMasuk":0,"pengaduanSelesai":1,"totalPengaduan":1}
+
+===== UJI i (aktif): masukan injeksi =====
+[SQL] SELECT COUNT(*) AS jumlah FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.status = 'terbit' AND (a.judul LIKE ? OR a.ringkasan LIKE ?) ["%' OR '1'='1%","%' OR '1'='1%"]
+[SQL] SELECT a.id, a.judul, a.slug, a.ringkasan, a.gambar_utama, a.status, a.jumlah_dibaca, a.terbit_pada, a.dibuat_pada, a.diperbarui_pada, k.id AS kategori_id, k.nama AS kategori_nama, k.slug AS kategori_slug, u.id AS penulis_id, u.nama AS penulis_nama, w.id AS wilayah_id, w.nama AS wilayah_nama FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.status = 'terbit' AND (a.judul LIKE ? OR a.ringkasan LIKE ?) ORDER BY a.terbit_pada DESC, a.id DESC LIMIT ? OFFSET ? ["%' OR '1'='1%","%' OR '1'='1%",9,0]
+ambilArtikelTerbit({q: "' OR '1'='1"}) -> total 0 (harus 0: dicari sebagai teks harfiah)
+[SQL] SELECT a.id, a.judul, a.slug, a.ringkasan, a.gambar_utama, a.status, a.jumlah_dibaca, a.terbit_pada, a.dibuat_pada, a.diperbarui_pada, k.id AS kategori_id, k.nama AS kategori_nama, k.slug AS kategori_slug, u.id AS penulis_id, u.nama AS penulis_nama, w.id AS wilayah_id, w.nama AS wilayah_nama, a.isi FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.slug = ? AND a.status = 'terbit' LIMIT 1 ["' OR '1'='1"]
+ambilArtikelBySlug("' OR '1'='1") -> null
+[SQL] SELECT p.nomor_kasus, p.kategori_masalah, w.nama AS wilayah_nama, p.status, p.dibuat_pada, p.diperbarui_pada FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.nomor_kasus = ? AND p.dihapus_pada IS NULL LIMIT 1 ["' OR '1'='1"]
+ambilPengaduanByNomor("' OR '1'='1") -> null
+[SQL] SELECT u.id, u.nama, u.email, u.kata_sandi_hash, u.peran, u.wilayah_id, u.aktif, u.token_version FROM users u WHERE u.email = ? LIMIT 1 ["admin@warkopnusantara.id' or '1'='1"]
+cariUserByEmail("admin@...' OR '1'='1") -> null
+[SQL] SELECT COUNT(*) AS jumlah FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL AND p.status = ? ["baru' OR 1=1 --"]
+[SQL] SELECT p.id, p.nomor_kasus, p.anonim, p.kategori_masalah, p.wilayah_id, w.nama AS wilayah_nama, p.lokasi_kejadian, p.deskripsi, p.status, p.petugas_id, u.nama AS petugas_nama, p.dibuat_pada, p.diperbarui_pada FROM pengaduan p LEFT JOIN wilayah w ON w.id = p.wilayah_id LEFT JOIN users u ON u.id = p.petugas_id WHERE p.dihapus_pada IS NULL AND p.status = ? ORDER BY p.dibuat_pada DESC, p.id DESC LIMIT ? OFFSET ? ["baru' OR 1=1 --",10,0]
+daftarPengaduan({status: "baru' OR 1=1 --"}) -> total 0 (harus 0)
+[SQL] SELECT COUNT(*) AS jumlah FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.status = 'terbit' 
+[SQL] SELECT a.id, a.judul, a.slug, a.ringkasan, a.gambar_utama, a.status, a.jumlah_dibaca, a.terbit_pada, a.dibuat_pada, a.diperbarui_pada, k.id AS kategori_id, k.nama AS kategori_nama, k.slug AS kategori_slug, u.id AS penulis_id, u.nama AS penulis_nama, w.id AS wilayah_id, w.nama AS wilayah_nama FROM artikel a JOIN kategori_artikel k ON k.id = a.kategori_id JOIN users u ON u.id = a.penulis_id LEFT JOIN wilayah w ON w.id = a.wilayah_id WHERE a.status = 'terbit' ORDER BY a.terbit_pada DESC, a.id DESC LIMIT ? OFFSET ? [9,0]
+ambilArtikelTerbit({halaman: "1; DROP TABLE artikel; --"}) -> halaman 1 perHalaman 9 (dipaksa angka)
+Seluruh SQL di atas memakai placeholder ? — nilai injeksi terlihat di log sebagai PARAMETER, bukan bagian teks SQL.
+
+===== RINGKASAN =====
+f (identitas tidak di-SELECT saat bolehLihatIdentitas=false): LULUS
+g (penyaringan wilayah/kepemilikan di WHERE): LULUS
+i (injeksi aktif): LULUS
+exit=0

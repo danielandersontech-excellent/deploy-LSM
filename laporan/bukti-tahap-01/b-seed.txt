@@ -1,0 +1,63 @@
+# UJI b — seed dua kali (idempoten) + kata sandi ter-hash bcrypt
+$ npm run seed   # pertama
+> warkop-nusantara@0.1.0 seed
+> node scripts/seed.js
+[seed] superadmin admin@warkopnusantara.id dibuat (id 1).
+[seed] database/seed.sql dijalankan.
+[seed] akun staf contoh diaktifkan: 5 (yang sudah punya kata sandi dilewati).
+[seed] WRP-009018: 2 perpindahan status lewat buku besar.
+[seed] WRP-008994: 3 perpindahan status lewat buku besar.
+[seed] jumlah baris: wilayah=39 users=6 kategori_artikel=5 artikel=12 tag=5 artikel_tag=11 pengaduan=3 pengaduan_riwayat=8 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.
+exit=0
+
+$ SELECT COUNT(*) per tabel (sesudah seed pertama)
+wilayah	users	artikel	pengaduan	riwayat	pengurus	program	galeri	pengaturan	tag	artikel_tag
+39	6	12	3	8	5	3	6	13	5	11
+
+$ npm run seed   # kedua
+> warkop-nusantara@0.1.0 seed
+> node scripts/seed.js
+[seed] superadmin admin@warkopnusantara.id sudah ada — dilewati.
+[seed] database/seed.sql dijalankan.
+[seed] akun staf contoh diaktifkan: 0 (yang sudah punya kata sandi dilewati).
+[seed] WRP-009018 sudah berstatus 'diproses' dengan 3 riwayat — dilewati.
+[seed] WRP-008994 sudah berstatus 'selesai' dengan 4 riwayat — dilewati.
+[seed] jumlah baris: wilayah=39 users=6 kategori_artikel=5 artikel=12 tag=5 artikel_tag=11 pengaduan=3 pengaduan_riwayat=8 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.
+exit=0
+
+$ SELECT COUNT(*) per tabel (sesudah seed kedua — harus SAMA)
+wilayah	users	artikel	pengaduan	riwayat	pengurus	program	galeri	pengaturan	tag	artikel_tag
+39	6	12	3	8	5	3	6	13	5	11
+
+$ kata sandi ter-hash bcrypt? (awalan $2a$/$2b$, panjang 60; nilai hash TIDAK dicetak utuh)
+id	email	peran	aktif	awalan_hash	panjang	pola_bcrypt
+1	admin@warkopnusantara.id	superadmin	1	$2a$12$	60	0
+2	budi.santoso@warkopnusantara.id	penulis	1	$2a$12$	60	0
+3	siti.rahma@warkopnusantara.id	redaktur	1	$2a$12$	60	0
+4	siti.aminah@warkopnusantara.id	verifikator	1	$2a$12$	60	0
+5	redaksi@warkopnusantara.id	redaktur	1	$2a$12$	60	0
+6	rahmat.siregar@warkopnusantara.id	pimpinan_wilayah	1	$2a$12$	60	0
+
+$ tidak ada kata sandi polos: cari nilai SEED_ADMIN_PASSWORD di kolom hash
+0
+(0 = tidak ada yang polos)
+
+$ (ulang, pola LIKE) kata_sandi_hash LIKE "$2a$12$%"  -> 1 = hash bcrypt biaya 12
+id	email	peran	aktif	awalan_hash	panjang	pola_bcrypt_2a_12
+1	admin@warkopnusantara.id	superadmin	1	$2a$12$	60	1
+2	budi.santoso@warkopnusantara.id	penulis	1	$2a$12$	60	1
+3	siti.rahma@warkopnusantara.id	redaktur	1	$2a$12$	60	1
+4	siti.aminah@warkopnusantara.id	verifikator	1	$2a$12$	60	1
+5	redaksi@warkopnusantara.id	redaktur	1	$2a$12$	60	1
+6	rahmat.siregar@warkopnusantara.id	pimpinan_wilayah	1	$2a$12$	60	1
+
+$ npm run seed   # ketiga, setelah SQL dipindahkan dari seed.js ke lib/db (harus tetap idempoten)
+[seed] superadmin admin@warkopnusantara.id sudah ada — dilewati.
+[seed] database/seed.sql dijalankan.
+[seed] akun staf contoh diaktifkan: 0 (yang sudah punya kata sandi dilewati).
+[seed] WRP-009018 sudah berstatus 'diproses' dengan 3 riwayat — dilewati.
+[seed] WRP-008994 sudah berstatus 'selesai' dengan 4 riwayat — dilewati.
+[seed] jumlah baris: wilayah=39 users=6 kategori_artikel=5 artikel=12 tag=5 artikel_tag=11 pengaduan=3 pengaduan_riwayat=8 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.

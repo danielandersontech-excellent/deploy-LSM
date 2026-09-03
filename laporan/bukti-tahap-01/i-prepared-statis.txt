@@ -1,0 +1,83 @@
+# UJI i (statis) — setiap ${...} di dalam template literal SQL lib/db/*.js, diklasifikasikan
+$ node laporan/bukti-tahap-01/skrip/uji-i-statis.mjs
+  aman    artikel.js:31  ${syarat.join(' AND ')}
+  aman    artikel.js:33  ${GABUNG}
+  aman    artikel.js:33  ${where}
+  aman    artikel.js:34  ${KOLOM_DAFTAR}
+  aman    artikel.js:34  ${GABUNG}
+  aman    artikel.js:34  ${where}
+  aman    artikel.js:43  ${KOLOM_DAFTAR}
+  aman    artikel.js:43  ${GABUNG}
+  aman    artikel.js:52  ${KOLOM_DAFTAR}
+  aman    artikel.js:52  ${GABUNG}
+  aman    artikel.js:62  ${KOLOM_DAFTAR}
+  aman    artikel.js:62  ${GABUNG}
+  aman    artikel.js:98  ${syarat.join(' AND ')}
+  aman    artikel.js:100  ${GABUNG}
+  aman    artikel.js:100  ${where}
+  aman    artikel.js:101  ${KOLOM_DAFTAR}
+  aman    artikel.js:101  ${GABUNG}
+  aman    artikel.js:101  ${where}
+  aman    artikel.js:108  ${KOLOM_DAFTAR}
+  aman    artikel.js:108  ${GABUNG}
+  aman    galeri.js:18  ${syarat.join(' AND ')}
+  aman    galeri.js:20  ${GABUNG}
+  aman    galeri.js:20  ${where}
+  aman    galeri.js:21  ${KOLOM}
+  aman    galeri.js:21  ${GABUNG}
+  aman    galeri.js:21  ${where}
+  aman    galeri.js:28  ${KOLOM}
+  aman    galeri.js:28  ${GABUNG}
+  aman    index.js:102  ${aman.map(() => '?').join(', ')}
+  aman    index.js:111  ${tabel}
+  aman    pengaduan.js:96  ${kolomUntuk(bolehLihatIdentitas)}
+  aman    pengaduan.js:96  ${GABUNG}
+  aman    pengaduan.js:96  ${syarat.join(' AND ')}
+  aman    pengaduan.js:113  ${syarat.join(' AND ')}
+  aman    pengaduan.js:115  ${GABUNG}
+  aman    pengaduan.js:115  ${where}
+  aman    pengaduan.js:116  ${kolomUntuk(bolehLihatIdentitas)}
+  aman    pengaduan.js:116  ${GABUNG}
+  aman    pengaduan.js:116  ${where}
+  aman    pengaduan.js:127  ${where}
+  aman    pengaduan.js:139  ${KOLOM_PUBLIK}
+  aman    pengaduan.js:139  ${GABUNG}
+  aman    pengaturan.js:16  ${placeholder}
+  aman    pengurus.js:10  ${KOLOM}
+  aman    pengurus.js:10  ${GABUNG}
+  aman    pengurus.js:11  ${KOLOM}
+  aman    pengurus.js:11  ${GABUNG}
+  aman    pengurus.js:15  ${KOLOM}
+  aman    pengurus.js:15  ${GABUNG}
+  aman    pengurus.js:19  ${KOLOM}
+  aman    pengurus.js:19  ${GABUNG}
+  aman    program.js:17  ${syarat.join(' AND ')}
+  aman    program.js:20  ${GABUNG}
+  aman    program.js:20  ${where}
+  aman    program.js:21  ${KOLOM}
+  aman    program.js:21  ${GABUNG}
+  aman    program.js:21  ${where}
+  aman    program.js:21  ${arah}
+  aman    program.js:21  ${arah}
+  aman    program.js:28  ${KOLOM}
+  aman    program.js:28  ${GABUNG}
+  aman    program.js:33  ${KOLOM}
+  aman    program.js:33  ${GABUNG}
+  aman    statistik.js:16  ${syaratArtikel.join(' AND ')}
+  aman    statistik.js:22  ${syaratPengaduan.join(' AND ')}
+  aman    statistik.js:26  ${whereArtikel}
+  aman    statistik.js:30  ${wherePengaduan}
+  aman    statistik.js:63  ${syarat.join(' AND ')}
+  aman    statistik.js:76  ${syarat.join(' AND ')}
+  aman    users.js:21  ${KOLOM_AMAN}
+  aman    users.js:29  ${KOLOM_AMAN}
+
+Total interpolasi dalam SQL: 71 | perlu diperiksa: 0
+Klasifikasi aman = konstanta daftar kolom/JOIN (huruf besar), potongan WHERE yang disusun dari string tetap + placeholder ?, daftar placeholder ?,?,?, atau nama tabel dari daftar putih TABEL_DIKENAL. TIDAK ADA nilai masukan pengguna yang masuk ke teks SQL; nilai selalu lewat parameter execute().
+exit=0
+
+$ grep -rn "\.query(" lib/db/  # di luar kueri()/execute: hanya SELECT 1 (health), SET time_zone, dan skrip seed.sql
+lib/db/index.js:37:      conn.query("SET time_zone = '+07:00'");
+lib/db/index.js:86:    const [baris] = await db().query('SELECT 1 AS ok');
+lib/db/index.js:126:    await koneksi.query("SET time_zone = '+07:00'");
+lib/db/index.js:127:    await koneksi.query(teksSql);

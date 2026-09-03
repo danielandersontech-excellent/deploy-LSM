@@ -1,0 +1,65 @@
+# UJI a — skema bersih: sql/01-schema.sql dijalankan pada basis data kosong, lalu dijalankan KEDUA kali
+$ docker exec warkop-mariadb mariadb -uwarkop -p*** warkop_nusantara -e "SHOW TABLES"   # sebelum
+(kosong = belum ada tabel)
+
+$ docker exec -i warkop-mariadb mariadb -uwarkop -p*** warkop_nusantara < sql/01-schema.sql   # pertama
+exit=0
+
+$ ... < sql/01-schema.sql   # kedua (harus tanpa galat: IF NOT EXISTS)
+exit=0
+
+$ SHOW TABLES   # sesudah
+Tables_in_warkop_nusantara
+artikel
+artikel_tag
+audit_log
+galeri
+kategori_artikel
+pengaduan
+pengaduan_lampiran
+pengaduan_riwayat
+pengaturan
+pengurus
+program
+tag
+users
+wilayah
+
+$ jumlah kolom & indeks per tabel
+tabel	kolom	indeks	engine	table_collation
+artikel	14	6	InnoDB	utf8mb4_unicode_ci
+artikel_tag	2	2	InnoDB	utf8mb4_unicode_ci
+audit_log	8	3	InnoDB	utf8mb4_unicode_ci
+galeri	11	4	InnoDB	utf8mb4_unicode_ci
+kategori_artikel	5	2	InnoDB	utf8mb4_unicode_ci
+pengaduan	16	6	InnoDB	utf8mb4_unicode_ci
+pengaduan_lampiran	7	2	InnoDB	utf8mb4_unicode_ci
+pengaduan_riwayat	7	3	InnoDB	utf8mb4_unicode_ci
+pengaturan	4	1	InnoDB	utf8mb4_unicode_ci
+pengurus	10	3	InnoDB	utf8mb4_unicode_ci
+program	12	5	InnoDB	utf8mb4_unicode_ci
+tag	3	2	InnoDB	utf8mb4_unicode_ci
+users	11	4	InnoDB	utf8mb4_unicode_ci
+wilayah	5	4	InnoDB	utf8mb4_unicode_ci
+
+$ foreign key & aturan ON DELETE
+constraint_name	table_name	column_name	referenced_table_name	delete_rule
+fk_artikel_kategori	artikel	kategori_id	kategori_artikel	RESTRICT
+fk_artikel_penulis	artikel	penulis_id	users	RESTRICT
+fk_artikel_wilayah	artikel	wilayah_id	wilayah	SET NULL
+fk_artikel_tag_artikel	artikel_tag	artikel_id	artikel	CASCADE
+fk_artikel_tag_tag	artikel_tag	tag_id	tag	CASCADE
+fk_audit_user	audit_log	user_id	users	SET NULL
+fk_galeri_wilayah	galeri	wilayah_id	wilayah	SET NULL
+fk_pengaduan_petugas	pengaduan	petugas_id	users	SET NULL
+fk_pengaduan_wilayah	pengaduan	wilayah_id	wilayah	SET NULL
+fk_lampiran_pengaduan	pengaduan_lampiran	pengaduan_id	pengaduan	RESTRICT
+fk_riwayat_oleh	pengaduan_riwayat	oleh_user_id	users	SET NULL
+fk_riwayat_pengaduan	pengaduan_riwayat	pengaduan_id	pengaduan	RESTRICT
+fk_pengurus_wilayah	pengurus	wilayah_id	wilayah	SET NULL
+fk_program_wilayah	program	wilayah_id	wilayah	SET NULL
+fk_users_wilayah	users	wilayah_id	wilayah	SET NULL
+fk_wilayah_induk	wilayah	induk_id	wilayah	SET NULL
+
+$ cmp database/schema.sql sql/01-schema.sql && cmp database/seed.sql sql/02-seed.sql
+salinan identik

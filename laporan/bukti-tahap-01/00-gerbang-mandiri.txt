@@ -1,0 +1,40 @@
+# GERBANG-MANDIRI 7.2 — Tahap 01 (pemeriksaan terprogram)
+a-skema.txt                      ada (65 baris)
+b-seed.txt                       ada (63 baris)
+c-zona-waktu.txt                 ada (45 baris)
+d-e-buku-besar-transaksi.txt     ada (55 baris)
+f-g-i-penyaringan.txt            ada (73 baris)
+h-sql-liar.txt                   ada (12 baris)
+i-prepared-statis.txt            ada (83 baris)
+j-nomor-kasus.txt                ada (26 baris)
+k-build-lint.txt                 ada (39 baris)
+
+$ grep -c 'HASIL: LULUS' c-zona-waktu.txt (2 = TZ mesin Asia/Jakarta & TZ=UTC)
+2
+$ grep 'selisih' c-zona-waktu.txt
+   NOW() DB        : 2026-09-03 13:14:06 selisih 0 detik
+   dibuat_pada     : 2026-09-03 13:14:06 selisih 0 detik
+HASIL: LULUS — ketiganya sama dengan jam WIB (tidak ada selisih 7 jam)
+   NOW() DB        : 2026-09-03 13:14:39 selisih 0 detik
+   dibuat_pada     : 2026-09-03 13:14:39 selisih 0 detik
+HASIL: LULUS — ketiganya sama dengan jam WIB (tidak ada selisih 7 jam)
+$ grep -E 'Rantai|HASIL UJI e' d-e-buku-besar-transaksi.txt
+Rantai: status_sesudah baris N == status_sebelum baris N+1 untuk seluruh 3 pasangan? YA
+HASIL UJI e: LULUS — UPDATE status ikut dibatalkan (rollback seluruh transaksi)
+$ grep -E '^(f|g|i) \(' f-g-i-penyaringan.txt
+f (identitas tidak di-SELECT saat bolehLihatIdentitas=false): LULUS
+g (penyaringan wilayah/kepemilikan di WHERE): LULUS
+i (injeksi aktif): LULUS
+$ grep -c 'nama_pelapor' pada baris [SQL] uji f.1-f.3 (harus 0):
+0
+$ grep '(nihil)' h-sql-liar.txt | wc -l (2)
+2
+$ grep 'perlu diperiksa' i-prepared-statis.txt
+Total interpolasi dalam SQL: 71 | perlu diperiksa: 0
+$ grep 'HASIL' j-nomor-kasus.txt
+HASIL: LULUS — 1000 nomor, tidak ada yang berganda, tidak berurutan
+$ grep -E 'exit=' k-build-lint.txt
+exit=0
+exit=0
+$ grep -c 'Proxy (Middleware)' k-build-lint.txt
+1
