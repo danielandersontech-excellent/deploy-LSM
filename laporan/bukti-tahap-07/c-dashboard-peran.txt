@@ -1,0 +1,85 @@
+# Uji c — Dashboard per peran: render GET /staf/dashboard dengan cookie login tiap peran — 2026-09-03T18:00Z
+# Email/sandi disamarkan (dari .env SEED_*). Potongan diekstrak dari DOM (tanpa <script> muatan RSC).
+# Per peran: kode HTTP, kepala, tiga kartu angka, judul panel samping + butir pertama, judul tabel + kolom + baris pertama + tautan Tindakan, jumlah batang grafik, tujuan 'Lihat Semua'.
+
+=============================== PERAN: superadmin — login 200, GET /staf/dashboard HTTP 200 ===============================
+Kepala      : Tinjauan Pengawasan Status pelaporan dan operasional hari ini.
+Kartu 1     : Total Artikel = 12 — +0 bulan ini
+Kartu 2     : Pengaduan Masuk = 5 — Menunggu Verifikasi
+Kartu 3     : Laporan Selesai = 2 — Resolusi tuntas
+Panel       : Aktivitas Staf | 6 butir | butir-1: Superadmin masuk ke sistem #1 baru saja
+Tabel       : Pengaduan Terbaru | kolom: ID | Region | Tanggal | Status | Tindakan
+Baris-1     : #WRP-043167 Jawa Barat 04 Sep 2026 Baru
+Tindakan    : Lihat pengaduan WRP-043167 -> /staf/pengaduan/1025 ; Proses pengaduan WRP-043167 -> /staf/pengaduan/1025
+Lencana     : inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-xs bg-error-container text-on-error-container border border-error/20
+Batang      : 12 | bulan berjalan (fixed-dim): 1 | label bulan: Okt Nov Des Jan Feb Mar Apr Mei Jun Jul Agu Sep
+Lihat Semua : undefined
+Sidebar     : Dashboard, Kelola Artikel, Kelola Pengaduan, Pengurus, Program, Galeri, Pengguna, Pengaturan, Keluar
+Sisa cacat  : googleusercontent=0 href=#=0 nama ikon teks=0
+
+=============================== PERAN: penulis — login 200, GET /staf/dashboard HTTP 200 ===============================
+Kepala      : Tinjauan Pengawasan Status pelaporan dan operasional hari ini.
+Kartu 1     : Total Artikel = 5 — +0 bulan ini
+Kartu 2     : Pengaduan Masuk = 5 — Menunggu Verifikasi
+Kartu 3     : Laporan Selesai = 2 — Resolusi tuntas
+Panel       : Draf Saya | 0 butir | butir-1: (keadaan kosong)
+Tabel       : Artikel Terbaru | kolom: Judul | Kategori | Penulis | Status | Tindakan
+Baris-1     : Indikasi Penyelewengan Dana Desa Mekarsari Investigasi Budi Santoso Published
+Tindakan    : Lihat artikel Indikasi Penyelewengan Dana Desa Mekarsari -> /staf/artikel/64
+Lencana     : inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-md text-xs font-semibold border border-secondary-fixed-dim
+Batang      : 12 | bulan berjalan (fixed-dim): 1 | label bulan: Okt Nov Des Jan Feb Mar Apr Mei Jun Jul Agu Sep
+Lihat Semua : undefined
+Sidebar     : Dashboard, Kelola Artikel, Keluar
+Sisa cacat  : googleusercontent=0 href=#=0 nama ikon teks=0
+
+=============================== PERAN: redaktur — login 200, GET /staf/dashboard HTTP 200 ===============================
+Kepala      : Tinjauan Pengawasan Status pelaporan dan operasional hari ini.
+Kartu 1     : Total Artikel = 12 — +0 bulan ini
+Kartu 2     : Pengaduan Masuk = 5 — Menunggu Verifikasi
+Kartu 3     : Laporan Selesai = 2 — Resolusi tuntas
+Panel       : Draf Menunggu Terbit | 2 butir | butir-1: Siti Aminah · Laporan Infrastruktur Jalan Rusak di Kab. Bandung 6 hari lalu
+Tabel       : Artikel Terbaru | kolom: Judul | Kategori | Penulis | Status | Tindakan
+Baris-1     : Indikasi Penyelewengan Dana Desa Mekarsari Investigasi Budi Santoso Published
+Tindakan    : Lihat artikel Indikasi Penyelewengan Dana Desa Mekarsari -> /staf/artikel/64
+Lencana     : inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-md text-xs font-semibold border border-secondary-fixed-dim
+Batang      : 12 | bulan berjalan (fixed-dim): 1 | label bulan: Okt Nov Des Jan Feb Mar Apr Mei Jun Jul Agu Sep
+Lihat Semua : undefined
+Sidebar     : Dashboard, Kelola Artikel, Pengurus, Program, Galeri, Keluar
+Sisa cacat  : googleusercontent=0 href=#=0 nama ikon teks=0
+
+=============================== PERAN: verifikator — login 200, GET /staf/dashboard HTTP 200 ===============================
+Kepala      : Tinjauan Pengawasan Status pelaporan dan operasional hari ini.
+Kartu 1     : Total Artikel = 12 — +0 bulan ini
+Kartu 2     : Pengaduan Masuk = 5 — Menunggu Verifikasi
+Kartu 3     : Laporan Selesai = 2 — Resolusi tuntas
+Panel       : Menunggu Verifikasi | 5 butir | butir-1: Kerusakan Infrastruktur · Jawa Barat #WRP-043167 52 mnt lalu
+Tabel       : Pengaduan Terbaru | kolom: ID | Region | Tanggal | Status | Tindakan
+Baris-1     : #WRP-043167 Jawa Barat 04 Sep 2026 Baru
+Tindakan    : Lihat pengaduan WRP-043167 -> /staf/pengaduan/1025 ; Proses pengaduan WRP-043167 -> /staf/pengaduan/1025
+Lencana     : inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-xs bg-error-container text-on-error-container border border-error/20
+Batang      : 12 | bulan berjalan (fixed-dim): 1 | label bulan: Okt Nov Des Jan Feb Mar Apr Mei Jun Jul Agu Sep
+Lihat Semua : undefined
+Sidebar     : Dashboard, Kelola Pengaduan, Keluar
+Sisa cacat  : googleusercontent=0 href=#=0 nama ikon teks=0
+
+=============================== PERAN: pimpinan_wilayah — login 200, GET /staf/dashboard HTTP 200 ===============================
+Kepala      : Tinjauan Pengawasan Status pelaporan dan operasional hari ini.
+Kartu 1     : Total Artikel = 3 — +0 bulan ini
+Kartu 2     : Pengaduan Masuk = 5 — Menunggu Verifikasi
+Kartu 3     : Laporan Selesai = 1 — Resolusi tuntas
+Panel       : Artikel Terbaru | 3 butir | butir-1: Budi Santoso · Indikasi Penyelewengan Dana Desa Mekarsari 2 hari lalu
+Tabel       : Pengaduan Terbaru | kolom: ID | Region | Tanggal | Status | Tindakan
+Baris-1     : #WRP-043167 Jawa Barat 04 Sep 2026 Baru
+Tindakan    : Lihat pengaduan WRP-043167 -> /staf/pengaduan/1025
+Lencana     : inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-xs bg-error-container text-on-error-container border border-error/20
+Batang      : 12 | bulan berjalan (fixed-dim): 1 | label bulan: Okt Nov Des Jan Feb Mar Apr Mei Jun Jul Agu Sep
+Lihat Semua : undefined
+Sidebar     : Dashboard, Kelola Artikel, Kelola Pengaduan, Pengurus, Program, Galeri, Keluar
+Sisa cacat  : googleusercontent=0 href=#=0 nama ikon teks=0
+
+=============================== KOREKSI baris 'Lihat Semua : undefined' (ekstraktor salah urutan atribut; nilai sebenarnya di bawah) ===============================
+superadmin        Lihat Semua -> /staf/pengaduan
+penulis           Lihat Semua -> /staf/artikel
+redaktur          Lihat Semua -> /staf/artikel
+verifikator       Lihat Semua -> /staf/pengaduan
+pimpinan_wilayah  Lihat Semua -> /staf/pengaduan

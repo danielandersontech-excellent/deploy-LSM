@@ -1,0 +1,103 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/galeri_dokumentasi/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-galeri-admin.html
+----------------------------------------------------------------
+Kelas desain       : 181
+Ditemukan di render: 117  (65%)
+Kelas hilang       : 64
+  appearance-none
+  bg-secondary
+  border-b-2
+  border-outline
+  border-t
+  duration-150
+  duration-200
+  duration-300
+  flex-grow
+  flex-wrap
+  focus:border-secondary-fixed-dim
+  focus:ring-0
+  font-body-lg
+  font-bold
+  font-headline-xl
+  font-motto
+  gap-6
+  gap-gutter
+  hover:bg-secondary-container
+  hover:border-primary
+  hover:text-on-primary
+  hover:text-on-secondary-container
+  hover:underline
+  items-end
+  line-clamp-2
+  max-w-3xl
+  max-w-sm
+  mb-12
+  md:col-span-8
+  md:gap-8
+  md:mb-0
+  md:mt-0
+  md:px-margin-desktop
+  md:row-span-2
+  md:text-headline-lg
+  md:text-headline-xl
+  md:w-1/3
+  md:w-auto
+  mt-12
+  mt-4
+  mt-auto
+  object-contain
+  opacity-90
+  p-6
+  pb-1
+  pressed-paper-shadow
+  px-8
+  px-margin-desktop
+  py-12
+  py-2.5
+  right-3
+  rounded
+  text-[16px]
+  text-body-lg
+  text-headline-xl
+  text-motto
+  text-on-secondary
+  text-on-surface
+  text-secondary-fixed-dim
+  text-sm
+  text-surface-variant
+  top-2.5
+  transition-all
+  via-primary/40
+----------------------------------------------------------------
+Token desain dipakai desain : 37
+Token hilang di render      : 8  -> body-lg, gutter, headline-xl, motto, on-secondary, on-surface, outline, surface-variant
+----------------------------------------------------------------
+Teks tampak desain : 28   hilang di render: 16
+  Berita
+  Dokumentasi & Arsip Visual
+  FAQ
+  Kantor Regional
+  Kategori Kegiatan
+  Kebijakan Privasi
+  Kontak & Pengaduan
+  Kontak Media
+  Masuk Staff
+  Muat Lebih Banyak expand_more
+  Pedoman Komunitas
+  Rentang Tanggal
+  Semua Kategori
+  Struktur
+  Tentang Kami
+  filter_list Terapkan Filter
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

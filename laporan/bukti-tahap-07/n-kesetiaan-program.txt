@@ -1,0 +1,105 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/kelola_artikel_admin/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-program-admin.html
+----------------------------------------------------------------
+Kelas desain       : 129
+Ditemukan di render: 93  (72%)
+Kelas hilang       : 36
+  -translate-y-1/2
+  absolute
+  bg-opacity-20
+  bg-surface-container-highest
+  bg-surface-variant
+  border-secondary-fixed-dim
+  flex-shrink-0
+  focus:border-secondary-fixed-dim
+  focus:ring-1
+  focus:ring-secondary-fixed-dim
+  h-screen
+  hover:bg-surface-container-highest
+  inline-flex
+  justify-center
+  left-3
+  mb-1
+  mb-6
+  md:w-1/2
+  ml-64
+  mt-4
+  mt-auto
+  no
+  p-4
+  pl-10
+  pr-4
+  pt-4
+  relative
+  rounded
+  rounded-md
+  shadows
+  space-x-1
+  space-y-2
+  text-xs
+  top-1/2
+  whitespace-nowrap
+  z-10
+----------------------------------------------------------------
+Token desain dipakai desain : 28
+Token hilang di render      : 3  -> secondary-fixed-dim, surface-container-highest, surface-variant
+----------------------------------------------------------------
+Teks tampak desain : 19   hilang di render: 15
+  Draft
+  Filter Status:
+  Judul Artikel
+  Penulis
+  Published
+  Semua Status
+  Staff Warkop
+  Tanggal Publikasi
+  add Buat Laporan Baru
+  dashboard Dashboard
+  edit_document Kelola Artikel
+  gavel Kelola Pengaduan
+  logout Keluar
+  post_add Tulis Artikel Baru
+  settings Pengaturan
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+
+================================================================
+CATATAN PEMBACAAN (ditulis agen modul program) — halaman /staf/program TIDAK ada di ZIP;
+uji ini INFORMATIF terhadap cetakan kelola_artikel_admin/code.html (REFERENSI 18.4).
+cacatExport: ikonSebagaiTeks 0, googleusercontent 0, cdnTailwind 0, fontsGoogleapis 0,
+important 0, seratusVh 0, hrefKosong 0  -> exit 0.
+
+Alasan 36 kelas hilang, per kelompok:
+(i)  Sidebar/nav kanonik desain (baris 103-150 code.html; dirender layout staf lewat SidebarStaf,
+     bukan halaman ini): h-screen, ml-64 (main desain, diganti md:ml-64 layout), z-10, flex-shrink-0,
+     no, shadows (sisa Stitch "flat no shadows" pada <nav>), mt-auto, space-y-2, pt-4, mt-4, mb-1,
+     justify-center (tombol "Tulis Artikel Baru" sidebar).
+(v)  Kotak Filter & Pencarian (baris 166-178) TIDAK dibawa ke Kelola Program — brief modul program
+     tidak meminta filter/pencarian (KEPUTUSAN BARU, dapat ditambah kemudian): relative, absolute,
+     left-3, top-1/2, -translate-y-1/2, pl-10, pr-4, rounded-md, focus:ring-1,
+     focus:ring-secondary-fixed-dim, focus:border-secondary-fixed-dim, md:w-1/2, whitespace-nowrap,
+     p-4, mb-6 (mb-6 dipakai hanya saat kotak pesan tampil).
+(ii) Elemen berulang -> .map() memakai kelas baris PERTAMA: bg-surface-container-highest,
+     bg-opacity-20 (baris ke-2 desain berselang-seling).
+(v)  Lencana status artikel (Published/Draft) diganti lencana status PROGRAM dari
+     program_kegiatan/code.html (Berjalan/Selesai, sesuai brief): inline-flex, text-xs,
+     border-secondary-fixed-dim, bg-surface-variant.
+(v)  Paginasi kaki tabel tidak dirender (perHalaman 50 > jumlah program; teks "Menampilkan N dari M"
+     tetap ada): space-x-1, rounded, hover:bg-surface-container-highest.
+Token hilang (secondary-fixed-dim, surface-container-highest, surface-variant) = turunan kelas di atas.
+
+Teks hilang: Draft/Published/Filter Status:/Semua Status/Judul Artikel/Penulis/Tanggal Publikasi =
+teks modul artikel (diganti Judul Program/Kategori/Status/Wilayah/Periode/Berjalan/Selesai);
+"post_add Tulis Artikel Baru" -> "Tambah Program"; Staff Warkop, add Buat Laporan Baru, dashboard
+Dashboard, edit_document Kelola Artikel, gavel Kelola Pengaduan, logout Keluar, settings Pengaturan =
+sidebar kanonik (menu per peran dari lib/navItems, dirender layout).

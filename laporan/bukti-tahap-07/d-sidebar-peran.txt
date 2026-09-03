@@ -1,0 +1,6 @@
+# Uji d — menu sidebar per peran (dari HTML render /staf/dashboard, 2026-09-03T18:12:15Z); tangkapan: tangkapan/dashboard-<peran>.png
+  superadmin: menu = Dashboard | Kelola Artikel | Kelola Pengaduan | Pengurus | Program | Galeri | Pengguna | Pengaturan | Keluar ; aksi utama = Tulis Artikel Baru
+  redaktur: menu = Dashboard | Kelola Artikel | Pengurus | Program | Galeri | Keluar ; aksi utama = Tulis Artikel Baru
+  penulis: menu = Dashboard | Kelola Artikel | Keluar ; aksi utama = Tulis Artikel Baru
+  verifikator: menu = Dashboard | Kelola Pengaduan | Keluar ; aksi utama = Proses Pengaduan
+  pimpinan_wilayah: menu = Dashboard | Kelola Artikel | Kelola Pengaduan | Pengurus | Program | Galeri | Keluar ; aksi utama = (tidak ada)

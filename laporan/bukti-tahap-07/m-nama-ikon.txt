@@ -1,0 +1,11 @@
+# Uji m — nama ikon sebagai teks di render halaman staf (superadmin), 2026-09-03T18:11:36Z
+  /staf/dashboard: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/artikel: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/artikel/baru: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/pengaduan: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/pengurus: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/program: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/galeri: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/pengguna: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/pengaturan: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0
+  /staf/ganti-sandi: dashboard|edit_document|gavel|settings|logout sebagai teks: 0 ; material-symbols: 0 ; googleusercontent: 0 ; href=#: 0 ; 100vh: 0 ; !important: 0

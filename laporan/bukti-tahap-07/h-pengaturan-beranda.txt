@@ -1,0 +1,11 @@
+# Uji h — 2026-09-03T18:00:45.848Z — cookie superadmin (email disamarkan), curl.exe
+
+## Uji h — statistik_laporan_ditangani awal = 12000
+  [OK] GET / publik memuat "12.000+" sebelum diubah
+  [OK] PATCH statistik_laporan_ditangani=12345 -> 200
+  [OK] GET / publik memuat "12.345+" TANPA deploy (cuplikan: "Laporan Ditangani")
+  [OK] GET / tidak lagi memuat "12.000+"
+  [OK] pulihkan -> 200, nilai 12000
+  [OK] GET / kembali memuat "12.000+"
+
+# HASIL: SEMUA LULUS

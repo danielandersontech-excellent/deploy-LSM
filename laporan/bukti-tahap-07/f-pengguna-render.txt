@@ -1,0 +1,33 @@
+# Uji f (render) — /staf/pengguna, 2026-09-03T18:01:19Z UTC
+# superadmin (cookie sesi) -> harus 200
+GET /staf/pengguna [superadmin] -> HTTP 200
+# redaktur -> harus 307 ke /tanpa-akses
+GET /staf/pengguna [redaktur] -> HTTP 307, Location: http://127.0.0.1:3000/tanpa-akses
+# tanpa sesi -> harus 307 ke /login
+GET /staf/pengguna [tanpa cookie] -> HTTP 307, Location: http://127.0.0.1:3000/login?lanjut=%2Fstaf%2Fpengguna
+# Uji e (sidebar bukan pagar): redaktur GET /api/staf/pengguna -> harus 403
+{"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+HTTP 403
+# Teks kunci pada render superadmin (jumlah kemunculan):
+  "Kelola Pengguna": 1
+  "Tambah Pengguna": 1
+  "Terakhir Masuk": 1
+  "Menampilkan 7 pengguna": 0  (React menyisipkan <!-- --> di antara teks & angka; lihat baris terkoreksi di bawah)
+  "Pimpinan Wilayah": 1
+  "Verifikator": 1
+  "(Anda)": 1
+# Sel kolom Peran (label, bukan slug):
+      1 Penulis
+      2 Pimpinan Wilayah
+      2 Redaktur
+      1 Superadmin
+      1 Verifikator
+# Uji m (nama ikon sebagai teks) — harus nihil:
+  (selesai; tanpa baris di atas = nihil)
+# Tombol hapus per baris (harus 6 = 7 pengguna dikurangi akun sendiri):
+6
+# Tombol Paksa keluar / Reset kata sandi per baris (harus 7 & 7):
+7
+7
+# Terkoreksi: kaki tabel (tolerir pemisah <!-- --> React):
+Menampilkan <!-- -->7<!-- --> pengguna

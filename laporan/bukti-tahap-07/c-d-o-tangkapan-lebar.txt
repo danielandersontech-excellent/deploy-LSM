@@ -1,0 +1,96 @@
+# Uji c/d — dashboard + sidebar kelima peran (2026-09-03T18:08:50Z); tangkapan 1280 px beremulasi (CDP), cookie per peran
+  [superadmin] http://127.0.0.1:3000/staf/dashboard @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+  [superadmin]   tangkapan: laporan/bukti-tahap-07/tangkapan/dashboard-superadmin.png (1280x1000)
+  [superadmin] menu sidebar: 
+  [redaktur] http://127.0.0.1:3000/staf/dashboard @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+  [redaktur]   tangkapan: laporan/bukti-tahap-07/tangkapan/dashboard-redaktur.png (1280x1000)
+  [redaktur] menu sidebar: 
+  [penulis] http://127.0.0.1:3000/staf/dashboard @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+  [penulis]   tangkapan: laporan/bukti-tahap-07/tangkapan/dashboard-penulis.png (1280x1000)
+  [penulis] menu sidebar: 
+  [verifikator] http://127.0.0.1:3000/staf/dashboard @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+  [verifikator]   tangkapan: laporan/bukti-tahap-07/tangkapan/dashboard-verifikator.png (1280x1000)
+  [verifikator] menu sidebar: 
+  [pimpinan_wilayah] http://127.0.0.1:3000/staf/dashboard @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+  [pimpinan_wilayah]   tangkapan: laporan/bukti-tahap-07/tangkapan/dashboard-pimpinan_wilayah.png (1280x1000)
+  [pimpinan_wilayah] menu sidebar: 
+
+# Uji o — lebar 375/768/1280 halaman staf (superadmin) + tangkapan 375
+http://127.0.0.1:3000/staf/dashboard @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 39
+  <span> right=401 width=16 | w-1/12 font-label-md text-label-md text-outline text-xs | Jul
+  <span> right=434 width=18 | w-1/12 font-label-md text-label-md text-outline text-xs | Agu
+  <span> right=468 width=18 | w-1/12 font-label-md text-label-md text-outline text-xs | Sep
+http://127.0.0.1:3000/staf/dashboard @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 20
+  <table> right=830 width=533 | w-full text-left border-collapse | IDRegionTanggalStatusTindakan#
+  <thead> right=830 width=533 | bg-primary text-on-primary font-label-md text-label-md | IDRegionTanggalStatusTindakan
+  <tr> right=830 width=533 |  | IDRegionTanggalStatusTindakan
+http://127.0.0.1:3000/staf/dashboard @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/staf/artikel @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 158
+  <button> right=405 width=92 | py-2 border border-outline rounded text-primary font-label-md text-sm hover:bg-surface-con | Terapkan
+  <table> right=615 width=574 | w-full text-left border-collapse | Judul ArtikelKategoriPenulisTa
+  <thead> right=615 width=574 | bg-primary text-on-primary | Judul ArtikelKategoriPenulisTa
+http://127.0.0.1:3000/staf/artikel @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 158
+  <table> right=1108 width=811 | w-full text-left border-collapse | Judul ArtikelKategoriPenulisTa
+  <thead> right=1108 width=811 | bg-primary text-on-primary | Judul ArtikelKategoriPenulisTa
+  <tr> right=1108 width=811 |  | Judul ArtikelKategoriPenulisTa
+http://127.0.0.1:3000/staf/artikel @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/staf/artikel/baru @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 25
+  <div> right=395 width=229 | flex items-center gap-3 | Simpan DrafTerbitkan
+  <button> right=395 width=115 | px-6 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-prima | Terbitkan
+  <div> right=515 width=320 | w-[320px] flex flex-col gap-6 flex-shrink-0 | Pengaturan PublikasiStatus Art
+http://127.0.0.1:3000/staf/artikel/baru @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 4
+  <div> right=771 width=320 | w-[320px] flex flex-col gap-6 flex-shrink-0 | Pengaturan PublikasiStatus Art
+  <div> right=771 width=320 | bg-surface-container-lowest rounded-xl border border-tertiary p-6 shadow-sm | Pengaturan PublikasiStatus Art
+  <div> right=771 width=320 | bg-surface-container-lowest rounded-xl border border-tertiary p-6 shadow-sm | Label & Kata KunciTambahkan ta
+http://127.0.0.1:3000/staf/artikel/baru @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/staf/pengaduan @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 43
+  <a> right=381 width=137 | px-4 py-1.5 bg-surface text-on-surface font-label-md rounded-full whitespace-nowrap border | Diverifikasi (0)
+  <a> right=507 width=118 | px-4 py-1.5 bg-surface text-on-surface font-label-md rounded-full whitespace-nowrap border | Diproses (1)
+  <a> right=622 width=107 | px-4 py-1.5 bg-surface text-on-surface font-label-md rounded-full whitespace-nowrap border | Selesai (1)
+http://127.0.0.1:3000/staf/pengaduan @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 36
+  <a> right=838 width=89 | px-4 py-1.5 bg-surface text-on-surface font-label-md rounded-full whitespace-nowrap border | Baru (1)
+  <a> right=983 width=137 | px-4 py-1.5 bg-surface text-on-surface font-label-md rounded-full whitespace-nowrap border | Diverifikasi (0)
+  <a> right=1109 width=118 | px-4 py-1.5 bg-surface text-on-surface font-label-md rounded-full whitespace-nowrap border | Diproses (1)
+http://127.0.0.1:3000/staf/pengaduan @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 1
+  <a> right=1341 width=109 | px-4 py-1.5 bg-surface text-on-surface font-label-md rounded-full whitespace-nowrap border | Ditolak (0)
+http://127.0.0.1:3000/staf/pengurus @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 66
+  <table> right=486 width=445 | w-full text-left border-collapse | Daftar pengurus berurutan sesu
+  <thead> right=486 width=445 | bg-primary text-on-primary | NamaJabatanTingkatWilayahAktif
+  <tr> right=486 width=445 |  | NamaJabatanTingkatWilayahAktif
+http://127.0.0.1:3000/staf/pengurus @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 84
+  <table> right=1149 width=852 | w-full text-left border-collapse | Daftar pengurus berurutan sesu
+  <thead> right=1149 width=852 | bg-primary text-on-primary | NamaJabatanTingkatWilayahAktif
+  <tr> right=1149 width=852 |  | NamaJabatanTingkatWilayahAktif
+http://127.0.0.1:3000/staf/pengurus @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/staf/program @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 64
+  <table> right=629 width=588 | w-full text-left border-collapse | Judul ProgramKategoriStatusWil
+  <thead> right=629 width=588 | bg-primary text-on-primary | Judul ProgramKategoriStatusWil
+  <tr> right=629 width=588 |  | Judul ProgramKategoriStatusWil
+http://127.0.0.1:3000/staf/program @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 62
+  <table> right=1136 width=839 | w-full text-left border-collapse | Judul ProgramKategoriStatusWil
+  <thead> right=1136 width=839 | bg-primary text-on-primary | Judul ProgramKategoriStatusWil
+  <tr> right=1136 width=839 |  | Judul ProgramKategoriStatusWil
+http://127.0.0.1:3000/staf/program @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/staf/galeri @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+  tangkapan: laporan/bukti-tahap-07/tangkapan/galeri-375.png (375x1000)
+http://127.0.0.1:3000/staf/galeri @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/staf/galeri @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/staf/pengguna @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 123
+  <table> right=713 width=672 | w-full text-left border-collapse | Daftar akun stafNamaEmailPeran
+  <thead> right=713 width=672 | bg-primary text-on-primary | NamaEmailPeranWilayahStatusTer
+  <tr> right=713 width=672 |  | NamaEmailPeranWilayahStatusTer
+http://127.0.0.1:3000/staf/pengguna @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 139
+  <table> right=1339 width=1042 | w-full text-left border-collapse | Daftar akun stafNamaEmailPeran
+  <thead> right=1339 width=1042 | bg-primary text-on-primary | NamaEmailPeranWilayahStatusTer
+  <tr> right=1339 width=1042 |  | NamaEmailPeranWilayahStatusTer
+http://127.0.0.1:3000/staf/pengguna @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 108
+  <table> right=1456 width=1159 | w-full text-left border-collapse | Daftar akun stafNamaEmailPeran
+  <thead> right=1456 width=1159 | bg-primary text-on-primary | NamaEmailPeranWilayahStatusTer
+  <tr> right=1456 width=1159 |  | NamaEmailPeranWilayahStatusTer
+http://127.0.0.1:3000/staf/pengaturan @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+  tangkapan: laporan/bukti-tahap-07/tangkapan/pengaturan-375.png (375x1000)
+http://127.0.0.1:3000/staf/pengaturan @768px: clientWidth=768 scrollWidth=768 -> PAS; elemen melewati tepi: 5
+  <div> right=821 width=320 | w-[320px] flex flex-col gap-6 flex-shrink-0 | CatatanSeluruh kunci di halama
+  <div> right=821 width=320 | bg-secondary-fixed/20 border border-secondary-fixed rounded-xl p-5 flex items-start gap-3 | CatatanSeluruh kunci di halama
+  <div> right=800 width=250 |  | CatatanSeluruh kunci di halama
+http://127.0.0.1:3000/staf/pengaturan @1280px: clientWidth=1280 scrollWidth=1280 -> PAS; elemen melewati tepi: 0

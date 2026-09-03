@@ -1,0 +1,27 @@
+# Uji f — render /staf/pengaturan per peran (2026-09-03T18:00:57Z) — curl.exe, email admin disamarkan
+
+## superadmin (cookie $TEMP/admin.txt)
+HTTP/1.1 200 OK
+HTTP_CODE=200
+title: <title>Pengaturan · WARKOP NUSANTARA</title>
+judul kelompok: Statistik Beranda >Kontak< Teks Organisasi Halaman Teks Statis 
+input berlabel: 13 label; 8 input; 5 textarea; tombol Simpan Perubahan: 4
+kotak Catatan: 1 rujukan
+
+## redaktur siti.rahma@… (cookie $TEMP/redaktur.txt)
+HTTP/1.1 307 Temporary Redirect
+location: /tanpa-akses
+HTTP_CODE=307
+
+## redaktur GET /api/staf/pengaturan (pagar API)
+{"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+HTTP_CODE=403
+
+## redaktur PATCH /api/staf/pengaturan
+{"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+HTTP_CODE=403
+
+## tanpa cookie
+HTTP/1.1 307 Temporary Redirect
+location: http://127.0.0.1:3000/login?lanjut=%2Fstaf%2Fpengaturan
+HTTP_CODE=307

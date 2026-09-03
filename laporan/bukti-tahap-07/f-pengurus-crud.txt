@@ -1,0 +1,38 @@
+### f — CRUD pengurus lewat curl.exe (superadmin) — 2026-09-03T17:59Z
+
+## 0. Daftar awal (GET /api/staf/pengurus) — id|nama|tingkat|urutan
+1|Bpk. H. Soedirman|pusat|1
+2|Ibu Hj. Ratna Sari|pusat|2
+3|Ir. Rahmat Siregar|wilayah|1
+4|Dr. Budi Santoso|wilayah|2
+5|Yohanes Rumbiak, S.H.|wilayah|3
+
+## 1. Validasi: POST tingkat wilayah TANPA wilayah_id -> harus 422 WILAYAH_WAJIB
+{"galat":"Pengurus tingkat wilayah wajib memilih wilayah","kode":"WILAYAH_WAJIB"}
+HTTP 422
+
+## 2. POST buat (tingkat wilayah, wilayah_id 13, aktif_sejak 2024) -> harus 201
+{"pengurus":{"id":6,"nama":"Uji Pengurus Sementara","jabatan":"Koordinator Uji","tingkat":"wilayah","wilayah_id":13,"wilayah_nama":"Jawa Barat","foto":null,"deskripsi":"Dibuat oleh uji otomatis Tahap 7.","aktif_sejak":2024,"urutan":99,"aktif":1}}
+HTTP 201
+ID baru = 6
+
+## 3. Unggah foto (POST /api/staf/unggah multipart berkas + tujuan=pengurus) -> harus 201 {jalur:/unggahan/pengurus/...}
+png uji dibuat
+{"jalur":"/unggahan/pengurus/1b51eb6ea1be50c61d9a0c6ad96be0be.png","namaBerkas":"1b51eb6ea1be50c61d9a0c6ad96be0be.png","tipeMime":"image/png","ukuran":548,"lebar":240,"tinggi":240}
+HTTP 201
+jalur = /unggahan/pengurus/1b51eb6ea1be50c61d9a0c6ad96be0be.png
+
+## 4. PATCH ubah (jabatan + foto hasil unggah) -> harus 200, jabatan & foto berubah
+{"pengurus":{"id":6,"nama":"Uji Pengurus Sementara","jabatan":"Koordinator Uji (Diubah)","tingkat":"wilayah","wilayah_id":13,"wilayah_nama":"Jawa Barat","foto":"/unggahan/pengurus/1b51eb6ea1be50c61d9a0c6ad96be0be.png","deskripsi":"Dibuat oleh uji otomatis Tahap 7.","aktif_sejak":2024,"urutan":99,"aktif":1}}
+HTTP 200
+
+## 5. Pagar peran: pimpinan_wilayah POST -> 403; tanpa sesi GET -> 401
+{"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+HTTP 403
+{"galat":"Belum masuk","kode":"BELUM_MASUK"}
+HTTP 401
+
+## 6. Tampilan tabel staf memuat baris baru (render superadmin)
+ditemukan di tabel: Uji Pengurus Sementara
+
+# Catatan: nomor 7–9 (DELETE, daftar akhir, /struktur akhir) ada di k-urutan-struktur.txt karena dijalankan setelah uji urutan dalam skrip yang sama.

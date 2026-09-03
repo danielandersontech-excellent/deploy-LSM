@@ -21,7 +21,7 @@ export default async function LayoutStaf({ children }) {
   const menu = menuUntukPeran(pengguna.peran);
   const aksi = aksiUtamaUntuk(pengguna.peran);
   return (
-    <KerangkaStaf pengguna={{ id: pengguna.id, nama: pengguna.nama, peran: pengguna.peran }} menu={menu} hrefAksiUtama={aksi.href} labelAksiUtama={aksi.label}>
+    <KerangkaStaf pengguna={{ id: pengguna.id, nama: pengguna.nama, peran: pengguna.peran }} menu={menu} hrefAksiUtama={aksi.href} labelAksiUtama={aksi.label} wajibGantiSandi={Number(pengguna.wajib_ganti_sandi) === 1}>
       {children}
     </KerangkaStaf>
   );

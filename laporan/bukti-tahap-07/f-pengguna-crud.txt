@@ -1,0 +1,48 @@
+# Uji f — CRUD /api/staf/pengguna (superadmin), 2026-09-03T18:03:35Z UTC. Sandi tidak dicetak.
+## 1. POST buat pengguna uji (peran penulis) -> harus 201
+{"pengguna":{"id":33,"nama":"Pengguna Uji Tahap 7","email":"uji.pengguna.t7@warkopnusantara.id","peran":"penulis","wilayah_id":null,"wilayah_nama":null,"aktif":1,"token_version":0,"wajib_ganti_sandi":0,"terakhir_masuk":null,"dibuat_pada":"2026-09-03T18:03:36.000Z","diperbarui_pada":"2026-09-03T18:03:36.000Z"}}
+HTTP 201
+-> id pengguna uji = 33
+## 2. GET /api/staf/pengguna/33 -> harus 200, tanpa kata_sandi_hash
+{"pengguna":{"id":33,"nama":"Pengguna Uji Tahap 7","email":"uji.pengguna.t7@warkopnusantara.id","peran":"penulis","wilayah_id":null,"wilayah_nama":null,"aktif":1,"token_version":0,"wajib_ganti_sandi":0,"terakhir_masuk":null,"dibuat_pada":"2026-09-03T18:03:36.000Z","diperbarui_pada":"2026-09-03T18:03:36.000Z"}}
+HTTP 200
+## 3. PATCH ubah nama + peran redaktur -> harus 200
+{"pengguna":{"id":33,"nama":"Pengguna Uji Tahap 7 (Diubah)","email":"uji.pengguna.t7@warkopnusantara.id","peran":"redaktur","wilayah_id":null,"wilayah_nama":null,"aktif":1,"token_version":1,"wajib_ganti_sandi":0,"terakhir_masuk":null,"dibuat_pada":"2026-09-03T18:03:36.000Z","diperbarui_pada":"2026-09-03T18:03:36.000Z"}}
+HTTP 200
+## 3b. PATCH peran pimpinan_wilayah tanpa wilayah -> harus 422 WILAYAH_WAJIB
+{"galat":"Pimpinan wilayah wajib memiliki wilayah","kode":"WILAYAH_WAJIB"}
+HTTP 422
+## 3c. GET daftar: kemunculan email uji (harus 1)
+1
+## 4. Superadmin POST /reset-sandi (kata_sandi_baru) -> harus 200, wajibGantiSandi=true
+{"pengguna":{"id":33,"nama":"Pengguna Uji Tahap 7 (Diubah)","email":"uji.pengguna.t7@warkopnusantara.id","peran":"redaktur","wilayah_id":null,"wilayah_nama":null,"aktif":1,"token_version":3,"wajib_ganti_sandi":1,"terakhir_masuk":"2026-09-03T18:03:37.000Z","dibuat_pada":"2026-09-03T18:03:36.000Z","diperbarui_pada":"2026-09-03T18:03:39.000Z"},"wajibGantiSandi":true}
+HTTP 200
+## 4b. reset-sandi dengan sandi lemah -> harus 422 SANDI_LEMAH
+{"galat":"Kata sandi minimal 10 karakter","kode":"SANDI_LEMAH"}
+HTTP 422
+## 5. Login pengguna uji dengan sandi LAMA -> harus 401; dengan sandi BARU (cookie C) -> harus 200
+sandi lama: HTTP 401
+{"pengguna":{"id":33,"nama":"Pengguna Uji Tahap 7 (Diubah)","email":"uji.pengguna.t7@warkopnusantara.id","peran":"redaktur","wilayah_id":null},"tujuan":"/staf/dashboard"}
+sandi baru: HTTP 200
+## 6. GET /api/staf/pengguna/33 -> wajib_ganti_sandi harus 1
+"wajib_ganti_sandi":1
+## 6b. Cookie C: GET /staf/dashboard -> 200 (KerangkaStaf mengalihkan ke /staf/ganti-sandi di klien); GET /staf/ganti-sandi -> 200 dengan teks 'Wajib Ganti Kata Sandi'
+GET /staf/dashboard: HTTP 200
+GET /staf/ganti-sandi: HTTP 200
+  teks "Wajib Ganti Kata Sandi" ditemukan (baris): 1
+## 7. Cookie C: POST /api/staf/ganti-sandi {kata_sandi_lama, kata_sandi_baru} -> harus 200
+{"diganti":true}
+HTTP 200
+## 8. GET /api/staf/pengguna/33 -> wajib_ganti_sandi harus 0
+"wajib_ganti_sandi":0
+## 8b. Cookie C (token sebelum ganti) -> harus 401 (token_version naik); cookie D (baru dari ganti-sandi) -> 200
+cookie C: HTTP 401
+cookie D: HTTP 200
+## 9. DELETE /api/staf/pengguna/33 -> harus 200; GET ulang -> 404
+{"dihapus":true,"id":33}
+HTTP 200
+{"galat":"Pengguna tidak ditemukan","kode":"TIDAK_DITEMUKAN"}
+HTTP 404
+## 10. DELETE pengguna yang punya artikel (id 2, penulis seed) -> harus 409 PUNYA_DATA (UI menyarankan nonaktifkan)
+{"galat":"Pengguna memiliki artikel/riwayat sehingga tidak dapat dihapus — nonaktifkan akunnya saja","kode":"PUNYA_DATA"}
+HTTP 409

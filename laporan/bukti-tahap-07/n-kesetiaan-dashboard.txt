@@ -1,0 +1,47 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/dashboard_staff_warkop/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-dashboard-superadmin.html
+----------------------------------------------------------------
+Kelas desain       : 151
+Ditemukan di render: 135  (89%)
+Kelas hilang       : 16
+  bg-on-secondary-fixed-variant
+  bg-outline
+  bg-tertiary-fixed
+  border-secondary-fixed-dim
+  border-tertiary-fixed-dim
+  gap-1.5
+  h-1.5
+  h-screen
+  hover:bg-surface-container
+  ml-64
+  px-3
+  py-1
+  text-[12px]
+  text-on-tertiary-fixed-variant
+  w-1.5
+  w-1/6
+----------------------------------------------------------------
+Token desain dipakai desain : 33
+Token hilang di render      : 3  -> on-tertiary-fixed-variant, surface-container, tertiary-fixed
+----------------------------------------------------------------
+Teks tampak desain : 16   hilang di render: 8
+  Buat Laporan Baru
+  Lihat Semua arrow_forward
+  Staff Warkop
+  dashboard Dashboard
+  edit_document Kelola Artikel
+  gavel Kelola Pengaduan
+  logout Keluar
+  settings Pengaturan
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

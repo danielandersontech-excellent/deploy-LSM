@@ -1,0 +1,53 @@
+UJI f — RENDER /staf/galeri PER PERAN (Kelola Galeri) — 2026-09-03 18:04 UTC
+Cara: login lewat POST /api/auth/login (cookie httpOnly) lalu curl.exe -b <cookie> http://127.0.0.1:3000/staf/galeri
+Akun: superadmin (SEED_ADMIN_*), redaktur siti.rahma@…, pimpinan_wilayah rahmat.siregar@… (wil 3), penulis budi.santoso@…, verifikator siti.aminah@… (sandi SEED_STAF_PASSWORD; nilai tidak dicetak)
+
+Kode HTTP:
+  superadmin        200
+  redaktur          200
+  pimpinan_wilayah  200 (baca-saja)
+  penulis           307 -> http://127.0.0.1:3000/tanpa-akses
+  verifikator       307 -> http://127.0.0.1:3000/tanpa-akses
+
+Isi render (grep pada HTML):
+== admin
+  ukuran render: 62666 byte
+  title: <title>Kelola Galeri · WARKOP NUSANTARA</title>
+  h2 'Kelola Galeri': 1
+  tombol 'Tambah Dokumentasi': 1
+  <article> kartu grid: 6 (DB: 6 baris galeri)
+  tombol ubah (aria-label 'Ubah dokumentasi …'): 6
+  tombol hapus (aria-label 'Hapus dokumentasi …'): 6
+  lencana kategori: 1 Audiensi Publik;3 Investigasi Lapangan;2 Sosialisasi;
+  kartu video (Item 3: bg-primary/70 + tautan putar): aria-label="Putar video: Kampanye Hak Lapor Warga" 
+  ikon bocor sebagai teks (dashboard|edit_document|gavel|settings|logout|play_arrow|edit|delete|event|location_on|add_photo_alternate): 0
+== redaktur
+  ukuran render: 60361 byte
+  title: <title>Kelola Galeri · WARKOP NUSANTARA</title>
+  h2 'Kelola Galeri': 1
+  tombol 'Tambah Dokumentasi': 1
+  <article> kartu grid: 6 (DB: 6 baris galeri)
+  tombol ubah (aria-label 'Ubah dokumentasi …'): 6
+  tombol hapus (aria-label 'Hapus dokumentasi …'): 6
+  lencana kategori: 1 Audiensi Publik;3 Investigasi Lapangan;2 Sosialisasi;
+  kartu video (Item 3: bg-primary/70 + tautan putar): aria-label="Putar video: Kampanye Hak Lapor Warga" 
+  ikon bocor sebagai teks (dashboard|edit_document|gavel|settings|logout|play_arrow|edit|delete|event|location_on|add_photo_alternate): 0
+== pimpinan
+  ukuran render: 52396 byte
+  title: <title>Kelola Galeri · WARKOP NUSANTARA</title>
+  h2 'Kelola Galeri': 1
+  tombol 'Tambah Dokumentasi': 0
+  <article> kartu grid: 6 (DB: 6 baris galeri)
+  tombol ubah (aria-label 'Ubah dokumentasi …'): 0
+  tombol hapus (aria-label 'Hapus dokumentasi …'): 0
+  lencana kategori: 1 Audiensi Publik;3 Investigasi Lapangan;2 Sosialisasi;
+  kartu video (Item 3: bg-primary/70 + tautan putar): aria-label="Putar video: Kampanye Hak Lapor Warga" 
+  ikon bocor sebagai teks (dashboard|edit_document|gavel|settings|logout|play_arrow|edit|delete|event|location_on|add_photo_alternate): 0
+
+Contoh kartu pertama (superadmin):
+<article class="md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-lg border border-tertiary-fixed-dim bg-surface">
+aria-label="Ubah dokumentasi Dialog Terbuka: Transparansi Dana Desa"
+aria-label="Ubah dokumentasi Pengecekan Proyek Irigasi"
+aria-label="Ubah dokumentasi Kampanye Hak Lapor Warga"
+
+Keadaan kosong: cabang item.length === 0 -> <KeadaanKosong ikon="image" judul="Belum ada dokumentasi" …/> (tidak diuji dengan mengosongkan tabel — seed 6 baris dibiarkan agar modul lain tidak terganggu; uji p menyeluruh dilakukan induk).

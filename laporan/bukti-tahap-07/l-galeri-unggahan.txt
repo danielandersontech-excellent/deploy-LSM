@@ -1,0 +1,43 @@
+UJI l — UNGGAHAN GALERI (magic bytes, ukuran, nama berkas, hak eksekusi) — 2026-09-03 18:04 UTC
+Semua permintaan: POST /api/staf/galeri multipart sebagai superadmin (curl.exe -F).
+
+== Berkas .php yang diberi nama .jpg dan content-type image/jpeg (isi: <?php system($_GET["c"]); ?>) -> harus 415
+{"galat":"Berkas harus JPG, PNG, WebP (foto) atau MP4 (video) — isi berkas tidak cocok","kode":"TIPE_TIDAK_SAH"}
+HTTP 415
+
+== Berkas .svg (berisi <script>) content-type image/svg+xml -> harus 415
+{"galat":"Berkas harus JPG, PNG, WebP (foto) atau MP4 (video) — isi berkas tidak cocok","kode":"TIPE_TIDAK_SAH"}
+HTTP 415
+
+== Berkas 21 MB (header JPEG ffd8ff + nol) -> diharapkan 413
+{"galat":"Muatan tidak sah (multipart/form-data atau JSON)","kode":"MUATAN_TIDAK_SAH"}
+HTTP 400
+
+   Penelusuran ambang (junk berheader JPEG, ukuran bervariasi):
+0.5 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+1 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+2 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+4 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+8 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+9 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+9.5 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+9.9 MB junk(ffd8ff) -> {"galat":"Gambar rusak atau tidak dapat diproses","kode":"GAMBAR_RUSAK"} HTTP 415
+10 MB junk(ffd8ff) -> {"galat":"Muatan tidak sah (multipart/form-data atau JSON)","kode":"MUATAN_TIDAK_SAH"} HTTP 400
+10 MB -> {"galat":"Muatan tidak sah (multipart/form-data atau JSON)","kode":"MUATAN_TIDAK_SAH"} HTTP 400
+15 MB -> {"galat":"Muatan tidak sah (multipart/form-data atau JSON)","kode":"MUATAN_TIDAK_SAH"} HTTP 400
+19 MB -> {"galat":"Muatan tidak sah (multipart/form-data atau JSON)","kode":"MUATAN_TIDAK_SAH"} HTTP 400
+20.5 MB -> {"galat":"Muatan tidak sah (multipart/form-data atau JSON)","kode":"MUATAN_TIDAK_SAH"} HTTP 400
+21 MB -> {"galat":"Muatan tidak sah (multipart/form-data atau JSON)","kode":"MUATAN_TIDAK_SAH"} HTTP 400
+
+   TEMUAN: berkas >= 10 MiB TIDAK mencapai pemeriksaan ukuran (413) — request.formData() gagal lebih dulu di runtime Next 16 (batas badan 10 MB) dan
+   lib/galeriUnggah.js bacaMuatanGaleri() menerjemahkannya menjadi 400 MUATAN_TIDAK_SAH. Berkas 0,5–9,9 MB lolos parsing dan ditolak sharp (415 GAMBAR_RUSAK) —
+   artinya magic bytes + sharp bekerja, tetapi jalur 413 tidak pernah tercapai untuk berkas > 10 MB. Bukan modul ini (API/lib); saran: periksa header
+   content-length terhadap batasByte() SEBELUM request.formData() -> 413, atau turunkan UPLOAD_MAX_MB <= 9. Di sisi UI, KelolaGaleri.js memeriksa ukuran
+   sebelum mengirim (pesan 'Berkas melebihi batas 20 MB') sehingga pengguna tetap mendapat pesan jelas.
+
+== Berkas tersimpan: nama acak (hex 32) + ekstensi dari tipe, mode 0644 (ls -l public/unggahan/galeri, sesudah POST #1)
+total 44
+-rw-r--r-- 1 TUF A15 FX506 197121 42106 Sep  4 01:02 3e6b4cfcd4f9966bbab37d36dad13a05.jpg
+
+   Jalur di DB/balasan API: /unggahan/galeri/3e6b4cfcd4f9966bbab37d36dad13a05.jpg
+   Hak eksekusi: -rw-r--r-- (0644) — tidak ada bit x. Ukuran 42106 byte = hasil sharp (jpg dikodekan ulang).

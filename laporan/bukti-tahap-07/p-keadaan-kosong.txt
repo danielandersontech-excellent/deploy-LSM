@@ -1,0 +1,20 @@
+# Uji p — keadaan kosong seluruh modul (2026-09-03T18:08:21Z)
+sebelum: pengurus=5 program=3 galeri=6 artikel=12 pengaduan=24 audit_log=259
+setelah DELETE: pengurus=0 program=0 galeri=0 artikel=0 pengaduan=0 audit_log=0
+  /staf/dashboard -> HTTP 200 | KeadaanKosong: 2 | judul: Belum ada data|Belum ada data| | galat: 0
+  /staf/artikel -> HTTP 200 | KeadaanKosong: 1 | judul: Belum ada artikel| | galat: 0
+  /staf/pengaduan -> HTTP 200 | KeadaanKosong: 1 | judul: Belum ada pengaduan| | galat: 0
+  /staf/pengurus -> HTTP 200 | KeadaanKosong: 1 | judul: Belum ada pengurus| | galat: 0
+  /staf/program -> HTTP 200 | KeadaanKosong: 1 | judul: Belum ada program| | galat: 0
+  /staf/galeri -> HTTP 200 | KeadaanKosong: 1 | judul: Belum ada dokumentasi| | galat: 0
+  /staf/pengguna -> HTTP 200 | KeadaanKosong: 0 | judul:  | galat: 0
+  /staf/pengaturan -> HTTP 200 | KeadaanKosong: 0 | judul:  | galat: 0
+  publik / -> HTTP 200 | KeadaanKosong: 1 | galat: 0
+  publik /berita -> HTTP 200 | KeadaanKosong: 2 | galat: 0
+  publik /struktur -> HTTP 200 | KeadaanKosong: 2 | galat: 0
+  publik /program -> HTTP 200 | KeadaanKosong: 1 | galat: 0
+  publik /galeri -> HTTP 200 | KeadaanKosong: 1 | galat: 0
+  publik /lacak?nomor=WRP-009018 -> HTTP 200 | KeadaanKosong: 1 | galat: 0
+$ node scripts/seed.js (pulihkan)
+[seed] jumlah baris: wilayah=39 users=7 kategori_artikel=5 artikel=12 tag=8 artikel_tag=11 pengaduan=3 pengaduan_riwayat=8 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.

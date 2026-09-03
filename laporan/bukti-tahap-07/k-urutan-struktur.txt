@@ -1,0 +1,68 @@
+# k — Urutan pengurus di ruang staf -> /struktur publik (skrip yang sama dengan f-pengurus-crud.txt; ID 6 = pengurus uji sementara) — 2026-09-03T18:00Z
+# Mekanisme UI: tombol ▲▼ per baris di KelolaPengurus.js mengirim PATCH /api/staf/pengurus/urutan {urutan:[id…]} — di sini dipanggil langsung lewat curl.exe dengan muatan yang persis sama.
+
+### k — Urutan pengurus -> /struktur
+
+## k1. Urutan /struktur SEBELUM (alt foto berurutan; ID 6 masih urutan 99 = paling akhir wilayah)
+     1	alt="Foto Bpk. H. Soedirman"
+     2	alt="Foto Ibu Hj. Ratna Sari"
+     3	alt="Foto Ir. Rahmat Siregar"
+     4	alt="Foto Dr. Budi Santoso"
+     5	alt="Foto Yohanes Rumbiak, S.H."
+     6	alt="Foto Uji Pengurus Sementara"
+
+## k2. PATCH /api/staf/pengurus/urutan — pengurus baru dipindah ke posisi PERTAMA tingkat wilayah
+muatan: {"urutan":[1,2,6,3,4,5]}
+tersimpan=6
+ 1|Bpk. H. Soedirman|pusat|urutan 1
+ 2|Ibu Hj. Ratna Sari|pusat|urutan 2
+ 6|Uji Pengurus Sementara|wilayah|urutan 3
+ 3|Ir. Rahmat Siregar|wilayah|urutan 4
+ 4|Dr. Budi Santoso|wilayah|urutan 5
+ 5|Yohanes Rumbiak, S.H.|wilayah|urutan 6
+HTTP 200
+
+
+## k3. Urutan /struktur SESUDAH (pengurus uji harus muncul pertama di bagian regional, tanpa cache)
+     1	alt="Foto Bpk. H. Soedirman"
+     2	alt="Foto Ibu Hj. Ratna Sari"
+     3	alt="Foto Uji Pengurus Sementara"
+     4	alt="Foto Ir. Rahmat Siregar"
+     5	alt="Foto Dr. Budi Santoso"
+     6	alt="Foto Yohanes Rumbiak, S.H."
+
+## k4. Validasi urutan: id asing -> 422; daftar ganda -> 422
+{"galat":"id tidak dikenal: 999999","kode":"ID_TIDAK_DIKENAL"}
+HTTP 422
+{"galat":"urutan harus daftar id pengurus yang unik","kode":"URUTAN_TIDAK_SAH"}
+HTTP 422
+
+## k5. Pulihkan urutan semula (pusat lalu wilayah seperti daftar awal, pengurus uji di akhir)
+PATCH urutan pulih -> HTTP 200
+
+## 7. DELETE pengurus uji -> 200; GET ulang -> 404
+{"dihapus":true,"id":6}
+HTTP 200
+{"galat":"Pengurus tidak ditemukan","kode":"TIDAK_DITEMUKAN"}
+HTTP 404
+
+## 8. Daftar akhir (harus sama dengan awal: 5 baris, urutan 1..2 pusat, 1..3 wilayah)
+1|Bpk. H. Soedirman|pusat|1
+2|Ibu Hj. Ratna Sari|pusat|2
+3|Ir. Rahmat Siregar|wilayah|3
+4|Dr. Budi Santoso|wilayah|4
+5|Yohanes Rumbiak, S.H.|wilayah|5
+
+## 9. /struktur akhir
+     1	alt="Foto Bpk. H. Soedirman"
+     2	alt="Foto Ibu Hj. Ratna Sari"
+     3	alt="Foto Ir. Rahmat Siregar"
+     4	alt="Foto Dr. Budi Santoso"
+     5	alt="Foto Yohanes Rumbiak, S.H."
+berkas unggahan uji dihapus: public/unggahan/pengurus/1b51eb6ea1be50c61d9a0c6ad96be0be.png
+
+## k6. Pemulihan nilai urutan seed (API urutan menomori ulang 1..n global; nilai seed wilayah 1..3 dikembalikan lewat PATCH per id):
+PATCH id 3 urutan=1 -> HTTP 200
+PATCH id 4 urutan=2 -> HTTP 200
+PATCH id 5 urutan=3 -> HTTP 200
+Daftar akhir: 1|pusat|1, 2|pusat|2, 3|wilayah|1, 4|wilayah|2, 5|wilayah|3 (= seed)

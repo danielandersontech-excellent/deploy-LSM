@@ -1,0 +1,10 @@
+# Uji a — angka kartu dashboard superadmin vs kueri manual (2026-09-03T17:59:19.670Z)
+# Kueri manual: SELECT COUNT(*) FROM artikel; ... WHERE dibuat_pada >= awal bulan WIB; SELECT COUNT(*) FROM pengaduan WHERE status='baru' AND dihapus_pada IS NULL; ... status='selesai' ...
+
+kartu            | manual | hitungStatistikDashboard (lib) | sama?
+totalArtikel     |     12 |                             12 | YA
+artikelBulanIni  |      0 |                              0 | YA
+pengaduanMasuk   |      5 |                              5 | YA
+pengaduanSelesai |      2 |                              2 | YA
+
+HASIL: SEMUA SAMA

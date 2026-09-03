@@ -1,0 +1,86 @@
+# n — Uji kesetiaan INFORMATIF Kelola Pengurus vs cetakan kelola_artikel_admin/code.html (layar pengurus TIDAK ada di ZIP; REFERENSI 18.4) — 2026-09-03T18:00Z
+# Render: /staf/pengurus sebagai superadmin. Target wajib: cacatExport semua 0.
+
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/kelola_artikel_admin/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-pengurus-admin.html
+----------------------------------------------------------------
+Kelas desain       : 129
+Ditemukan di render: 95  (74%)
+Kelas hilang       : 34
+  -translate-y-1/2
+  absolute
+  bg-opacity-20
+  bg-surface-container-highest
+  bg-surface-variant
+  flex-shrink-0
+  focus:border-secondary-fixed-dim
+  focus:ring-1
+  focus:ring-secondary-fixed-dim
+  h-screen
+  hover:bg-surface-container-highest
+  hover:text-primary
+  justify-center
+  left-3
+  mb-1
+  mb-6
+  md:w-1/2
+  ml-64
+  mt-4
+  mt-auto
+  no
+  p-4
+  pl-10
+  pr-4
+  pt-4
+  relative
+  rounded-md
+  shadows
+  space-x-1
+  space-y-2
+  text-on-surface
+  top-1/2
+  whitespace-nowrap
+  z-10
+----------------------------------------------------------------
+Token desain dipakai desain : 28
+Token hilang di render      : 3  -> on-surface, surface-container-highest, surface-variant
+----------------------------------------------------------------
+Teks tampak desain : 19   hilang di render: 16
+  Draft
+  Filter Status:
+  Judul Artikel
+  Kategori
+  Penulis
+  Published
+  Semua Status
+  Staff Warkop
+  Tanggal Publikasi
+  add Buat Laporan Baru
+  dashboard Dashboard
+  edit_document Kelola Artikel
+  gavel Kelola Pengaduan
+  logout Keluar
+  post_add Tulis Artikel Baru
+  settings Pengaturan
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+
+----------------------------------------------------------------
+ALASAN KELAS HILANG (34) — dikelompokkan
+(i) Sidebar kanonik (hanya ada di <nav>/<body> code.html, dirender layout staf): h-screen, ml-64 (main desain; layout memakai md:ml-64), mt-auto, pt-4, mt-4, space-y-2, flex-shrink-0, z-10, justify-center (tombol CTA sidebar), mb-1 (h1 sidebar), text-on-surface (nav), "no", "shadows" (kata dari atribut class rusak nav: "no shadows").
+(ii) Bagian cetakan yang TIDAK dipakai modul pengurus (KEPUTUSAN BARU): kotak Filter & Search (tidak ada pencarian/filter status untuk 5–20 baris pengurus; seluruh baris ditampilkan): relative, absolute, left-3, top-1/2, -translate-y-1/2, pl-10, pr-4, rounded-md, focus:ring-1, focus:ring-secondary-fixed-dim, focus:border-secondary-fixed-dim, md:w-1/2, whitespace-nowrap, mb-6, p-4 — CATATAN: mb-6/p-4/relative/absolute/left-3/focus:border-secondary-fixed-dim justru DIPAKAI di formulir inline (kelas editor_artikel_admin) tetapi formulir hanya dirender setelah tombol "Tambah Pengurus" diklik (state klien), sehingga tidak ada di HTML server.
+    Paginasi kaki tabel (tidak dipaginasi): space-x-1, hover:bg-surface-container-highest, bg-surface-container-highest + bg-opacity-20 (baris ke-3 desain, varian .map()).
+(iii) Ikon -> <Ikon>: material-symbols-outlined (diabaikan alat).
+(iv) Varian baris/lencana: bg-surface-variant (lencana "Draft"/Nonaktif — seluruh pengurus seed aktif sehingga hanya lencana Aktif yang dirender; kelasnya ada di komponen), hover:text-primary (tombol Preview — pengurus tidak punya halaman detail; tombol Edit hover:text-secondary & Delete hover:text-error tetap dipakai).
+(v)/(vi) Teks tampak hilang: sidebar (Staff Warkop, Dashboard, Kelola Artikel, Kelola Pengaduan, Buat Laporan Baru, Pengaturan, Keluar) = sidebar kanonik; Judul Artikel/Kategori/Penulis/Tanggal Publikasi/Published/Draft/Filter Status/Semua Status/Tulis Artikel Baru = label modul artikel yang diganti label modul pengurus (Nama/Jabatan/Tingkat/Wilayah/Aktif Sejak/Urutan/Aktif/Tambah Pengurus).
+Token desain hilang: on-surface (dipakai di label checkbox formulir — hanya setelah formulir dibuka), surface-container-highest & surface-variant (lihat ii/iv).

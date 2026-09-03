@@ -1,0 +1,103 @@
+# Uji g — 2026-09-03T18:00:43.982Z — cookie superadmin (email disamarkan), curl.exe
+
+## Langkah 0 — nilai awal (GET /api/staf/pengaturan)
+  [OK] GET status 200
+  daftarPutih (13): statistik_laporan_ditangani, statistik_provinsi_tercover, statistik_tahun_mengawasi, kontak_email, kontak_hotline, kontak_alamat_gedung, kontak_alamat_jalan, kontak_alamat_kota, visi, misi, teks_kebijakan_privasi, teks_pedoman_komunitas, teks_faq
+  [OK] definisi ⇔ daftarPutih konsisten (satu sumber)
+  statistik_laporan_ditangani [angka/statistik] = "12000"
+  statistik_provinsi_tercover [angka/statistik] = "38"
+  statistik_tahun_mengawasi [angka/statistik] = "15"
+  kontak_email [teks/kontak] = "pengaduan@warkopnusantara.id"
+  kontak_hotline [teks/kontak] = "0800-1-WARKOP (927567)"
+  kontak_alamat_gedung [teks/kontak] = "Gedung Aspirasi Rakyat"
+  kontak_alamat_jalan [teks/kontak] = "Jl. Kebenaran No. 1, Jakarta Pusat"
+  kontak_alamat_kota [teks/kontak] = "DKI Jakarta, 10110"
+  visi [teks_panjang/profil] = "Terwujudnya tata kelola pemerintahan dan pelayanan publik yang tran…"
+  misi [teks_panjang/profil] = "1. Menjadi wadah aspirasi rakyat yang aman dan terpercaya.\n2. Melak…"
+  teks_kebijakan_privasi [teks_panjang/halaman_statis] = "WARKOP NUSANTARA menghormati privasi setiap pelapor dan pengunjung.…"
+  teks_pedoman_komunitas [teks_panjang/halaman_statis] = "Setiap laporan yang disampaikan melalui kanal WARKOP NUSANTARA diha…"
+  teks_faq [teks_panjang/halaman_statis] = "Apakah saya bisa melapor tanpa menyebut identitas?\nBisa. Pilih \"Sem…"
+
+## Langkah 1 — simpan SETIAP kunci satu per satu (PATCH satu kunci per permintaan)
+  [OK] PATCH {statistik_laporan_ditangani} -> 200 tersimpan=["statistik_laporan_ditangani"] nilai="12001"
+  [OK] PATCH {statistik_provinsi_tercover} -> 200 tersimpan=["statistik_provinsi_tercover"] nilai="39"
+  [OK] PATCH {statistik_tahun_mengawasi} -> 200 tersimpan=["statistik_tahun_mengawasi"] nilai="16"
+  [OK] PATCH {kontak_email} -> 200 tersimpan=["kontak_email"] nilai="uji-pengaduan@warkopnusantara.id"
+  [OK] PATCH {kontak_hotline} -> 200 tersimpan=["kontak_hotline"] nilai="0800-1-WARKOP (927567) (uji)"
+  [OK] PATCH {kontak_alamat_gedung} -> 200 tersimpan=["kontak_alamat_gedung"] nilai="Gedung Aspirasi Rakyat (uji)"
+  [OK] PATCH {kontak_alamat_jalan} -> 200 tersimpan=["kontak_alamat_jalan"] nilai="Jl. Kebenaran No. 1, Jakarta Pusat (uji)"
+  [OK] PATCH {kontak_alamat_kota} -> 200 tersimpan=["kontak_alamat_kota"] nilai="DKI Jakarta, 10110 (uji)"
+  [OK] PATCH {visi} -> 200 tersimpan=["visi"] nilai="Terwujudnya tata kelola pemerintahan dan pelayanan publik yang tran…"
+  [OK] PATCH {misi} -> 200 tersimpan=["misi"] nilai="1. Menjadi wadah aspirasi rakyat yang aman dan terpercaya.\n2. Melak…"
+  [OK] PATCH {teks_kebijakan_privasi} -> 200 tersimpan=["teks_kebijakan_privasi"] nilai="WARKOP NUSANTARA menghormati privasi setiap pelapor dan pengunjung.…"
+  [OK] PATCH {teks_pedoman_komunitas} -> 200 tersimpan=["teks_pedoman_komunitas"] nilai="Setiap laporan yang disampaikan melalui kanal WARKOP NUSANTARA diha…"
+  [OK] PATCH {teks_faq} -> 200 tersimpan=["teks_faq"] nilai="Apakah saya bisa melapor tanpa menyebut identitas?\nBisa. Pilih \"Sem…"
+
+## Langkah 2 — muat ulang: GET API + render /staf/pengaturan
+  [OK] GET status 200
+  [OK] API statistik_laporan_ditangani = "12001"
+  [OK] API statistik_provinsi_tercover = "39"
+  [OK] API statistik_tahun_mengawasi = "16"
+  [OK] API kontak_email = "uji-pengaduan@warkopnusantara.id"
+  [OK] API kontak_hotline = "0800-1-WARKOP (927567) (uji)"
+  [OK] API kontak_alamat_gedung = "Gedung Aspirasi Rakyat (uji)"
+  [OK] API kontak_alamat_jalan = "Jl. Kebenaran No. 1, Jakarta Pusat (uji)"
+  [OK] API kontak_alamat_kota = "DKI Jakarta, 10110 (uji)"
+  [OK] API visi = "Terwujudnya tata kelola pemerintahan dan pelayanan publik yang tran…"
+  [OK] API misi = "1. Menjadi wadah aspirasi rakyat yang aman dan terpercaya.\n2. Melak…"
+  [OK] API teks_kebijakan_privasi = "WARKOP NUSANTARA menghormati privasi setiap pelapor dan pengunjung.…"
+  [OK] API teks_pedoman_komunitas = "Setiap laporan yang disampaikan melalui kanal WARKOP NUSANTARA diha…"
+  [OK] API teks_faq = "Apakah saya bisa melapor tanpa menyebut identitas?\nBisa. Pilih \"Sem…"
+  render /staf/pengaturan: 60120 byte, judul: Pengaturan · WARKOP NUSANTARA
+  [OK] render memuat statistik_laporan_ditangani = "12001" (atribut value)
+  [OK] render memuat statistik_provinsi_tercover = "39" (atribut value)
+  [OK] render memuat statistik_tahun_mengawasi = "16" (atribut value)
+  [OK] render memuat kontak_email = "uji-pengaduan@warkopnusantara.id" (atribut value)
+  [OK] render memuat kontak_hotline = "0800-1-WARKOP (927567) (uji)" (atribut value)
+  [OK] render memuat kontak_alamat_gedung = "Gedung Aspirasi Rakyat (uji)" (atribut value)
+  [OK] render memuat kontak_alamat_jalan = "Jl. Kebenaran No. 1, Jakarta Pusat (uji)" (atribut value)
+  [OK] render memuat kontak_alamat_kota = "DKI Jakarta, 10110 (uji)" (atribut value)
+  [OK] render memuat visi = "Terwujudnya tata kelola pemerintahan dan pelayanan publik yang tran…" (isi textarea)
+  [OK] render memuat misi = "1. Menjadi wadah aspirasi rakyat yang aman dan terpercaya.\n2. Melak…" (isi textarea)
+  [OK] render memuat teks_kebijakan_privasi = "WARKOP NUSANTARA menghormati privasi setiap pelapor dan pengunjung.…" (isi textarea)
+  [OK] render memuat teks_pedoman_komunitas = "Setiap laporan yang disampaikan melalui kanal WARKOP NUSANTARA diha…" (isi textarea)
+  [OK] render memuat teks_faq = "Apakah saya bisa melapor tanpa menyebut identitas?\nBisa. Pilih \"Sem…" (isi textarea)
+
+## Langkah 3 — kembalikan nilai asli (PATCH nilai semula) lalu periksa
+  [OK] PATCH pulihkan 13 kunci -> 200 tersimpan=13
+  [OK] pulih statistik_laporan_ditangani = "12000"
+  [OK] pulih statistik_provinsi_tercover = "38"
+  [OK] pulih statistik_tahun_mengawasi = "15"
+  [OK] pulih kontak_email = "pengaduan@warkopnusantara.id"
+  [OK] pulih kontak_hotline = "0800-1-WARKOP (927567)"
+  [OK] pulih kontak_alamat_gedung = "Gedung Aspirasi Rakyat"
+  [OK] pulih kontak_alamat_jalan = "Jl. Kebenaran No. 1, Jakarta Pusat"
+  [OK] pulih kontak_alamat_kota = "DKI Jakarta, 10110"
+  [OK] pulih visi = "Terwujudnya tata kelola pemerintahan dan pelayanan publik yang tran…"
+  [OK] pulih misi = "1. Menjadi wadah aspirasi rakyat yang aman dan terpercaya.\n2. Melak…"
+  [OK] pulih teks_kebijakan_privasi = "WARKOP NUSANTARA menghormati privasi setiap pelapor dan pengunjung.…"
+  [OK] pulih teks_pedoman_komunitas = "Setiap laporan yang disampaikan melalui kanal WARKOP NUSANTARA diha…"
+  [OK] pulih teks_faq = "Apakah saya bisa melapor tanpa menyebut identitas?\nBisa. Pilih \"Sem…"
+
+## Langkah 4 — kunci TIDAK terdaftar {"warna_tema":"merah"} harus 422 dengan pesan jelas
+  status 422; balasan: {"galat":"Kunci pengaturan 'warna_tema' tidak dikenal. Kunci yang diizinkan: statistik_laporan_ditangani, statistik_provinsi_tercover, statistik_tahun_mengawasi, kontak_email, kontak_hotline, kontak_alamat_gedung, kontak_alamat_jalan, kontak_alamat_kota, visi, misi, teks_kebijakan_privasi, teks_pedoman_komunitas, teks_faq","kode":"KUNCI_TIDAK_SAH"}
+  [OK] status 422
+  [OK] pesan menyebut kunci yang ditolak
+  [OK] pesan menyebut seluruh daftar kunci yang diizinkan
+  [OK] kode = KUNCI_TIDAK_SAH
+  [OK] campuran kunci sah + asing -> 422 (KUNCI_TIDAK_SAH)
+  [OK] GET setelahnya TIDAK memuat warna_tema (tidak disimpan diam-diam)
+  [OK] statistik_tahun_mengawasi tetap 15 (tidak ada simpan sebagian)
+  [OK] render /staf/pengaturan TIDAK memuat warna_tema
+
+## Langkah 5 — tipe salah harus 422
+  {"statistik_tahun_mengawasi":"lima belas"} -> 422: {"galat":"'Tahun mengawasi' harus bilangan bulat (diberi: 'lima belas')","kode":"TIPE_ANGKA"}
+  [OK] angka berisi huruf ditolak 422 TIPE_ANGKA
+  {"kontak_email":"bukan-email"} -> 422: {"galat":"'Email resmi' harus alamat email yang sah","kode":"TIPE_EMAIL"}
+  [OK] email tidak sah ditolak 422 TIPE_EMAIL
+  [OK] {"statistik_provinsi_tercover":"3.5"} -> 422 (TIPE_ANGKA)
+  [OK] {"visi":""} -> 422 (WAJIB)
+  [OK] muatan bukan objek [] -> 422 (MUATAN_TIDAK_SAH)
+  [OK] nilai akhir identik dengan nilai awal (tidak ada efek samping)
+
+# HASIL: SEMUA LULUS

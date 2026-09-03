@@ -1,0 +1,45 @@
+# Uji f — CRUD program lewat curl.exe (2026-09-03T18:01Z)
+
+## 1. POST /api/staf/program (superadmin) — judul: Uji CRUD Program Tahap 7 010119
+{"program":{"id":17,"judul":"Uji CRUD Program Tahap 7 010119","slug":"uji-crud-program-tahap-7-010119","ringkasan":"Ringkasan uji","isi":"Isi uji program.","gambar":"/penampung/program-2.jpg","kategori":"bantuan-hukum","status":"berjalan","wilayah_id":13,"wilayah_nama":"Jawa Barat","mulai_pada":"2026-01-14T17:00:00.000Z","selesai_pada":null,"dibuat_pada":"2026-09-03T18:01:19.000Z"}}
+HTTP 201
+-> id=17
+
+## 2. PATCH /api/staf/program/17 (superadmin) — ubah judul, status selesai, selesai_pada
+{"program":{"id":17,"judul":"Uji CRUD Program Tahap 7 010119 (diubah)","slug":"uji-crud-program-tahap-7-010119-diubah","ringkasan":"Ringkasan uji diubah","isi":"Isi uji program diubah.","gambar":"/penampung/program-2.jpg","kategori":"observasi-kebijakan","status":"selesai","wilayah_id":13,"wilayah_nama":"Jawa Barat","mulai_pada":"2026-01-14T17:00:00.000Z","selesai_pada":"2026-02-28T17:00:00.000Z","dibuat_pada":"2026-09-03T18:01:19.000Z"}}
+HTTP 200
+
+## 2b. PATCH rentang salah (selesai < mulai) -> harus 422
+{"galat":"Tanggal selesai tidak boleh sebelum tanggal mulai","kode":"RENTANG_TIDAK_SAH"}
+HTTP 422
+
+## 3. GET /program (publik, tanpa cookie) memuat judul baru?
+HTTP 200
+kemunculan judul diubah: 1
+kartu berjangkar #program-<slug>: id="program-uji-crud-program-tahap-7-010119-diubah"
+lencana Selesai pada kartu tsb: 0 ikon check_circle di halaman
+
+## 3b. GET /staf/program (superadmin) memuat judul baru + slug + periode?
+judul diubah: 1; slug: title="Slug: uji-crud-program-tahap-7-010119-diubah"; periode: 15 Jan 2026 – 01 Mar 2026
+
+## 4. Pagar API — pimpinan_wilayah: GET boleh (200), POST/PATCH/DELETE 403; penulis: GET 403
+pimpinan GET  : 200
+pimpinan POST : 403
+pimpinan PATCH: 403
+pimpinan DEL  : 403
+penulis  GET  : 403
+tanpa cookie GET: 401
+
+## 5. DELETE /api/staf/program/17 (superadmin)
+{"dihapus":true,"id":17}
+HTTP 200
+
+## 6. Setelah hapus: GET /api/staf/program/17 -> 404; /program publik tidak memuat judul
+GET id: 404
+kemunculan judul di /program publik: 0
+
+CATATAN: pada langkah 3, "0 ikon check_circle" bukan cacat — <Ikon> merender SVG (bukan ligatur teks),
+sehingga nama ikon memang tidak boleh muncul sebagai teks (uji m). Kartu program uji terbukti ada
+(id="program-<slug>") dan judul terbitnya muncul 1x di /program publik tanpa cookie.
+CATATAN: PATCH judul juga memperbarui slug (perilaku lib/db/program perbaruiProgram -> slugUnik);
+jangkar publik /program#program-<slug> ikut berubah bila judul diganti.

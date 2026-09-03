@@ -1,0 +1,55 @@
+# Uji f — render /staf/program per peran (2026-09-03T18:00Z); email disamarkan
+
+## peran: admin
+HTTP 200 Location=
+ukuran: 54558 byte
+judul <title>: <title>Kelola Program · WARKOP NUSANTARA</title>
+h2 Kelola Program: 1
+tombol Tambah Program: 1
+tombol Edit (title="Edit"): 3
+tombol Delete (title="Delete"): 3
+baris program (slug tampil): 3
+lencana Berjalan: 2 ; lencana Selesai: 1
+kebocoran nama ikon sebagai teks (>post_add<|>edit<|>delete<|>visibility<|>pending<|>check_circle<): 0
+
+## peran: redaktur
+HTTP 200 Location=
+ukuran: 52253 byte
+judul <title>: <title>Kelola Program · WARKOP NUSANTARA</title>
+h2 Kelola Program: 1
+tombol Tambah Program: 1
+tombol Edit (title="Edit"): 3
+tombol Delete (title="Delete"): 3
+baris program (slug tampil): 3
+lencana Berjalan: 2 ; lencana Selesai: 1
+kebocoran nama ikon sebagai teks (>post_add<|>edit<|>delete<|>visibility<|>pending<|>check_circle<): 0
+
+## peran: pimpinan
+HTTP 200 Location=
+ukuran: 48554 byte
+judul <title>: <title>Kelola Program · WARKOP NUSANTARA</title>
+h2 Kelola Program: 1
+tombol Tambah Program: 0
+tombol Edit (title="Edit"): 0
+tombol Delete (title="Delete"): 0
+baris program (slug tampil): 3
+lencana Berjalan: 2 ; lencana Selesai: 1
+kebocoran nama ikon sebagai teks (>post_add<|>edit<|>delete<|>visibility<|>pending<|>check_circle<): 0
+
+## peran: penulis
+HTTP 307 Location=http://127.0.0.1:3000/tanpa-akses
+ukuran: 28730 byte
+judul <title>: <title>Kelola Program · WARKOP NUSANTARA</title>
+h2 Kelola Program: 2
+tombol Tambah Program: 0
+tombol Edit (title="Edit"): 0
+tombol Delete (title="Delete"): 0
+baris program (slug tampil): 0
+lencana Berjalan: 0 ; lencana Selesai: 0
+kebocoran nama ikon sebagai teks (>post_add<|>edit<|>delete<|>visibility<|>pending<|>check_circle<): 0
+
+## Uji m — nama ikon sebagai teks di render /staf/program (admin): dashboard|edit_document|gavel|settings|logout|post_add|explore
+jumlah kemunculan >nama<: 0 (harus 0)
+
+## Catatan: peran penulis -> HTTP 307 Location=/tanpa-akses (redirect() Next.js masih mengirim badan HTML kerangka; tabel/tombol tidak ada di dalamnya: baris program 0).
+## Catatan: mode formulir (tambah/ubah) adalah keadaan klien (useState) — tidak dapat direkam lewat curl tanpa peramban; JSX-nya ikut terkompilasi (render daftar sukses = modul sama), alur POST/PATCH/DELETE yang dipanggilnya diuji di f-program-crud.txt.

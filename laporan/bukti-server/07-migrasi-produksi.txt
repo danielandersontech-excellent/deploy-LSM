@@ -1,0 +1,4 @@
+# Migrasi produksi sql/03-users-wajib-ganti-sandi.sql — 2026-09-03T17:56:13Z (via SSH deployer; sandi DB dari env container DB, tidak dicetak)
+ALTER OK
+Field	Type	Null	Key	Default	Extra
+wajib_ganti_sandi	tinyint(1)	NO		0	

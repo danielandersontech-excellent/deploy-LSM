@@ -1,0 +1,29 @@
+# f — Render /staf/pengurus per peran (curl.exe, dev server http://127.0.0.1:3000) — 2026-09-03T18:00Z
+# Akun: superadmin (SEED_ADMIN_*), redaktur siti.rahma, pimpinan_wilayah rahmat.siregar (wil 3), penulis budi.santoso, verifikator siti.aminah; sandi dari .env (disamarkan).
+# Harapan: superadmin/redaktur 200 + tombol kelola; pimpinan_wilayah 200 baca-saja (tanpa Tambah/Aksi); penulis & verifikator 307 -> /tanpa-akses.
+
+== admin: HTTP 200 Location=
+== redaktur: HTTP 200 Location=
+== pimpinan: HTTP 200 Location=
+== penulis: HTTP 307 Location=http://127.0.0.1:3000/tanpa-akses
+== verifikator: HTTP 307 Location=http://127.0.0.1:3000/tanpa-akses
+
+== Isi render (hitungan grep):
+-- admin: title=Kelola Pengurus · WARKOP NUSANTARA | h2 'Kelola Pengurus'=1 | tombol 'Tambah Pengurus'=1 | baris foto=5 | kolom Aksi=1 | tombol naik=5 | tombol turun=5 | lencana Aktif=5 | KeadaanKosong=0 | ikon-sebagai-teks=0 | googleusercontent=0 | href=#: 0
+-- redaktur: title=Kelola Pengurus · WARKOP NUSANTARA | h2 'Kelola Pengurus'=1 | tombol 'Tambah Pengurus'=1 | baris foto=5 | kolom Aksi=1 | tombol naik=5 | tombol turun=5 | lencana Aktif=5 | KeadaanKosong=0 | ikon-sebagai-teks=0 | googleusercontent=0 | href=#: 0
+-- pimpinan: title=Kelola Pengurus · WARKOP NUSANTARA | h2 'Kelola Pengurus'=1 | tombol 'Tambah Pengurus'=0 | baris foto=5 | kolom Aksi=0 | tombol naik=0 | tombol turun=0 | lencana Aktif=5 | KeadaanKosong=0 | ikon-sebagai-teks=0 | googleusercontent=0 | href=#: 0
+
+== Nama pengurus berurutan di tabel (superadmin):
+     1	alt="Foto Bpk. H. Soedirman"
+     2	alt="Foto Ibu Hj. Ratna Sari"
+     3	alt="Foto Ir. Rahmat Siregar"
+     4	alt="Foto Dr. Budi Santoso"
+     5	alt="Foto Yohanes Rumbiak, S.H."
+
+== Cabang KeadaanKosong ada di komponen (grep):
+27://   7. Urutan bawaan pengurus baru = urutan terbesar se-tingkat + 1. Tanpa data -> KeadaanKosong.
+35:import KeadaanKosong from '@/components/ui/KeadaanKosong';
+359:          <KeadaanKosong ikon="person" judul="Belum ada pengurus" keterangan={bolehKelola ? 'Tambahkan pengurus agar tampil di halaman Struktur Organisasi.' : 'Belum ada data pengurus yang dapat ditampilkan.'} />
+
+== Lint:
+eslint 0 galat (2 berkas)

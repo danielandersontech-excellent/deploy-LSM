@@ -22,6 +22,12 @@ try {
   ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && tunggu.has(m.id)) { tunggu.get(m.id)(m); tunggu.delete(m.id); } };
   const kirim = (method, params = {}) => new Promise((r) => { const n = ++id; tunggu.set(n, r); ws.send(JSON.stringify({ id: n, method, params })); });
   await kirim('Emulation.setDeviceMetricsOverride', { width: lebar, height: 1000, deviceScaleFactor: 1, mobile: lebar < 768 });
+  // Env COOKIE="warkop_token=<jwt>" -> disuntik sebelum navigasi (halaman staf berpagar sesi).
+  if (process.env.COOKIE) {
+    const [nama, ...sisa] = process.env.COOKIE.split('=');
+    await kirim('Network.enable');
+    await kirim('Network.setCookie', { name: nama, value: sisa.join('='), url, httpOnly: true, sameSite: 'Lax' });
+  }
   await kirim('Page.enable');
   await kirim('Page.navigate', { url });
   await tidur(4000);

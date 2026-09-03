@@ -1,0 +1,124 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/editor_artikel_admin/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-pengaturan.html
+----------------------------------------------------------------
+Kelas desain       : 165
+Ditemukan di render: 95  (58%)
+Kelas hilang       : 70
+  appearance-none
+  bg-outline-variant
+  bg-secondary-fixed-dim
+  bg-surface-variant
+  bg-tertiary
+  border-0
+  border-dashed
+  border-outline
+  border-t
+  cursor-pointer
+  duration-100
+  flex-wrap
+  focus-within:border-secondary-fixed-dim
+  focus:outline-none
+  font-body-lg
+  font-bold
+  gap-1
+  group
+  h-12
+  h-6
+  h-screen
+  hover:bg-surface-container
+  hover:bg-surface-container-low
+  hover:bg-surface-variant
+  hover:text-on-error-container
+  hover:text-primary
+  inline-flex
+  justify-center
+  leading-none
+  leading-relaxed
+  light
+  max-w-[1600px]
+  max-w-[720px]
+  mb-2
+  mb-3
+  min-h-[200px]
+  min-h-[500px]
+  min-w-[100px]
+  ml-64
+  mt-4
+  mt-auto
+  mx-1
+  p-0
+  p-1
+  p-2
+  p-4
+  p-8
+  pb-12
+  placeholder:text-outline
+  pointer-events-none
+  pt-4
+  px-2
+  px-margin-desktop
+  py-1
+  py-1.5
+  py-4
+  py-5
+  right-3
+  rounded
+  rounded-md
+  scale-95
+  text-[16px]
+  text-[18px]
+  text-[24px]
+  text-body-lg
+  top-3
+  transition-all
+  w-12
+  w-px
+  z-40
+----------------------------------------------------------------
+Token desain dipakai desain : 30
+Token hilang di render      : 4  -> body-lg, on-error-container, surface-container, surface-variant
+----------------------------------------------------------------
+Teks tampak desain : 32   hilang di render: 31
+  Draf
+  Indonesia Timur
+  Investigasi
+  Jawa & Bali
+  Kalimantan
+  Kategori
+  Laporan Pengawasan
+  Nasional (Pusat)
+  Opini Publik
+  Penulis (Opsional)
+  Pilih Kategori
+  Pilih Wilayah Terkait
+  Publik
+  Siaran Pers
+  Simpan Draf
+  Staff Warkop
+  Sulawesi
+  Sumatera
+  Tanggal Publikasi
+  Terbitkan
+  Wilayah
+  add Buat Laporan Baru
+  dashboard Dashboard
+  edit_document Kelola Artikel
+  format_h1
+  format_h2
+  gavel Kelola Pengaduan
+  logout Keluar
+  sell Label & Kata Kunci
+  settings Pengaturan
+  settings_applications Pengaturan Publikasi
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

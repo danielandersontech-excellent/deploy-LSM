@@ -1,0 +1,10 @@
+# Redeploy produksi Tahap 06 (commit 0b4a1e8) — 2026-09-03T17:40:52Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"fup812dh341ak5yumcdr1sre"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[17:43:25Z] health=000  container: re8snqu8jwyxdqg2wmzrbm3w:0b4a1e8cf3ac4098e1a299c0e2c9dafe7ae5edbf Up About a minute (healthy) re8snqu8jwyxdqg2wmzrbm3w:d5c8f7bf2774e826da8a8cdcb4b21fe61bcd425f Up 56 minutes (healthy) 
+[17:43:58Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:0b4a1e8cf3ac4098e1a299c0e2c9dafe7ae5edbf Up About a minute (healthy) 
+HASIL: image 0b4a1e8 HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T00:44:00+07:00","basisData":"terhubung","versi":"0.1.0"}

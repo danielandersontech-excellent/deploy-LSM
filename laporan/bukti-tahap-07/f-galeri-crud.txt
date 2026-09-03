@@ -1,0 +1,35 @@
+UJI f — CRUD GALERI LEWAT API (curl.exe, multipart) sebagai superadmin — 2026-09-03 18:04 UTC
+Dev server http://127.0.0.1:3000; cookie superadmin dari POST /api/auth/login (email/sandi tidak dicetak).
+
+== 1. POST /api/staf/galeri multipart (berkas=@public/penampung/galeri-2.jpg, JPG asli 42106 byte; judul, deskripsi, jenis=foto, kategori=sosialisasi, wilayah_id=13, lokasi, tanggal_kegiatan=2026-09-04)
+{"galeri":{"id":7,"judul":"Uji Unggah Galeri Tahap 7","deskripsi":"Dokumentasi uji CRUD multipart","jenis":"foto","berkas":"/unggahan/galeri/3e6b4cfcd4f9966bbab37d36dad13a05.jpg","thumbnail":null,"kategori":"sosialisasi","wilayah_id":13,"wilayah_nama":"Jawa Barat","lokasi":"Kab. Bogor","tanggal_kegiatan":"2026-09-03T17:00:00.000Z","dibuat_pada":"2026-09-03T18:02:42.000Z"}}
+HTTP 201
+
+== 2. GET /galeri (publik, tanpa login) memuat judul baru? (jumlah baris cocok 'Uji Unggah Galeri Tahap 7' + jalur berkas di kartu)
+1
+url('/unggahan/galeri/3e6b4cfcd4f9966bbab37d36dad13a05.jpg')
+
+== 3. PATCH /api/staf/galeri/7 JSON {"judul":"Uji Unggah Galeri Tahap 7 (diubah)"}
+{"galeri":{"id":7,"judul":"Uji Unggah Galeri Tahap 7 (diubah)","deskripsi":"Dokumentasi uji CRUD multipart","jenis":"foto","berkas":"/unggahan/galeri/3e6b4cfcd4f9966bbab37d36dad13a05.jpg","thumbnail":null,"kategori":"sosialisasi","wilayah_id":13,"wilayah_nama":"Jawa Barat","lokasi":"Kab. Bogor","tanggal_kegiatan":"2026-09-02T17:00:00.000Z","dibuat_pada":"2026-09-03T18:02:42.000Z"}}
+HTTP 200
+
+== 3b. GET /staf/galeri (superadmin) memuat judul yang diubah? (jumlah baris cocok)
+1
+
+== 8. DELETE /api/staf/galeri/7
+{"dihapus":true,"id":7}
+HTTP 200
+
+== 9. GET /galeri publik sesudah hapus — jumlah baris cocok judul (harus 0)
+0
+
+== 10. Pagar peran (sidebar bukan pagar)
+penulis POST 403
+pimpinan_wilayah DELETE 403
+pimpinan_wilayah GET api 200
+
+TEMUAN (bukan modul ini, dilaporkan tanpa diubah):
+  (a) PATCH JSON tanpa tanggal_kegiatan menggeser tanggal MUNDUR 1 hari: sebelum PATCH tanggal_kegiatan=2026-09-03T17:00Z (=4 Sep WIB), sesudah PATCH 2026-09-02T17:00Z (=3 Sep WIB).
+      Sebab: app/api/staf/galeri/[id]/route.js memakai lama.tanggal_kegiatan.toISOString().slice(0,10) padahal driver membaca DATE sebagai 00:00 WIB (17:00 UTC hari sebelumnya).
+      Dampak pada UI Kelola Galeri: TIDAK ADA — KelolaGaleri.js selalu mengirim tanggal_kegiatan (KEPUTUSAN BARU 6); page.js menggeser +7 jam (keTanggalISO).
+  (b) DELETE menghapus baris DB tetapi berkas /unggahan/galeri/<acak>.jpg tetap di disk (yatim). Berkas uji dibersihkan manual sesudah uji.
