@@ -11,7 +11,7 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 | 00 Fondasi | LULUS | 75615ca | 15 butir uji a–n + h2, semua berbukti; proxy terbukti di Next 16.3.4 |
 | 01 Basis data | LULUS | 62495b7 | 11 butir uji a–k berbukti; zona waktu selisih 0 detik; buku besar utuh |
 | 02 Autentikasi | LULUS | 2356075 | 14 butir uji a–n berbukti; Location tanpa 0.0.0.0; 403 semua peran tak berhak |
-| 03 Docker | SEDANG (gerbang tertunda) | 2ab6814 | berkas lengkap; uji l & k-sebelum LULUS; butir a–k container diulang 3 Sep 2026 (disk C: dibereskan pemilik, sisa 7,4 GB); butir server dikerjakan via SSH sesuai `dokumen/PERINTAH-PEMILIK-SERVER.md` |
+| 03 Docker | LULUS | 1117749 | 12 butir a–l berbukti (image 998 MB, log bersih, healthy→unhealthy→healthy, proxy+pemisahan host di container, WIB selaras, non-root, volume, rollback, konteks 764 MB→2,77 MB); skema+seed PRODUKSI dijalankan, login & pemisahan host di domain terbukti (bukti-server/). Temuan: unggahan butuh route handler (Tahap 5/6) |
 | 04 Situs publik | BELUM | | dimulai setelah gerbang Tahap 3 + tugas server 5a/5b |
 | 05 Modul berita | BELUM | | |
 | 06 Modul pengaduan | BELUM | | |
@@ -35,6 +35,4 @@ MODE OTONOM dilanjutkan. Perintah pemilik untuk server/produksi terangkum di
 - Push + redeploy via webhook diizinkan (PERINTAH-PEMILIK-SERVER 3).
 
 ## Posisi terakhir (bila sesi terputus di tengah tahap)
-Tahap 03 — mengulang butir a–k (build image lokal + uji container) di laptop,
-lalu tugas server 5a (skema+seed produksi) dan 5b (bukti `laporan/bukti-server/`),
-lalu Tahap 4.
+Tahap 03 LULUS + tugas server 5a/5b selesai. Berikutnya: push + redeploy webhook + verifikasi health, lalu Tahap 04 dari awal (belum ada berkas).
