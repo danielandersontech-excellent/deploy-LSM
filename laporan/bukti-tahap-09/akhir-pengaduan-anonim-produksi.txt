@@ -1,0 +1,17 @@
+# Verifikasi akhir — pengaduan anonim end-to-end di https://warkopnusantara.id — 2026-09-03T20:21:52.415Z
+  OK    POST /api/pengaduan anonim → 201 nomor kasus — HTTP 201 {"nomorKasus":"WRP-098183","anonim":true,"lampiran":0,"diterima":true}
+  OK    GET /api/pengaduan/lacak → 200 status baru, 1 riwayat, hanya kolom publik — HTTP 200 kunci pengaduan: nomorKasus,kategori,kategoriLabel,wilayah,status,statusLabel,dibuatPada,diperbaruiPada
+  OK    Halaman /lacak menampilkan nomor & status — HTTP 200
+  OK    Daftar staf (superadmin) memuat kasus baru — HTTP 200, id 4
+  OK    Detail staf: anonim=1 dan nama/nik/telepon/email pelapor NULL — anonim=1 nama=null nik=null telepon=null email=null; riwayat 1
+NOMOR_UJI=WRP-098183
+RINGKASAN: LULUS
+
+## Pembersihan data uji di DB produksi (SELECT dulu, baru UPDATE hapus lunak; objek warkop saja)
+id	nomor_kasus	anonim	nama_pelapor	nik_pelapor	telepon_pelapor	email_pelapor	status	dihapus_pada
+4	WRP-098183	1	NULL	NULL	NULL	NULL	baru	NULL
+dihapus_lunak
+1
+aktif_tersisa
+0
+(riwayat & audit kasus uji dibiarkan sebagai jejak; pengaduan tidak tampil lagi di daftar/lacak)

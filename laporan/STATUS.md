@@ -36,7 +36,33 @@ MODE OTONOM dilanjutkan. Perintah pemilik untuk server/produksi terangkum di
 - Container app produksi: image tag = commit c97e255 (HEAD saat run dilanjutkan),
   HEALTHY, volume `warkop-unggahan`. DB `warkop_nusantara` KOSONG (belum ada
   tabel) sebelum tugas 5a.
-- Push + redeploy via webhook diizinkan (PERINTAH-PEMILIK-SERVER 3). Webhook port 8000 TIDAK terjangkau dari internet → dipanggil dari dalam server lewat SSH (localhost:8000), token via stdin — KEPUTUSAN BARU. Redeploy Tahap 03 (a2dbb53) sukses 3 Sep 22:45 WIB; Tahap 04 (6e39a1b) 23:28 WIB; Tahap 07 (d38129e) 4 Sep 01:18 WIB; **Tahap 08 (3c64be4) 4 Sep 02:12 WIB**, health 200 (bukti-server/0N-redeploy-tahap-0N.txt; skrip bukti-server/skrip/redeploy.sh). Socket.io wss:// terbukti di produksi (bukti-tahap-08/h-wss-produksi.txt).
+- Push + redeploy via webhook diizinkan (PERINTAH-PEMILIK-SERVER 3). Webhook port 8000 TIDAK terjangkau dari internet → dipanggil dari dalam server lewat SSH (localhost:8000), token via stdin — KEPUTUSAN BARU. Redeploy Tahap 03 (a2dbb53) sukses 3 Sep 22:45 WIB; Tahap 04 (6e39a1b) 23:28 WIB; Tahap 07 (d38129e) 4 Sep 01:18 WIB; Tahap 08 (3c64be4) 4 Sep 02:12 WIB; **Tahap 09: push f9c78d5+f0696fb → Coolify membangun HEAD f0696fb, healthy 4 Sep 03:15 WIB** (bukti-server/09-redeploy-tahap-09.txt; catatan: skrip menunggu tag f9c78d5 sehingga menulis "perlu Redeploy manual" — tidak perlu, image f0696fb memuat seluruh Tahap 09), health 200 (bukti-server/0N-redeploy-tahap-0N.txt; skrip bukti-server/skrip/redeploy.sh). Socket.io wss:// terbukti di produksi (bukti-tahap-08/h-wss-produksi.txt).
 
 ## Posisi terakhir (bila sesi terputus di tengah tahap)
-Tahap 09 LULUS (catatan) + commit f9c78d5. Berikutnya: push + redeploy webhook + verifikasi produksi akhir (14 layar, pemisahan host, wss, pengaduan anonim end-to-end), lalu ringkasan penutup + DAFTAR TINDAKAN PEMILIK, lalu BERHENTI.
+SELESAI. Seluruh tahap 00–09 LULUS dan ter-push; produksi menjalankan image f0696fb (HEAD) HEALTHY; verifikasi akhir di domain LULUS (di bawah). Run MODE OTONOM BERHENTI sesuai perintah — tidak ada tahap berikutnya. Bila prompt dikirim ulang: tidak ada yang perlu dilanjutkan kecuali tindakan pemilik di bawah.
+
+## RINGKASAN PENUTUP (4 Sep 2026, ±03:25 WIB)
+
+Sistem WARKOP NUSANTARA lengkap: situs publik (beranda, tentang, struktur, program, galeri, berita + detail, kontak/pengaduan, lacak, FAQ/privasi/pedoman), ruang staf lima peran (dashboard realtime, artikel + editor, pengaduan + buku besar, pengurus/program/galeri, pengguna, pengaturan, ganti sandi), API 48 endpoint berpagar peran, Socket.io terautentikasi, MariaDB 14 tabel, Docker/Coolify di warkopnusantara.id + staf.warkopnusantara.id (HTTPS, wss, pemisahan host).
+
+Verifikasi akhir di DOMAIN PRODUKSI (image f0696fb; bukti `laporan/bukti-tahap-09/akhir-*`):
+- Kesetiaan 14 layar pada build produksi: sisa cacat export 0/14; cakupan kelas 63–99 % (alasan tercatat) — `akhir-d4b-kesetiaan-14-layar-produksi.md`.
+- Pemisahan host: `warkopnusantara.id/staf/*` & `/login` → 307 `https://staf.…`; `staf.…/berita` → dashboard; `/staf/*` tanpa sesi → `/login?lanjut=`; http → https 302; `Location` tanpa `0.0.0.0` — `akhir-produksi-host-header-port.txt`.
+- Header keamanan (CSP tanpa unsafe-eval, HSTS preload, Permissions-Policy, X-Frame DENY, nosniff, COOP) dan 0 pelanggaran CSP di 10 halaman publik+staf di Chrome headless; socket `wss://staf.warkopnusantara.id/socket.io/` 101, realtime tersambung — `akhir-b3-header-csp-produksi.txt`, `akhir-h-wss-produksi.txt`.
+- Pengaduan anonim ujung ke ujung: POST 201 → lacak API/halaman (kolom publik saja) → daftar & detail staf: anonim=1, empat kolom identitas NULL → dihapus lunak via SQL — `akhir-pengaduan-anonim-produksi.txt`.
+- `/api/health` 200, container healthy, volume `warkop-unggahan` terpasang.
+
+Yang TIDAK tercapai / TIDAK diuji (jujur): Lighthouse Performance 70–77 (< 90; font belum disubset — keputusan pemilik); Safari iOS/macOS, Chrome Android, Firefox tidak diuji (tidak tersedia); rahasia produksi tertanam di layer image (sisi Coolify — kritis, di bawah); firewall/SSH/panel Coolify belum sesuai daftar periksa (butuh sudo).
+
+## DAFTAR TINDAKAN PEMILIK (urut prioritas)
+
+1. **KRITIS — Coolify → Environment Variables: matikan "Available at Buildtime" untuk SEMUA rahasia** (DB_PASSWORD, JWT_SECRET, SEED_ADMIN_PASSWORD, DB_HOST/USER, STAF_HOST, dll.; sisakan hanya NEXT_PUBLIC_APP_URL/NEXT_PUBLIC_WS_URL). Bukti: `docker history` image f0696fb memuat `DB_PASSWORD=`/`JWT_SECRET=` di 4 layer (`laporan/bukti-tahap-09/c2-log-build-coolify.txt`). Redeploy, lalu cek `docker history --no-trunc <image> | grep -c DB_PASSWORD` = 0.
+2. **Rotasi SEMUA rahasia yang pernah tertulis di chat / layer image**: `DB_PASSWORD` (ubah di MariaDB `ALTER USER 'warkop'@'%' IDENTIFIED BY …` + ENV), `JWT_SECRET` (`openssl rand -hex 48`; seluruh sesi keluar), `SEED_ADMIN_PASSWORD` (ganti sandi admin lewat aplikasi lalu ENV), **token API Coolify** (buat baru, cabut lama; beri izin `deploy` saja). Redeploy setelah tiap perubahan.
+3. **Ganti kata sandi admin segera** lewat `https://staf.warkopnusantara.id/staf/ganti-sandi`; tinjau/ganti artikel, pengurus, program, galeri seed (konten contoh) sebelum diumumkan.
+4. **Volume lampiran pengaduan**: Coolify → Storages → `warkop-lampiran` → `/app/unggahan-terjaga` (tanpa ini lampiran hilang saat redeploy).
+5. **Pengerasan server (butuh sudo)**: firewall hanya 22/80/443 — tutup 8000 (panel Coolify; akses lewat terowongan SSH), 5050, 3000 (sistem lain di server yang sama); sshd `PasswordAuthentication no` + `PermitRootLogin no` (saat ini masih `publickey,password`).
+6. **Cloudflare**: proxy oranye untuk `@` dan `staf` (WebSocket didukung), SSL "Full (strict)"; putuskan nasib `www` (saat ini tidak menjawab).
+7. **Webhook GitHub → Coolify auto-deploy** (push = redeploy) sehingga skrip webhook + token tidak lagi diperlukan.
+8. **Cadangan berkala**: cron harian `scripts/cadangkan-db.sh` (PENERAPAN G.3) + salinan luar server + uji pulih berkala (prosedur sudah teruji: `d5-e-pemulihan-cadangan.txt`).
+9. Keputusan desain yang menunggu (tidak menghalangi): subset font Fira Sans (Performance ≥ 90), navbar kanonik meluap di 1280 px, `galeri-3.mp4` seed hilang, overlay detail pengaduan, tautan "Ganti kata sandi" & tombol "Arsipkan" di antarmuka staf; 13 GET route staf tanpa pemanggil (kontrak API) — hapus atau pertahankan.
+10. Baca `PANDUAN-STAF.md` bersama pengurus; `PENERAPAN.md` bagian 3 = daftar periksa produksi dengan status per butir.

@@ -1,0 +1,27 @@
+# Verifikasi akhir produksi (image f0696fb) — pemisahan host, header, port, SSH, layer image — 2026-09-03T20:20:46Z
+  https://warkopnusantara.id/staf/dashboard -> 307 Location: https://staf.warkopnusantara.id/staf/dashboard
+  https://warkopnusantara.id/login -> 307 Location: https://staf.warkopnusantara.id/login
+  https://staf.warkopnusantara.id/berita -> 307 Location: https://staf.warkopnusantara.id/staf/dashboard
+  https://staf.warkopnusantara.id/ -> 307 Location: https://staf.warkopnusantara.id/staf/dashboard
+  https://staf.warkopnusantara.id/staf/dashboard -> 307 Location: https://staf.warkopnusantara.id/login?lanjut=%2Fstaf%2Fdashboard
+  http://warkopnusantara.id/ -> 302 Location: https://warkopnusantara.id/
+  http://staf.warkopnusantara.id/login -> 302 Location: https://staf.warkopnusantara.id/login
+  Location memuat 0.0.0.0: 0
+
+## header produksi:
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=()
+
+## port dari internet:
+  :3306 -> 000 Connection timed out after 6015 milliseconds
+  :8000 -> 302 
+  :5050 -> 302 
+  :3000 -> 200 
+## SSH kata sandi (harus publickey saja):
+deployer@31.97.106.106: Permission denied (publickey,password).
+
+## container & layer image f0696fb (rahasia dihitung, tidak dicetak):
+  re8snqu8jwyxdqg2wmzrbm3w-200915658510 re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 10 minutes (healthy)
+  layer: 52
+  layer memuat DB_PASSWORD=: 4
+  layer memuat JWT_SECRET=: 4
+  volume: warkop-unggahan->/app/public/unggahan 

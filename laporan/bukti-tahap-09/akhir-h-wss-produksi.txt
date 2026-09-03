@@ -1,0 +1,16 @@
+# Uji h — WSS produksi https://staf.warkopnusantara.id — 2026-09-03T20:20:13.265Z
+login produksi: HTTP 200, cookie diterima; atribut cookie: warkop_token=<disembunyikan>; Path=/; Expires=Fri, 04 Sep 2026 04:20:16 GMT; Max-Age=28800; Secure; HttpOnly; SameSite=lax
+
+## 1. socket.io-client (Node) ke produksi
+  tanpa cookie   -> ditolak: TANPA_TOKEN
+  cookie sah     -> tersambung | transport=websocket | uri=wss://staf.warkopnusantara.id/socket.io/ | room=global,user:1,staf
+
+## 2. Chrome headless: halaman dashboard produksi membuka wss:// (same-origin), tanpa mixed content
+  url=https://staf.warkopnusantara.id/staf/dashboard judul="Dashboard · WARKOP NUSANTARA" data-realtime=tersambung
+  WebSocket yang dibuat halaman:
+    wss://staf.warkopnusantara.id/socket.io/?EIO=4&transport=websocket
+      handshake 101 Switching Protocols
+  konsol peringatan/galat: warning: The resource https://staf.warkopnusantara.id/_next/static/media/Domine%5Bwght%5D-s.p.2imvd8kp_i7fc.woff2 was preloaded using link preload but not used within a 
+  mixed content: TIDAK ADA
+
+HASIL h: LULUS — wss:// di balik HTTPS/Traefik, tanpa cookie ditolak, tanpa mixed content

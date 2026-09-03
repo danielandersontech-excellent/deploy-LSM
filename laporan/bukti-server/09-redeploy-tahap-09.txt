@@ -1,0 +1,20 @@
+# Redeploy produksi Tahap 09 (commit f9c78d5) — 2026-09-03T20:09:12Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"jks6el31d8c55gukw2mmx9x0"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[20:11:20Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 33 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:3c64be4751d2073f395db0a27c0739797a348210 Up 59 minutes (healthy) 
+[20:11:54Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up About a minute (healthy) re8snqu8jwyxdqg2wmzrbm3w:3c64be4751d2073f395db0a27c0739797a348210 Up About an hour (healthy) 
+[20:12:30Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up About a minute (healthy) 
+[20:13:04Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 2 minutes (healthy) 
+[20:13:38Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 2 minutes (healthy) 
+[20:14:12Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 3 minutes (healthy) 
+[20:14:49Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 4 minutes (healthy) 
+[20:15:23Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 4 minutes (healthy) 
+[20:15:56Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 5 minutes (healthy) 
+[20:16:32Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 5 minutes (healthy) 
+[20:17:09Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 6 minutes (healthy) 
+[20:17:44Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 6 minutes (healthy) 
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T03:18:17+07:00","basisData":"terhubung","versi":"0.1.0"}
+HASIL: image belum f9c78d5 setelah pemantauan — perlu Redeploy manual
