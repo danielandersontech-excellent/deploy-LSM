@@ -83,6 +83,25 @@ staf.<domain>     -> ruang kerja staf (/login, /staf/*)
 menuju `/staf/dashboard`. `/api/*` dilayani di kedua host. Cookie sesi terbit
 di `staf.<domain>` (httpOnly, Secure, SameSite=Lax) dan tidak dikirim ke host lain.
 
+### C.1 WebSocket (Socket.io, Tahap 8)
+
+Realtime memakai Socket.io pada `server.js` yang sama (path `/socket.io`).
+Klien menyambung **same-origin** (`window.location.origin`, jadi `wss://` di
+balik HTTPS); `NEXT_PUBLIC_WS_URL` boleh dikosongkan — isi hanya bila socket
+dilayani di origin lain (cookie httpOnly `warkop_token` harus tetap terkirim).
+
+- **Traefik/Coolify**: meneruskan `Upgrade: websocket` secara bawaan; tidak
+  ada label tambahan. Bila di lain waktu Traefik dipasang manual, pastikan
+  router HTTPS untuk `staf.<domain>` tidak menyaring header `Upgrade`/`Connection`.
+- **Cloudflare (proxy oranye)**: WebSocket diteruskan pada paket gratis; batas
+  waktu idle 100 s > `pingInterval` 25 s Socket.io, sehingga sambungan tetap hidup.
+- Tanpa WebSocket (proxy memutus), klien jatuh ke `polling` (`/socket.io/?transport=polling`)
+  — jangan memblokir jalur itu. Tanpa socket sama sekali, ruang staf tetap
+  berfungsi (realtime = penyempurna); yang tampak hanya penanda kecil
+  "Sambungan langsung terputus".
+- Verifikasi: buka `staf.<domain>/staf/dashboard` → tab Network → WS →
+  `wss://staf.<domain>/socket.io/?EIO=4&transport=websocket` berstatus 101.
+
 ## D. Volume unggahan (KEPUTUSAN PEMILIK: volume lokal)
 
 Lampiran pengaduan disimpan di `/app/public/unggahan` **di dalam container**.

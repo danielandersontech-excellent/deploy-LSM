@@ -12,7 +12,8 @@
 //   5. semuanya dalam SATU transaksi buku besar (buatPengaduan: pengaduan + riwayat pertama).
 // Balasan hanya nomor kasus — tidak pernah memantulkan identitas.
 import { NextResponse } from 'next/server';
-import { buatPengaduan, tambahLampiran } from '@/lib/db/pengaduan';
+import { buatPengaduan, tambahLampiran, ambilPengaduan } from '@/lib/db/pengaduan';
+import { siarkanPengaduanBaru } from '@/lib/socket/siaran';
 import { validasiKirimanPengaduan, GalatValidasiPengaduan } from '@/lib/validasi/pengaduan';
 import { periksaLaju, pesanDibatasi } from '@/lib/pembatasLajuUmum';
 import { periksaTokenFormulir } from '@/lib/tokenFormulir';
@@ -120,6 +121,11 @@ export async function POST(request) {
     // Audit tanpa identitas: hanya id pengaduan, anonim, jumlah lampiran, IP.
     await catatAudit({ userId: null, aksi: 'pengaduan_masuk', tabelTerkait: 'pengaduan', idTerkait: id,
       detail: { anonim: muatan.anonim, lampiran: tersimpan.length }, ip });
+    // Siaran realtime (Tahap 8) lewat pembantu — muatan hanya penanda (nomor, kategori, wilayah, status), tanpa identitas.
+    try {
+      const ringkas = await ambilPengaduan(id, { bolehLihatIdentitas: false });
+      if (ringkas) siarkanPengaduanBaru(ringkas);
+    } catch (g) { console.error('[api/pengaduan] siaran gagal:', g?.message); }
     return NextResponse.json({ nomorKasus, anonim: muatan.anonim, lampiran: tersimpan.length, diterima: true }, { status: 201, headers: { 'cache-control': 'no-store' } });
   } catch (g) {
     if (g instanceof GalatUnggahan) return galat(g.status, `Lampiran ditolak: ${g.message}`, g.kode);

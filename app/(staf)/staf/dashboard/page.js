@@ -19,6 +19,7 @@ import { redirect } from 'next/navigation';
 import Ikon from '@/components/ui/Ikon';
 import Lencana from '@/components/ui/Lencana';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
+import PemantauRealtime from '@/components/staf/PemantauRealtime';
 import { ambilPenggunaSesi } from '@/lib/auth/sesi';
 import { HAK, wilayahTerbatas } from '@/lib/auth/hakAkses';
 import { hitungStatistikDashboard, trenLaporanBulanan, pengaduanTerbaru, artikelTerbaruDashboard } from '@/lib/db/statistik';
@@ -255,6 +256,7 @@ export default async function HalamanDashboard() {
 
   return (
     <>
+      <PemantauRealtime mode="dashboard" />
       {/* Header Area */}
       <header className="px-margin-desktop py-8 bg-surface-lowest border-b border-tertiary/20">
         <h2 className="font-headline-lg text-headline-lg text-primary">Tinjauan Pengawasan</h2>
@@ -383,7 +385,7 @@ export default async function HalamanDashboard() {
                 {/* Rows: Alternating subtle Tan zebra-striping */}
                 <tbody className="font-body-md text-body-md text-on-surface divide-y divide-tertiary-fixed-dim/50">
                   {barisTabel.map((p) => (
-                    <tr key={p.id} className={KELAS_BARIS}>
+                    <tr key={p.id} className={KELAS_BARIS} data-nomor={p.nomor_kasus}>
                       <td className="py-4 px-6 font-mono text-sm">{`#${p.nomor_kasus}`}</td>
                       <td className="py-4 px-6">{p.wilayah_nama ?? '—'}</td>
                       <td className="py-4 px-6 text-outline">{formatTanggalID(p.dibuat_pada)}</td>

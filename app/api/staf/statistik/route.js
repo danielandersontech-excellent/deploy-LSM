@@ -6,6 +6,7 @@ import { denganPeran } from '@/lib/auth/penjaga';
 import { HAK, wilayahTerbatas } from '@/lib/auth/hakAkses';
 import { hitungStatistikDashboard, trenLaporanBulanan, pengaduanTerbaru, artikelTerbaruDashboard } from '@/lib/db/statistik';
 import { ambilAktivitasTerbaru } from '@/lib/db/audit';
+import { jumlahSocket as ambilJumlahSocket } from '@/lib/socket/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,5 +19,7 @@ export const GET = denganPeran(HAK.statistik, async (_request, _konteks, penggun
     HAK.artikel_lihat.includes(pengguna.peran) ? artikelTerbaruDashboard({ peran: pengguna.peran, userId: pengguna.id, wilayahId, batas: 5 }) : Promise.resolve([]),
     pengguna.peran === 'superadmin' ? ambilAktivitasTerbaru(10) : Promise.resolve([]),
   ]);
-  return NextResponse.json({ kartu, tren, pengaduanTerbaru: terbaru, artikelTerbaru: artikel, aktivitas }, { headers: { 'cache-control': 'no-store' } });
+  // Tahap 8: jumlah socket tersambung (diagnostik uji k/l) — superadmin saja.
+  const jumlahSocket = pengguna.peran === 'superadmin' ? ambilJumlahSocket() : undefined;
+  return NextResponse.json({ kartu, tren, pengaduanTerbaru: terbaru, artikelTerbaru: artikel, aktivitas, jumlahSocket }, { headers: { 'cache-control': 'no-store' } });
 });

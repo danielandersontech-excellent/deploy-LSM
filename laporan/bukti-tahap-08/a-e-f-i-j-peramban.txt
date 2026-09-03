@@ -1,0 +1,45 @@
+# Uji peramban Tahap 8 — 2026-09-03T19:05:29.222Z
+login: superadmin ok | verifikator ok
+
+## a. Siaran sampai — dua tab dashboard (superadmin, verifikator) + pengaduan dari jendela ketiga
+  [A superadmin] socket tersambung (0.0 s)
+  [B verifikator] socket tersambung (0.0 s)
+  identitas tab A: "Superadmin" | tab B: "Siti Aminah"
+  sebelum: superadmin Pengaduan Masuk=1, verifikator=1 (laporan/bukti-tahap-08/tangkapan/a-sebelum-superadmin.png, laporan/bukti-tahap-08/tangkapan/a-sebelum-verifikator.png)
+  jendela ketiga POST /api/pengaduan -> 201 WRP-695194
+  waktu sampai dashboard diperbarui: A 0.5 s, B 0.0 s (-1 = tidak dalam 30 s)
+  sesudah (tanpa muat ulang manual): superadmin=2, verifikator=2 (laporan/bukti-tahap-08/tangkapan/a-sesudah-superadmin.png, laporan/bukti-tahap-08/tangkapan/a-sesudah-verifikator.png)
+  baris pertama tabel: A="#WRP-695194Jawa Barat04 Sep 2026Baru" B="#WRP-695194Jawa Barat04 Sep 2026Baru"
+  HASIL a: LULUS — kedua dashboard diperbarui seketika
+
+## f. Pemulihan sambungan — tab superadmin offline, pengaduan dikirim, lalu online kembali
+  A offline -> hook melapor 'terputus' setelah 37.3 s (ping 25 s + timeout 20 s)
+  saat A offline: POST -> 201 WRP-531355
+  angka di A saat offline (harus belum berubah): 2; penanda terputus tampil: true
+  setelah online: dashboard menyusul dalam 1.5 s -> angka=3 baris pertama="#WRP-531355Jawa Barat04 Sep 2026Baru"
+  HASIL f: LULUS — dashboard menyusul ketinggalan lewat sinkronisasi ulang
+
+## i. Gulir tidak bergeser — /staf/pengaduan digulir ke tengah lalu pengaduan baru masuk
+  [C] socket tersambung (0.0 s)
+  urutan baris sebelum: WRP-531355,WRP-695194,WRP-009021,WRP-009018,WRP-008994
+  scrollTop sebelum=300, baris=5; POST -> 201 WRP-056765
+  baris baru muncul di tabel setelah 0.5 s
+  urutan baris sesudah: WRP-056765,WRP-531355,WRP-695194,WRP-009021,WRP-009018,WRP-008994
+  scrollTop sesudah=300, baris=6, nomor baru ada di daftar=true; baris acuan WRP-531355: top 60px -> 141px (bergeser satu tinggi baris karena baris baru disisipkan di atasnya)
+  HASIL i: LULUS — posisi gulir tetap, baris baru muncul
+
+## j. Perilaku saat menyaring — /staf/pengaduan?status=selesai lalu pengaduan baru (status baru)
+  [D] socket tersambung (0.0 s)
+  daftar sebelum: #WRP-008994Kerusakan InfrastrukturPelapo ; POST -> 201 WRP-159044
+  penanda muncul setelah 0.0 s
+  daftar sesudah: #WRP-008994Kerusakan InfrastrukturPelapo ; penanda: Ada 1 laporan baru — muat ulang
+  HASIL j: LULUS — daftar tidak berubah, penanda halus muncul
+
+## e. Tanpa socket — /socket.io/* diblokir di peramban, halaman staf tetap berfungsi
+  /staf/dashboard: judul="Dashboard · WARKOP NUSANTARA" tombol/tautan=22 galat=false penanda-terputus=true data-realtime=terputus hidrasi=true overlay-galat=false
+  /staf/pengaduan: judul="Kelola Pengaduan · WARKOP NUSANTARA" tombol/tautan=27 galat=false penanda-terputus=true data-realtime=terputus hidrasi=true overlay-galat=false
+  /staf/artikel: judul="Kelola Artikel · WARKOP NUSANTARA" tombol/tautan=45 galat=false penanda-terputus=false data-realtime= hidrasi=true overlay-galat=false
+  /staf/pengaturan: judul="Pengaturan · WARKOP NUSANTARA" tombol/tautan=15 galat=false penanda-terputus=false data-realtime= hidrasi=true overlay-galat=false
+  HASIL e: LULUS — halaman tetap berfungsi tanpa socket: hidrasi=true, tanpa overlay galat, tombol/tautan tersedia; hanya penanda kecil "Sambungan langsung terputus" (§6) di dashboard & daftar pengaduan
+
+  pengaduan uji dihapus lunak: 4

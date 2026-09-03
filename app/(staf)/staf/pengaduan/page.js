@@ -12,6 +12,7 @@ import { redirect } from 'next/navigation';
 import Ikon from '@/components/ui/Ikon';
 import Lencana from '@/components/ui/Lencana';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
+import PemantauRealtime from '@/components/staf/PemantauRealtime';
 import { ambilPenggunaSesi } from '@/lib/auth/sesi';
 import { HAK, wilayahTerbatas, bolehLihatIdentitas } from '@/lib/auth/hakAkses';
 import { daftarPengaduan, hitungPengaduanPerStatus } from '@/lib/db/pengaduan';
@@ -101,6 +102,7 @@ export default async function HalamanKelolaPengaduan({ searchParams }) {
     // dan max-w dibawa pembungkus ini; min-h-screen (=100vh, aturan 5) -> min-h-full (main ber-h-full) agar
     // kontainer tabel ber-flex-1 tetap memanjang ke bawah seperti screen.png.
     <div className="p-margin-mobile md:p-margin-desktop min-h-full flex flex-col max-w-container-max">
+      <PemantauRealtime mode="daftar-pengaduan" bebasFilter={!q && !status && !kategori && halamanDiminta === 1} />
       {/* Mobile Header desain (md:hidden) TIDAK disalin: bilah atas + hamburger sudah dirender KerangkaStaf (kanonik). */}
       {/* Page Title */}
       <div className="mb-8">
@@ -167,7 +169,7 @@ export default async function HalamanKelolaPengaduan({ searchParams }) {
                   const hrefDetail = `/staf/pengaduan/${p.id}`;
                   return (
                     // Kelas baris PERTAMA desain; onclick overlay desain -> tautan ikon Aksi ke halaman detail.
-                    <tr key={p.id} className="hover:bg-surface-container-low transition-colors group cursor-pointer">
+                    <tr key={p.id} className="hover:bg-surface-container-low transition-colors group cursor-pointer" data-nomor={p.nomor_kasus}>
                       <td className="py-4 px-6 font-body-md font-medium text-primary">#{p.nomor_kasus}</td>
                       <td className="py-4 px-6 font-body-md text-on-surface">{labelKategoriPengaduan(p.kategori_masalah)}</td>
                       {nama ? (

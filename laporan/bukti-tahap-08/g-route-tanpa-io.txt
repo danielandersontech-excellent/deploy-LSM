@@ -1,0 +1,8 @@
+# Uji g — route API yang menyentuh io langsung (2026-09-03T18:24:52Z)
+  grep 'ambilIo|globalThis\.__warkopIo|\bio\.' di app/api/**/route.js:
+  jumlah: 0 (harus 0)
+  route yang memanggil pembantu siaran:
+    app/api/pengaduan/route.js
+    app/api/staf/artikel/[id]/terbitkan/route.js
+    app/api/staf/pengaduan/[id]/status/route.js
+  statistik memakai jumlahSocket() dari lib/socket/server (diagnostik, bukan siaran): 3

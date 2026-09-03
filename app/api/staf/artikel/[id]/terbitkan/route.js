@@ -6,6 +6,7 @@ import { denganPeran, GalatHttp } from '@/lib/auth/penjaga';
 import { HAK } from '@/lib/auth/hakAkses';
 import { ambilArtikelById, terbitkanArtikel } from '@/lib/db/artikel';
 import { catatAudit } from '@/lib/db/audit';
+import { siarkanArtikelTerbit } from '@/lib/socket/siaran';
 import { alamatIpPermintaan } from '@/lib/auth/sesi';
 
 export const dynamic = 'force-dynamic';
@@ -23,5 +24,8 @@ export const POST = denganPeran(HAK.artikel_terbitkan, async (request, { params 
   await terbitkanArtikel(n);
   await catatAudit({ userId: pengguna.id, aksi: 'artikel_terbit', tabelTerkait: 'artikel', idTerkait: n,
     detail: { judul: artikel.judul, dari: artikel.status }, ip: await alamatIpPermintaan(request) });
-  return NextResponse.json({ artikel: await ambilArtikelById(n) }, { headers: { 'cache-control': 'no-store' } });
+  const terbit = await ambilArtikelById(n);
+  // Siaran realtime (Tahap 8) lewat pembantu: hanya judul, slug, kategori, penulis.
+  try { siarkanArtikelTerbit(terbit); } catch (g) { console.error('[api/terbitkan] siaran gagal:', g?.message); }
+  return NextResponse.json({ artikel: terbit }, { headers: { 'cache-control': 'no-store' } });
 });

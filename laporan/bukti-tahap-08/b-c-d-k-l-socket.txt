@@ -1,0 +1,48 @@
+# Uji socket Tahap 8 — 2026-09-03T18:26:53.482Z
+login: admin=ok verif=ok pw13=ok pw3=ok
+
+## c. Socket tanpa token / token tidak sah / token versi lama / token kedaluwarsa -> DITOLAK
+  tanpa cookie          -> ditolak: TANPA_TOKEN
+  token palsu           -> ditolak: TOKEN_TIDAK_SAH
+  token_version berbeda -> ditolak: SESI_DIBATALKAN
+  token kedaluwarsa     -> ditolak: TOKEN_TIDAK_SAH
+  token sah (superadmin)-> tersambung (kontrol)
+  room superadmin: global, user:1, staf
+  HASIL c: LULUS
+
+## b/d. Muatan mentah siaran (laporan BERNAMA, wilayah 13) & isolasi room wilayah
+  room pimpinan wil 13: global, user:22, wilayah:13
+  room pimpinan wil 3 : global, user:6, wilayah:3
+  POST /api/pengaduan (bernama, wilayah 13) -> 201 WRP-231527
+  POST status diverifikasi -> 200
+  [admin] menerima 2 pesan
+    pengaduan:baru {"nomorKasus":"WRP-231527","kategori":"pungli","wilayahId":13,"wilayah":"Jawa Barat","status":"baru","waktu":"2026-09-04T01:26:55+07:00"}
+      kunci: nomorKasus,kategori,wilayahId,wilayah,status,waktu | kunci terlarang: NIHIL | nilai sensitif: NIHIL
+    pengaduan:status {"nomorKasus":"WRP-231527","kategori":"pungli","wilayahId":13,"wilayah":"Jawa Barat","status":"diverifikasi","waktu":"2026-09-04T01:26:57+07:00","statusSebelum":"baru","statusSesudah":"diverifikasi"}
+      kunci: nomorKasus,kategori,wilayahId,wilayah,status,waktu,statusSebelum,statusSesudah | kunci terlarang: NIHIL | nilai sensitif: NIHIL
+  [verif] menerima 2 pesan
+    pengaduan:baru {"nomorKasus":"WRP-231527","kategori":"pungli","wilayahId":13,"wilayah":"Jawa Barat","status":"baru","waktu":"2026-09-04T01:26:55+07:00"}
+      kunci: nomorKasus,kategori,wilayahId,wilayah,status,waktu | kunci terlarang: NIHIL | nilai sensitif: NIHIL
+    pengaduan:status {"nomorKasus":"WRP-231527","kategori":"pungli","wilayahId":13,"wilayah":"Jawa Barat","status":"diverifikasi","waktu":"2026-09-04T01:26:57+07:00","statusSebelum":"baru","statusSesudah":"diverifikasi"}
+      kunci: nomorKasus,kategori,wilayahId,wilayah,status,waktu,statusSebelum,statusSesudah | kunci terlarang: NIHIL | nilai sensitif: NIHIL
+  [pw13] menerima 2 pesan
+    pengaduan:baru {"nomorKasus":"WRP-231527","kategori":"pungli","wilayahId":13,"wilayah":"Jawa Barat","status":"baru","waktu":"2026-09-04T01:26:55+07:00"}
+      kunci: nomorKasus,kategori,wilayahId,wilayah,status,waktu | kunci terlarang: NIHIL | nilai sensitif: NIHIL
+    pengaduan:status {"nomorKasus":"WRP-231527","kategori":"pungli","wilayahId":13,"wilayah":"Jawa Barat","status":"diverifikasi","waktu":"2026-09-04T01:26:57+07:00","statusSebelum":"baru","statusSesudah":"diverifikasi"}
+      kunci: nomorKasus,kategori,wilayahId,wilayah,status,waktu,statusSebelum,statusSesudah | kunci terlarang: NIHIL | nilai sensitif: NIHIL
+  [pw3] menerima 0 pesan
+  HASIL b: LULUS — semua muatan bersih (laporan bernama)
+  HASIL d: LULUS — wilayah 13 menerima 2, wilayah 3 menerima 0
+  artikel:terbit (POST terbitkan -> 200) diterima superadmin: 1 {"judul":"Laporan Infrastruktur Jalan Rusak di Kab. Bandung","slug":"laporan-infrastruktur-jalan-rusak-di-kab-bandung","kategori":"Fasilitas Umum","penulis":"Siti Aminah","waktu":"2026-09-04T01:27:01+07:00"}
+
+## k. Beban — 50 socket verifikator tersambung, 20 perubahan status beruntun
+  socket tersambung (statistik.jumlahSocket): 54
+  20 POST status dalam 957 ms; pesan diterima 1000/1000 (50 socket × 20); socket dengan <20 pesan: 0; latensi rata-rata 479 ms (dari waktu siaran WIB); RSS klien 69 MB
+  HASIL k: LULUS — tidak ada pesan hilang
+
+## l. Pembersihan — tutup 50 socket, buka-tutup 20×, jumlah socket kembali ke dasar
+  setelah 50 ditutup (tersisa 1 socket superadmin uji): 1
+  setelah 20× buka-tutup: 1 | listener event di io.sockets: diperiksa server-side per socket (dibersihkan saat disconnect)
+  HASIL l: LULUS — kembali ke dasar
+  setelah socket terakhir ditutup: 0
+  pengaduan uji WRP-231527 dihapus lunak

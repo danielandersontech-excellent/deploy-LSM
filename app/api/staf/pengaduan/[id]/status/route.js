@@ -9,6 +9,7 @@ import { ambilPengaduan, ubahStatusPengaduan, ambilRiwayat } from '@/lib/db/peng
 import { SLUG_STATUS_PENGADUAN } from '@/lib/kategoriPengaduan';
 import { CATATAN_MIN } from '@/lib/validasi/pengaduan';
 import { catatAudit } from '@/lib/db/audit';
+import { siarkanStatusPengaduan } from '@/lib/socket/siaran';
 import { alamatIpPermintaan } from '@/lib/auth/sesi';
 
 export const dynamic = 'force-dynamic';
@@ -43,5 +44,7 @@ export const POST = denganPeran(HAK.pengaduan_ubah_status, async (request, { par
     ambilPengaduan(n, { bolehLihatIdentitas: false }),
     ambilRiwayat(n),
   ]);
+  // Siaran realtime (Tahap 8) lewat pembantu; muatan penanda tanpa catatan/petugas/identitas.
+  try { siarkanStatusPengaduan(pengaduan, hasil.statusSebelum, hasil.statusSesudah); } catch (g) { console.error('[api/status] siaran gagal:', g?.message); }
   return NextResponse.json({ pengaduan, riwayat, perubahan: hasil }, { headers: { 'cache-control': 'no-store' } });
 });
