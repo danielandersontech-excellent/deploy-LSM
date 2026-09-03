@@ -35,6 +35,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV TZ=Asia/Jakarta
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+ENV UPLOAD_PRIVATE_DIR=/app/unggahan-terjaga
 
 RUN apk add --no-cache tzdata wget && \
     cp /usr/share/zoneinfo/Asia/Jakarta /etc/localtime && \
@@ -58,7 +59,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/scripts          ./scripts
 
 # Volume unggahan dipasang di sini (Coolify: /app/public/unggahan). Folder dibuat dengan
 # pemilik nextjs agar volume kosong yang baru dipasang mewarisi kepemilikannya.
-RUN mkdir -p /app/public/unggahan && chown nextjs:nodejs /app/public/unggahan
+RUN mkdir -p /app/public/unggahan /app/unggahan-terjaga && chown nextjs:nodejs /app/public/unggahan /app/unggahan-terjaga
+# /app/unggahan-terjaga = lampiran pengaduan (UPLOAD_PRIVATE_DIR), DI LUAR public/ — Tahap 6: berkas di bawah
+# public/ dilayani statis Next.js saat server mulai sehingga pagar peran terlewati. Pasang volume terpisah (PENERAPAN D).
 
 USER nextjs
 EXPOSE 3000

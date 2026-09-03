@@ -1,0 +1,17 @@
+UJI d — /lacak?nomor=WRP-009018 tanpa identitas pelapor (2026-09-03 23:57)
+Render: curl.exe -s http://127.0.0.1:3000/lacak?nomor=WRP-009018 (HTTP 200, 85291 byte)
+Metode: SELECT kolom identitas WRP-009018 dari DB (nilai TIDAK dicetak), lalu hitung kemunculannya di HTML render.
+----
+kolom identitas di DB: nama_pelapor=TERISI, nik_pelapor=TERISI, telepon_pelapor=TERISI, email_pelapor=TERISI
+kemunculan nilai utuh di HTML: nama=0 nik=0 telepon=0 email=0
+kemunculan potongan: nama_depan=0 nik_8digit_awal=0 telepon_tanpa_spasi=0 bagian_lokal_email=0
+kata terlarang di HTML: "petugas"=0 "catatan"=0 "nama_pelapor"=0 "nik_pelapor"=0
+----
+Yang tampil (dari HTML): 7x nomor kasus; label status linimasa:
+Nomor Kasus|Pembaruan Status|Hotline Pengaduan (24/7)|Nomor Kasus|Kategori Masalah|Wilayah Kejadian|Tanggal Masuk|Terakhir Diperbarui|Baru|Diverifikasi|Diproses|
+----
+UJI e — pesan netral untuk nomor asing vs format salah:
+  /lacak?nomor=WRP-000000 -> Nomor kasus tidak dikenali. Periksa kembali penulisannya (format WRP-XXXXXX).
+  /lacak?nomor=abc        -> Nomor kasus tidak dikenali. Periksa kembali penulisannya (format WRP-XXXXXX).
+  => IDENTIK (byte per byte), kelas pembungkus sama (role=status, KELAS_PESAN_INFO)
+Kode HTTP: /lacak=200, ?nomor=WRP-009018=200, ?nomor=WRP-000000=200, ?nomor=abc=200

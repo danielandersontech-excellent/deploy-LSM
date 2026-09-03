@@ -14,6 +14,9 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request, { params }) {
   const { jalur } = await params;
+  // Lampiran pengaduan (subfolder `pengaduan/…`) TIDAK dilayani di sini — hanya lewat
+  // /api/staf/pengaduan/[id]/lampiran/[lampiranId] setelah requireRole (TAHAP-06 §10).
+  if (Array.isArray(jalur) && jalur[0] === 'pengaduan') return new Response('Tidak ditemukan', { status: 404, headers: { 'cache-control': 'no-store' } });
   const berkas = await jalurDiskUnggahan(jalur);
   if (!berkas) return new Response('Tidak ditemukan', { status: 404, headers: { 'cache-control': 'no-store' } });
   const ext = path.extname(berkas.jalur).slice(1).toLowerCase();

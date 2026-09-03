@@ -1,0 +1,40 @@
+# Uji o — lebar 375/768/1024/1280 seluruh halaman publik lewat CDP + emulasi (2026-09-03T17:35:13Z); setelah perbaikan navbar (flex-wrap, nowrap lg+), filter program/galeri (flex-wrap), kolom berita (min-w-0)
+http://127.0.0.1:3000/kontak @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 1
+  <input> right=447 width=212 |  | 
+http://127.0.0.1:3000/kontak @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/kontak @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/kontak @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/lacak?nomor=WRP-009018 @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/lacak?nomor=WRP-009018 @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/lacak?nomor=WRP-009018 @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/lacak?nomor=WRP-009018 @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/ @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/ @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/ @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/ @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/berita @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/berita @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/berita @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/berita @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/program @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/program @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/program @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/program @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/galeri @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/galeri @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/galeri @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/galeri @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/struktur @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 3
+  <div> right=390 width=64 | absolute top-0 right-0 w-16 h-16 bg-surface-variant -mr-8 -mt-8 rounded-full opacity-50 gr | 
+  <div> right=390 width=64 | absolute top-0 right-0 w-16 h-16 bg-surface-variant -mr-8 -mt-8 rounded-full opacity-50 gr | 
+http://127.0.0.1:3000/struktur @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/struktur @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/struktur @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/tentang @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/tentang @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/tentang @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/tentang @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/faq @375px: clientWidth=375 scrollWidth=375 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/faq @768px: clientWidth=753 scrollWidth=753 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/faq @1024px: clientWidth=1009 scrollWidth=1009 -> PAS; elemen melewati tepi: 0
+http://127.0.0.1:3000/faq @1280px: clientWidth=1265 scrollWidth=1265 -> PAS; elemen melewati tepi: 0

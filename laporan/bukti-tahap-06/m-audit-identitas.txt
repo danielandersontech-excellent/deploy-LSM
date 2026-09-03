@@ -1,0 +1,12 @@
+# m-audit-identitas — audit_log 'lihat_identitas_pelapor' dari halaman /staf/pengaduan/[id] — 2026-09-03T17:02:30Z
+Sebelum uji render: n=2, id maks=14 (dicatat 2026-09-03T17:00Z sebelum curl).
+Urutan render: superadmin id2, superadmin id1(anonim), verifikator id2, verifikator id1(anonim), pimpinan13 id1, pimpinan13 id2(404), pimpinan3 id1/id2 (404), lalu superadmin id 1023 (non-anonim) x2, pimpinan13 id 1023, pimpinan3 id 1023 (404).
+Harapan: baris baru HANYA untuk superadmin/verifikator pada pengaduan non-anonim (id 2 dan id 1023); tidak ada baris untuk pengaduan anonim maupun pimpinan_wilayah.
+Sesudah: {"n":6,"maks":111}
+{"id":104,"user_id":1,"peran":"superadmin","aksi":"lihat_identitas_pelapor","tabel_terkait":"pengaduan","id_terkait":2,"detail":null,"ip":"127.0.0.1","dibuat_pada":"2026-09-03T17:00:22.000Z"}
+{"id":105,"user_id":4,"peran":"verifikator","aksi":"lihat_identitas_pelapor","tabel_terkait":"pengaduan","id_terkait":2,"detail":null,"ip":"127.0.0.1","dibuat_pada":"2026-09-03T17:00:23.000Z"}
+{"id":107,"user_id":1,"peran":"superadmin","aksi":"lihat_identitas_pelapor","tabel_terkait":"pengaduan","id_terkait":1023,"detail":null,"ip":"127.0.0.1","dibuat_pada":"2026-09-03T17:01:21.000Z"}
+{"id":111,"user_id":1,"peran":"superadmin","aksi":"lihat_identitas_pelapor","tabel_terkait":"pengaduan","id_terkait":1023,"detail":null,"ip":"127.0.0.1","dibuat_pada":"2026-09-03T17:01:49.000Z"}
+Baris oleh pimpinan_wilayah (user 6/22): 0 (harap 0)
+Baris untuk pengaduan anonim id 1: 0 (harap 0)
+(kolom detail NULL — tidak ada identitas di audit_log; hanya id pengaduan + aksi + ip)

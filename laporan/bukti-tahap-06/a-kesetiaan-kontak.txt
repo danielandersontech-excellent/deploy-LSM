@@ -1,0 +1,33 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/kontak_pengaduan_warkop_nusantara_updated_logo/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-kontak.html
+----------------------------------------------------------------
+Kelas desain       : 199
+Ditemukan di render: 194  (97%)
+Kelas hilang       : 5
+  hover:text-on-error-container
+  max-w-md
+  md:gap-12
+  mt-6
+  text-error
+----------------------------------------------------------------
+Token desain dipakai desain : 38
+Token hilang di render      : 2  -> error, on-error-container
+----------------------------------------------------------------
+Teks tampak desain : 39   hilang di render: 5
+  Kirim Laporan Resmi send
+  Masuk Staff login
+  contact_phone Hubungi Kami
+  edit_document Formulir Pengaduan Resmi
+  map Kantor Regional
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

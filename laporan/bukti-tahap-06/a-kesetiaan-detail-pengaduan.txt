@@ -1,0 +1,84 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/kelola_artikel_admin/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-admin-2.html
+----------------------------------------------------------------
+Kelas desain       : 129
+Ditemukan di render: 83  (64%)
+Kelas hilang       : 46
+  -translate-y-1/2
+  bg-opacity-20
+  bg-surface-container-highest
+  border-collapse
+  border-secondary-fixed-dim
+  divide-outline-variant
+  divide-y
+  focus:border-secondary-fixed-dim
+  focus:ring-1
+  focus:ring-secondary-fixed-dim
+  h-screen
+  hover:bg-surface-container-highest
+  hover:bg-surface-container-low
+  hover:text-error
+  hover:text-primary
+  hover:text-secondary
+  left-3
+  lg:table-cell
+  max-w-xs
+  md:table-cell
+  md:w-1/2
+  ml-64
+  mt-4
+  mt-auto
+  no
+  pl-10
+  pr-4
+  pt-4
+  px-3
+  py-1
+  py-4
+  rounded-md
+  shadow-md
+  shadows
+  sm:table-cell
+  space-x-1
+  space-x-2
+  space-y-2
+  text-left
+  text-outline
+  text-right
+  text-xl
+  top-1/2
+  truncate
+  whitespace-nowrap
+  z-10
+----------------------------------------------------------------
+Token desain dipakai desain : 28
+Token hilang di render      : 2  -> secondary-fixed-dim, surface-container-highest
+----------------------------------------------------------------
+Teks tampak desain : 19   hilang di render: 15
+  Draft
+  Filter Status:
+  Judul Artikel
+  Penulis
+  Published
+  Semua Status
+  Staff Warkop
+  Tanggal Publikasi
+  add Buat Laporan Baru
+  dashboard Dashboard
+  edit_document Kelola Artikel
+  gavel Kelola Pengaduan
+  logout Keluar
+  post_add Tulis Artikel Baru
+  settings Pengaturan
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

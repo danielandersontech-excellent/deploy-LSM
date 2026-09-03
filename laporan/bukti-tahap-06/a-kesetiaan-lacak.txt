@@ -1,0 +1,93 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/kontak_pengaduan_warkop_nusantara_updated_logo/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-lacak-lacak_nomor_WRP_009018.html
+----------------------------------------------------------------
+Kelas desain       : 199
+Ditemukan di render: 151  (76%)
+Kelas hilang       : 48
+  appearance-none
+  bg-outline-variant
+  bg-surface-container
+  border-2
+  border-b-2
+  border-dashed
+  border-secondary-fixed-dim
+  contrast-125
+  cursor-pointer
+  duration-150
+  focus:ring-2
+  font-semibold
+  gap-1
+  grayscale
+  h-4
+  h-48
+  h-5
+  h-full
+  h-px
+  hover:bg-surface-container-high
+  hover:text-on-error-container
+  inset-0
+  left-0
+  max-w-md
+  mb-4
+  mb-8
+  md:gap-12
+  mix-blend-multiply
+  mt-6
+  object-cover
+  opacity-20
+  opacity-90
+  p-8
+  pb-1
+  px-2
+  px-3
+  py-1
+  shadow
+  text-[12px]
+  text-[14px]
+  text-error
+  text-secondary
+  text-secondary-fixed-dim
+  transform
+  transition-transform
+  w-4
+  z-0
+  z-10
+----------------------------------------------------------------
+Token desain dipakai desain : 38
+Token hilang di render      : 2  -> secondary-fixed-dim, surface-container
+----------------------------------------------------------------
+Teks tampak desain : 39   hilang di render: 22
+  Alamat Email
+  Bukti Pendukung
+  Deskripsi Lengkap Kejadian
+  Detail Laporan
+  Identitas Pelapor
+  Kerusakan Infrastruktur
+  Kirim Laporan Resmi send
+  Lainnya
+  Masuk Staff login
+  Nama Lengkap (Sesuai KTP)
+  Nomor Induk Kependudukan (NIK)
+  Nomor Telepon / WhatsApp
+  Pencemaran Lingkungan
+  Pilih Kategori...
+  Pusat Layanan Pengaduan Masyarakat
+  Sembunyikan Identitas Saya (Laporan Anonim)
+  Sengketa Agraria / Tanah
+  Simpan Draft
+  Tindak Pidana Korupsi
+  contact_phone Hubungi Kami
+  edit_document Formulir Pengaduan Resmi
+  map Kantor Regional
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

@@ -1,0 +1,105 @@
+=== 1. anonim=true, state identitas TERISI ===
+[
+  [
+    "token_formulir",
+    "1700000000000.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ],
+  [
+    "situs_web",
+    ""
+  ],
+  [
+    "kategori_masalah",
+    "korupsi"
+  ],
+  [
+    "deskripsi",
+    "Dugaan penyelewengan dana desa untuk proyek jalan yang tidak pernah dibangun sejak 2025."
+  ],
+  [
+    "wilayah_id",
+    "13"
+  ],
+  [
+    "anonim",
+    "1"
+  ]
+]
+LULUS tidak ada field identitas di muatan
+LULUS field nama_pelapor TIDAK ADA
+LULUS field nik_pelapor TIDAK ADA
+LULUS field telepon_pelapor TIDAK ADA
+LULUS field email_pelapor TIDAK ADA
+LULUS anonim=1 disertakan
+LULUS tidak ada NILAI identitas yang bocor lewat field lain
+LULUS token_formulir & honeypot situs_web ikut
+
+=== 2. anonim=false, state sama ===
+[
+  [
+    "token_formulir",
+    "1700000000000.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  ],
+  [
+    "situs_web",
+    ""
+  ],
+  [
+    "kategori_masalah",
+    "korupsi"
+  ],
+  [
+    "deskripsi",
+    "Dugaan penyelewengan dana desa untuk proyek jalan yang tidak pernah dibangun sejak 2025."
+  ],
+  [
+    "wilayah_id",
+    "13"
+  ],
+  [
+    "nama_pelapor",
+    "Budi Contoh"
+  ],
+  [
+    "nik_pelapor",
+    "3171234567890001"
+  ],
+  [
+    "telepon_pelapor",
+    "081234567890"
+  ],
+  [
+    "email_pelapor",
+    "budi@contoh.id"
+  ]
+]
+LULUS identitas ikut dikirim bila TIDAK anonim
+LULUS field anonim tidak dikirim bila tidak dicentang
+
+=== 3. Muatan anonim diteruskan ke validasi server (lib/validasi/pengaduan.js) ===
+{
+  "anonim": true,
+  "namaPelapor": null,
+  "nikPelapor": null,
+  "teleponPelapor": null,
+  "emailPelapor": null,
+  "kategoriMasalah": "korupsi",
+  "wilayahId": 13,
+  "lokasiKejadian": null,
+  "deskripsi": "Dugaan penyelewengan dana desa untuk proyek jalan yang tidak pernah dibangun sejak 2025."
+}
+LULUS server menyimpan NULL untuk keempat identitas
+
+=== 4. Validasi klien ===
+LULUS anonim tanpa identitas: lolos
+LULUS bernama tanpa kontak: ditolak (bidang telepon_pelapor)
+LULUS deskripsi < 30: ditolak
+LULUS kategori kosong: ditolak
+
+=== 5. Batas lampiran klien ===
+LULUS 21 MB/berkas ditolak
+LULUS ekstensi .exe ditolak
+LULUS berkas ke-6 ditolak (maks 5)
+LULUS total > 40 MB ditolak
+
+RINGKASAN: SEMUA LULUS

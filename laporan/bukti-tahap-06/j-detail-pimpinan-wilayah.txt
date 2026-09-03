@@ -1,0 +1,25 @@
+# j-detail-pimpinan-wilayah — /staf/pengaduan/[id] untuk pimpinan_wilayah — 2026-09-03T17:02:26Z
+Akun: pimpinan_wilayah wilayah 13 (user 22) dan wilayah 3 (user 6); email/sandi disamarkan.
+Pengaduan: id 1 = WRP-009021 (anonim, wilayah 13), id 2 = WRP-009018 (wilayah 12), id 1023 = WRP-283161 (pengaduan uji NON-anonim, wilayah 13, dibuat lewat POST /api/pengaduan dengan identitas contoh + 1 lampiran PNG).
+
+GET /staf/pengaduan/1 sebagai pw13 -> HTTP 200
+GET /staf/pengaduan/2 sebagai pw13 -> HTTP 404
+GET /staf/pengaduan/1023 sebagai pw13 -> HTTP 200
+GET /staf/pengaduan/1 sebagai pw3 -> HTTP 404
+GET /staf/pengaduan/2 sebagai pw3 -> HTTP 404
+GET /staf/pengaduan/1023 sebagai pw3 -> HTTP 404
+
+## Hitung (grep -c, nilai TIDAK dicetak) pada render pimpinan_wilayah 13:
+  id=1: 'DATA SENSITIF'=0 'Laporan anonim'=0 'Tindak Lanjut'=0 kunci_kolom_identitas=0 nilai_nama=0 nilai_nik=0 nilai_telepon=0 nilai_email=0 ukuran_html=72836
+  id=1023: 'DATA SENSITIF'=0 'Laporan anonim'=0 'Tindak Lanjut'=0 kunci_kolom_identitas=0 nilai_nama=0 nilai_nik=0 nilai_telepon=0 nilai_email=0 ukuran_html=70865
+## Kontrol positif — render superadmin id=1023:
+  'DATA SENSITIF'=2 nilai_nama=2 nilai_nik=2 nilai_telepon=2 nilai_email=2  (2 = HTML + muatan RSC)
+## Kontrol anonim — render superadmin id=1 (WRP-009021): 'Laporan anonim'=2 'DATA SENSITIF'=0
+## Pratinjau aman (render superadmin id=1023): <iframe>=0 <object>=0 <video>=0 <img ke route lampiran>=1 tautan unduh=1 path_disk_bocor(/unggahan/)=0
+## Header route lampiran (superadmin):
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+content-disposition: inline; filename="d7f152b9e132a562ed5ee9768a5d5ef2.png"
+content-security-policy: default-src 'none'; sandbox
+content-type: image/png
+  tanpa cookie -> HTTP 401; pimpinan wilayah 3 -> HTTP 404; pimpinan wilayah 13 -> HTTP 200

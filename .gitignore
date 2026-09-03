@@ -16,6 +16,7 @@ LSM_WARKOP.png
 # --- unggahan runtime ---
 public/unggahan/*
 !public/unggahan/.gitkeep
+unggahan-terjaga/
 
 # --- lain-lain ---
 *.log

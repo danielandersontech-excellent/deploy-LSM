@@ -154,7 +154,7 @@ export default async function HalamanBerita({ searchParams }) {
       {/* Dua kolom (portal_berita_beranda): kolom utama + sisi kanan */}
       <div className="flex flex-col md:flex-row gap-gutter">
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col gap-12">
+        <div className="flex-1 min-w-0 flex flex-col gap-12">
           {/* Featured Investigasi — sorotan utama (portal_berita_beranda) */}
           {sorotan ? (
             <section aria-label="Sorotan utama">

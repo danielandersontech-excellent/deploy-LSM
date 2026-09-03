@@ -1,0 +1,89 @@
+# Uji API Tahap 6 — 2026-09-03T17:20:59Z
+login superadmin=200 verifikator=200 penulis=200 redaktur=200 pimpinan_wilayah(3)=200 pimpinan_wilayah(13)=200
+
+## b. UJI ANONIM LEWAT API LANGSUNG — anonim:true BESERTA identitas terisi (JSON)
+  -> HTTP 201 {"nomorKasus":"WRP-409618","anonim":true,"lampiran":0,"diterima":true}
+  baris DB (SELECT langsung):
+    {"nomor_kasus":"WRP-409618","anonim":1,"nama_pelapor":null,"nik_pelapor":null,"telepon_pelapor":null,"email_pelapor":null,"status":"baru","dibuat_pada":"2026-09-04 00:21:03"}
+    HASIL b: LULUS — keempat kolom NULL, anonim=1
+
+## c. Alur laporan BERNAMA (multipart + 1 lampiran JPG asli) — nomor kasus terbit
+  -> HTTP 201 {"nomorKasus":"WRP-739679","anonim":false,"lampiran":1,"diterima":true}
+    DB: {"id":1030,"anonim":0,"nama_ada":1,"tel_ada":1,"dibuat":"2026-09-04 00:21:03"}
+    lampiran: [{"id":5,"tipe":"image/jpeg","ukuran":40821,"path":"/terjaga/pengaduan/<acak>/<acak>.jpg"}]
+
+## p. Zona waktu — dibuat_pada pengaduan WRP-739679 vs WIB aplikasi
+    dibuat_pada: 2026-09-04 00:21:03 | WIB aplikasi: 2026-09-04 00:21:05 | zona sesi: +07:00 | selisih detik: 2
+    HASIL p: LULUS (WIB)
+
+## d. Pelacakan — JSON mentah WRP-739679 (bernama) tidak memuat identitas
+  -> HTTP 200
+    {"pengaduan":{"nomorKasus":"WRP-739679","kategori":"infrastruktur","kategoriLabel":"Kerusakan Infrastruktur","wilayah":"Jawa Barat","status":"baru","statusLabel":"Baru","dibuatPada":"2026-09-03T17:21:03.000Z","diperbaruiPada":"2026-09-03T17:21:03.000Z"},"riwayat":[{"statusSebelum":null,"statusSesudah":"baru","statusLabel":"Baru","pada":"2026-09-03T17:21:03.000Z"}]}
+    kata 'Pelapor Uji'/'0812'/'contoh.id'/nama_pelapor di JSON: 0 (harus 0)
+
+## e. Pelacakan nomor asing vs nomor yang ada tetapi 'tidak berhak' — pesan HARUS sama
+  WRP-000001 (tidak ada): HTTP 404 {"galat":"Nomor kasus tidak dikenali. Periksa kembali penulisannya (format WRP-XXXXXX).","kode":"TIDAK_DITEMUKAN"}
+  WRP-99999999 (format salah): HTTP 404 {"galat":"Nomor kasus tidak dikenali. Periksa kembali penulisannya (format WRP-XXXXXX).","kode":"TIDAK_DITEMUKAN"}
+  xyz: HTTP 404 {"galat":"Nomor kasus tidak dikenali. Periksa kembali penulisannya (format WRP-XXXXXX).","kode":"TIDAK_DITEMUKAN"}
+  HASIL e: LULUS — ketiga balasan identik (tidak ada pembedaan keberadaan/hak)
+
+## i. Catatan wajib — verifikator POST status tanpa catatan / catatan pendek
+  tanpa catatan  -> HTTP 422 {"galat":"Catatan internal wajib diisi (minimal 10 karakter) — setiap perubahan status harus bisa ditelusuri alasannya","kode":"CATATAN_WAJIB"}
+  catatan 'ok'   -> HTTP 422 {"galat":"Catatan internal wajib diisi (minimal 10 karakter) — setiap perubahan status harus bisa ditelusuri alasannya","kode":"CATATAN_WAJIB"}
+
+## f. UJI BUKU BESAR — WRP-739679: baru -> diverifikasi -> diproses -> selesai (+ ditolak -> diproses = 5 perubahan)
+  -> diverifikasi : HTTP 200 {"statusSebelum":"baru","statusSesudah":"diverifikasi","riwayatId":1030}
+  -> diproses : HTTP 200 {"statusSebelum":"diverifikasi","statusSesudah":"diproses","riwayatId":1031}
+  -> ditolak : HTTP 200 {"statusSebelum":"diproses","statusSesudah":"ditolak","riwayatId":1032}
+  -> diproses : HTTP 200 {"statusSebelum":"ditolak","statusSesudah":"diproses","riwayatId":1033}
+  -> selesai : HTTP 200 {"statusSebelum":"diproses","statusSesudah":"selesai","riwayatId":1034}
+  isi pengaduan_riwayat (SELECT):
+    {"id":1029,"status_sebelum":null,"status_sesudah":"baru","catatan":"Laporan diterima","oleh_user_id":null,"oleh":null,"waktu":"2026-09-04 00:21:03"}
+    {"id":1030,"status_sebelum":"baru","status_sesudah":"diverifikasi","catatan":"Bukti foto jembatan cocok dengan laporan warga.","oleh_user_id":4,"oleh":"Siti Aminah","waktu":"2026-09-04 00:21:08"}
+    {"id":1031,"status_sebelum":"diverifikasi","status_sesudah":"diproses","catatan":"Diteruskan ke tim advokasi wilayah untuk klarifikasi.","oleh_user_id":4,"oleh":"Siti Aminah","waktu":"2026-09-04 00:21:08"}
+    {"id":1032,"status_sebelum":"diproses","status_sesudah":"ditolak","catatan":"Uji cabang: sementara ditolak karena bukti tambahan diminta.","oleh_user_id":4,"oleh":"Siti Aminah","waktu":"2026-09-04 00:21:08"}
+    {"id":1033,"status_sebelum":"ditolak","status_sesudah":"diproses","catatan":"Bukti tambahan diterima; kembali diproses.","oleh_user_id":4,"oleh":"Siti Aminah","waktu":"2026-09-04 00:21:08"}
+    {"id":1034,"status_sebelum":"diproses","status_sesudah":"selesai","catatan":"Perbaikan jembatan dimulai; pelapor mengonfirmasi.","oleh_user_id":4,"oleh":"Siti Aminah","waktu":"2026-09-04 00:21:08"}
+    status akhir pengaduan: selesai
+    HASIL f: LULUS — 1 baris awal + 5 perubahan berantai, semua bercatatan & berpelaku, waktu WIB
+
+## g. UJI TRANSAKSI — trigger sementara menggagalkan INSERT riwayat -> status TIDAK berubah
+    SEBELUM: status=selesai riwayat=6
+  POST status=baru catatan=GAGALKAN-UJI-G -> HTTP 500 {"galat":"Terjadi kesalahan di server","kode":"GALAT_SERVER"}
+    SESUDAH: status=selesai riwayat=6
+    HASIL g: LULUS — status & riwayat tidak berubah (rollback)
+    trigger uji dihapus
+
+## h. Penelusuran jalan pintas — UPDATE pengaduan … status di luar ubahStatusPengaduan()
+    lib/db/pengaduan.js:170: *   3. UPDATE pengaduan.status
+    kemunculan 'SET status' pada tabel pengaduan di luar lib/db/pengaduan.js: 0 (harus 0); di dalam lib/db/pengaduan.js hanya di ubahStatusPengaduan: [194:    await kueri(`UPDATE pengaduan SET status = ?, diperbarui_pada = ? WHERE id = ?`, [statusBaru, sekarang, Number(id)], koneksi);] 
+
+## j. UJI PERAN
+  penulis GET /api/staf/pengaduan               -> HTTP 403
+  redaktur GET /api/staf/pengaduan              -> HTTP 403
+  pimpinan_wilayah POST status                  -> HTTP 403
+  pimpinan_wilayah(3) GET daftar                -> HTTP 200 total=0 wilayah=[] kolom identitas ada=false
+  pimpinan_wilayah(13) GET daftar               -> HTTP 200 total=9 wilayah=[13] kolom identitas ada=false
+  pimpinan_wilayah(13) GET detail 1030 (wil 13)  -> HTTP 200 kunci= (harus kosong) ; nama/nik/telepon/email di JSON: 0
+  pimpinan_wilayah(3) GET detail 1030 (wil 13)   -> HTTP 404
+  verifikator GET detail                        -> HTTP 200 kunci identitas=nama_pelapor,nik_pelapor,telepon_pelapor,email_pelapor ; lampiran url=/api/staf/pengaduan/1030/lampiran/5 ; path disk ada=false
+
+## m. Audit identitas — audit_log 'lihat_identitas_pelapor' oleh verifikator untuk pengaduan 1030
+    {"aksi":"lihat_identitas_pelapor","user_id":4,"peran":"verifikator","w":"2026-09-04 00:21:15"}
+    HASIL m: LULUS
+
+## k. UJI LAMPIRAN (POST /api/pengaduan anonim)
+  25 MB (.pdf asli)            -> HTTP 400 {"galat":"Muatan tidak sah","kode":"MUATAN_TIDAK_SAH"}
+  .exe bernama .pdf            -> HTTP 415 {"galat":"Lampiran ditolak: format harus JPG, PNG, WebP, PDF, atau MP4 (isi berkas tidak cocok)","kode":"LAMPIRAN_TIPE_TIDAK_SAH"}
+  .svg berisi script           -> HTTP 415 {"galat":"Lampiran ditolak: format harus JPG, PNG, WebP, PDF, atau MP4 (isi berkas tidak cocok)","kode":"LAMPIRAN_TIPE_TIDAK_SAH"}
+  6 berkas (maks 5)            -> HTTP 422 {"galat":"Maksimal 5 berkas lampiran","kode":"LAMPIRAN_TERLALU_BANYAK"}
+  pengaduan setengah jadi dari kiriman yang ditolak? jumlah pengaduan berdeskripsi 'Uji k': 0 (harus 0)
+  tebak URL lampiran: jalur disk /terjaga/pengaduan/d35679f073cb65da3035bebb/6a0c66364cabec93b780019514abec10.jpg
+    GET /terjaga/pengaduan/d35679f073cb65da3035bebb/6a0c66364cabec93b780019514abec10.jpg (route publik)          -> HTTP 404  (harus 404: subfolder pengaduan tidak dilayani)
+    GET /api/staf/pengaduan/1030/lampiran/5 tanpa cookie -> HTTP 401
+    … sebagai penulis -> HTTP 403 ; pimpinan_wilayah(3, wilayah lain) -> HTTP 404 ; verifikator -> HTTP 200 X-Content-Type-Options: nosniff content-disposition: inline; filename="6a0c66364cabec93b780019514abec10.jpg" content-security-policy: default-src 'none'; sandbox content-type: image/jpeg 
+    lampiran pengaduan LAIN lewat id pengaduan ini: /api/staf/pengaduan/1/lampiran/5 (verifikator) -> HTTP 404  (harus 404)
+
+## Bersihkan: hapus lunak pengaduan uji WRP-409618, WRP-739679 (tidak ada DELETE fisik — riwayat RESTRICT)
+    hapus lunak WRP-409618 1
+    hapus lunak WRP-739679 1

@@ -50,13 +50,16 @@ export default function NavPublik({ menu, hrefStaf }) {
       <div className="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
         {/* Merek: kelas verbatim + shrink-0 whitespace-nowrap (KEPUTUSAN BARU Tahap 4, TEMUAN navbar): tanpa itu
             Chrome menyusutkan merek sehingga teks "WARKOP NUSANTARA" membungkus dua baris dan ditimpa tautan menu
-            pada 768–1280 px — di seluruh screen.png desain merek selalu satu baris. Dijadikan tautan ke beranda
+            pada 768–1280 px — di seluruh screen.png desain merek selalu satu baris. nowrap hanya md+ (Tahap 6:
+            di 375 px nowrap membuat halaman melebar melewati viewport). Dijadikan tautan ke beranda
             seperti varian beranda_warkop_nusantara. */}
-        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 shrink-0 whitespace-nowrap" href="/">
+        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 max-w-full lg:shrink-0 lg:whitespace-nowrap" href="/">
           <Image alt="WARKOP NUSANTARA Logo" className="h-16 w-16 object-contain rounded-full" src="/logo-warkop.png" width={64} height={64} priority />
           <span className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight">WARKOP NUSANTARA</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-6 mt-4 md:mt-0" aria-label="Navigasi utama">
+        {/* flex-wrap justify-center (kelas nav di layar tentang/struktur/program ZIP) — Tahap 6: tanpa itu navbar
+            meluap mendatar pada 768–1024 px (merek + 7 tautan + tombol > lebar); nowrap merek hanya lg+. */}
+        <nav className="hidden md:flex flex-wrap justify-center items-center gap-6 mt-4 md:mt-0" aria-label="Navigasi utama">
           {daftarTautan()}
         </nav>
         <div className="flex items-center gap-4">
@@ -82,12 +85,13 @@ export default function NavPublik({ menu, hrefStaf }) {
           </button>
         </div>
       </div>
-      {/* Laci menu (KEPUTUSAN BARU 18.3): bg-primary, tautan kelas sama, vertikal, gap-4 */}
+      {/* Laci menu (KEPUTUSAN BARU 18.3): bg-primary, tautan kelas sama, vertikal, gap-4.
+          Dirender hanya saat terbuka (Tahap 6: atribut hidden dikalahkan kelas .flex — laci selalu tampak). */}
+      {laciTerbuka ? (
       <nav
         id={`${idLaci}-laci`}
         className="md:hidden bg-primary w-full px-margin-mobile pb-4 flex flex-col gap-4"
         aria-label="Navigasi utama (seluler)"
-        hidden={!laciTerbuka}
       >
         {daftarTautan()}
         <a className="flex items-center gap-2 bg-secondary text-on-secondary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors self-start" href={hrefStaf}>
@@ -95,6 +99,7 @@ export default function NavPublik({ menu, hrefStaf }) {
           <Ikon nama="login" />
         </a>
       </nav>
+      ) : null}
     </header>
   );
 }

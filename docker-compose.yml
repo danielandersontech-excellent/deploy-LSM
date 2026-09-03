@@ -68,14 +68,18 @@ services:
       NEXT_TELEMETRY_DISABLED: "1"
       STAF_HOST: ${STAF_HOST:-}
       UPLOAD_DIR: /app/public/unggahan
+      UPLOAD_PRIVATE_DIR: /app/unggahan-terjaga
       UPLOAD_MAX_MB: "20"
     ports:
       - "127.0.0.1:3000:3000"
     volumes:
       # unggahan tidak boleh hilang saat container diganti
       - warkop-compose-unggahan:/app/public/unggahan
+      # lampiran pengaduan: di LUAR public/ (Tahap 6)
+      - warkop-compose-terjaga:/app/unggahan-terjaga
     restart: unless-stopped
 
 volumes:
   warkop-compose-db:
   warkop-compose-unggahan:
+  warkop-compose-terjaga:

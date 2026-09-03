@@ -1,0 +1,124 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/kelola_pengaduan_admin/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-kelola-pengaduan.html
+----------------------------------------------------------------
+Kelas desain       : 218
+Ditemukan di render: 139  (64%)
+Kelas hilang       : 79
+  aspect-video
+  backdrop-blur-sm
+  before:absolute
+  before:bg-outline-variant
+  before:bg-secondary-fixed-dim
+  before:bottom-0
+  before:bottom-2
+  before:content-['']
+  before:left-0
+  before:left-[11px]
+  before:rounded-l-lg
+  before:top-0
+  before:top-2
+  before:w-1
+  before:w-[2px]
+  bg-primary-container
+  bg-primary/40
+  bg-primary/60
+  bg-surface-container-low/30
+  bg-surface-container-lowest
+  border-2
+  border-b-2
+  border-b-transparent
+  border-dashed
+  border-primary-container
+  border-surface
+  border-tertiary
+  cursor-not-allowed
+  flex-shrink-0
+  focus:border-b-secondary
+  focus:border-secondary
+  focus:ring-2
+  focus:ring-secondary
+  gap-8
+  grid
+  grid-cols-2
+  h-20
+  h-6
+  h-screen
+  hover:text-secondary-fixed
+  inset-0
+  italic
+  items-end
+  leading-relaxed
+  lg:flex-row
+  lg:w-80
+  max-h-[921px]
+  max-w-4xl
+  mb-1
+  mb-3
+  ml-0
+  mt-0.5
+  mt-2
+  opacity-0
+  overflow-x-hidden
+  p-0
+  p-2.5
+  p-3
+  p-5
+  p-6
+  pt-4
+  px-2
+  resize-none
+  shadow-[0_10px_40px_-10px_rgba(39,19,16,0.3)]
+  sm:items-center
+  sm:p-6
+  sm:rounded-xl
+  space-y-2
+  space-y-3
+  space-y-6
+  text-[12px]
+  text-lg
+  text-secondary-fixed
+  tracking-wider
+  transition-transform
+  w-20
+  w-6
+  z-10
+  z-40
+----------------------------------------------------------------
+Token desain dipakai desain : 32
+Token hilang di render      : 3  -> secondary-fixed, surface-container-lowest, tertiary
+----------------------------------------------------------------
+Teks tampak desain : 31   hilang di render: 22
+  Baru (12)
+  Baru Masuk
+  Bukti Lampiran
+  Catatan Internal (Staff Only)
+  Deskripsi Kejadian
+  Detail Laporan #WRP-9021
+  Diproses (45)
+  Diproses (Investigasi)
+  Ditolak (Kurang Bukti)
+  Riwayat Aktivitas
+  Selesai Ditindak
+  Semua (124)
+  Staff Warkop
+  Ubah Status
+  add Buat Laporan Baru
+  dashboard Dashboard
+  edit_document Kelola Artikel
+  gavel Kelola Pengaduan
+  logout Keluar
+  save Simpan Perubahan
+  settings Pengaturan
+  update Tindak Lanjut
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

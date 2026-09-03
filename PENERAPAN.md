@@ -69,6 +69,7 @@ nilainya tercetak terbuka di log build.
 | **`STAF_HOST`** | `staf.<domain>` | Runtime only | **wajib terisi** di produksi; kosong = pemisahan host nonaktif |
 | `UPLOAD_DIR` | `/app/public/unggahan` | Runtime only | titik pasang volume (bagian D) |
 | `UPLOAD_MAX_MB` | `20` | Runtime only | |
+| `UPLOAD_PRIVATE_DIR` | `/app/unggahan-terjaga` | Runtime only | **Tahap 6.** Direktori lampiran PENGADUAN — WAJIB di luar `public/` (berkas di bawah `public/` dilayani statis Next.js, melewati pagar peran). Pasang volume terpisah `warkop-lampiran` → `/app/unggahan-terjaga` di Coolify (Storages). Tanpa volume ini lampiran hilang saat redeploy |
 
 ## C. Subdomain
 

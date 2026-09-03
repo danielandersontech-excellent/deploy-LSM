@@ -1,0 +1,2 @@
+{"galat":"Kiriman terlalu besar: setiap lampiran maksimal 20 MB","kode":"LAMPIRAN_TERLALU_BESAR"}
+HTTP 413

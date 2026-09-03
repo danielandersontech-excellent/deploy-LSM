@@ -1,0 +1,6 @@
+# Nama ikon bocor / larangan pada render produksi
+  /kontak: ikon-teks 0 material-symbols 0 googleusercontent 0 href=# 0 100vh 0 !important 0 ; input tanpa id: 1
+  /lacak: ikon-teks 0 material-symbols 0 googleusercontent 0 href=# 0 100vh 0 !important 0 ; input tanpa id: 0
+  /kelola-pengaduan: ikon-teks 0 material-symbols 0 googleusercontent 0 href=# 0 100vh 0 !important 0 ; input tanpa id: 0
+  /detail-pengaduan: ikon-teks 0 material-symbols 0 googleusercontent 0 href=# 0 100vh 0 !important 0 ; input tanpa id: 0
+  await: 0 (harus 0)

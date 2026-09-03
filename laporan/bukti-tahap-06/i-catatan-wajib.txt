@@ -1,0 +1,24 @@
+# i-catatan-wajib — POST /api/staf/pengaduan/1023/status (WRP-283161, pengaduan uji) — 2026-09-03T17:01:46Z
+## 1. superadmin, tanpa catatan -> harap 422 CATATAN_WAJIB
+{"galat":"Catatan internal wajib diisi (minimal 10 karakter) — setiap perubahan status harus bisa ditelusuri alasannya","kode":"CATATAN_WAJIB"}
+HTTP 422
+## 2. superadmin, catatan 5 karakter -> harap 422
+{"galat":"Catatan internal wajib diisi (minimal 10 karakter) — setiap perubahan status harus bisa ditelusuri alasannya","kode":"CATATAN_WAJIB"}
+HTTP 422
+## 3. pimpinan_wilayah 13, catatan sah -> harap 403 (baca-saja)
+{"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+HTTP 403
+## 4. superadmin, catatan sah -> harap 200 (balasan tanpa kolom identitas)
+{"pengaduan":{"id":1023,"nomor_kasus":"WRP-283161","anonim":0,"kategori_masalah":"pelayanan-publik","wilayah_id":13,"wilayah_nama":"Jawa Barat","lokasi_kejadian":"Kantor Kecamatan Uji, Bandung","deskripsi":"<dipotong>","status":"diverifikasi","petugas_id":null,"petugas_nama":null,"dibuat_pada":"2026-09-03T17:01:06.000Z","diperbarui_pada":"2026-09-03T17:01:47.000Z"},"riwayat":[{"id":1016,"status_sebelum":null,"status_sesudah":"baru","catatan":"Laporan diterima","oleh_user_id":null,"oleh_nama":null,"dibuat_pada":"2026-09-03T17:01:06.000Z"},{"id":1017,"status_sebelum":"baru","status_sesudah":"diverifikasi","catatan":"Bukti awal lengkap; laporan diverifikasi untuk ditindaklanjuti (uji Tahap 6).","oleh_user_id":1,"oleh_nama":"Superadmin","dibuat_pada":"2026-09-03T17:01:47.000Z"}],"perubahan":{"statusSebelum":"baru","statusSesudah":"diverifikasi","riwayatId":1017}}
+HTTP 200
+## 5. superadmin, status sama -> harap 422 STATUS_SAMA
+{"galat":"Pengaduan sudah berstatus 'diverifikasi'","kode":"STATUS_SAMA"}
+HTTP 422
+## 6. PATCH petugas_id=4 (verifikator) oleh superadmin -> harap 200
+{"pengaduan":{"id":1023,"nomor_kasus":"WRP-283161","anonim":0,"kategori_masalah":"pelayanan-publik","wilayah_id":13,"wilayah_nama":"Jawa Barat","lokasi_kejadian":"Kantor Kecamatan Uji, Bandung","deskripsi":"<dipotong>","status":"diverifikasi","petugas_id":4,"petugas_nama":"Siti Aminah","dibuat_pada":"2026-09-03T17:01:06.000Z","diperbarui_pada":"2026-09-03T17:01:48.000Z"}}
+HTTP 200
+## 7. Render ulang halaman detail (superadmin) — linimasa memuat langkah baru?
+HTTP 200
+  'Bukti awal lengkap' muncul: 2 kali; 'Diverifikasi' muncul: 3 kali; petugas 'Belum ditugaskan' sisa: 1
+## 8. Telusur: UPDATE pengaduan SET status di luar lib/db/pengaduan.js
+  (tidak ada)

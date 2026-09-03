@@ -1,0 +1,7 @@
+# Uji l — rate limit POST /api/pengaduan (2026-09-03T17:21:27Z); batas 10 / 60 menit per IP
+  kiriman ke-11 -> HTTP 429 {"galat":"Terlalu banyak permintaan dari jaringan Anda dalam waktu singkat. Ini pengaman otomatis, bukan penolakan laporan Anda — silakan coba lagi dalam sekitar 60 menit, atau hubungi hotline kami.","kode":"TERLALU_BANYAK","sisaDetik":3600}
+  lolos (201): 10 ; dibatasi (429): 20 ; 429 pertama pada kiriman ke-11
+  HASIL l: LULUS — dibatasi setelah kuota, pesan netral tidak menyalahkan pelapor
+  lacak: 70 permintaan cepat -> 10 x 429 (batas 60/15 menit)
+$ bersihkan: hapus lunak pengaduan 'Uji l'
+  dihapus lunak: 10

@@ -130,7 +130,7 @@ export default async function HalamanProgram({ searchParams }) {
             )}
           </nav>
           {/* Satu <select> desain memuat urutan + status; dipecah jadi dua <select> berkelas sama agar keduanya bisa dipilih bersamaan (KEPUTUSAN BARU) */}
-          <form method="get" action="/program" className="flex items-center gap-2">
+          <form method="get" action="/program" className="flex flex-wrap items-center gap-2">
             {kategori ? <input type="hidden" name="kategori" value={kategori} /> : null}
             <label htmlFor="urut" className="font-label-md text-label-md text-on-surface-variant">Urutkan:</label>
             <select id="urut" name="urut" defaultValue={urut || 'terbaru'} className="bg-surface border-tertiary text-on-surface font-body-md text-body-md rounded-lg focus:ring-secondary focus:border-secondary">
