@@ -13,7 +13,7 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 | 02 Autentikasi | LULUS | 2356075 | 14 butir uji a–n berbukti; Location tanpa 0.0.0.0; 403 semua peran tak berhak |
 | 03 Docker | LULUS | 1117749 | 12 butir a–l berbukti (image 998 MB, log bersih, healthy→unhealthy→healthy, proxy+pemisahan host di container, WIB selaras, non-root, volume, rollback, konteks 764 MB→2,77 MB); skema+seed PRODUKSI dijalankan, login & pemisahan host di domain terbukti (bukti-server/). Temuan: unggahan butuh route handler (Tahap 5/6) |
 | 04 Situs publik | LULUS (catatan) | 7b075f8 | 14 butir a–n berbukti: kesetiaan 5 halaman cacat 0 (97/89/91/81/93 % kelas, semua beralasan), kontras 28/28, identitas 0 bocor, keadaan kosong, build+lint hijau. Uji c: A11y 98–100/BP 96/SEO 100 lulus, **Performance 70–80 < 90** (font Fira Sans ±570 KB tidak disubset; preload dimatikan; subset = keputusan pemilik). TEMUAN: navbar kanonik tidak muat di 1280 (kotak cari) — keputusan pemilik; `min-h-screen` body = 100vh |
-| 05 Modul berita | SEDANG | | mulai 3 Sep 2026 23:20 WIB: sanitasi server (isomorphic-dompurify), unggahan (magic bytes+sharp+nama acak) + route penyaji /unggahan, slugify, API artikel publik/staf/terbitkan/unggah, sidebar staf kanonik + layout; uji API b/c/d/e/f/g LULUS (bukti-tahap-05/b-c-d-e-f-g-api.txt); 4 halaman dikerjakan agen paralel |
+| 05 Modul berita | LULUS (catatan) | 4409067 | 15 butir a–o berbukti: peran 403 semua, XSS bersih di DB & render, unggahan (php/svg/6MB ditolak, nama acak), slug unik+beku, kategori wajib 422, terbit_pada WIB, jumlah_dibaca tanpa bot, kesetiaan 5 layar cacat 0, keadaan kosong, build+lint hijau. Uji k: A11y 98–100/SEO 100, Performance 73–78 < 90 (sebab sama Tahap 4: font). Tangkapan halaman staf tidak ada (tanpa otomasi login) |
 | 06 Modul pengaduan | BELUM | | |
 | 07 Ruang staf | BELUM | | |
 | 08 Realtime | BELUM | | |
@@ -38,4 +38,4 @@ MODE OTONOM dilanjutkan. Perintah pemilik untuk server/produksi terangkum di
 - Push + redeploy via webhook diizinkan (PERINTAH-PEMILIK-SERVER 3). Webhook port 8000 TIDAK terjangkau dari internet → dipanggil dari dalam server lewat SSH (localhost:8000), token via stdin — KEPUTUSAN BARU. Redeploy Tahap 03 (a2dbb53) sukses 3 Sep 22:45 WIB; Tahap 04 (6e39a1b) sukses 23:28 WIB, health 200 (bukti-server/03-…, 04-redeploy-tahap-04.txt; skrip bukti-server/skrip/redeploy.sh).
 
 ## Posisi terakhir (bila sesi terputus di tengah tahap)
-Tahap 05 SEDANG — fondasi (lib/sanitasi, lib/unggahan, route API, sidebar/layout staf) sudah ditulis, belum di-commit; halaman /berita, /berita/[slug], /staf/artikel, editor sedang dikonversi; sisa uji a,h,i–o, laporan, commit, push, redeploy.
+Tahap 05 LULUS + commit 4409067. Berikutnya: push + redeploy webhook (bukti-server/skrip/redeploy.sh) + verifikasi health, lalu Tahap 06 (modul pengaduan) dari awal.
