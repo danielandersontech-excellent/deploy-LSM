@@ -1,0 +1,17 @@
+# BLOKIR — prasyarat mati: disk C: penuh (ALUR 7.3). npm run build tidak lagi hijau di mesin ini.
+waktu: 2026-09-03 14:14:04 WIB
+$ df -h /c
+C:              220G  220G  259M 100% /c
+$ df -h /d
+D:              932G  158G  775G  17% /d
+
+$ npm run build (dua kali, termasuk dengan TEMP/TMP dialihkan ke D:)
+▲ Next.js 16.3.4 (Turbopack)
+✓ Compiled successfully in 20.0s
+ƒ Proxy (Middleware)
+exit=0
+
+# Kronologi: pukul 13:3x build masih hijau (bukti-tahap-02/n-build-lint.txt, bukti-tahap-03 build host). Setelah tiga upaya docker build (Docker Desktop/WSL mati, vhdx di C:), sisa C: turun 1,1 GB -> 255 MB; sejak itu worker `next build` mati dengan "Fatal error in , line 0" (V8 gagal alokasi memori — pagefile di C: tidak bisa tumbuh), exit 134.
+# Mengalihkan TEMP/TMP ke D: tidak menolong -> bukan berkas sementara, melainkan alokasi memori/pagefile.
+# Isi %TEMP% terbesar (bukan milik Claude Code, tidak dihapus): vscode-stable-user-x64 221 MB, wct*.tmp 3x ~130 MB, Adobe 88 MB, CreativeCloud 51 MB.
+# Docker: docker_data.vhdx ±13 GB di %LOCALAPPDATA%\Docker\wsl\disk; 13 GB image/cache proyek lain reclaimable (docker system df).
