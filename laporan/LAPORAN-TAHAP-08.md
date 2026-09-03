@@ -10,7 +10,7 @@ sebelum masuk room; tiga kejadian (`pengaduan:baru`, `pengaduan:status`,
 tanpa identitas; klien same-origin lewat `hooks/useSocket.js`; antarmuka
 memuat ulang halus (`router.refresh()`) tanpa menggeser gulir dan tanpa
 mengubah daftar pengguna yang menyaring. **13/13 butir uji LULUS** (butir h di
-produksi setelah redeploy — lihat bagian 7).
+produksi setelah redeploy image 3c64be4 — lihat bagian 7).
 
 ## 1. Berkas, kejadian, dan room
 
@@ -105,7 +105,7 @@ angka 3, baris pertama = pengaduan yang dikirim saat offline
 | e. Tanpa socket sistem tetap jalan | LULUS | bagian 4 |
 | f. Pemulihan sambungan | LULUS: menyusul 1,5 s setelah online | bagian 5 |
 | g. Route tidak menyentuh io | LULUS: 0 kecocokan | `g-route-tanpa-io.txt` |
-| h. WSS di balik HTTPS (produksi) | lihat `h-wss-produksi.txt` (dijalankan setelah redeploy, dicatat di STATUS.md) | `h-wss-produksi.txt` |
+| h. WSS di balik HTTPS — PRODUKSI staf.warkopnusantara.id (image 3c64be4, Traefik/Coolify) | LULUS: Node tanpa cookie → TANPA_TOKEN; cookie sah → tersambung transport=websocket `wss://staf.warkopnusantara.id/socket.io/`, room global,user:1,staf; Chrome headless: halaman dashboard membuka `wss://…/socket.io/` handshake 101, `data-realtime=tersambung`, mixed content TIDAK ADA (satu peringatan preload font Domine, bukan socket) | `h-wss-produksi.txt`; `tangkapan/h-dashboard-produksi.png` |
 | i. Tidak mengganggu gulir | LULUS: `main.scrollTop` 300 → 300; baris baru masuk di atas (5→6 baris) dalam 0,5 s | `a-e-f-i-j-peramban.txt`; `i-setelah-pengaduan-baru.png` |
 | j. Menyaring (status=selesai) | LULUS: daftar identik sebelum/sesudah; penanda "Ada 1 laporan baru — muat ulang" muncul | `j-menyaring-penanda.png` |
 | k. Beban 50 socket + 20 pengaduan/status | LULUS: 1000/1000 pesan diterima, 0 socket kekurangan, 20 POST dalam 957 ms, latensi rata-rata 479 ms, RSS klien 69 MB | `b-c-d-k-l-socket.txt` |
