@@ -1,0 +1,12 @@
+# UJI m — cookies()/headers()/params/searchParams tanpa await (aturan 12)
+$ node laporan/bukti-tahap-02/skrip/uji-m-await.mjs
+  ok           app/(auth)/login/page.js:13  export default async function HalamanLogin({ searchParams }) {
+  ok           app/(auth)/login/page.js:14  const sp = await searchParams;
+  ok           app/api/staf/pengaduan/[id]/route.js:13  export const GET = denganPeran(HAK.pengaduan_lihat, async (request, { params }, pengguna) => {
+  ok           app/api/staf/pengaduan/[id]/route.js:14  const { id } = await params;
+  ok           lib/auth/sesi.js:54  const toko = await cookies();
+  ok           lib/auth/sesi.js:68  const h = request?.headers ?? (await headers());
+
+Berkas dipindai: 40 | pemakaian ditemukan: 6 | pembacaan tanpa await: 0
+HASIL: LULUS — nihil (semua cookies()/headers()/params/searchParams di-await)
+exit=0

@@ -1,0 +1,46 @@
+# UJI f — PEMISAHAN HOST. Server: STAF_HOST=staf.warkop.test (domain utama = warkop.test). curl meniru Traefik: Host + X-Forwarded-Host + X-Forwarded-Proto: https
+# Nilai Location diperiksa HARFIAH: tidak boleh memuat 0.0.0.0 atau localhost saat STAF_HOST terisi.
+
+$ curl.exe -i -H "Host: warkop.test" -H "X-Forwarded-Host: warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/staf/dashboard
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/staf/dashboard
+https://staf.warkop.test/staf/dashboard
+
+$ curl.exe -i -H "Host: warkop.test" -H "X-Forwarded-Host: warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/login
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/login
+https://staf.warkop.test/login
+
+$ curl.exe -i -H "Host: staf.warkop.test" -H "X-Forwarded-Host: staf.warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/tentang
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/staf/dashboard
+https://staf.warkop.test/staf/dashboard
+
+$ curl.exe -i -H "Host: staf.warkop.test" -H "X-Forwarded-Host: staf.warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/staf/dashboard
+https://staf.warkop.test/staf/dashboard
+
+$ curl.exe -i -H "Host: staf.warkop.test" -H "X-Forwarded-Host: staf.warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/staf/dashboard
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/login?lanjut=%2Fstaf%2Fdashboard
+https://staf.warkop.test/login?lanjut=%2Fstaf%2Fdashboard
+
+$ curl.exe -i -H "Host: warkop.test" -H "X-Forwarded-Host: warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/api/health
+HTTP/1.1 200 OK
+content-type: application/json
+
+$ curl.exe -i -H "Host: staf.warkop.test" -H "X-Forwarded-Host: staf.warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/api/health
+HTTP/1.1 200 OK
+content-type: application/json
+
+$ curl.exe -i -H "Host: staf.warkop.test" -H "X-Forwarded-Host: staf.warkop.test" -H "X-Forwarded-Proto: https" http://localhost:3000/login
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+
+# baris ke-6 tabel TAHAP-02 (STAF_HOST kosong, localhost tanpa token) — sudah diuji pada run pertama (bukti e): 307 ke http://localhost:3000/login?lanjut=%2Fstaf%2Fdashboard
+
+# pemeriksaan terprogram: grep -ic "0.0.0.0" & "localhost" pada seluruh baris Location di atas
+kemunculan 0.0.0.0 di Location : 0
+kemunculan localhost di Location: 0
+jumlah baris Location            : 5

@@ -1,0 +1,33 @@
+# GERBANG-MANDIRI 7.2 — Tahap 02 (pemeriksaan terprogram)
+a-b-c-d-e-g-h-i-j-curl.txt       ada (128 baris)
+f-pemisahan-host.txt             ada (46 baris)
+g-sql-log.txt                    ada (35 baris)
+k-kesetiaan-login.txt            ada (37 baris)
+l-route-penjaga.txt              ada (15 baris)
+m-await.txt                      ada (12 baris)
+n-build-lint.txt                 ada (53 baris)
+
+$ grep -i '^location' f-pemisahan-host.txt | grep -c '0.0.0.0'   (harus 0)
+0
+$ grep -i '^location' f-pemisahan-host.txt | grep -c 'localhost'  (harus 0)
+0
+$ grep -i '^location' f-pemisahan-host.txt
+location: https://staf.warkop.test/staf/dashboard
+location: https://staf.warkop.test/login
+location: https://staf.warkop.test/staf/dashboard
+location: https://staf.warkop.test/staf/dashboard
+location: https://staf.warkop.test/login?lanjut=%2Fstaf%2Fdashboard
+$ uji c: baris 403/401 yang diharapkan & lulus
+     15 ya
+$ grep -c 'IDENTIK' (uji b)
+1
+$ uji h: kemunculan kunci identitas untuk pimpinan_wilayah
+kemunculan kunci identitas (nama_pelapor|nik_pelapor|telepon_pelapor|email_pelapor): 0  (harus 0)
+$ uji g SQL tanpa wilayah_id
+  tanpa   : 0  (harus 0)
+$ uji k cacatExport
+jumlah cacat = 0
+$ uji l/m/n
+HASIL: LULUS — seluruh route non-publik memakai penjaga
+HASIL: LULUS — nihil (semua cookies()/headers()/params/searchParams di-await)
+exit=0 exit=0 

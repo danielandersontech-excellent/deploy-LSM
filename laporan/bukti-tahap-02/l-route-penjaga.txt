@@ -1,0 +1,15 @@
+# UJI l — route tanpa penjaga (uji otomatis; dijalankan ulang tiap tahap)
+$ node laporan/bukti-tahap-02/skrip/uji-l-route-tanpa-penjaga.mjs
+Route                                            Metode     Status         Keterangan
+app/api/auth/login/route.js                      POST       PUBLIK         route autentikasi (sesi diperiksa sendiri / tanpa sesi)
+app/api/auth/logout/route.js                     POST       PUBLIK         route autentikasi (sesi diperiksa sendiri / tanpa sesi)
+app/api/auth/saya/route.js                       GET        PUBLIK         route autentikasi (sesi diperiksa sendiri / tanpa sesi)
+app/api/health/route.js                          GET        PUBLIK         dirancang tanpa login (REFERENSI 12)
+app/api/staf/artikel/route.js                    GET        TERJAGA        denganPeran()
+app/api/staf/pengaduan/[id]/route.js             GET        TERJAGA        denganPeran()
+app/api/staf/pengaduan/route.js                  GET        TERJAGA        denganPeran()
+app/api/staf/statistik/route.js                  GET        TERJAGA        denganPeran()
+
+Total route.js: 8 | terjaga: 4 | publik: 4 | TANPA PENJAGA: 0
+HASIL: LULUS — seluruh route non-publik memakai penjaga
+exit=0

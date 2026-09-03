@@ -1,0 +1,128 @@
+################ UJI a — login berhasil, cookie httpOnly, sampai ke dashboard
+$ curl -i -X POST /api/auth/login (superadmin)
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store
+content-type: application/json
+set-cookie: warkop_token=<token-disembunyikan>; Path=/; Expires=Thu, 03 Sep 2026 14:27:41 GMT; Max-Age=28800; HttpOnly; SameSite=lax
+Date: Thu, 03 Sep 2026 06:27:41 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"pengguna":{"id":1,"nama":"Superadmin","email":"admin@warkopnusantara.id","peran":"superadmin","wilayah_id":null},"tujuan":"/staf/dashboard"}
+$ curl -i /staf/dashboard  (dengan cookie)
+HTTP/1.1 200 OK
+Dashboard · WARKOP NUSANTARATinjauan PengawasanMasuk sebagai Superadmin (superadmin). Dashboard lengkap dibangun di Tahap 7.self.__next_r="oGmnXMerVjV3NJ3cD1Buf";if(document.cookie.indexOf('next-instant-navigation-testing=')>-1){self.__next_instant_test=fetch(location.pathname+'?_rsc=xhdorIanPcIpYSsE',{credentials:'same-origin',headers:{'rsc':'1','next-router-prefetch':'1','next-router-segment-prefetch':'/_full'}})}(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,"c:I[\"[project]/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"SegmentViewNode\"]\ne:\"$Sreact.fragment\"\n20:I[\"[project]/node_modules/next/dist/client/components/layout-router.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"default\"]\n22:I[\"[project]/node_modules/next/dist/client/components/render-from-template-context.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"default\"]\n5f:I[\"[project]/node_modules/next/dist/lib/framework/boundary-components.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"OutletBoundary\"]\n61:\"$Sreact.suspense\"\n6f:I[\"[project]/node_modules/next/dist/lib/framework/boundary-components.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"ViewportBoundary\"]\n79:I[\"[project]/node_modules/next/dist/lib/framework/boundary-components.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"MetadataBoundary\"]\n80:I[\"[project]/node_modules/next/dist/client/components/builtin/global-error.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"default\",1]\n:HL[\"/_next/static/chunks/app_1-h4cki._.css\",\"style\"]\n:HL[\"/_next/static/media/Domine%5Bwght%5D-s.p.2imvd8kp_i7fc.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/FiraSans_Italic-s.p.2y83er5h4k4z-.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/FiraSans_Medium-s.p.3m3al9y8qfjoq.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/FiraSans_Regular-s.p.28rav53daf6bw.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/FiraSans_SemiBold-s.p.2_conx2uh88bk.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n1:D\"$9\"\n1:D\"$2\"\n1:D\"$a\"\n1:null\n11:D\"$1b\"\n11:D\"$12\"\n11:D\"$1d\"\n24:D\"$26\"\n24:D\"$25\"\n24:D\"$28\"\n24:D\"$27\"\n24:D\"$29\"\n24:[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"},\"$27\",\"$2a\",1],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}},\"$27\",\"$2d\",1],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404},\"$27\",\"$2e\",1],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"},\"$27\",\"$30\",1]},\"$27\",\"$2f\",1]]},\"$27\",\"$2c\",1]},\"$27\",\"$2b\",1]]\n11:[\"$\",\"html\",null,{\"lang\":\"id\",\"className\":\"domine_8dc8d88a-module__SVYi0W__variable firasans_45c1ce27-module__KvceHW__variable\",\"children\":[\"$\",\"body\",null,{\"className\":\"bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed\",\"children\":[\"$\",\"$L20\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L22\",null,{},null,\"$21\",1],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[\"$\",\"$Lc\",\"c-not-found\",{\"type\":\"not-found\",\"pagePath\":\"__next_builtin__not-found.js\",\"children\":[\"$24\",[]]},null,\"$23\",0],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\",\"segmentViewBoundaries\":[[\"$\",\"$Lc\",null,{\"type\":\"boundary:not-found\",\"pagePath\":\"__next_builtin__not-found.js@boundary\"},null,\"$31\",1],\"$undefined\",\"$undefined\",[\"$\",\"$Lc\",null,{\"type\":\"boundary:global-error\",\"pagePath\":\"__next_builtin__global-error.js\"},null,\"$32\",1]]},null,\"$1f\",1]},\"$12\",\"$1e\",1]},\"$12\",\"$1c\",1]\n37:D\"$39\"\n37:D\"$38\"\n37:D\"$3b\"\n37:D\"$3a\"\n37:D\"$3c\"\n37:[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"},\"$3a\",\"$3d\",1],[\"$\",\"div\",null,{\"style\":\"$24:1:props:style\",\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}},\"$3a\",\"$40\",1],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":\"$24:1:props:children:props:children:1:props:style\",\"children\":404},\"$3a\",\"$41\",1],[\"$\",\"div\",null,{\"style\":\"$24:1:props:children:props:children:2:props:style\",\"children\":[\"$\",\"h2\",null,{\"style\":\"$24:1:props:children:props:children:2:props:children:props:style\",\"children\":\"This page could not be found.\"},\"$3a\",\"$43\",1]},\"$3a\",\"$42\",1]]},\"$3a\",\"$3f\",1]},\"$3a\",\"$3e\",1]]\n47:D\"$4f\"\n47:D\"$48\"\n55:D\"$59\"\n55:D\"$56\"\n5a:D\"$5c\"\n5a:D\"$5b\"\n5a:D\"$5e\"\n5a:[\"$\",\"$L5f\",null,{\"children\":[\"$\",\"$61\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@62\"},\"$5b\",\"$60\",1]},\"$5b\",\"$5d\",1]\n63:X\n65:D\"$68\"\n65:D\"$66\"\n65:D\"$69\"\n65:null\n6a:D\"$6c\"\n6a:D\"$6b\"\n6a:D\"$6e\"\n70:D\"$72\"\n70:D\"$71\"\n6a:[\"$\",\"$L6f\",null,{\"children\":\"$L70\"},\"$6b\",\"$6d\",1]\n73:D\"$75\"\n73:D\"$74\"\n73:D\"$77\"\n7b:D\"$7d\"\n7b:D\"$7c\"\n73:[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$L79\",null,{\"children\":[\"$\",\"$61\",null,{\"name\":\"Next.Metadata\",\"children\":\"$L7b\"},\"$74\",\"$7a\",1]},\"$74\",\"$78\",1]},\"$74\",\"$76\",1]\n7f:[]\n0:{\"P\":\"$1\",\"c\":[\"\",\"staf\",\"dashboard\"],\"q\":\"\",\"i\":true,\"f\":[[[\"\",{\"children\":[\"(staf)\",{\"children\":[\"staf\",{\"children\":[\"dashboard\",{\"children\":[\"__PAGE__\",{},\"$undefined\",\"$undefined\",4096]},\"$undefined\",\"$undefined\",4096]},\"$undefined\",\"$undefined\",4096]},\"$undefined\",\"$undefined\",4096]},\"$undefined\",\"$undefined\",4112],[[\"$\",\"$Lc\",\"layout\",{\"type\":\"layout\",\"pagePath\":\"layout.js\",\"children\":[\"$\",\"$e\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/app_1-h4cki._.css\",\"precedence\":\"next_static/chunks/app_1-h4cki._.css\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"},null,\"$f\",0],[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\",\"async\":true,\"nonce\":\"$undefined\"},null,\"$10\",0]],\"$11\"]},null,\"$d\",1]},null,\"$b\",0],{\"children\":[[\"$\",\"$e\",\"c\",{\"children\":[null,[\"$\",\"$L20\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L22\",null,{},null,\"$35\",1],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[\"$\",\"$Lc\",\"c-not-found\",{\"type\":\"not-found\",\"pagePath\":\"__next_builtin__not-found.js\",\"children\":[\"$37\",[]]},null,\"$36\",0],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\",\"segmentViewBoundaries\":[[\"$\",\"$Lc\",null,{\"type\":\"boundary:not-found\",\"pagePath\":\"__next_builtin__not-found.js@boundary\"},null,\"$44\",1],\"$undefined\",\"$undefined\",\"$undefined\"]},null,\"$34\",1]]},null,\"$33\",0],{\"children\":[[\"$\",\"$Lc\",\"layout\",{\"type\":\"layout\",\"pagePath\":\"(staf)/staf/layout.js\",\"children\":[\"$\",\"$e\",\"c\",{\"children\":[null,\"$L47\"]},null,\"$46\",1]},null,\"$45\",0],{\"children\":[[\"$\",\"$e\",\"c\",{\"children\":[null,[\"$\",\"$L20\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L22\",null,{},null,\"$52\",1],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\",\"segmentViewBoundaries\":[\"$undefined\",\"$undefined\",\"$undefined\",\"$undefined\"]},null,\"$51\",1]]},null,\"$50\",0],{\"children\":[[\"$\",\"$e\",\"c\",{\"children\":[[\"$\",\"$Lc\",\"c-page\",{\"type\":\"page\",\"pagePath\":\"(staf)/staf/dashboard/page.js\",\"children\":\"$L55\"},null,\"$54\",1],null,\"$5a\"]},null,\"$53\",0],{},null,false,null]},null,false,\"$63\"]},null,false,null]},null,false,\"$63\"]},null,false,null],[\"$\",\"$e\",\"h\",{\"children\":[\"$65\",\"$6a\",\"$73\",[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"},null,\"$7e\",1]]},null,\"$64\",0],false]],\"m\":\"$W7f\",\"G\":[\"$80\",[\"$\",\"$Lc\",\"ge-svn\",{\"type\":\"global-error\",\"pagePath\":\"__next_builtin__global-error.js\",\"children\":[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/app_1-h4cki._.css\",\"precedence\":\"next_static/chunks/app_1-h4cki._.css\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"},null,\"$82\",0]]},null,\"$81\",0]],\"S\":false,\"h\":null,\"r\":\"$undefined\",\"s\":\"$undefined\",\"a\":\"$undefined\",\"l\":\"$undefined\",\"p\":\"$undefined\",\"d\":\"$undefined\",\"b\":\"development\"}\n63:C\n70:D\"$83\"\n70:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"},\"$5b\",\"$84\",0],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"},\"$5b\",\"$85\",0]]\n97:I[\"[project]/node_modules/next/dist/lib/metadata/generate/icon-mark.js [app-client] (ecmascript)\",[\"/_next/static/chunks/node_modules_next_dist_20wefz_._.js\"],\"IconMark\"]\n62:D\"$86\"\n62:null\n7b:D\"$87\"\n7b:[[\"$\",\"title\",\"0\",{\"children\":\"Dashboard · WARKOP NUSANTARA\"},\"$5b\",\"$88\",0],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar.\"},\"$5b\",\"$89\",0],[\"$\",\"meta\",\"2\",{\"property\":\"og:title\",\"content\":\"Dashboard · WARKOP NUSANTARA\"},\"$5b\",\"$8a\",0],[\"$\",\"meta\",\"3\",{\"property\":\"og:description\",\"content\":\"Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar.\"},\"$5b\",\"$8b\",0],[\"$\",\"meta\",\"4\",{\"property\":\"og:site_name\",\"content\":\"WARKOP NUSANTARA\"},\"$5b\",\"$8c\",0],[\"$\",\"meta\",\"5\",{\"property\":\"og:locale\",\"content\":\"id_ID\"},\"$5b\",\"$8d\",0],[\"$\",\"meta\",\"6\",{\"property\":\"og:image\",\"content\":\"http://localhost:3000/og-default.png\"},\"$5b\",\"$8e\",0],[\"$\",\"meta\",\"7\",{\"property\":\"og:type\",\"content\":\"website\"},\"$5b\",\"$8f\",0],[\"$\",\"meta\",\"8\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"},\"$5b\",\"$90\",0],[\"$\",\"meta\",\"9\",{\"name\":\"twitter:title\",\"content\":\"Dashboard · WARKOP NUSANTARA\"},\"$5b\",\"$91\",0],[\"$\",\"meta\",\"10\",{\"name\":\"twitter:description\",\"content\":\"Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar.\"},\"$5b\",\"$92\",0],[\"$\",\"meta\",\"11\",{\"name\":\"twitter:image\",\"content\":\"http://localhost:3000/og-default.png\"},\"$5b\",\"$93\",0],[\"$\",\"link\",\"12\",{\"rel\":\"icon\",\"href\":\"/favicon.ico\"},\"$5b\",\"$94\",0],[\"$\",\"link\",\"13\",{\"rel\":\"apple-touch-icon\",\"href\":\"/apple-touch-icon.png\"},\"$5b\",\"$95\",0],[\"$\",\"$L97\",\"14\",{},\"$5b\",\"$96\",0]]\n55:D\"$9b\"\n55:D\"$9d\"\n55:D\"$9e\"\n55:D\"$a0\"\n55:D\"$a1\"\n55:D\"$a5\"\n55:D\"$a7\"\n55:D\"$a8\"\n55:D\"$aa\"\n55:D\"$ab\"\n55:D\"$ad\"\n55:D\"$ae\"\n55:D\"$b0\"\n55:D\"$b1\"\n47:D\"$b2\"\n47:D\"$b4\"\n47:D\"$b5\"\n47:D\"$b6\"\n47:D\"$b8\"\n47:D\"$b9\"\n55:D\"$c0\"\n55:[\"$\",\"main\",null,{\"className\":\"p-8 font-body-md text-body-md\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"font-headline-md text-headline-md text-primary mb-2\",\"children\":\"Tinjauan Pengawasan\"},\"$56\",\"$c1\",1],[\"$\",\"p\",null,{\"className\":\"text-on-surface-variant\",\"children\":\"Masuk sebagai Superadmin (superadmin). Dashboard lengkap dibangun di Tahap 7.\"},\"$56\",\"$c2\",1]]},\"$56\",\"$bf\",1]\n47:D\"$c4\"\n47:[\"$\",\"$L20\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L22\",null,{},null,\"$c5\",1],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\",\"segmentViewBoundaries\":[\"$undefined\",\"$undefined\",\"$undefined\",\"$undefined\"]},null,\"$c3\",1]\n"])
+$ curl -i /login (sudah bertoken -> dialihkan ke dashboard oleh proxy)
+HTTP/1.1 307 Temporary Redirect
+location: http://localhost:3000/staf/dashboard
+http://localhost:3000/staf/dashboard
+# cookie httpOnly: peramban tidak mengizinkan document.cookie membacanya (flag HttpOnly di Set-Cookie di atas; tidak ada peramban di lingkungan ini)
+
+################ UJI b — login gagal: email salah vs sandi salah -> pesan IDENTIK
+email tidak terdaftar : HTTP 401  {"galat":"Email atau kata sandi tidak sesuai","kode":"KREDENSIAL_TIDAK_SESUAI"}
+sandi salah           : HTTP 401  {"galat":"Email atau kata sandi tidak sesuai","kode":"KREDENSIAL_TIDAK_SESUAI"}
+=> IDENTIK
+
+################ login peran lain
+budi.santoso -> HTTP 200
+siti.rahma -> HTTP 200
+siti.aminah -> HTTP 200
+rahmat.siregar -> HTTP 200
+pimpinan.jabar -> HTTP 200
+
+################ UJI c — LAPISAN 4: setiap route staf dengan peran TIDAK berhak (curl saja)
+Route                                Metode  Peran penguji      Kode  Lulus
+/api/staf/artikel                    GET     verifikator        403   ya
+/api/staf/pengaduan                  GET     penulis            403   ya
+/api/staf/pengaduan                  GET     redaktur           403   ya
+/api/staf/pengaduan/2                GET     penulis            403   ya
+/api/staf/pengaduan/2                GET     redaktur           403   ya
+/api/staf/statistik                  GET     (tanpa cookie)     401   ya
+/api/staf/artikel                    GET     (tanpa cookie)     401   ya
+/api/staf/pengaduan                  GET     (tanpa cookie)     401   ya
+/api/auth/saya                       GET     (tanpa cookie)     401   ya
+# cookie palsu (token dibuat sendiri, tanda tangan salah):
+/api/staf/statistik                  GET     token palsu        401   ya
+# header identitas disuntik klien (x-user-role: superadmin) tanpa cookie -> proxy menghapusnya:
+/api/staf/statistik                  GET     x-user-role palsu  401   ya
+# peran yang BERHAK (pembanding, harus 200):
+/api/staf/artikel                    GET     penulis            200   ya
+/api/staf/pengaduan                  GET     verifikator        200   ya
+/api/staf/pengaduan/2                GET     superadmin         200   ya
+/api/staf/statistik                  GET     redaktur           200   ya
+# route yang belum dibuat (menyusul): POST/PATCH/DELETE artikel, terbitkan (T5); POST pengaduan status (T6); pengurus/program/galeri/pengguna/pengaturan/unggah (T7)
+
+################ UJI d — token_version: token lama ditolak setelah dinaikkan di DB
+sebelum: /api/auth/saya dengan token -> HTTP 200
+$ SELECT id, token_version FROM users WHERE email='budi.santoso@...'
+id	email	token_version
+2	budi.santoso@warkopnusantara.id	0
+$ UPDATE users SET token_version = token_version + 1 WHERE email='budi.santoso@...'
+id	email	token_version
+2	budi.santoso@warkopnusantara.id	1
+sesudah: /api/auth/saya dengan token LAMA -> HTTP 401  (harus 401)
+sesudah: /api/staf/artikel dengan token LAMA -> HTTP 401  (harus 401)
+sesudah: /staf/dashboard dengan token LAMA ->
+HTTP/1.1 307 Temporary Redirect
+location: /login?lanjut=%2Fstaf%2Fdashboard
+# tanda tangan token lama masih sah (proxy meloloskan), tetapi lapisan 3/4 menolak karena token_version di DB berbeda
+login ulang -> HTTP 200 ; /api/auth/saya dengan token BARU -> HTTP 200
+
+################ UJI e — halaman staf tanpa cookie -> /login (STAF_HOST kosong)
+$ curl -i /staf/dashboard
+HTTP/1.1 307 Temporary Redirect
+location: http://localhost:3000/login?lanjut=%2Fstaf%2Fdashboard
+http://localhost:3000/login?lanjut=%2Fstaf%2Fdashboard
+$ curl -i /staf/pengaduan/1
+HTTP/1.1 307 Temporary Redirect
+location: http://localhost:3000/login?lanjut=%2Fstaf%2Fpengaduan%2F1
+http://localhost:3000/login?lanjut=%2Fstaf%2Fpengaduan%2F1
+
+################ UJI g — dua pimpinan_wilayah di wilayah berbeda (JSON mentah)
+$ GET /api/staf/pengaduan sebagai pimpinan Sumatera Utara:
+{"baris":[],"total":0,"halaman":1,"perHalaman":10,"totalHalaman":1,"perStatus":{"semua":0,"baru":0,"diverifikasi":0,"diproses":0,"selesai":0,"ditolak":0}}
+$ GET /api/staf/pengaduan sebagai pimpinan Jawa Barat:
+{"baris":[{"id":1,"nomor_kasus":"WRP-009021","anonim":1,"kategori_masalah":"pungli","wilayah_id":13,"wilayah_nama":"Jawa Barat","lokasi_kejadian":"Jawa Barat, Kab. Bogor","deskripsi":"Terdapat praktik pungutan liar yang dilakukan oleh oknum berseragam preman di perempatan jalan raya utama menuju pasar induk. Mereka memaksa setiap truk pengangkut sayur untuk membayar sejumlah uang tanpa memberikan karcis resmi. Kejadian ini terpantau rutin setiap pagi hari antara pukul 04:00 hingga 06:00 WIB.","status":"selesai","petugas_id":null,"petugas_nama":null,"dibuat_pada":"2026-09-02T07:30:00.000Z","diperbarui_pada":"2026-09-03T06:14:06.000Z"}],"total":1,"halaman":1,"perHalaman":10,"totalHalaman":1,"perStatus":{"semua":1,"baru":0,"diverifikasi":0,"diproses":0,"selesai":1,"ditolak":0}}
+$ GET /api/staf/pengaduan/1 (WRP-009021, Jawa Barat) sebagai pimpinan Sumut -> HTTP 404  (harus 404: bukan wilayahnya)
+$ GET /api/staf/pengaduan/1 sebagai pimpinan Jabar -> HTTP 200  (harus 200)
+$ GET /api/staf/pengaduan/2 (DKI) sebagai pimpinan Jabar -> HTTP 404  (harus 404)
+$ GET /api/staf/artikel sebagai pimpinan Jabar (total harus 3 = artikel wilayah Jabar):
+total 3 | wilayah: Jawa Barat
+$ GET /api/staf/statistik sebagai pimpinan Sumut:
+{"kartu":{"totalArtikel":0,"artikelBulanIni":0,"pengaduanMasuk":0,"pengaduanSelesai":0,"totalPengaduan":0},"tren":[{"bulan":"2026-04","jumlah":0},{"bulan":"2026-05","jumlah":0},{"bulan":"2026-06","jumlah":0},{"bulan":"2026-07","jumlah":0},{"bulan":"2026-08","jumlah":0},{"bulan":"2026-09","jumlah":0}],"pengaduanTerbaru":[]}
+# kueri SQL yang dijalankan: lihat g-sql-log.txt (server dijalankan ulang dengan DB_LOG_KUERI=1)
+
+################ UJI h — identitas pelapor tidak ikut di balasan peran tidak berhak (JSON mentah)
+$ GET /api/staf/pengaduan/2 (bernama) sebagai pimpinan_wilayah DKI? -> tidak ada pimpinan DKI; dipakai daftar Jabar (WRP-009021 anonim) dan pembanding superadmin
+$ GET /api/staf/pengaduan sebagai pimpinan Jabar:
+{"baris":[{"id":1,"nomor_kasus":"WRP-009021","anonim":1,"kategori_masalah":"pungli","wilayah_id":13,"wilayah_nama":"Jawa Barat","lokasi_kejadian":"Jawa Barat, Kab. Bogor","deskripsi":"Terdapat praktik pungutan liar yang dilakukan oleh oknum berseragam preman di perempatan jalan raya utama menuju pasar induk. Mereka memaksa setiap truk pengangkut sayur untuk membayar sejumlah uang tanpa memberikan karcis resmi. Kejadian ini terpantau rutin setiap pagi hari antara pukul 04:00 hingga 06:00 WIB.","status":"selesai","petugas_id":null,"petugas_nama":null,"dibuat_pada":"2026-09-02T07:30:00.000Z","diperbarui_pada":"2026-09-03T06:14:06.000Z"}],"total":1,"halaman":1,"perHalaman":10,"totalHalaman":1,"perStatus":{"semua":1,"baru":0,"diverifikasi":0,"diproses":0,"selesai":1,"ditolak":0}}
+kemunculan kunci identitas (nama_pelapor|nik_pelapor|telepon_pelapor|email_pelapor): 0  (harus 0)
+$ GET /api/staf/pengaduan/2 sebagai redaktur -> HTTP 403  (403: redaktur tidak punya hak pengaduan sama sekali)
+$ GET /api/staf/pengaduan/2 sebagai verifikator (BERHAK — pembanding):
+{"pengaduan":{"id":2,"nomor_kasus":"WRP-009018","anonim":0,"kategori_masalah":"pelayanan-publik","wilayah_id":12,"wilayah_nama":"DKI Jakarta","lokasi_kejadian":"DKI Jakarta, Jakarta Timur","deskripsi":"Pelayanan pengurusan dokumen kependudukan di kantor kelurahan memakan waktu lebih dari tiga minggu tanpa kejelasan, dan petugas meminta warga datang berulang kali dengan alasan yang berubah-ubah.","status":"diproses","petugas_id":null,"petugas_nama":null,"dibuat_pada":"2026-08-30T03:15:00.000Z","diperbarui_pada":"2026-09-03T06:09:56.000Z","nama_pelapor":"Pelapor Contoh Satu","nik_pelapor":"<disembunyikan-di-bukti>","telepon_pelapor":"<disembunyikan-di-bukti>","email_pelapor":"<disembunyikan-di-bukti>"},"riwayat":[{"id":2,"status_sebelum":null,"status_sesudah":"baru","catatan":"Laporan diterima","oleh_user_id":null,"oleh_nama":null,"dibuat_pada":"2026-08-30T03:15:00.000Z"},{"id":4,"status_sebelum":"baru","status_sesudah":"diverifikasi","catatan":"Bukti awal lengkap; laporan diverifikasi.","oleh_user_id":4,"oleh_nama":"Siti Aminah","dibuat_pada":"2026-09-03T06:09:56.000Z"},{"id":5,"status_sebelum":"diverifikasi","status_sesudah":"diproses","catatan":"Diteruskan ke tim advokasi wilayah untuk klarifikasi ke instansi terkait.","oleh_user_id":4,"oleh_nama":"Siti Aminah","dibuat_pada":"2026-09-03T06:09:56.000Z"}],"lampiran":[]}
+kemunculan kunci identitas: 4  (4 = berhak)
+$ audit_log pembukaan identitas:
+id	user_id	aksi	tabel_terkait	id_terkait	ip	dibuat_pada
+14	4	lihat_identitas_pelapor	pengaduan	2	127.0.0.1	2026-09-03 13:27:59
+11	1	lihat_identitas_pelapor	pengaduan	2	127.0.0.1	2026-09-03 13:27:52
+
+################ UJI i — rate limit: 20 kegagalan dari satu IP -> 429; pemilik sah dari IP lain tetap bisa masuk
+401 401 401 401 401 401 401 401 401 401 401 401 401 401 401 401 401 401 401 401 429 
+(20 pertama 401, ke-21 harus 429)  badan ke-21: {"galat":"Terlalu banyak percobaan masuk. Coba lagi beberapa menit lagi.","kode":"TERLALU_BANYAK_PERCOBAAN","cobaLagiDetik":890}
+pemilik sah dari IP lain (198.51.100.7) dengan sandi benar -> HTTP 200  (harus 200: akun TIDAK terkunci)
+IP penyerang (203.0.113.9) dengan sandi BENAR -> HTTP 429  (429: IP itu dibatasi 15 menit)
+# sumbu akun: 30 kegagalan/15 menit dari IP mana pun -> 429 untuk akun itu selama sisa jendela; login berhasil menghapus hitungan akun.
+
+################ UJI j — atribut cookie
+$ Set-Cookie saat login lewat http (dev):
+set-cookie: warkop_token=<token>; Path=/; Expires=Thu, 03 Sep 2026 14:28:12 GMT; Max-Age=28800; HttpOnly; SameSite=lax
+$ Set-Cookie saat login di balik HTTPS (X-Forwarded-Proto: https, seperti Traefik) / produksi:
+set-cookie: warkop_token=<token>; Path=/; Expires=Thu, 03 Sep 2026 14:28:13 GMT; Max-Age=28800; Secure; HttpOnly; SameSite=lax
+$ logout -> cookie dihapus:
+HTTP/1.1 200 OK
+set-cookie: warkop_token=<kosong>; Path=/; Max-Age=0; HttpOnly; SameSite=lax

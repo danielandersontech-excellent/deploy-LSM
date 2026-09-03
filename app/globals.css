@@ -4,3 +4,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Kelas non-Tailwind dari blok <style> export desain (disalin apa adanya, REFERENSI 18.2):
+   login_staff_warkop_nusantara/code.html */
+.paper-shadow {
+  box-shadow: 0 4px 6px -1px rgba(116, 88, 83, 0.1), 0 2px 4px -1px rgba(116, 88, 83, 0.06);
+}
+.watermark {
+  opacity: 0.05;
+  pointer-events: none;
+}

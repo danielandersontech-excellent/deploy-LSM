@@ -1,0 +1,37 @@
+# UJI k — uji kesetiaan halaman login (REFERENSI 18.5), tanpa peramban
+$ curl.exe -s http://localhost:3000/login > k-login-render.html
+$ node paket-pendukung/UJI/uji-kesetiaan.mjs desain/stitch_portal_berita_inklusif/login_staff_warkop_nusantara/code.html laporan/bukti-tahap-02/k-login-render.html --teks
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/login_staff_warkop_nusantara/code.html
+               render=laporan/bukti-tahap-02/k-login-render.html
+----------------------------------------------------------------
+Kelas desain       : 79
+Ditemukan di render: 79  (100%)
+Kelas hilang       : 0
+----------------------------------------------------------------
+Token desain dipakai desain : 18
+Token hilang di render      : 0
+----------------------------------------------------------------
+Teks tampak desain : 6   hilang di render: 1
+  Masuk Sistem login
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+exit=0
+
+# Teks "Masuk Sistem login" di desain = label tombol + NAMA IKON YANG BOCOR (cacat export 4: <span class="material-symbols-outlined">login</span> ikut terbaca sebagai teks). Render memuat "Masuk Sistem" + SVG <Ikon nama="login"/> — bukan teks hilang.
+$ grep -o "Masuk Sistem" k-login-render.html | head -1
+Masuk Sistem
+$ grep -c "viewBox=\"0 -960 960 960\"" k-login-render.html   # 4 ikon: admin_panel_settings, badge, key, login
+4
+
+# screen.png rujukan: 1280 x 644 px (terpotong di bawah). Peramban tidak tersedia di lingkungan ini — perbandingan berdampingan 375/768/1280 tidak dilakukan.
+# Catatan: memanggil uji-kesetiaan.mjs dengan URL langsung menghasilkan hasil yang sama tetapi Node 24.12 di Windows mencetak "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)" saat keluar (bug libuv setelah fetch) — karena itu render diambil ke berkas dulu.
