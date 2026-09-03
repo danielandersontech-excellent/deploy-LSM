@@ -12,7 +12,7 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 | 01 Basis data | LULUS | 62495b7 | 11 butir uji a–k berbukti; zona waktu selisih 0 detik; buku besar utuh |
 | 02 Autentikasi | LULUS | 2356075 | 14 butir uji a–n berbukti; Location tanpa 0.0.0.0; 403 semua peran tak berhak |
 | 03 Docker | LULUS | 1117749 | 12 butir a–l berbukti (image 998 MB, log bersih, healthy→unhealthy→healthy, proxy+pemisahan host di container, WIB selaras, non-root, volume, rollback, konteks 764 MB→2,77 MB); skema+seed PRODUKSI dijalankan, login & pemisahan host di domain terbukti (bukti-server/). Temuan: unggahan butuh route handler (Tahap 5/6) |
-| 04 Situs publik | SEDANG | | mulai 3 Sep 2026 22:50 WIB: komponen bersama (navbar/footer kanonik, ui/*, hooks), beranda, halaman teks statis, not-found/error/sitemap/robots, penampung gambar; 4 halaman lain dikerjakan agen paralel |
+| 04 Situs publik | LULUS (catatan) | 7b075f8 | 14 butir a–n berbukti: kesetiaan 5 halaman cacat 0 (97/89/91/81/93 % kelas, semua beralasan), kontras 28/28, identitas 0 bocor, keadaan kosong, build+lint hijau. Uji c: A11y 98–100/BP 96/SEO 100 lulus, **Performance 70–80 < 90** (font Fira Sans ±570 KB tidak disubset; preload dimatikan; subset = keputusan pemilik). TEMUAN: navbar kanonik tidak muat di 1280 (kotak cari) — keputusan pemilik; `min-h-screen` body = 100vh |
 | 05 Modul berita | BELUM | | |
 | 06 Modul pengaduan | BELUM | | |
 | 07 Ruang staf | BELUM | | |
@@ -20,6 +20,9 @@ Status: `BELUM` / `SEDANG` / `LULUS` / `BLOKIR` / sebagian `MENUNGGU PEMILIK`
 | 09 Pengerasan | BELUM | | |
 
 ## BLOKIR / MENUNGGU PEMILIK
+
+### Keputusan pemilik yang menunggu (tidak menghalangi run)
+- Tahap 4: (1) navbar kanonik 18.3 + kotak cari tidak muat di kontainer 1280 px (Berita menimpa kotak cari; juga tampak di screen.png beranda) — pilih: kotak cari hanya di laci seluler / logo h-12 / biarkan. (2) Izin subset font Fira Sans ke Latin di public/fonts/ (Lighthouse Performance 70–80 → target ≥ 90). (3) `min-h-screen` pada body desain = 100vh di CSS. (4) Seed menautkan /penampung/galeri-3.mp4 yang tidak ada.
 
 (kosong — 3 Sep 2026 ±22:20 WIB: blokir disk C: DICABUT oleh pemilik; run
 MODE OTONOM dilanjutkan. Perintah pemilik untuk server/produksi terangkum di
@@ -35,4 +38,4 @@ MODE OTONOM dilanjutkan. Perintah pemilik untuk server/produksi terangkum di
 - Push + redeploy via webhook diizinkan (PERINTAH-PEMILIK-SERVER 3). Webhook port 8000 TIDAK terjangkau dari internet → dipanggil dari dalam server lewat SSH (localhost:8000), token via stdin — KEPUTUSAN BARU. Redeploy Tahap 03 (a2dbb53) sukses 3 Sep 22:45 WIB, health 200 (bukti-server/03-redeploy-tahap-03.txt).
 
 ## Posisi terakhir (bila sesi terputus di tengah tahap)
-Tahap 04 SEDANG — berkas komponen bersama + beranda + halaman statis sudah ditulis (belum di-commit); tentang/struktur/program/galeri sedang dikonversi; uji a–n Tahap 4 belum dijalankan.
+Tahap 04 LULUS + commit 7b075f8. Berikutnya: push + redeploy webhook (via SSH) + verifikasi health, lalu Tahap 05 (modul berita) dari awal.
