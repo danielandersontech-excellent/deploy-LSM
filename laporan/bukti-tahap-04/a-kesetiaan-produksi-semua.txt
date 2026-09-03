@@ -1,0 +1,229 @@
+# Uji a — uji-kesetiaan pada BUILD PRODUKSI (NODE_ENV=production node server.js), 2026-09-03T16:08:24Z
+
+## / -> HTTP 200 68142B
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/beranda_warkop_nusantara/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/prod-beranda.html
+----------------------------------------------------------------
+Kelas desain       : 230
+Ditemukan di render: 223  (97%)
+Kelas hilang       : 7
+  bg-outline
+  bg-secondary-container/30
+  bg-surface-variant
+  h-1.5
+  hover:text-primary
+  md:gap-0
+  w-1.5
+----------------------------------------------------------------
+Token desain dipakai desain : 35
+Token hilang di render      : 0
+----------------------------------------------------------------
+Teks tampak desain : 25   hilang di render: 5
+  Dugaan Penyelewengan Dana Desa di Sektor Infrastruktur Terungkap
+  Fasilitas Kesehatan Mangkrak di Daerah Pelosok
+  Lihat Semua Berita arrow_forward
+  campaign Sampaikan Pengaduan
+  menu_book Pelajari Prosedur
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+exit=0
+
+## /tentang -> HTTP 200 84631B
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/tentang_kami_warkop_nusantara/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/prod-tentang.html
+----------------------------------------------------------------
+Kelas desain       : 157
+Ditemukan di render: 139  (89%)
+Kelas hilang       : 18
+  antialiased
+  bg-secondary-fixed-dim
+  bg-surface-variant
+  border-outline-variant/30
+  bottom-0
+  flex-wrap
+  hover:bg-secondary-fixed
+  hover:text-secondary-fixed
+  italic
+  justify-center
+  max-w-md
+  md:mb-0
+  px-margin-desktop
+  py-4
+  rounded
+  text-on-secondary-fixed-variant
+  text-surface-variant/80
+  w-auto
+----------------------------------------------------------------
+Token desain dipakai desain : 29
+Token hilang di render      : 1  -> on-secondary-fixed-variant
+----------------------------------------------------------------
+Teks tampak desain : 23   hilang di render: 0
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+exit=0
+
+## /struktur -> HTTP 200 69441B
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/struktur_organisasi/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/prod-struktur.html
+----------------------------------------------------------------
+Kelas desain       : 173
+Ditemukan di render: 157  (91%)
+Kelas hilang       : 16
+  antialiased
+  bg-primary-container
+  bottom-0
+  flex-wrap
+  focus:border-secondary-fixed-dim
+  focus:ring-secondary-fixed-dim
+  hover:bg-tertiary-container
+  justify-center
+  md:gap-8
+  md:mb-0
+  opacity-60
+  pl-10
+  placeholder:opacity-50
+  placeholder:text-on-primary
+  pr-4
+  px-margin-desktop
+----------------------------------------------------------------
+Token desain dipakai desain : 30
+Token hilang di render      : 1  -> tertiary-container
+----------------------------------------------------------------
+Teks tampak desain : 21   hilang di render: 2
+  Lukas Enembe, S.H.
+  Profil arrow_forward
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+exit=0
+
+## /program -> HTTP 200 66254B
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/program_kegiatan/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/prod-program.html
+----------------------------------------------------------------
+Kelas desain       : 178
+Ditemukan di render: 145  (81%)
+Kelas hilang       : 33
+  antialiased
+  bg-primary-container
+  border-primary
+  bottom-0
+  disabled:opacity-50
+  flex-1
+  focus:border-secondary-fixed-dim
+  h-10
+  hide-scrollbar
+  hover:bg-secondary-fixed-dim
+  justify-center
+  justify-start
+  md:gap-8
+  md:justify-center
+  md:justify-end
+  md:mb-0
+  md:pb-0
+  md:px-0
+  min-w-max
+  mt-12
+  opacity-70
+  overflow-x-auto
+  p-2
+  pb-2
+  pl-10
+  placeholder-on-primary-container
+  pointer-events-none
+  pr-4
+  px-2
+  text-on-primary-container
+  text-on-secondary-fixed
+  text-secondary
+  w-10
+----------------------------------------------------------------
+Token desain dipakai desain : 33
+Token hilang di render      : 3  -> on-primary-container, on-secondary-fixed, primary-container
+----------------------------------------------------------------
+Teks tampak desain : 28   hilang di render: 3
+  Baca Hasil Observasi arrow_forward
+  Lihat Laporan Detail arrow_forward
+  Tautan Penting
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+exit=0
+
+## /galeri -> HTTP 200 73748B
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/galeri_dokumentasi/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/prod-galeri.html
+----------------------------------------------------------------
+Kelas desain       : 181
+Ditemukan di render: 169  (93%)
+Kelas hilang       : 12
+  flex-wrap
+  hover:border-primary
+  max-w-sm
+  mb-8
+  md:gap-8
+  md:mb-0
+  mt-12
+  mt-auto
+  p-2
+  px-8
+  px-margin-desktop
+  py-3
+----------------------------------------------------------------
+Token desain dipakai desain : 37
+Token hilang di render      : 0
+----------------------------------------------------------------
+Teks tampak desain : 28   hilang di render: 2
+  Muat Lebih Banyak expand_more
+  filter_list Terapkan Filter
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.
+exit=0

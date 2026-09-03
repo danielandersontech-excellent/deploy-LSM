@@ -1,0 +1,14 @@
+# Uji b/a2 — tangkapan layar headless Chrome (dev server) pada 375/768/1280 (+830 = lebar screen.png beranda), 2026-09-03T15:59:19Z
+laporan/bukti-tahap-04/tangkapan/beranda-375.png 301102 B
+laporan/bukti-tahap-04/tangkapan/beranda-768.png 530803 B
+laporan/bukti-tahap-04/tangkapan/beranda-1280.png 623425 B
+laporan/bukti-tahap-04/tangkapan/beranda-830.png 564877 B
+laporan/bukti-tahap-04/tangkapan/kebijakan-privasi-375.png 127256 B
+laporan/bukti-tahap-04/tangkapan/kebijakan-privasi-768.png 146256 B
+laporan/bukti-tahap-04/tangkapan/kebijakan-privasi-1280.png 148592 B
+laporan/bukti-tahap-04/tangkapan/faq-375.png 168554 B
+laporan/bukti-tahap-04/tangkapan/faq-768.png 184992 B
+laporan/bukti-tahap-04/tangkapan/faq-1280.png 191688 B
+laporan/bukti-tahap-04/tangkapan/404-375.png 34716 B
+laporan/bukti-tahap-04/tangkapan/404-768.png 99879 B
+laporan/bukti-tahap-04/tangkapan/404-1280.png 176645 B

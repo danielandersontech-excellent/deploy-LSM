@@ -1,0 +1,41 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/tentang_kami_warkop_nusantara/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-tentang.html
+----------------------------------------------------------------
+Kelas desain       : 157
+Ditemukan di render: 139  (89%)
+Kelas hilang       : 18
+  antialiased
+  bg-secondary-fixed-dim
+  bg-surface-variant
+  border-outline-variant/30
+  bottom-0
+  flex-wrap
+  hover:bg-secondary-fixed
+  hover:text-secondary-fixed
+  italic
+  justify-center
+  max-w-md
+  md:mb-0
+  px-margin-desktop
+  py-4
+  rounded
+  text-on-secondary-fixed-variant
+  text-surface-variant/80
+  w-auto
+----------------------------------------------------------------
+Token desain dipakai desain : 29
+Token hilang di render      : 1  -> on-secondary-fixed-variant
+----------------------------------------------------------------
+Teks tampak desain : 23   hilang di render: 0
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

@@ -1,0 +1,47 @@
+# Uji d, e, j, k (Tahap 4) — render dev http://127.0.0.1:3000, 2026-09-03T15:58:54Z
+## /beranda
+  d. nama ikon bocor (edit_document|gavel|settings|logout|dashboard sebagai teks di luar atribut): 0
+  d. material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font (class __variable): 1   berkas woff2 lokal dirujuk CSS: url("../media/Domine[wght]-s.p.2imvd8kp_i7fc.woff2") url("../media/FiraSans_Regular-s.p.28rav53daf6bw.woff2") 
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+## /kebijakan-privasi
+  d. nama ikon bocor (edit_document|gavel|settings|logout|dashboard sebagai teks di luar atribut): 0
+  d. material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font (class __variable): 1   berkas woff2 lokal dirujuk CSS: url("../media/Domine[wght]-s.p.2imvd8kp_i7fc.woff2") url("../media/FiraSans_Regular-s.p.28rav53daf6bw.woff2") 
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+## /pedoman-komunitas
+  d. nama ikon bocor (edit_document|gavel|settings|logout|dashboard sebagai teks di luar atribut): 0
+  d. material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font (class __variable): 1   berkas woff2 lokal dirujuk CSS: url("../media/Domine[wght]-s.p.2imvd8kp_i7fc.woff2") url("../media/FiraSans_Regular-s.p.28rav53daf6bw.woff2") 
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+## /faq
+  d. nama ikon bocor (edit_document|gavel|settings|logout|dashboard sebagai teks di luar atribut): 0
+  d. material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font (class __variable): 1   berkas woff2 lokal dirujuk CSS: url("../media/Domine[wght]-s.p.2imvd8kp_i7fc.woff2") url("../media/FiraSans_Regular-s.p.28rav53daf6bw.woff2") 
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+## /tidak-ada-halaman-ini
+  d. nama ikon bocor (edit_document|gavel|settings|logout|dashboard sebagai teks di luar atribut): 0
+  d. material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font (class __variable): 1   berkas woff2 lokal dirujuk CSS: url("../media/Domine[wght]-s.p.2imvd8kp_i7fc.woff2") url("../media/FiraSans_Regular-s.p.28rav53daf6bw.woff2") 
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+
+## j. UJI KEBOCORAN IDENTITAS — HTML mentah beranda vs identitas pelapor di DB lokal
+  WRP-009021 selesai anonim=1 identitas terisi=0 kolom (nilai tidak dicetak)
+  WRP-009018 diproses anonim=0 identitas terisi=4 kolom (nilai tidak dicetak)
+  WRP-008994 selesai anonim=0 identitas terisi=4 kolom (nilai tidak dicetak)
+  nomor kasus tampil di beranda: WRP-009018
+  HASIL j: LULUS — 0 nilai identitas di HTML mentah
+  potongan Status Advokasi (teks saja): Status Advokasi Kasus WRP-009018 - Buruknya Pelayanan Publik DKI Jakarta Diproses Pantau Semua Kasus
+
+## m. params/searchParams tanpa await (grep app/)
+  nihil
+
+## f. Tanpa JavaScript — konten utama ada di HTML server (h1 + teks) 
+  /beranda: h1=Wadah Aspirasi Rakyat, | jumlah <p>: 13
+  /kebijakan-privasi: h1=Kebijakan Privasi | jumlah <p>: 5
+  /faq: h1=Pertanyaan yang Sering Diajukan | jumlah <p>: 4

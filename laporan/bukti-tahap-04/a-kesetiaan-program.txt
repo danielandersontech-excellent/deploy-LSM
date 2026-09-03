@@ -1,0 +1,59 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/program_kegiatan/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-program.html
+----------------------------------------------------------------
+Kelas desain       : 178
+Ditemukan di render: 145  (81%)
+Kelas hilang       : 33
+  antialiased
+  bg-primary-container
+  border-primary
+  bottom-0
+  disabled:opacity-50
+  flex-1
+  focus:border-secondary-fixed-dim
+  h-10
+  hide-scrollbar
+  hover:bg-secondary-fixed-dim
+  justify-center
+  justify-start
+  md:gap-8
+  md:justify-center
+  md:justify-end
+  md:mb-0
+  md:pb-0
+  md:px-0
+  min-w-max
+  mt-12
+  opacity-70
+  overflow-x-auto
+  p-2
+  pb-2
+  pl-10
+  placeholder-on-primary-container
+  pointer-events-none
+  pr-4
+  px-2
+  text-on-primary-container
+  text-on-secondary-fixed
+  text-secondary
+  w-10
+----------------------------------------------------------------
+Token desain dipakai desain : 33
+Token hilang di render      : 3  -> on-primary-container, on-secondary-fixed, primary-container
+----------------------------------------------------------------
+Teks tampak desain : 28   hilang di render: 3
+  Baca Hasil Observasi arrow_forward
+  Lihat Laporan Detail arrow_forward
+  Tautan Penting
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

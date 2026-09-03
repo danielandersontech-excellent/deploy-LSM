@@ -1,0 +1,26 @@
+# Redeploy produksi setelah push Tahap 03 (commit a2dbb53) — 3 Sep 2026 22:42–22:46 WIB
+# (berkas ditulis ulang rapi: dua proses pemantau sempat menulis berkas yang sama secara bersamaan)
+
+## Percobaan 1 — dari laptop ke COOLIFY_DEPLOY_WEBHOOK (http://31.97.106.106:8000/api/v1/deploy?uuid=<uuid>&force=…)
+$ curl.exe -s -m 60 "$COOLIFY_DEPLOY_WEBHOOK" -H "Authorization: Bearer <token>"
+HTTP 000 — curl: (28) Connection timed out (port 8000 server tidak terjangkau dari internet)
+
+## Percobaan 2 — KEPUTUSAN BARU: webhook yang SAMA dipanggil dari dalam server lewat SSH deployer,
+## host diganti localhost:8000; token dikirim lewat stdin (tidak di argumen/log)
+$ ssh deployer@server 'read TK; curl -s "http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=…" -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"j5yeyxich2m3l197s55wzwph"}]}
+HTTP 200
+
+## Pemantauan (tunggu 120 s, lalu tiap 30 s)
+[15:42:49Z] health=000 (rolling update sedang berjalan; sesaat tidak terjawab dari laptop)
+[15:45:23Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:a2dbb534f16ad157a612b0eb2aee3a9e1a4d486d  Up About a minute (healthy)
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-03T22:46:15+07:00","basisData":"terhubung","versi":"0.1.0"}
+
+## Verifikasi ulang saat berkas ini ditulis
+$ date -u: 2026-09-03T15:47:29Z
+$ curl.exe -s -i https://warkopnusantara.id/api/health | head
+HTTP/1.1 200 OK
+{"status":"sehat","waktu":"2026-09-03T22:47:32+07:00","basisData":"terhubung","versi":"0.1.0"}
+$ docker ps (server) image container warkop:
+re8snqu8jwyxdqg2wmzrbm3w:a2dbb534f16ad157a612b0eb2aee3a9e1a4d486d  Up 3 minutes (healthy)

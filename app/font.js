@@ -16,4 +16,7 @@ export const firaSans = localFont({
   ],
   variable: '--font-fira-sans',
   display: 'swap',
+  // KEPUTUSAN BARU Tahap 4 (Lighthouse): empat berkas Fira Sans (±570 KB) tidak di-preload; dimuat lewat CSS
+  // dengan font-display swap sehingga teks langsung tampil dengan font cadangan (LCP turun dari ±6 s).
+  preload: false,
 });

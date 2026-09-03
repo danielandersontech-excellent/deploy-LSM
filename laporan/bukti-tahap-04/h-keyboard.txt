@@ -1,0 +1,23 @@
+# Uji h — navigasi keyboard (pemeriksaan terprogram atas HTML render dev, 2026-09-03T16:03:06Z)
+# Peramban tanpa kepala tidak bisa menekan Tab; yang diperiksa: (1) tautan lewati-ke-konten ada dan menjadi elemen fokus pertama, (2) tidak ada tabindex positif (jebakan urutan), (3) setiap outline-none disertai gaya fokus pengganti (focus:ring/border), (4) elemen interaktif = <a href>/<button>/<input>/<select> (bukan div onClick), (5) laci menu punya aria-expanded/aria-controls.
+## /beranda
+  (1) lewati ke konten: 1 ; posisi = elemen fokus pertama di body: <a href="#konten-utama" class="sr-only focus:not-sr-only focus:absolute focus:to
+  (2) tabindex positif: 0
+  (3) outline-none tanpa focus:ring/border: 2  (total outline-none: 3)
+  (4) div/span dengan onclick: 0 ; jumlah <a href>: 30 ; <button>: 1
+  (5) hamburger aria-expanded: 1 aria-controls: 1
+  urutan fokus (12 pertama): [a] Lewati ke konten|[a] |[a] Beranda|[a] Tentang Kami|[a] Struktur|[a] Program|[a] Galeri|[a] Kontak &amp; Pengaduan|[a] Berita|[a] Masuk Staff|[button] |[a] Beranda|
+## /kebijakan-privasi
+  (1) lewati ke konten: 1 ; posisi = elemen fokus pertama di body: <a href="#konten-utama" class="sr-only focus:not-sr-only focus:absolute focus:to
+  (2) tabindex positif: 0
+  (3) outline-none tanpa focus:ring/border: 0  (total outline-none: 1)
+  (4) div/span dengan onclick: 0 ; jumlah <a href>: 24 ; <button>: 1
+  (5) hamburger aria-expanded: 1 aria-controls: 1
+  urutan fokus (12 pertama): [a] Lewati ke konten|[a] |[a] Beranda|[a] Tentang Kami|[a] Struktur|[a] Program|[a] Galeri|[a] Kontak &amp; Pengaduan|[a] Berita|[a] Masuk Staff|[button] |[a] Beranda|
+## /faq
+  (1) lewati ke konten: 1 ; posisi = elemen fokus pertama di body: <a href="#konten-utama" class="sr-only focus:not-sr-only focus:absolute focus:to
+  (2) tabindex positif: 0
+  (3) outline-none tanpa focus:ring/border: 0  (total outline-none: 1)
+  (4) div/span dengan onclick: 0 ; jumlah <a href>: 24 ; <button>: 1
+  (5) hamburger aria-expanded: 1 aria-controls: 1
+  urutan fokus (12 pertama): [a] Lewati ke konten|[a] |[a] Beranda|[a] Tentang Kami|[a] Struktur|[a] Program|[a] Galeri|[a] Kontak &amp; Pengaduan|[a] Berita|[a] Masuk Staff|[button] |[a] Beranda|

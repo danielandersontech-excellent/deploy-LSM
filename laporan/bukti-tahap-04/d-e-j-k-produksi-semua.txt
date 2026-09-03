@@ -1,0 +1,38 @@
+# Uji d, e, j, k pada BUILD PRODUKSI — seluruh halaman Tahap 4, 2026-09-03T16:09:10Z
+## /beranda
+  d. nama ikon bocor sebagai teks: 0   material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font: 1
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+  img tanpa alt: 0   input/select tanpa id: 0
+## /tentang
+  d. nama ikon bocor sebagai teks: 0   material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font: 1
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+  img tanpa alt: 0   input/select tanpa id: 0
+## /struktur
+  d. nama ikon bocor sebagai teks: 0   material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font: 1
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+  img tanpa alt: 0   input/select tanpa id: 0
+## /program
+  d. nama ikon bocor sebagai teks: 0   material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font: 1
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+  img tanpa alt: 0   input/select tanpa id: 0
+## /galeri
+  d. nama ikon bocor sebagai teks: 0   material-symbols-outlined: 0
+  e. !important: 0   100vh: 0
+  k. fonts.googleapis/gstatic: 0   next/font: 1
+  cacat: googleusercontent 0  cdn.tailwindcss 0  href="#" 0
+  img tanpa alt: 0   input/select tanpa id: 0
+
+## j. kebocoran identitas — seluruh halaman vs kolom identitas DB lokal
+  HASIL j: LULUS — 0 nilai identitas pelapor di HTML mentah kelima halaman
+
+## CSS produksi: !important & 100vh di seluruh berkas CSS build
+  .next/static/chunks/3o54yma86ot8b.css: !important=0 100vh=1
+  (kode sumber) !important: 2  100vh: 4

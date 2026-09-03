@@ -14,3 +14,27 @@
   opacity: 0.05;
   pointer-events: none;
 }
+
+/* Tahap 4 — kelas non-Tailwind dari blok <style> layar publik (disalin apa adanya):
+   kontak_pengaduan_warkop_nusantara_updated_logo (form-input-focus),
+   program_kegiatan & galeri_dokumentasi (pressed-paper-shadow; struktur_organisasi memakai
+   rgba(116,92,0) yang secara visual identik — KEPUTUSAN BARU: satu definisi),
+   tentang_kami_warkop_nusantara (texture-paper), detail_artikel_investigasi (drop-cap). */
+.form-input-focus:focus-within {
+  border-bottom-color: #ffe088;
+}
+.pressed-paper-shadow {
+  box-shadow: 0 4px 6px -1px rgba(115, 92, 0, 0.1), 0 2px 4px -1px rgba(115, 92, 0, 0.06);
+}
+.texture-paper {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+.drop-cap::first-letter {
+  float: left;
+  font-size: 4em;
+  line-height: 0.8;
+  margin-right: 0.1em;
+  font-family: var(--font-domine), 'Domine', serif;
+  font-weight: 700;
+  color: #735c00; /* secondary */
+}

@@ -1,0 +1,35 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/beranda_warkop_nusantara/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-beranda.html
+----------------------------------------------------------------
+Kelas desain       : 230
+Ditemukan di render: 223  (97%)
+Kelas hilang       : 7
+  bg-outline
+  bg-secondary-container/30
+  bg-surface-variant
+  h-1.5
+  hover:text-primary
+  md:gap-0
+  w-1.5
+----------------------------------------------------------------
+Token desain dipakai desain : 35
+Token hilang di render      : 0
+----------------------------------------------------------------
+Teks tampak desain : 25   hilang di render: 5
+  Dugaan Penyelewengan Dana Desa di Sektor Infrastruktur Terungkap
+  Fasilitas Kesehatan Mangkrak di Daerah Pelosok
+  Lihat Semua Berita arrow_forward
+  campaign Sampaikan Pengaduan
+  menu_book Pelajari Prosedur
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

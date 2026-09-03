@@ -1,0 +1,41 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/struktur_organisasi/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-struktur.html
+----------------------------------------------------------------
+Kelas desain       : 173
+Ditemukan di render: 157  (91%)
+Kelas hilang       : 16
+  antialiased
+  bg-primary-container
+  bottom-0
+  flex-wrap
+  focus:border-secondary-fixed-dim
+  focus:ring-secondary-fixed-dim
+  hover:bg-tertiary-container
+  justify-center
+  md:gap-8
+  md:mb-0
+  opacity-60
+  pl-10
+  placeholder:opacity-50
+  placeholder:text-on-primary
+  pr-4
+  px-margin-desktop
+----------------------------------------------------------------
+Token desain dipakai desain : 30
+Token hilang di render      : 1  -> tertiary-container
+----------------------------------------------------------------
+Teks tampak desain : 21   hilang di render: 2
+  Lukas Enembe, S.H.
+  Profil arrow_forward
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

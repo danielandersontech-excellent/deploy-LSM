@@ -1,0 +1,19 @@
+# Uji b — tangkapan layar build produksi 375/768/1280, 2026-09-03T16:08:25Z
+laporan/bukti-tahap-04/tangkapan/beranda-375.png 350922 B
+laporan/bukti-tahap-04/tangkapan/beranda-768.png 543375 B
+laporan/bukti-tahap-04/tangkapan/beranda-1280.png 625472 B
+laporan/bukti-tahap-04/tangkapan/tentang-375.png 311232 B
+laporan/bukti-tahap-04/tangkapan/tentang-768.png 783033 B
+laporan/bukti-tahap-04/tangkapan/tentang-1280.png 984926 B
+laporan/bukti-tahap-04/tangkapan/struktur-375.png 168834 B
+laporan/bukti-tahap-04/tangkapan/struktur-768.png 186132 B
+laporan/bukti-tahap-04/tangkapan/struktur-1280.png 185330 B
+laporan/bukti-tahap-04/tangkapan/program-375.png 372569 B
+laporan/bukti-tahap-04/tangkapan/program-768.png 324763 B
+laporan/bukti-tahap-04/tangkapan/program-1280.png 380863 B
+laporan/bukti-tahap-04/tangkapan/galeri-375.png 420718 B
+laporan/bukti-tahap-04/tangkapan/galeri-768.png 376462 B
+laporan/bukti-tahap-04/tangkapan/galeri-1280.png 572380 B
+laporan/bukti-tahap-04/tangkapan/faq-375.png 170131 B
+laporan/bukti-tahap-04/tangkapan/faq-768.png 183813 B
+laporan/bukti-tahap-04/tangkapan/faq-1280.png 192980 B

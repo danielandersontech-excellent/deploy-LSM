@@ -1,0 +1,11 @@
+# Uji l — keadaan kosong (2026-09-03T16:07:14Z)
+sebelum: artikel=12 pengurus=5 galeri=6 program=3
+setelah DELETE: artikel=0 pengurus=0 galeri=0 program=0
+/ -> HTTP 200 | KeadaanKosong(role=status): 1 | judul: Belum ada sorotan investigasi| | galat: 0
+/struktur -> HTTP 200 | KeadaanKosong(role=status): 2 | judul: Data pimpinan pusat belum tersedia|Belum ada pimpinan regional| | galat: 0
+/program -> HTTP 200 | KeadaanKosong(role=status): 1 | judul: Belum ada program| | galat: 0
+/galeri -> HTTP 200 | KeadaanKosong(role=status): 1 | judul: Belum ada dokumentasi| | galat: 0
+/tentang -> HTTP 200 | KeadaanKosong(role=status): 0 | judul:  | galat: 0
+$ node scripts/seed.js (pulihkan data contoh)
+[seed] jumlah baris: wilayah=39 users=7 kategori_artikel=5 artikel=12 tag=5 artikel_tag=11 pengaduan=3 pengaduan_riwayat=11 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.

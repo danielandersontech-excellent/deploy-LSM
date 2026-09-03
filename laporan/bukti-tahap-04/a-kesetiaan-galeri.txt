@@ -1,0 +1,37 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/galeri_dokumentasi/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-galeri.html
+----------------------------------------------------------------
+Kelas desain       : 181
+Ditemukan di render: 169  (93%)
+Kelas hilang       : 12
+  flex-wrap
+  hover:border-primary
+  max-w-sm
+  mb-8
+  md:gap-8
+  md:mb-0
+  mt-12
+  mt-auto
+  p-2
+  px-8
+  px-margin-desktop
+  py-3
+----------------------------------------------------------------
+Token desain dipakai desain : 37
+Token hilang di render      : 0
+----------------------------------------------------------------
+Teks tampak desain : 28   hilang di render: 2
+  Muat Lebih Banyak expand_more
+  filter_list Terapkan Filter
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

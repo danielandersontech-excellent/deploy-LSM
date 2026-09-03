@@ -1,0 +1,4 @@
+nilai sebelum: 12000 | di HTML: 12.000+ ADA
+setelah simpanPengaturan(54321) | di HTML: 54.321+ ADA | 12.000+ masih ada: false
+dikembalikan ke 12000 | di HTML: 12.000+ ADA
+HASIL i: LULUS
