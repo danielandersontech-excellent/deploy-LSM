@@ -1,0 +1,28 @@
+# UJI i — penelusuran larangan di seluruh proyek (kecuali node_modules, .next, desain, paket-pendukung, dokumen, laporan, .git)
+$ grep -rnE <pola> --exclude-dir=... .
+
+== pola: output:\s*['"]standalone['"]
+./next.config.mjs:2:// JANGAN pernah menambahkan output: 'standalone' — custom server.js butuh
+./server.js:7:// Jangan memakai output: 'standalone' — server ini butuh node_modules penuh.
+
+== pola: cdn\.tailwindcss\.com
+(nihil)
+
+== pola: !important
+./app/globals.css:3:   yang tercatat di laporan tahap. Dilarang !important dan 100vh (aturan 4 dan 5). */
+
+== pola: 100vh
+./app/globals.css:3:   yang tercatat di laporan tahap. Dilarang !important dan 100vh (aturan 4 dan 5). */
+
+== pola: middleware\.js
+./proxy.js:1:// proxy.js — WARKOP NUSANTARA (Next.js 16; dulu bernama middleware.js)
+./README.md:89:proxy.js   lapisan 2 penjaga (Next.js 16; bukan middleware.js)
+
+== pola: next lint
+./eslint.config.mjs:1:// eslint.config.mjs — flat config (Next.js 16: `next lint` sudah dihapus; skrip lint memanggil eslint langsung)
+./README.md:50:npm run lint                # eslint . (next lint sudah dihapus di Next.js 16)
+
+== pola: jsonwebtoken
+(nihil)
+
+# Catatan: CLAUDE.md dan MULAI-DI-SINI.md dikecualikan karena menyebut pola ini sebagai LARANGAN (teks dokumen, bukan kode). Komentar kode yang menyebut larangan ditampilkan apa adanya di atas.

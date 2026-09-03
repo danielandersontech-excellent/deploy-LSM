@@ -1,0 +1,10 @@
+# UJI n — plugin @tailwindcss/forms aktif di CSS produksi
+$ ls .next/static/chunks/*.css
+.next/static/chunks/3w84k0pz05vr9.css
+
+$ grep -c "input:where" .next/static/chunks/*.css
+1
+
+$ grep -o "input:where([^)]*)[^{]*{[^}]*}" .next/static/chunks/*.css | head -c 600
+input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:#0000;background-image:none}
+input:where([type=text]),input:where(:not([type])),input:where([type=email]),input:where([type=url]),input:where([type=password]),input:where([type=number]),input:where([type=date]),input:where([type=datetime-local]),input:where([type=month]),input:where([type=search]),input:where([type=tel]),input:where([type=time]),input:where([type=week]),select:where([multiple]),textarea,select{appearance:none;--tw-shadow:0 0 #0000;background-color:#fff;bor

@@ -1,0 +1,16 @@
+# UJI m — ikon: /uji-desain me-render SVG Material, tanpa nama ikon bocor (server produksi)
+$ curl.exe -s http://localhost:3000/uji-desain > m-uji-desain-render.html
+$ grep -o 'viewBox="0 -960 960 960"' m-uji-desain-render.html | wc -l
+308
+  (77 ikon x 4 varian = 308 diharapkan; >= 77 lulus)
+
+$ grep -c "material-symbols-outlined" m-uji-desain-render.html
+0
+  (0 = tidak ada teks material-symbols-outlined)
+
+$ node: jumlah nama di DAFTAR_IKON
+total kunci JALUR: 92 | nama ikon (DAFTAR_IKON): 77 | varian __fill: 15
+  => 308 SVG di render = 77 nama x 4 varian (text-sm, bawaan, text-3xl, terisi)
+
+$ ukuran HTML render:
+476052 laporan/bukti-tahap-00/m-uji-desain-render.html

@@ -1,0 +1,33 @@
+# UJI d (1) — banding token tailwind.config.js vs blok tailwind.config di beranda_warkop_nusantara/code.html
+$ node banding-token.mjs
+
+== colors: desain=47 proyek=47
+   hanya di desain : -
+   hanya di proyek : -
+   nilai berbeda   : -
+
+== borderRadius: desain=4 proyek=4
+   hanya di desain : -
+   hanya di proyek : -
+   nilai berbeda   : -
+
+== spacing: desain=5 proyek=5
+   hanya di desain : -
+   hanya di proyek : -
+   nilai berbeda   : -
+
+== fontSize: desain=8 proyek=8
+   hanya di desain : -
+   hanya di proyek : -
+   nilai berbeda   : -
+
+== fontFamily (keluarga: Domine/Fira Sans; nilai desain = nama Google Font, proyek = var(--font-*)): desain=8 proyek=10
+   hanya di desain : -
+   hanya di proyek : serif, sans
+   nilai berbeda   : -
+
+darkMode desain = "class" | proyek = "class"
+plugin forms di proyek: ada
+
+HASIL: SELURUH TOKEN IDENTIK dengan code.html
+exit=0

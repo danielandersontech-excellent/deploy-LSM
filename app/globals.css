@@ -1,0 +1,6 @@
+/* app/globals.css — hanya lapisan Tailwind. Token desain ada di tailwind.config.js
+   (dibangkitkan dari code.html); jangan menambah gaya kustom di sini tanpa alasan
+   yang tercatat di laporan tahap. Dilarang !important dan 100vh (aturan 4 dan 5). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

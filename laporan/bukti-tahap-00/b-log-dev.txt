@@ -1,0 +1,16 @@
+$ npm run dev   (= node server.js; log awal dev, Next.js 16.3.4)
+✓ Running next.config.mjs took 30ms
+[warkop] Socket.io terpasang di path /socket.io
+[warkop] siap di http://0.0.0.0:3000  mode=dev  STAF_HOST=(kosong: pemisahan host nonaktif)
+ GET /api/health 200 in 583ms (next.js: 420ms, proxy.ts: 111ms, application-code: 52ms)
+ GET /api/health 200 in 20ms (next.js: 5ms, proxy.ts: 5ms, application-code: 10ms)
+ GET /uji-proxy 200 in 2.1s (next.js: 1989ms, proxy.ts: 4ms, application-code: 131ms)
+ GET /uji-proxy 200 in 58ms (next.js: 17ms, proxy.ts: 5ms, application-code: 36ms)
+ GET /uji-proxy 200 in 44ms (next.js: 7ms, proxy.ts: 4ms, application-code: 32ms)
+ GET /api/health 200 in 20ms (next.js: 6ms, proxy.ts: 5ms, application-code: 10ms)
+ GET /api/health 503 in 19ms (next.js: 5ms, proxy.ts: 4ms, application-code: 10ms)
+ GET /api/health 200 in 27ms (next.js: 5ms, proxy.ts: 4ms, application-code: 18ms)
+ GET /uji-proxy 200 in 61ms (next.js: 7ms, proxy.ts: 4ms, application-code: 50ms)
+
+--- stderr ---
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase

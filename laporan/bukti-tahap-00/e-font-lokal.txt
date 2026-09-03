@@ -1,0 +1,42 @@
+# UJI e — font lokal, tanpa Google Fonts (keluaran build produksi)
+# Catatan: Tahap 0 belum punya halaman / (app/(publik)/page.js dibuat Tahap 4), sehingga .next/server/app/index.html tidak ada.
+# Diganti dengan halaman statis yang ada: .next/server/app/uji-desain.html
+
+$ ls .next/server/app/
+_global-error
+_global-error.html
+_global-error.meta
+_global-error.rsc
+_global-error.segments
+_not-found
+_not-found.html
+_not-found.meta
+_not-found.rsc
+_not-found.segments
+api
+uji-desain
+uji-desain.html
+uji-desain.meta
+uji-desain.rsc
+uji-desain.segments
+uji-proxy
+
+$ grep -c "fonts.g" .next/server/app/uji-desain.html
+0
+
+$ grep -rc "fonts.googleapis\|fonts.gstatic" .next/static .next/server/app | grep -v ":0$" ; echo "(kosong = tidak ada rujukan sama sekali)"
+(kosong = tidak ada rujukan sama sekali)
+
+$ grep -o "<link rel=\"preload\"[^>]*woff2[^>]*>" .next/server/app/uji-desain.html
+<link rel="preload" href="/_next/static/media/Domine%5Bwght%5D-s.p.2imvd8kp_i7fc.woff2" as="font" crossorigin="" type="font/woff2"/>
+<link rel="preload" href="/_next/static/media/FiraSans_Italic-s.p.2y83er5h4k4z-.woff2" as="font" crossorigin="" type="font/woff2"/>
+<link rel="preload" href="/_next/static/media/FiraSans_Medium-s.p.3m3al9y8qfjoq.woff2" as="font" crossorigin="" type="font/woff2"/>
+<link rel="preload" href="/_next/static/media/FiraSans_Regular-s.p.28rav53daf6bw.woff2" as="font" crossorigin="" type="font/woff2"/>
+<link rel="preload" href="/_next/static/media/FiraSans_SemiBold-s.p.2_conx2uh88bk.woff2" as="font" crossorigin="" type="font/woff2"/>
+
+$ ls .next/static/media/ | grep woff2
+Domine[wght]-s.p.2imvd8kp_i7fc.woff2
+FiraSans_Italic-s.p.2y83er5h4k4z-.woff2
+FiraSans_Medium-s.p.3m3al9y8qfjoq.woff2
+FiraSans_Regular-s.p.28rav53daf6bw.woff2
+FiraSans_SemiBold-s.p.2_conx2uh88bk.woff2

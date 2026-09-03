@@ -1,0 +1,57 @@
+# UJI l — struktur rute: segmen bersarang app/(staf)/staf/
+$ find app -type d | sort
+app
+app/(auth)
+app/(auth)/login
+app/(publik)
+app/(publik)/berita
+app/(publik)/berita/[slug]
+app/(publik)/galeri
+app/(publik)/kontak
+app/(publik)/lacak
+app/(publik)/program
+app/(publik)/struktur
+app/(publik)/tentang
+app/(staf)
+app/(staf)/staf
+app/(staf)/staf/artikel
+app/(staf)/staf/artikel/[id]
+app/(staf)/staf/artikel/baru
+app/(staf)/staf/dashboard
+app/(staf)/staf/galeri
+app/(staf)/staf/pengaduan
+app/(staf)/staf/pengaduan/[id]
+app/(staf)/staf/pengaturan
+app/(staf)/staf/pengguna
+app/(staf)/staf/pengurus
+app/(staf)/staf/program
+app/api
+app/api/artikel
+app/api/artikel/[slug]
+app/api/auth
+app/api/auth/login
+app/api/auth/logout
+app/api/auth/saya
+app/api/health
+app/api/pengaduan
+app/api/pengaduan/lacak
+app/api/pengaduan/lacak/[nomor]
+app/api/staf
+app/api/staf/artikel
+app/api/staf/artikel/[id]
+app/api/staf/artikel/[id]/terbitkan
+app/api/staf/galeri
+app/api/staf/pengaduan
+app/api/staf/pengaduan/[id]
+app/api/staf/pengaduan/[id]/status
+app/api/staf/pengaturan
+app/api/staf/pengguna
+app/api/staf/pengurus
+app/api/staf/program
+app/api/staf/statistik
+app/api/staf/unggah
+app/uji-desain
+app/uji-proxy
+
+# Route group (staf) TIDAK membentuk URL; segmen bernama "staf" di bawahnya yang membentuk /staf/*.
+# Sehingga: app/(publik)/program/page.js -> /program ; app/(staf)/staf/program/page.js -> /staf/program (tidak menabrak).

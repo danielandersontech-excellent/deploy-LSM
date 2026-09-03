@@ -1,0 +1,17 @@
+$ curl.exe -i http://localhost:3000/uji-proxy   # dev (node server.js), Next.js 16.3.4
+# (bagian <script> RSC dipangkas agar terbaca; header dan <body> utuh)
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+x-diag-url: http://0.0.0.0:3000/uji-proxy
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+Link: </_next/static/media/Domine%5Bwght%5D-s.p.2imvd8kp_i7fc.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/FiraSans_Italic-s.p.2y83er5h4k4z-.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/FiraSans_Medium-s.p.3m3al9y8qfjoq.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/FiraSans_Regular-s.p.28rav53daf6bw.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/FiraSans_SemiBold-s.p.2_conx2uh88bk.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/chunks/app_1-h4cki._.css>; rel=preload; as="style"
+Cache-Control: no-cache, must-revalidate
+Content-Type: text/html; charset=utf-8
+Date: Thu, 03 Sep 2026 05:47:33 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+<!DOCTYPE html><html lang="id" class="domine_8dc8d88a-module__SVYi0W__variable firasans_45c1ce27-module__KvceHW__variable"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>WARKOP NUSANTARA</title><meta name="description" content="Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar."/><meta property="og:title" content="WARKOP NUSANTARA"/><meta property="og:description" content="Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar."/><meta property="og:site_name" content="WARKOP NUSANTARA"/><meta property="og:locale" content="id_ID"/><meta property="og:image" content="http://localhost:3000/og-default.png"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="WARKOP NUSANTARA"/><meta name="twitter:description" content="Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar."/><meta name="twitter:image" content="http://localhost:3000/og-default.png"/><meta name="next-size-adjust" content=""/></head><body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed"><div hidden=""><!--$--><!--/$--></div><main class="p-8 font-body-md text-body-md"><h1 class="font-headline-md text-headline-md mb-4">Uji proxy</h1><p>x-uji-proxy: proxy-berjalan</p></main><!--$--><!--/$--></body></html>

@@ -1,0 +1,54 @@
+### 1. DB menyala
+$ curl.exe -i http://localhost:3000/api/health
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+x-diag-url: http://0.0.0.0:3000/api/health
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store
+content-type: application/json
+Date: Thu, 03 Sep 2026 05:47:15 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"status":"sehat","waktu":"2026-09-03T12:47:15+07:00","basisData":"terhubung","versi":"0.1.0"}
+
+### 2. DB dimatikan: docker stop warkop-mariadb
+warkop-mariadb
+$ curl.exe -i http://localhost:3000/api/health
+HTTP/1.1 503 Service Unavailable
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+x-diag-url: http://0.0.0.0:3000/api/health
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store
+content-type: application/json
+Date: Thu, 03 Sep 2026 05:47:18 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"status":"terganggu","waktu":"2026-09-03T12:47:18+07:00","basisData":"terputus","versi":"0.1.0"}
+
+### 3. DB dinyalakan lagi: docker start warkop-mariadb
+warkop-mariadb
+mysqld is alive
+(mariadb siap setelah 4s)
+$ curl.exe -i http://localhost:3000/api/health
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+x-diag-url: http://0.0.0.0:3000/api/health
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store
+content-type: application/json
+Date: Thu, 03 Sep 2026 05:47:24 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"status":"sehat","waktu":"2026-09-03T12:47:24+07:00","basisData":"terhubung","versi":"0.1.0"}

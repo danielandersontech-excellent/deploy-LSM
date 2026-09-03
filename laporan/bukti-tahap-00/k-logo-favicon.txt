@@ -1,0 +1,45 @@
+# UJI k — logo & favicon tersaji (server produksi)
+
+$ curl.exe -I http://localhost:3000/logo-warkop.png
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+Content-Type: image/png
+Content-Length: 390742
+
+$ curl.exe -I http://localhost:3000/favicon.ico
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+Content-Type: image/x-icon
+Content-Length: 8582
+
+$ curl.exe -I http://localhost:3000/apple-touch-icon.png
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+Content-Type: image/png
+Content-Length: 50265
+
+$ curl.exe -I http://localhost:3000/logo-warkop-besar.png
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+Content-Type: image/png
+Content-Length: 1201813
+
+$ curl.exe -I http://localhost:3000/og-default.png
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+Content-Type: image/png
+Content-Length: 360335
+
+$ ls -l public/*.png public/*.ico
+-rw-r--r-- 1 TUF A15 FX506 197121   50265 Sep  3 12:35 public/apple-touch-icon.png
+-rw-r--r-- 1 TUF A15 FX506 197121    8582 Sep  3 12:35 public/favicon.ico
+-rw-r--r-- 1 TUF A15 FX506 197121 1201813 Sep  3 12:35 public/logo-warkop-besar.png
+-rw-r--r-- 1 TUF A15 FX506 197121  390742 Sep  3 12:35 public/logo-warkop.png
+-rw-r--r-- 1 TUF A15 FX506 197121  360335 Sep  3 12:35 public/og-default.png
+
+$ cmp public/logo-warkop.png paket-pendukung/ASET/logo/logo-warkop-512.png && echo identik
+identik
+favicon identik
+apple-touch-icon identik
+
+ukuran logo utama: 390742 byte (< 409600 = < 400 KB)

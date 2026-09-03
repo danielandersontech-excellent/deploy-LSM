@@ -1,0 +1,24 @@
+# Tidak ikut ke konteks build Docker
+.git
+.gitignore
+node_modules
+.next
+_backup*
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+
+# sumber besar / baca-saja yang tidak dibutuhkan image
+desain
+paket-pendukung
+dokumen
+laporan
+Warkop_Nusantara.zip
+LSM_WARKOP.png
+*.md
+!README.md
+
+# unggahan runtime (volume)
+public/unggahan/*

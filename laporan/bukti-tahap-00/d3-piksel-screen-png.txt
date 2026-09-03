@@ -1,0 +1,30 @@
+# UJI d (3) — penghitungan piksel screen.png (tanpa peramban; dekoder PNG zlib bawaan Node)
+$ node hitung-piksel.mjs desain/stitch_portal_berita_inklusif/beranda_warkop_nusantara/screen.png
+berkas : desain/stitch_portal_berita_inklusif/beranda_warkop_nusantara/screen.png
+ukuran : 830 x 1600 px (1328000 piksel), tipe warna RGB
+
+Piksel yang PERSIS sama dengan hex token (tanpa toleransi):
+  surface-container-lowest   #ffffff     406737   30.63%
+  background                 #faf9f5     326463   24.58%
+  primary                    #271310     302385   22.77%
+  surface-container-low      #f4f4f0      45125    3.40%
+  secondary                  #735c00        832    0.06%
+  error                      #ba1a1a        497    0.04%
+  secondary-fixed            #ffe088        324    0.02%
+  primary-container          #3e2723          0    0.00%
+  secondary-container        #fed65b          0    0.00%
+  secondary-fixed-dim        #e9c349          0    0.00%
+  on-surface                 #1b1c1a          0    0.00%
+
+10 warna terbanyak di screen.png:
+  #ffffff     406737   30.63%  <- token surface-container-lowest
+  #faf9f5     326463   24.58%  <- token background
+  #271310     302385   22.77%  <- token primary
+  #f4f4f0      45125    3.40%  <- token surface-container-low
+  #fffffe      23134    1.74%  
+  #000000      14706    1.11%  
+  #fefefe      12586    0.95%  
+  #fefefd       5031    0.38%  
+  #fdfdfd       2920    0.22%  
+  #000606       2428    0.18%  
+exit=0

@@ -1,0 +1,12 @@
+$ npm run lint
+
+> warkop-nusantara@0.1.0 lint
+> eslint .
+
+exit=0
+
+$ grep -c "next lint" package.json
+0
+(0 = tidak ada rujukan next lint)
+
+# Catatan: 2 peringatan import/no-anonymous-default-export pada tailwind.config.js & postcss.config.js (salinan kerangka baca-saja) dimatikan lewat override di eslint.config.mjs, bukan dengan mengubah berkasnya.

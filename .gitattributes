@@ -1,0 +1,7 @@
+# Normalisasi akhir baris: repo memakai LF; skrip shell WAJIB LF agar jalan di container Alpine.
+* text=auto eol=lf
+*.sh text eol=lf
+*.png binary
+*.ico binary
+*.woff2 binary
+*.zip binary

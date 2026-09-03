@@ -1,0 +1,85 @@
+# UJI d (2) — verifikasi numerik CSS produksi: token yang benar-benar ter-render di .next/static/chunks/*.css
+# (pencarian toleran terhadap minifier: urutan properti bebas, "0.25rem" ditulis ".25rem", selektor bernilai sama digabung "a,b{...}")
+  ada    background                  #faf9f5  .bg-background{--tw-bg-opacity:1;background-color:rgb(250 249 245/var(--tw-bg-opacity,1))}
+  ada    error                       #ba1a1a  .bg-error{--tw-bg-opacity:1;background-color:rgb(186 26 26/var(--tw-bg-opacity,1))}
+  ada    error-container             #ffdad6  .bg-error-container{--tw-bg-opacity:1;background-color:rgb(255 218 214/var(--tw-bg-opacity,1))}
+  ada    inverse-on-surface          #f2f1ed  .bg-inverse-on-surface{--tw-bg-opacity:1;background-color:rgb(242 241 237/var(--tw-bg-opacity,1))}
+  ada    inverse-primary             #e3beb8  .bg-inverse-primary{--tw-bg-opacity:1;background-color:rgb(227 190 184/var(--tw-bg-opacity,1))}
+  ada    inverse-surface             #2f312e  .bg-inverse-surface{--tw-bg-opacity:1;background-color:rgb(47 49 46/var(--tw-bg-opacity,1))}
+  ada    on-background               #1b1c1a  .bg-on-background{--tw-bg-opacity:1;background-color:rgb(27 28 26/var(--tw-bg-opacity,1))}
+  ada    on-error                    #ffffff  .bg-on-error{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}
+  ada    on-error-container          #93000a  .bg-on-error-container{--tw-bg-opacity:1;background-color:rgb(147 0 10/var(--tw-bg-opacity,1))}
+  ada    on-primary                  #ffffff  .bg-on-primary{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}
+  ada    on-primary-container        #ae8d87  .bg-on-primary-container{--tw-bg-opacity:1;background-color:rgb(174 141 135/var(--tw-bg-opacity,1))}
+  ada    on-primary-fixed            #2b1613  .bg-on-primary-fixed{--tw-bg-opacity:1;background-color:rgb(43 22 19/var(--tw-bg-opacity,1))}
+  ada    on-primary-fixed-variant    #5b403c  .bg-on-primary-fixed-variant{--tw-bg-opacity:1;background-color:rgb(91 64 60/var(--tw-bg-opacity,1))}
+  ada    on-secondary                #ffffff  .bg-on-secondary{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}
+  ada    on-secondary-container      #745c00  .bg-on-secondary-container{--tw-bg-opacity:1;background-color:rgb(116 92 0/var(--tw-bg-opacity,1))}
+  ada    on-secondary-fixed          #241a00  .bg-on-secondary-fixed{--tw-bg-opacity:1;background-color:rgb(36 26 0/var(--tw-bg-opacity,1))}
+  ada    on-secondary-fixed-variant  #574500  .bg-on-secondary-fixed-variant{--tw-bg-opacity:1;background-color:rgb(87 69 0/var(--tw-bg-opacity,1))}
+  ada    on-surface                  #1b1c1a  .bg-on-surface{--tw-bg-opacity:1;background-color:rgb(27 28 26/var(--tw-bg-opacity,1))}
+  ada    on-surface-variant          #504442  .bg-on-surface-variant{--tw-bg-opacity:1;background-color:rgb(80 68 66/var(--tw-bg-opacity,1))}
+  ada    on-tertiary                 #ffffff  .bg-on-tertiary{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}
+  ada    on-tertiary-container       #a88f86  .bg-on-tertiary-container{--tw-bg-opacity:1;background-color:rgb(168 143 134/var(--tw-bg-opacity,1))}
+  ada    on-tertiary-fixed           #271812  .bg-on-tertiary-fixed{--tw-bg-opacity:1;background-color:rgb(39 24 18/var(--tw-bg-opacity,1))}
+  ada    on-tertiary-fixed-variant   #56423b  .bg-on-tertiary-fixed-variant{--tw-bg-opacity:1;background-color:rgb(86 66 59/var(--tw-bg-opacity,1))}
+  ada    outline                     #827472  .bg-outline{--tw-bg-opacity:1;background-color:rgb(130 116 114/var(--tw-bg-opacity,1))}
+  ada    outline-variant             #d3c3c0  .bg-outline-variant{--tw-bg-opacity:1;background-color:rgb(211 195 192/var(--tw-bg-opacity,1))}
+  ada    primary                     #271310  .bg-primary{--tw-bg-opacity:1;background-color:rgb(39 19 16/var(--tw-bg-opacity,1))}
+  ada    primary-container           #3e2723  .bg-primary-container{--tw-bg-opacity:1;background-color:rgb(62 39 35/var(--tw-bg-opacity,1))}
+  ada    primary-fixed               #ffdad4  .bg-primary-fixed{--tw-bg-opacity:1;background-color:rgb(255 218 212/var(--tw-bg-opacity,1))}
+  ada    primary-fixed-dim           #e3beb8  .bg-primary-fixed-dim{--tw-bg-opacity:1;background-color:rgb(227 190 184/var(--tw-bg-opacity,1))}
+  ada    secondary                   #735c00  .bg-secondary{--tw-bg-opacity:1;background-color:rgb(115 92 0/var(--tw-bg-opacity,1))}
+  ada    secondary-container         #fed65b  .bg-secondary-container{--tw-bg-opacity:1;background-color:rgb(254 214 91/var(--tw-bg-opacity,1))}
+  ada    secondary-fixed             #ffe088  .bg-secondary-fixed{--tw-bg-opacity:1;background-color:rgb(255 224 136/var(--tw-bg-opacity,1))}
+  ada    secondary-fixed-dim         #e9c349  .bg-secondary-fixed-dim{--tw-bg-opacity:1;background-color:rgb(233 195 73/var(--tw-bg-opacity,1))}
+  ada    surface                     #faf9f5  .bg-surface{--tw-bg-opacity:1;background-color:rgb(250 249 245/var(--tw-bg-opacity,1))}
+  ada    surface-bright              #faf9f5  .bg-surface-bright{--tw-bg-opacity:1;background-color:rgb(250 249 245/var(--tw-bg-opacity,1))}
+  ada    surface-container           #efeeea  .bg-surface-container{--tw-bg-opacity:1;background-color:rgb(239 238 234/var(--tw-bg-opacity,1))}
+  ada    surface-container-high      #e9e8e4  .bg-surface-container-high{--tw-bg-opacity:1;background-color:rgb(233 232 228/var(--tw-bg-opacity,1))}
+  ada    surface-container-highest   #e3e2df  .bg-surface-container-highest{--tw-bg-opacity:1;background-color:rgb(227 226 223/var(--tw-bg-opacity,1))}
+  ada    surface-container-low       #f4f4f0  .bg-surface-container-low{--tw-bg-opacity:1;background-color:rgb(244 244 240/var(--tw-bg-opacity,1))}
+  ada    surface-container-lowest    #ffffff  .bg-surface-container-lowest{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}
+  ada    surface-dim                 #dbdad6  .bg-surface-dim{--tw-bg-opacity:1;background-color:rgb(219 218 214/var(--tw-bg-opacity,1))}
+  ada    surface-tint                #745853  .bg-surface-tint{--tw-bg-opacity:1;background-color:rgb(116 88 83/var(--tw-bg-opacity,1))}
+  ada    surface-variant             #e3e2df  .bg-surface-variant{--tw-bg-opacity:1;background-color:rgb(227 226 223/var(--tw-bg-opacity,1))}
+  ada    tertiary                    #24150f  .bg-tertiary{--tw-bg-opacity:1;background-color:rgb(36 21 15/var(--tw-bg-opacity,1))}
+  ada    tertiary-container          #3a2922  .bg-tertiary-container{--tw-bg-opacity:1;background-color:rgb(58 41 34/var(--tw-bg-opacity,1))}
+  ada    tertiary-fixed              #fadcd2  .bg-tertiary-fixed{--tw-bg-opacity:1;background-color:rgb(250 220 210/var(--tw-bg-opacity,1))}
+  ada    tertiary-fixed-dim          #ddc1b7  .bg-tertiary-fixed-dim{--tw-bg-opacity:1;background-color:rgb(221 193 183/var(--tw-bg-opacity,1))}
+
+Token warna ter-render (kelas .bg-<token> ada & nilainya = hex desain): 47/47
+  ada    .text-headline-xl{letter-spacing:-.02em;font-size:48px;font-weight:700;line-height:56px}
+  ada    .text-headline-lg{font-size:32px;font-weight:700;line-height:40px}
+  ada    .text-body-lg{font-size:18px;font-weight:400;line-height:28px}
+  ada    .text-body-md{font-size:16px;font-weight:400;line-height:24px}
+  ada    .text-label-md{letter-spacing:.05em;font-size:14px;font-weight:600;line-height:20px}
+  ada    .text-motto{font-size:16px;font-weight:500;line-height:24px}
+  ada    .text-headline-md{font-size:24px;font-weight:600;line-height:32px}
+  ada    .text-headline-lg-mobile{font-size:28px;font-weight:700;line-height:36px}
+Tipografi ter-render (ukuran+tinggi baris+berat+jarak huruf): 8/8
+  ada    .font-headline-xl{font-family:var(--font-domine), serif}
+  ada    .font-headline-lg{font-family:var(--font-domine), serif}
+  ada    .font-body-lg{font-family:var(--font-fira-sans), sans-serif}
+  ada    .font-body-md{font-family:var(--font-fira-sans), sans-serif}
+  ada    .font-label-md{font-family:var(--font-fira-sans), sans-serif}
+  ada    .font-motto{font-family:var(--font-domine), serif}
+  ada    .font-headline-md{font-family:var(--font-domine), serif}
+  ada    .font-headline-lg-mobile{font-family:var(--font-domine), serif}
+  HILANG .font-serif{(tidak ada)}
+  HILANG .font-sans{(tidak ada)}
+Keluarga font ter-render: 8/10  (serif/sans = alias tambahan kerangka; hanya muncul bila dipakai halaman)
+  ada    container-max = 1280px  .w-container-max{width:1280px}
+  ada    margin-mobile = 16px  .w-margin-mobile{width:16px}
+  ada    margin-desktop = 40px  .w-margin-desktop{width:40px}
+  ada    unit = 8px  .w-unit{width:8px}
+  ada    gutter = 24px  .w-gutter{width:24px}
+Spacing ter-render: 5/5
+  ada    .rounded{border-radius:.25rem}
+  ada    .rounded-lg{border-radius:.5rem}
+  ada    .rounded-xl{border-radius:.75rem}
+  ada    .rounded-full{border-radius:9999px}
+Radius ter-render: 4/4
+
+reset @tailwindcss/forms (input:where) di CSS: ada
+ukuran CSS produksi: 21179 byte

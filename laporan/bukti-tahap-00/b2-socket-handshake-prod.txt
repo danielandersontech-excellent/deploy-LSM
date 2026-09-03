@@ -1,0 +1,26 @@
+# UJI b (tambahan) — Socket.io handshake di proses yang sama (server produksi)
+$ curl.exe -s -i "http://localhost:3000/socket.io/?EIO=4&transport=polling"
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=UTF-8
+Content-Length: 118
+cache-control: no-store
+Date: Thu, 03 Sep 2026 05:51:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+0{"sid":"tjvEUM-SNpf9EMQ5AAAA","upgrades":["websocket"],"pingInterval":25000,"pingTimeout":20000,"maxPayload":1000000}
+
+$ curl.exe -s -i http://localhost:3000/api/health   # produksi
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store
+content-type: application/json
+Date: Thu, 03 Sep 2026 05:51:35 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"status":"sehat","waktu":"2026-09-03T12:51:35+07:00","basisData":"terhubung","versi":"0.1.0"}

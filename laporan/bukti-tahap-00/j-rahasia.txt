@@ -1,0 +1,36 @@
+# UJI j — rahasia
+$ git check-ignore -v .env .env.local _backup-x/x
+.gitignore:2:.env	.env
+.gitignore:3:.env.*	.env.local
+.gitignore:9:_backup*/	_backup-x/x
+
+$ git status --short --ignored | grep -E "^!!" | grep -E "\.env|_backup"
+!! .env
+
+$ cat .gitignore
+# --- rahasia ---
+.env
+.env.*
+!.env.example
+
+# --- dependensi & build ---
+node_modules/
+.next/
+_backup*/
+
+# --- sumber besar yang tidak ikut repo (tetap ada di disk) ---
+desain/
+Warkop_Nusantara.zip
+LSM_WARKOP.png
+
+# --- unggahan runtime ---
+public/unggahan/*
+!public/unggahan/.gitkeep
+
+# --- lain-lain ---
+*.log
+.DS_Store
+
+# nilai rahasia .env lokal tidak muncul di berkas yang akan di-commit:
+$ git add -A --dry-run | grep -v laporan/ ; lalu grep nilai DB_PASSWORD & JWT_SECRET di seluruh berkas terlacak+baru (kecuali .env):
+kemunculan nilai rahasia di berkas ter-commit/akan-commit: 0

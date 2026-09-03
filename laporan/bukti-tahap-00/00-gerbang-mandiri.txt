@@ -1,0 +1,37 @@
+# GERBANG-MANDIRI 7.2 — Tahap 00 (pemeriksaan terprogram)
+$ grep -c 'x-uji-proxy: proxy-berjalan' laporan/bukti-tahap-00/h-curl-dev-uji-proxy.txt
+1
+$ grep -c 'x-uji-proxy: proxy-berjalan' laporan/bukti-tahap-00/h-curl-prod-uji-proxy.txt
+1
+$ grep -c 'ƒ Proxy (Middleware)' laporan/bukti-tahap-00/f-build.txt
+1
+$ grep 'exit=' laporan/bukti-tahap-00/f-build.txt
+exit=0
+$ grep 'x-diag-url' laporan/bukti-tahap-00/h2-curl-diag-url.txt
+x-diag-url: http://0.0.0.0:3000/uji-proxy
+$ grep -c '^HTTP/1.1 503' laporan/bukti-tahap-00/c-health-200-503-200.txt ; grep -c '^HTTP/1.1 200' laporan/bukti-tahap-00/c-health-200-503-200.txt
+1
+2
+$ ls laporan/bukti-tahap-00
+00-gerbang-mandiri.txt
+a-npm-audit-versi.txt
+b-log-dev.txt
+b2-socket-handshake-prod.txt
+b3-log-prod.txt
+c-health-200-503-200.txt
+d1-banding-token.txt
+d2-css-produksi-token.txt
+d3-piksel-screen-png.txt
+e-font-lokal.txt
+f-build.txt
+g-lint.txt
+h-curl-dev-uji-proxy.txt
+h-curl-prod-uji-proxy.txt
+h2-curl-diag-url.txt
+i-penelusuran-larangan.txt
+j-rahasia.txt
+k-logo-favicon.txt
+l-struktur-rute.txt
+m-ikon.txt
+m-uji-desain-render.html
+n-plugin-forms.txt
