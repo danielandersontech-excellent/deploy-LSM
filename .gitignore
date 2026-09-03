@@ -1,0 +1,22 @@
+# --- rahasia ---
+.env
+.env.*
+!.env.example
+
+# --- dependensi & build ---
+node_modules/
+.next/
+_backup*/
+
+# --- sumber besar yang tidak ikut repo (tetap ada di disk) ---
+desain/
+Warkop_Nusantara.zip
+LSM_WARKOP.png
+
+# --- unggahan runtime ---
+public/unggahan/*
+!public/unggahan/.gitkeep
+
+# --- lain-lain ---
+*.log
+.DS_Store

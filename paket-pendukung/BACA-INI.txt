@@ -1,0 +1,53 @@
+PAKET-PENDUKUNG — WARKOP NUSANTARA v2.1 edisi Claude Code (31 Agustus 2026)
+============================================================================
+
+Folder ini BACA-SAJA. Isinya disalin ke tempatnya oleh Claude Code sesuai
+dokumen/TAHAP-00; jangan diubah, jangan dibuat ulang.
+
+ASET/fonts/
+  Domine[wght].woff2   variabel 400-700   (OFL, repo resmi google/fonts)
+  FiraSans-Regular / Italic / Medium / SemiBold .woff2   (OFL)
+  OFL-Domine.txt, OFL-FiraSans.txt
+  -> Tahap 0: salin ke public/fonts/. Dimuat lewat ASET/kerangka/font.js.
+
+ASET/ikon/Ikon.js
+  Komponen <Ikon nama="..." terisi className="..." />. Jalur SVG resmi Material
+  Symbols Outlined (Apache 2.0) untuk tepat 77 ikon yang dipakai
+  Warkop_Nusantara.zip, + 15 varian terisi (FILL 1). bookmark_border dialias
+  ke bookmark. -> Tahap 0: salin ke components/ui/Ikon.js.
+
+ASET/logo/
+  logo-warkop-512.png   -> public/logo-warkop.png
+  logo-warkop-1024.png  -> public/logo-warkop-besar.png
+  logo-warkop-256.png, logo-warkop-64.png   (cadangan)
+  favicon.ico (16/32/48, potongan burung hantu berlatar cokelat #271310)
+  favicon-owl-32.png, favicon-owl-48.png    (sumber potongan)
+  apple-touch-icon.png (180, latar krem #faf9f5)
+  og-default.png (1200x630, latar cokelat, logo di kiri)
+
+ASET/kerangka/          SEMUA TERVERIFIKASI MEMBANGUN di Next.js 16.3.3
+  tailwind.config.js    dibangkitkan dari blok tailwind.config di
+                        beranda_warkop_nusantara/code.html: 47 warna, 4 radius,
+                        5 spacing, 8 tipografi; fontFamily -> variabel next/font;
+                        plugin @tailwindcss/forms. NILAI TOKEN JANGAN DIUBAH.
+  font.js               next/font/local untuk Domine + Fira Sans (-> app/font.js)
+  postcss.config.js
+  jsconfig.json         alias @/*
+  server.js             custom server Next.js + Socket.io (butuh lib/socket/server.js
+                        yang mengekspor initSocket)
+  proxy.js              kerangka Tahap 0 + urlDariHeader() + logika Tahap 2 dalam
+                        komentar. Baca peringatan di dalamnya tentang request.url.
+
+UJI/uji-kesetiaan.mjs
+  node paket-pendukung/UJI/uji-kesetiaan.mjs <code.html desain> <URL atau berkas HTML render> [--teks] [--json]
+  Membandingkan kelas Tailwind, token desain, teks tampak, dan sisa cacat export
+  antara desain Stitch dan render Next.js. Tanpa peramban. REFERENSI 18.5.
+
+BUKTI (31 Agustus 2026, Node 22.22.2):
+  next 16.3.3, react 19.2.8, socket.io 4.8.3, tailwindcss 3.4.19,
+  @tailwindcss/forms 0.5.11 — proxy.js berjalan di custom server (dev &
+  produksi); header proxy sampai ke halaman; pemisahan host 404/307/200 sesuai;
+  request.url di proxy = 0.0.0.0:3000 (bukan host asli) -> urlDariHeader();
+  next build menampilkan "ƒ Proxy (Middleware)"; CSS produksi memuat token
+  (rgb 39 19 16 dst) dan reset forms; tidak ada permintaan ke googleapis/CDN;
+  Ikon.js me-render SVG tanpa nama ikon bocor.
