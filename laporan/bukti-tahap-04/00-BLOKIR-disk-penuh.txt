@@ -15,3 +15,6 @@ exit=0
 # Mengalihkan TEMP/TMP ke D: tidak menolong -> bukan berkas sementara, melainkan alokasi memori/pagefile.
 # Isi %TEMP% terbesar (bukan milik Claude Code, tidak dihapus): vscode-stable-user-x64 221 MB, wct*.tmp 3x ~130 MB, Adobe 88 MB, CreativeCloud 51 MB.
 # Docker: docker_data.vhdx ±13 GB di %LOCALAPPDATA%\Docker\wsl\disk; 13 GB image/cache proyek lain reclaimable (docker system df).
+
+# CATATAN: build ketiga di atas (14:14 WIB) LULUS exit=0 dengan sisa C: 259 MB — dua build sebelumnya (14:0x) gagal exit 134 pada kondisi yang sama.
+# Kesimpulan: kegagalan INTERMITEN, bergantung memori/pagefile sesaat. Membangun Tahap 4 (banyak kompilasi dev + build) di kondisi ini tidak dapat diandalkan; gerbang 7.2 menuntut build hijau yang bisa diulang. Run dihentikan sampai C: dikosongkan.
