@@ -1,0 +1,31 @@
+# Bukti 5a — skema + seed produksi (3 Sep 2026). Dijalankan lewat SSH deployer; sandi DB diambil dari env container DB (tidak pernah tercetak).
+
+$ date (server): 2026-09-03T15:23:36Z
+$ docker exec re8snqu8jwyxdqg2wmzrbm3w-085550537779 cat /app/database/schema.sql | docker exec -i kwoz3jwjb037hw3oh669g9c4 mariadb -uwarkop -p<disembunyikan> warkop_nusantara
+  -> skema OK
+$ SHOW TABLES:
+Tables_in_warkop_nusantara
+artikel
+artikel_tag
+audit_log
+galeri
+kategori_artikel
+pengaduan
+pengaduan_lampiran
+pengaduan_riwayat
+pengaturan
+pengurus
+program
+tag
+users
+wilayah
+
+$ docker exec re8snqu8jwyxdqg2wmzrbm3w-085550537779 node scripts/seed.js
+[seed] superadmin <email-superadmin-disembunyikan> dibuat (id 1).
+[seed] database/seed.sql dijalankan.
+[seed] SEED_STAF_PASSWORD kosong — 5 akun staf contoh dibiarkan NONAKTIF (tidak bisa masuk).
+[seed] WRP-009018: 2 perpindahan status lewat buku besar.
+[seed] WRP-008994: 3 perpindahan status lewat buku besar.
+[seed] jumlah baris: wilayah=39 users=6 kategori_artikel=5 artikel=12 tag=5 artikel_tag=11 pengaduan=3 pengaduan_riwayat=8 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.
+  exit=0

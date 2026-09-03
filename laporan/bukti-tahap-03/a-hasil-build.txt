@@ -1,0 +1,63 @@
+# Butir a — build image lokal (3 Sep 2026, setelah disk C: dibereskan; sisa C: 7,4 GB)
+$ docker build --progress=plain --build-arg NEXT_PUBLIC_APP_URL=http://localhost:3000 -t warkop-nusantara:lokal .
+exit=0 ; baris log: 150
+
+## waktu tiap langkah (DONE) dari log
+  #1 DONE 0.1s
+  #2 DONE 5.6s
+  #3 DONE 0.0s
+  #4 DONE 0.0s
+  #5 DONE 0.0s
+  #4 DONE 0.0s
+  #12 DONE 23.0s
+  #13 DONE 0.3s
+  #14 DONE 12.5s
+  #15 DONE 4.2s
+  #16 DONE 3.7s
+  #17 DONE 0.5s
+  #18 DONE 0.1s
+  #19 DONE 0.1s
+  #20 DONE 0.1s
+  #21 DONE 0.1s
+  #22 DONE 0.1s
+  #23 DONE 0.1s
+  #24 DONE 0.1s
+  #25 DONE 0.1s
+  #26 DONE 0.3s
+  #27 DONE 29.8s
+
+## langkah utama
+  #10 [deps 4/5] COPY package.json package-lock.json* ./
+  #11 [deps 5/5] RUN npm ci --include=dev
+  #12 [builder 3/6] COPY --from=deps /app/node_modules ./node_modules
+  #13 [builder 4/6] COPY . .
+  #14 [builder 5/6] RUN npm run build
+  #15 [builder 6/6] RUN npm prune --omit=dev
+  #16 [runner  5/15] COPY --from=builder --chown=nextjs:nodejs /app/node_modules     ./node_modules
+  #17 [runner  6/15] COPY --from=builder --chown=nextjs:nodejs /app/.next            ./.next
+  #18 [runner  7/15] COPY --from=builder --chown=nextjs:nodejs /app/public           ./public
+  #19 [runner  8/15] COPY --from=builder --chown=nextjs:nodejs /app/package.json     ./package.json
+  #20 [runner  9/15] COPY --from=builder --chown=nextjs:nodejs /app/next.config.mjs  ./next.config.mjs
+  #21 [runner 10/15] COPY --from=builder --chown=nextjs:nodejs /app/server.js        ./server.js
+  #22 [runner 11/15] COPY --from=builder --chown=nextjs:nodejs /app/proxy.js         ./proxy.js
+  #23 [runner 12/15] COPY --from=builder --chown=nextjs:nodejs /app/lib              ./lib
+  #24 [runner 13/15] COPY --from=builder --chown=nextjs:nodejs /app/database         ./database
+  #25 [runner 14/15] COPY --from=builder --chown=nextjs:nodejs /app/scripts          ./scripts
+  #26 [runner 15/15] RUN mkdir -p /app/public/unggahan && chown nextjs:nodejs /app/public/unggahan
+  #5 [deps 1/5] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+  #6 [runner  3/15] RUN apk add --no-cache tzdata wget &&     cp /usr/share/zoneinfo/Asia/Jakarta /etc/localtime &&     echo "Asia/Jakarta" > /etc/timezone
+  #7 [deps 2/5] WORKDIR /app
+  #8 [runner  4/15] RUN addgroup --system --gid 1001 nodejs &&     adduser  --system --uid 1001 nextjs
+  #9 [deps 3/5] RUN apk add --no-cache libc6-compat
+
+## total waktu build (dari waktu DONE terbesar per langkah, dijumlahkan)
+  jumlah durasi langkah: 80.8 s
+
+## ukuran image
+warkop-nusantara:lokal  a5e00b4cae4d  998MB  dibuat About a minute ago
+  history (5 layer terbesar):
+    483MB	COPY --chown=nextjs:nodejs /app/node_modules ./node_modules # buildkit
+    160MB	RUN /bin/sh -c addgroup -g 1000 node     && adduser -u 1000 -G node -s /bin/sh -D node     && apk add --no-cache         libstdc++    
+    81.5MB	COPY --chown=nextjs:nodejs /app/.next ./.next # buildkit
+    9.07MB	ADD alpine-minirootfs-3.24.1-x86_64.tar.gz / # buildkit
+    5.48MB	RUN /bin/sh -c apk add --no-cache --virtual .build-deps-yarn curl gnupg tar   && export GNUPGHOME="$(mktemp -d)"   && for key in     

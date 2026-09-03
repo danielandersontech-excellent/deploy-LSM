@@ -1,0 +1,40 @@
+# Butir k — ukuran konteks build SESUDAH .dockerignore (3 Sep 2026)
+# Metode: image 'FROM scratch + COPY . /' = tepat isi konteks yang dikirim ke daemon setelah .dockerignore (transfer BuildKit inkremental, jadi angka 'transferring context' 7,39 kB di log tidak mewakili).
+$ printf "FROM scratch\nCOPY . /\n" | docker build -q -t warkop-konteks:uji -f - .
+sha256:dbcb15e9a632fe17e8e46c7b814b1dd16c153e28484163c1042dfd3cfb597786
+$ docker images warkop-konteks
+warkop-konteks:uji  6.4MB
+$ docker image inspect --format '{{.Size}}' warkop-konteks:uji (byte)
+  2770222 byte
+$ daftar folder tingkat atas di konteks (docker run --rm ... tidak mungkin di scratch; pakai docker create + export):
+     2633276  public
+      250382  package-lock.json
+       77293  lib
+       52451  database
+       51424  sql
+       34197  components
+       32452  app
+        8102  scripts
+        5075  tailwind.config.js
+        4118  proxy.js
+        3722  README.md
+        2925  docker-compose.yml
+        2846  Dockerfile
+        1335  server.js
+        1281  .env.example
+        1001  next.config.mjs
+         933  package.json
+         760  eslint.config.mjs
+         317  .dockerignore
+         187  .gitattributes
+          67  postcss.config.js
+          55  jsconfig.json
+           0  sys
+           0  proc
+           0  hooks
+
+## SEBELUM (dari k-konteks-sebelum.txt):
+  $ docker build -f Dockerfile.ukur --no-cache -t warkop-ukur-konteks . 2>&1 | grep -i "transferring context"
+  #4 transferring context: 726.05MB 89.5s
+  #4 transferring context: 755.32MB 94.5s
+  #4 transferring context: 764.16MB 95.9s done

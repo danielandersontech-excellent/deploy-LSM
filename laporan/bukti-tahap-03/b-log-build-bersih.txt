@@ -1,0 +1,26 @@
+# berkas: laporan/bukti-tahap-03/a-build-log.txt (150 baris)
+
+## 1. nilai rahasia .env lokal di log (harus 0 semua; nilainya sendiri tidak dicetak di sini)
+  DB_PASSWORD                  kemunculan nilai: 0
+  JWT_SECRET                   kemunculan nilai: 0
+  SEED_ADMIN_PASSWORD          kemunculan nilai: 0
+  SEED_STAF_PASSWORD           kemunculan nilai: 0
+  MARIADB_ROOT_PASSWORD_LOKAL  kemunculan nilai: 0
+
+## 2. nama variabel di log build (grep -n)
+  DB_PASSWORD            baris: 0
+  JWT_SECRET             baris: 0
+  SEED_ADMIN_PASSWORD    baris: 0
+
+## 3. baris ARG/ENV yang tercetak di log (yang wajar hanya NEXT_PUBLIC_*, NODE_ENV, TZ, PORT, HOSTNAME, NEXT_TELEMETRY_DISABLED)
+
+## 4. potongan log tahap builder di sekitar 'npm run build' (Environments)
+  54:#14 2.006 ▲ Next.js 16.3.4 (Turbopack)
+  58:#14 7.686 ✓ Compiled successfully in 5.2s
+  85:#14 12.21 ƒ Proxy (Middleware)
+  97:#15 [builder 6/6] RUN npm prune --omit=dev
+
+## 5. transferring context (ukuran konteks SESUDAH .dockerignore)
+  #4 transferring context: 7.39kB 0.0s done
+
+HASIL: LULUS — log build bersih dari nilai maupun nama rahasia

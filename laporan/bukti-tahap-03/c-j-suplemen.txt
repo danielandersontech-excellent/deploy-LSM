@@ -1,0 +1,42 @@
+# Suplemen uji c–j (3 Sep 2026) — ulang perintah yang argumennya dirusak konversi jalur Git Bash (/app -> C:/Program Files/Git/app), dijalankan dengan MSYS_NO_PATHCONV=1 pada compose yang masih berjalan.
+
+## f. berkas proxy.js dkk. di image
+$ docker compose exec app ls -l /app/proxy.js /app/server.js /app/lib/socket/server.js /app/next.config.mjs
+-rwxr-xr-x    1 nextjs   nodejs        1000 Sep  3 12:38 /app/lib/socket/server.js
+-rwxr-xr-x    1 nextjs   nodejs        1001 Sep  3 12:37 /app/next.config.mjs
+-rwxr-xr-x    1 nextjs   nodejs        4118 Sep  3 13:24 /app/proxy.js
+-rwxr-xr-x    1 nextjs   nodejs        1335 Sep  3 12:35 /app/server.js
+$ docker compose logs app | grep -i proxy  (Next.js memuat proxy?)
+[warkop] siap di http://0.0.0.0:3000  mode=produksi  STAF_HOST=(kosong: pemisahan host nonaktif)
+[warkop] siap di http://0.0.0.0:3000  mode=produksi  STAF_HOST=(kosong: pemisahan host nonaktif)
+
+## g. /etc/timezone
+$ docker compose exec app cat /etc/timezone
+Asia/Jakarta
+$ docker compose exec app date
+Thu Sep  3 22:29:44 WIB 2026
+
+## i. isi volume di container BARU (container app sudah diganti oleh 'down' + 'up' di skrip utama)
+$ docker inspect --format '{{.Created}}' warkop-lokal-app-1
+2026-09-03T15:28:05.302314449Z
+$ docker compose exec app cat /app/public/unggahan/uji-volume.txt
+uji-volume-1788449280
+  -> berkas MASIH ADA di container baru
+
+## i2. TEMUAN: berkas di public/unggahan yang ditambah SETELAH build tidak dilayani Next.js produksi
+$ curl /logo-warkop.png (ada saat build) -> HTTP 200
+$ curl /unggahan/uji-volume.txt (ditambah setelah start) -> HTTP 200
+$ docker compose restart app; ulangi
+$ curl /unggahan/uji-volume.txt setelah restart -> HTTP 200
+  => unggahan WAJIB dilayani route handler sendiri dari UPLOAD_DIR (dicatat untuk Tahap 5/6)
+
+## j. volume terbaca dari image rilis-1 (versi sebelumnya)
+uji-volume-1788449280
+  -> volume terbaca dari rilis-1
+
+## Klarifikasi urutan temuan i2 (dibaca bersama c-j-container.txt)
+- Skrip utama: berkas dibuat SETELAH container app menyala -> curl /unggahan/uji-volume.txt = 404.
+- Suplemen: container app sudah DIGANTI (down/up) setelah berkas ada -> 200; restart lagi -> tetap 200.
+- Kesimpulan: Next.js produksi mendaftar isi public/ saat server MULAI; berkas yang ditambah saat
+  server berjalan (= setiap unggahan) tidak dilayani sampai restart. Unggahan Tahap 5/6 harus
+  dilayani route handler sendiri dari UPLOAD_DIR (bukan mengandalkan public/). TEMUAN, bukan cacat volume.

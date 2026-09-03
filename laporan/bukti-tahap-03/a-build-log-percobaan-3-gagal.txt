@@ -1,0 +1,48 @@
+# UJI a — docker build (image produksi), percobaan 3.
+# Percobaan 1 & 2 (a-build-log-percobaan-1-gagal.txt): BuildKit terputus "rpc error: Unavailable ... EOF" pada langkah COPY node_modules, engine Docker Desktop mati; Docker Desktop + WSL dimulai ulang bersih sebelum percobaan 3.
+# Argumen build HANYA NEXT_PUBLIC_*
+$ docker build --progress=plain --build-arg NEXT_PUBLIC_APP_URL=http://localhost:3000 -t warkop-nusantara:lokal .
+mulai 14:02:33
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.88kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine
+#2 DONE 4.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 359B done
+#3 DONE 0.0s
+
+#4 [deps 1/5] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+#4 resolve docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 0.0s done
+#4 DONE 0.0s
+
+#5 [runner  3/15] RUN apk add --no-cache tzdata wget &&     cp /usr/share/zoneinfo/Asia/Jakarta /etc/localtime &&     echo "Asia/Jakarta" > /etc/timezone
+#5 CACHED
+
+#6 [deps 2/5] WORKDIR /app
+#6 CACHED
+
+#7 [runner  4/15] RUN addgroup --system --gid 1001 nodejs &&     adduser  --system --uid 1001 nextjs
+#7 CACHED
+
+#8 [internal] load build context
+#8 transferring context: 7.39kB 0.0s done
+#8 DONE 0.0s
+
+#9 [deps 4/5] COPY package.json package-lock.json* ./
+#9 CACHED
+
+#10 [deps 3/5] RUN apk add --no-cache libc6-compat
+#10 CACHED
+
+#11 [deps 5/5] RUN npm ci --include=dev
+#11 CACHED
+
+#12 [builder 3/6] COPY --from=deps /app/node_modules ./node_modules
+ERROR: failed to build: failed to receive status: rpc error: code = Unavailable desc = error reading from server: EOF
+exit=1
+selesai 14:02:56

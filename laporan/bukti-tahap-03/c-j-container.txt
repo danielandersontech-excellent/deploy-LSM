@@ -1,0 +1,128 @@
+################ UJI c — docker compose up (image sudah dibangun, --no-build)
+$ docker compose up -d --no-build
+ Container warkop-lokal-db-1 Waiting 
+ Container warkop-lokal-db-1 Healthy 
+ Container warkop-lokal-app-1 Starting 
+ Container warkop-lokal-app-1 Started 
+$ menunggu healthy (start-period 40 s)
+  -> 'healthy' setelah 6s
+$ docker compose logs app (log awal)
+✓ Running next.config.mjs took 27ms
+[warkop] Socket.io terpasang di path /socket.io
+[warkop] siap di http://0.0.0.0:3000  mode=produksi  STAF_HOST=(kosong: pemisahan host nonaktif)
+$ docker compose ps
+NAME                 IMAGE                    STATUS                    PORTS
+warkop-lokal-app-1   warkop-nusantara:lokal   Up 7 seconds (healthy)    127.0.0.1:3000->3000/tcp
+warkop-lokal-db-1    mariadb:11               Up 19 seconds (healthy)   3306/tcp
+$ curl -i /api/health
+HTTP/1.1 200 OK
+{"status":"sehat","waktu":"2026-09-03T22:25:36+07:00","basisData":"terhubung","versi":"0.1.0"}
+
+################ UJI d — healthcheck sungguhan: healthy -> (db mati) unhealthy -> (db hidup) healthy
+status awal: healthy
+$ docker compose stop db
+$ curl /api/health (db mati) -> HTTP 503
+$ menunggu 'unhealthy' (interval 30 s x 3 percobaan gagal)
+  -> 'unhealthy' setelah 80s
+$ docker inspect Health (2 log terakhir):
+2026-09-03 15:27:16.027047692 +0000 UTC exit=1
+
+$ docker compose start db
+$ menunggu 'healthy' kembali
+  -> 'healthy' setelah 25s
+$ curl /api/health (db hidup) -> HTTP 200
+
+################ UJI e — login di container (alur Tahap 2)
+$ docker compose exec app node scripts/seed.js   (superadmin + data awal; skema sudah dari ./sql saat init)
+[seed] superadmin <email-disembunyikan> dibuat (id 6).
+[seed] database/seed.sql dijalankan.
+[seed] akun staf contoh diaktifkan: 5 (yang sudah punya kata sandi dilewati).
+[seed] WRP-009018: 2 perpindahan status lewat buku besar.
+[seed] WRP-008994: 3 perpindahan status lewat buku besar.
+[seed] jumlah baris: wilayah=39 users=6 kategori_artikel=5 artikel=12 tag=5 artikel_tag=11 pengaduan=3 pengaduan_riwayat=8 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.
+POST /api/auth/login (superadmin) -> HTTP 200  {"pengguna":{"id":6,"nama":"Superadmin","email":"<disembunyikan>","peran":"superadmin","wilayah_id":null},"tujuan":"/staf/dashboard"}
+GET /api/auth/saya (cookie) -> HTTP 200
+GET /staf/dashboard (cookie) -> HTTP 200
+GET /api/staf/pengaduan (cookie superadmin) -> HTTP 200
+login sandi salah -> HTTP 401 {"galat":"Email atau kata sandi tidak sesuai","kode":"KREDENSIAL_TIDAK_SESUAI"}
+GET /login dengan cookie -> HTTP/1.1 307 Temporary Redirect location: http://127.0.0.1:3000/staf/dashboard http://127.0.0.1:3000/staf/dashboard 
+
+################ UJI f — PROXY DI CONTAINER (proxy.js tersalin & berjalan)
+$ docker compose exec app ls -l /app/proxy.js /app/server.js /app/lib/socket/server.js
+ls: C:/Program Files/Git/app/proxy.js: No such file or directory
+ls: C:/Program Files/Git/app/server.js: No such file or directory
+ls: C:/Program Files/Git/app/lib/socket/server.js: No such file or directory
+$ GET /staf/dashboard tanpa cookie (STAF_HOST kosong):
+HTTP/1.1 307 Temporary Redirect
+location: http://127.0.0.1:3000/login?lanjut=%2Fstaf%2Fdashboard
+http://127.0.0.1:3000/login?lanjut=%2Fstaf%2Fdashboard
+$ header x-user-role palsu tanpa cookie -> /api/staf/statistik HTTP 401  (401 = proxy menghapus header)
+$ container kedua dari image yang SAMA dengan STAF_HOST=staf.warkop.test (port 3001) untuk uji pemisahan host:
+  $ curl -i -H "Host: warkop.test" -H "X-Forwarded-Host: warkop.test" -H "X-Forwarded-Proto: https" :3001/staf/dashboard
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/staf/dashboard
+https://staf.warkop.test/staf/dashboard
+  $ curl -i -H "Host: warkop.test" -H "X-Forwarded-Host: warkop.test" -H "X-Forwarded-Proto: https" :3001/login
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/login
+https://staf.warkop.test/login
+  $ curl -i -H "Host: staf.warkop.test" -H "X-Forwarded-Host: staf.warkop.test" -H "X-Forwarded-Proto: https" :3001/tentang
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/staf/dashboard
+https://staf.warkop.test/staf/dashboard
+  $ curl -i -H "Host: staf.warkop.test" -H "X-Forwarded-Host: staf.warkop.test" -H "X-Forwarded-Proto: https" :3001/staf/dashboard
+HTTP/1.1 307 Temporary Redirect
+location: https://staf.warkop.test/login?lanjut=%2Fstaf%2Fdashboard
+https://staf.warkop.test/login?lanjut=%2Fstaf%2Fdashboard
+  $ curl -i -H "Host: warkop.test" -H "X-Forwarded-Host: warkop.test" -H "X-Forwarded-Proto: https" :3001/api/health
+HTTP/1.1 200 OK
+  0.0.0.0 di Location: 0  localhost di Location: 0
+
+################ UJI g — ZONA WAKTU DI CONTAINER
+$ docker compose exec app date
+Thu Sep  3 22:27:58 WIB 2026
+$ docker compose exec app cat /etc/timezone
+cat: can't open 'C:/Program Files/Git/etc/timezone': No such file or directory
+$ curl /api/health -> waktu
+"waktu":"2026-09-03T22:27:59+07:00"
+$ dari aplikasi di container (lib/db): INSERT lewat catatAudit, SELECT NOW(), @@session.time_zone, dibuat_pada
+  WIB sebenarnya (UTC+7 dari JS) : 2026-09-03 22:27:59
+  NOW() lewat pool aplikasi      : 2026-09-03 22:27:59 | @@session.time_zone = +07:00 | server DB = UTC
+  dibuat_pada tersimpan (id 3) : 2026-09-03 22:27:59
+  HASIL: SELARAS (WIB ketiganya)
+
+################ UJI h — user non-root
+$ docker compose exec app whoami -> nextjs
+$ docker compose exec app id -> uid=1001(nextjs) gid=65533(nogroup) groups=65533(nogroup)
+
+################ UJI i — volume unggahan bertahan setelah container diganti
+$ docker compose exec app sh -c 'echo uji-volume-$(date +%s) > /app/public/unggahan/uji-volume.txt'
+total 4
+-rw-r--r--    1 nextjs   nogroup         22 Sep  3 22:28 uji-volume.txt
+uji-volume-1788449280
+$ curl /unggahan/uji-volume.txt -> HTTP 404
+$ docker compose down (tanpa -v) lalu up -d --no-build (container BARU)
+  -> 'healthy' setelah 6s
+$ isi volume di container baru:
+cat: can't open 'C:/Program Files/Git/app/public/unggahan/uji-volume.txt': No such file or directory
+$ docker volume ls | grep warkop-compose
+warkop-lokal_warkop-compose-db
+warkop-lokal_warkop-compose-unggahan
+
+################ UJI j — rollback ke image versi sebelumnya
+$ docker tag warkop-nusantara:lokal warkop-nusantara:rilis-1   (versi sebelumnya)
+$ 'versi baru' = image turunan dengan LABEL rilis=2 (id berbeda):
+sha256:dc3eda2536d5bc5d3dd74b968623980586351a90d918b16f615a8839724029be
+warkop-nusantara:lokal a5e00b4cae4d
+warkop-nusantara:rilis-1 a5e00b4cae4d
+warkop-nusantara:rilis-2 dc3eda2536d5
+$ jalankan rilis-2 menggantikan app compose, lalu 'rusak' -> hentikan, jalankan rilis-1 di port yang sama
+  rilis-2 berjalan: /api/health -> HTTP 200 ; image: warkop-nusantara:rilis-2
+  rilis-2 dihentikan & dihapus; /api/health -> HTTP 000tidak ada koneksi
+  rilis-1 (sebelumnya) dijalankan: /api/health -> HTTP 200 ; image: warkop-nusantara:rilis-1
+cat: can't open 'C:/Program Files/Git/app/public/unggahan/uji-volume.txt': No such file or directory
+  volume unggahan tetap terbaca dari rilis-1: 
+  login di rilis-1 -> HTTP 200
+  -> 'healthy' setelah 6s
+  app compose dipulihkan: healthy

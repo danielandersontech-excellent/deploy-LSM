@@ -1,48 +1,150 @@
-# UJI a — docker build (image produksi), percobaan 3.
-# Percobaan 1 & 2 (a-build-log-percobaan-1-gagal.txt): BuildKit terputus "rpc error: Unavailable ... EOF" pada langkah COPY node_modules, engine Docker Desktop mati; Docker Desktop + WSL dimulai ulang bersih sebelum percobaan 3.
-# Argumen build HANYA NEXT_PUBLIC_*
-$ docker build --progress=plain --build-arg NEXT_PUBLIC_APP_URL=http://localhost:3000 -t warkop-nusantara:lokal .
-mulai 14:02:33
 #0 building with "desktop-linux" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 2.88kB done
-#1 DONE 0.0s
+#1 transferring dockerfile: 2.88kB 0.0s done
+#1 DONE 0.1s
 
 #2 [internal] load metadata for docker.io/library/node:22-alpine
-#2 DONE 4.2s
+#2 DONE 5.6s
 
 #3 [internal] load .dockerignore
-#3 transferring context: 359B done
+#3 transferring context: 359B 0.0s done
 #3 DONE 0.0s
 
-#4 [deps 1/5] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
-#4 resolve docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 0.0s done
+#4 [internal] load build context
 #4 DONE 0.0s
 
-#5 [runner  3/15] RUN apk add --no-cache tzdata wget &&     cp /usr/share/zoneinfo/Asia/Jakarta /etc/localtime &&     echo "Asia/Jakarta" > /etc/timezone
-#5 CACHED
+#5 [deps 1/5] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+#5 resolve docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 0.0s done
+#5 DONE 0.0s
 
-#6 [deps 2/5] WORKDIR /app
+#6 [runner  3/15] RUN apk add --no-cache tzdata wget &&     cp /usr/share/zoneinfo/Asia/Jakarta /etc/localtime &&     echo "Asia/Jakarta" > /etc/timezone
 #6 CACHED
 
-#7 [runner  4/15] RUN addgroup --system --gid 1001 nodejs &&     adduser  --system --uid 1001 nextjs
+#7 [deps 2/5] WORKDIR /app
 #7 CACHED
 
-#8 [internal] load build context
-#8 transferring context: 7.39kB 0.0s done
-#8 DONE 0.0s
+#8 [runner  4/15] RUN addgroup --system --gid 1001 nodejs &&     adduser  --system --uid 1001 nextjs
+#8 CACHED
 
-#9 [deps 4/5] COPY package.json package-lock.json* ./
+#4 [internal] load build context
+#4 transferring context: 7.39kB 0.0s done
+#4 DONE 0.0s
+
+#9 [deps 3/5] RUN apk add --no-cache libc6-compat
 #9 CACHED
 
-#10 [deps 3/5] RUN apk add --no-cache libc6-compat
+#10 [deps 4/5] COPY package.json package-lock.json* ./
 #10 CACHED
 
 #11 [deps 5/5] RUN npm ci --include=dev
 #11 CACHED
 
 #12 [builder 3/6] COPY --from=deps /app/node_modules ./node_modules
-ERROR: failed to build: failed to receive status: rpc error: code = Unavailable desc = error reading from server: EOF
-exit=1
-selesai 14:02:56
+#12 DONE 23.0s
+
+#13 [builder 4/6] COPY . .
+#13 DONE 0.3s
+
+#14 [builder 5/6] RUN npm run build
+#14 1.380 
+#14 1.380 > warkop-nusantara@0.1.0 build
+#14 1.380 > next build
+#14 1.380 
+#14 2.006 ▲ Next.js 16.3.4 (Turbopack)
+#14 2.031 ✓ Running next.config.mjs took 24ms
+#14 2.079 
+#14 2.134   Creating an optimized production build ...
+#14 7.686 ✓ Compiled successfully in 5.2s
+#14 7.699   Running TypeScript ...
+#14 7.728   Finished TypeScript in 26ms ...
+#14 7.734   Collecting page data using 15 workers ...
+#14 11.29   Generating static pages using 15 workers (0/4) ...
+#14 11.95   Generating static pages using 15 workers (1/4) 
+#14 12.16   Generating static pages using 15 workers (2/4) 
+#14 12.19   Generating static pages using 15 workers (3/4) 
+#14 12.19 ✓ Generating static pages using 15 workers (4/4) in 903ms
+#14 12.20   Finalizing page optimization ...
+#14 12.21 
+#14 12.21 Route (app)
+#14 12.21 ┌ ○ /_not-found
+#14 12.21 ├ ƒ /api/auth/login
+#14 12.21 ├ ƒ /api/auth/logout
+#14 12.21 ├ ƒ /api/auth/saya
+#14 12.21 ├ ƒ /api/health
+#14 12.21 ├ ƒ /api/staf/artikel
+#14 12.21 ├ ƒ /api/staf/pengaduan
+#14 12.21 ├ ƒ /api/staf/pengaduan/[id]
+#14 12.21 ├ ƒ /api/staf/statistik
+#14 12.21 ├ ƒ /login
+#14 12.21 ├ ƒ /staf/dashboard
+#14 12.21 ├ ƒ /tanpa-akses
+#14 12.21 └ ○ /uji-desain
+#14 12.21 
+#14 12.21 
+#14 12.21 ƒ Proxy (Middleware)
+#14 12.21 
+#14 12.21 ○  (Static)   prerendered as static content
+#14 12.21 ƒ  (Dynamic)  server-rendered on demand
+#14 12.21 
+#14 12.37 npm notice
+#14 12.37 npm notice New major version of npm available! 10.9.8 -> 12.0.2
+#14 12.37 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+#14 12.37 npm notice To update run: npm install -g npm@12.0.2
+#14 12.37 npm notice
+#14 DONE 12.5s
+
+#15 [builder 6/6] RUN npm prune --omit=dev
+#15 4.079 
+#15 4.079 up to date, audited 73 packages in 4s
+#15 4.079 
+#15 4.079 14 packages are looking for funding
+#15 4.079   run `npm fund` for details
+#15 4.080 
+#15 4.080 found 0 vulnerabilities
+#15 DONE 4.2s
+
+#16 [runner  5/15] COPY --from=builder --chown=nextjs:nodejs /app/node_modules     ./node_modules
+#16 DONE 3.7s
+
+#17 [runner  6/15] COPY --from=builder --chown=nextjs:nodejs /app/.next            ./.next
+#17 DONE 0.5s
+
+#18 [runner  7/15] COPY --from=builder --chown=nextjs:nodejs /app/public           ./public
+#18 DONE 0.1s
+
+#19 [runner  8/15] COPY --from=builder --chown=nextjs:nodejs /app/package.json     ./package.json
+#19 DONE 0.1s
+
+#20 [runner  9/15] COPY --from=builder --chown=nextjs:nodejs /app/next.config.mjs  ./next.config.mjs
+#20 DONE 0.1s
+
+#21 [runner 10/15] COPY --from=builder --chown=nextjs:nodejs /app/server.js        ./server.js
+#21 DONE 0.1s
+
+#22 [runner 11/15] COPY --from=builder --chown=nextjs:nodejs /app/proxy.js         ./proxy.js
+#22 DONE 0.1s
+
+#23 [runner 12/15] COPY --from=builder --chown=nextjs:nodejs /app/lib              ./lib
+#23 DONE 0.1s
+
+#24 [runner 13/15] COPY --from=builder --chown=nextjs:nodejs /app/database         ./database
+#24 DONE 0.1s
+
+#25 [runner 14/15] COPY --from=builder --chown=nextjs:nodejs /app/scripts          ./scripts
+#25 DONE 0.1s
+
+#26 [runner 15/15] RUN mkdir -p /app/public/unggahan && chown nextjs:nodejs /app/public/unggahan
+#26 DONE 0.3s
+
+#27 exporting to image
+#27 exporting layers
+#27 exporting layers 17.6s done
+#27 exporting manifest sha256:70b8015b63c5ba1b0f55cb56a3e39ba362cc91b06929f12a01f0db3ae88f0db8 0.0s done
+#27 exporting config sha256:2f22095c19a75058a9bbce9e38d51c61e69571fe305e2fcd59dd513e1cce6730 0.0s done
+#27 exporting attestation manifest sha256:ba26b48d1598cfe28e5d24cbcd606c5cce03a5745e25335ad4924491726e906a 0.0s done
+#27 exporting manifest list sha256:a5e00b4cae4d474b840e2da57f66a7b3612195a2c214d4243649a34543c52bd4 0.0s done
+#27 naming to docker.io/library/warkop-nusantara:lokal done
+#27 unpacking to docker.io/library/warkop-nusantara:lokal
+#27 unpacking to docker.io/library/warkop-nusantara:lokal 12.0s done
+#27 DONE 29.8s

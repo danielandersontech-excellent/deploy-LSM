@@ -1,0 +1,72 @@
+# Bukti 5b — verifikasi produksi via domain (3 Sep 2026, dari laptop). Kredensial disamarkan.
+
+## 1. /api/health
+$ curl.exe -i https://warkopnusantara.id/api/health
+HTTP/1.1 200 OK
+Alt-Svc: h3=":443"; ma=2592000
+Cache-Control: no-store
+Content-Type: application/json
+Date: Thu, 03 Sep 2026 15:24:02 GMT
+Referrer-Policy: strict-origin-when-cross-origin
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Transfer-Encoding: chunked
+
+{"status":"sehat","waktu":"2026-09-03T22:24:02+07:00","basisData":"terhubung","versi":"0.1.0"}
+
+## 2. Login superadmin di https://staf.warkopnusantara.id
+$ curl.exe -i https://staf.warkopnusantara.id/login  (halaman login)
+HTTP 200  ukuran=19624B  content-type=text/html; charset=utf-8
+<title>Masuk Staf · WARKOP NUSANTARA</title>
+$ curl.exe -i -X POST https://staf.warkopnusantara.id/api/auth/login -d '{"email":"<SEED_ADMIN_EMAIL>","kataSandi":"<SEED_ADMIN_PASSWORD>"}'
+HTTP/1.1 200 OK
+Alt-Svc: h3=":443"; ma=2592000
+Cache-Control: no-store
+Content-Type: application/json
+Date: Thu, 03 Sep 2026 15:24:13 GMT
+Referrer-Policy: strict-origin-when-cross-origin
+Set-Cookie: warkop_token=<token-disembunyikan>; Path=/; Expires=Thu, 03 Sep 2026 23:24:13 GMT; Max-Age=28800; Secure; HttpOnly; SameSite=lax
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Transfer-Encoding: chunked
+
+{"pengguna":{"id":1,"nama":"Superadmin","email":"<email-disembunyikan>","peran":"superadmin","wilayah_id":null},"tujuan":"/staf/dashboard"}
+$ GET https://staf.warkopnusantara.id/api/auth/saya (dengan cookie)
+HTTP/1.1 200 OK
+Content-Type: application/json
+{"pengguna":{"id":1,"nama":"Superadmin","email":"<email-disembunyikan>","peran":"superadmin","wilayah_id":null,"wilayah_nama":null,"token_version":0}}
+$ GET https://staf.warkopnusantara.id/staf/dashboard (dengan cookie)
+HTTP 200
+$ GET https://staf.warkopnusantara.id/staf/dashboard (TANPA cookie)
+HTTP/1.1 307 Temporary Redirect
+Location: https://staf.warkopnusantara.id/login?lanjut=%2Fstaf%2Fdashboard
+https://staf.warkopnusantara.id/login?lanjut=%2Fstaf%2Fdashboard
+$ login sandi salah
+HTTP/1.1 401 Unauthorized
+{"galat":"Email atau kata sandi tidak sesuai","kode":"KREDENSIAL_TIDAK_SESUAI"}
+
+## 3. Pemisahan host
+$ curl.exe -i https://warkopnusantara.id/staf/dashboard
+HTTP/1.1 307 Temporary Redirect
+Location: https://staf.warkopnusantara.id/staf/dashboard
+https://staf.warkopnusantara.id/staf/dashboard
+$ curl.exe -i https://warkopnusantara.id/login
+HTTP/1.1 307 Temporary Redirect
+Location: https://staf.warkopnusantara.id/login
+https://staf.warkopnusantara.id/login
+$ curl.exe -i https://staf.warkopnusantara.id/tentang
+HTTP/1.1 307 Temporary Redirect
+Location: https://staf.warkopnusantara.id/staf/dashboard
+https://staf.warkopnusantara.id/staf/dashboard
+$ curl.exe -i https://staf.warkopnusantara.id/
+HTTP/1.1 307 Temporary Redirect
+Location: https://staf.warkopnusantara.id/staf/dashboard
+https://staf.warkopnusantara.id/staf/dashboard
+$ curl.exe -i https://warkopnusantara.id/api/health
+HTTP/1.1 200 OK
+
+## 4. Pemeriksaan terprogram
+kemunculan 0.0.0.0 pada Location: 0
+kemunculan localhost pada Location: 0
