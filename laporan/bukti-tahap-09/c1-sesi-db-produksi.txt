@@ -1,0 +1,4 @@
+# C1 (produksi) — sesi DB dari POOL APLIKASI di container app (node di dalam container, ENV runtime) — 2026-09-03T20:01:05Z
+{"tz_sesi":"+07:00","now_sesi":"2026-09-03T20:01:09.000Z","utc":"2026-09-03T13:01:09.000Z"}
+{"nomor_kasus":"WRP-008994","dibuat_pada":"2026-08-08T02:00:00.000Z"}
+date container: Fri Sep  4 03:01:09 WIB 2026

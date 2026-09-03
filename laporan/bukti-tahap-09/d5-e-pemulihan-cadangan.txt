@@ -1,0 +1,61 @@
+# D5 & E — 2026-09-03T19:57:30Z
+
+## D5. Pemulihan: MariaDB dimatikan saat aplikasi berjalan
+sebelum: /api/health 200, / 200, /berita 200
+$ docker stop warkop-mariadb
+saat DB mati: /api/health -> 503 (harus 503): {"status":"terganggu","waktu":"2026-09-04T02:57:34+07:00","basisData":"terputus","versi":"0.1.0"}
+GET /berita saat DB mati -> HTTP 500
+  jejak galat (stack/SQL/ECONNREFUSED) di HTML: 0 kemunculan; teks pesan rapi: 
+POST /api/auth/login saat DB mati -> 500 (harus 500 JSON rapi, bukan crash)
+$ docker start warkop-mariadb
+setelah DB kembali (tanpa restart aplikasi): /api/health -> 200 setelah ±4 s; / 200, /berita 200, login superadmin: 200
+HASIL D5: LULUS — pulih sendiri
+
+## E. Pencadangan sungguhan + pemulihan ke basis data KOSONG + verifikasi data utuh
+$ DB_CONTAINER=warkop-mariadb DB_PASSWORD=*** sh scripts/cadangkan-db.sh cadangan
+[cadangkan] selesai: cadangan/warkop_nusantara-20260903-1957.sql.gz (17645 byte)
+berkas cadangan: cadangan/warkop_nusantara-20260903-1957.sql.gz (20K); gunzip -t: utuh
+$ CREATE DATABASE warkop_pulih (kosong) + GRANT ke user warkop
+$ gunzip -c cadangan | mariadb warkop_pulih
+pemulihan selesai
+
+### Perbandingan jumlah baris asli vs pulih
+| tabel | asli | pulih |
+|---|---|---|
+| users | 7 | 7 |
+| artikel | 12 | 12 |
+| pengaduan | 43 | 43 |
+| pengaduan_riwayat | 94 | 94 |
+| pengaduan_lampiran | 0 | 0 |
+| pengaturan | 13 | 13 |
+| audit_log | 281 | 281 |
+| wilayah | 39 | 39 |
+| pengurus | 5 | 5 |
+| program | 3 | 3 |
+| galeri | 6 | 6 |
+| kategori_artikel | 5 | 5 |
+### Checksum tabel inti (CHECKSUM TABLE) asli vs pulih
+  pengaduan: asli=952985627 pulih=952985627 SAMA
+  pengaduan_riwayat: asli=3952549098 pulih=3952549098 SAMA
+  artikel: asli=772868430 pulih=772868430 SAMA
+  users: asli=2970551433 pulih=2970551433 SAMA
+  pengaturan: asli=378301496 pulih=378301496 SAMA
+### Riwayat pengaduan di DB pulih: rantai utuh?
+pengaduan tanpa riwayat: 0
+rantai putus: 0
+### Lampiran: berkas di public/unggahan & unggahan-terjaga (dicadangkan terpisah bersama volume)
+  public/unggahan: 1 berkas; unggahan-terjaga: 1 berkas; baris pengaduan_lampiran (pulih): 0
+
+### Aplikasi dijalankan terhadap basis data hasil pemulihan (port 3001, DB_NAME=warkop_pulih)
+  /api/health (DB pulih) -> 200: {"status":"sehat","waktu":"2026-09-04T02:57:55+07:00","basisData":"terhubung","versi":"0.1.0"}
+  / -> 200, /berita -> 200, /lacak -> 200
+  login superadmin di DB pulih: ok; artikel via API: "total":9; pengaduan staf: "total":3; pengaturan: "kontak_email":"pengaduan@warkopnusantara.id"
+  server DB pulih dimatikan
+  basis data warkop_pulih dihapus (uji selesai); berkas cadangan tetap di cadangan/ (gitignored? 1)
+HASIL E: lihat tabel perbandingan di atas (semua SAMA = LULUS)
+
+## D5 pelengkap — tampilan di peramban saat DB mati (2026-09-03T19:58:53Z)
+  /berita: pesan rapi=true, jejak galat=false, cuplikan: "WARKOP NUSANTARA Terjadi gangguan Halaman tidak dapat dimuat Sistem mengalami gangguan sementara. Silakan coba lagi beberapa saat; bila berulang, hubungi kami l"
+  /: pesan rapi=true, jejak galat=false, cuplikan: "WARKOP NUSANTARA Terjadi gangguan Halaman tidak dapat dimuat Sistem mengalami gangguan sementara. Silakan coba lagi beberapa saat; bila berulang, hubungi kami l"
+  /lacak?nomor=WRP-000001: pesan rapi=true, jejak galat=false, cuplikan: "WARKOP NUSANTARA Terjadi gangguan Halaman tidak dapat dimuat Sistem mengalami gangguan sementara. Silakan coba lagi beberapa saat; bila berulang, hubungi kami l"
+  DB dinyalakan kembali: /api/health 200

@@ -1,0 +1,14 @@
+# C6 — hamparan/modal layar penuh: satu pendekatan (useViewportTinggi, tanpa 100vh) — 2026-09-03T20:00:36Z
+components/staf/KerangkaStaf.js:28:        <button type="button" className="fixed inset-0 z-40 bg-primary/60 md:hidden" aria-label="Tutup menu" onClick={() => setLaci(fal
+components/ui/Dialog.js:3:// satu pendekatan, tanpa !important). Tinggi hamparan dari useViewportTinggi (aturan 5, bukan 100vh).
+components/ui/Dialog.js:9:import { createPortal } from 'react-dom';
+components/ui/Dialog.js:11:import useViewportTinggi from '@/hooks/useViewportTinggi';
+components/ui/Dialog.js:14:  const tinggi = useViewportTinggi();
+components/ui/Dialog.js:36:  return createPortal(
+components/ui/Dialog.js:44:        role="dialog"
+components/ui/Dialog.js:45:        aria-modal="true"
+app/(auth)/login/page.js:23:      <div className="fixed inset-0 flex items-center justify-center overflow-hidden z-0">
+app/not-found.js:16:      <div className="fixed inset-0 flex items-center justify-center overflow-hidden z-0" aria-hidden="true">
+hooks/useViewportTinggi.js:2:// hooks/useViewportTinggi.js — pengganti 100vh (aturan 5, pelajaran Cap Jiki nomor 5).
+hooks/useViewportTinggi.js:8://   const tinggi = useViewportTinggi();           // number | null (null saat render server)
+hooks/useViewportTinggi.js:18:export default function useViewportTinggi() {

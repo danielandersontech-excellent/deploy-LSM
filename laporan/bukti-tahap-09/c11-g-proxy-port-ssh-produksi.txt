@@ -1,0 +1,29 @@
+# C11/G — proxy & pemisahan host di PRODUKSI (image 3c64be4), port, SSH — dari laptop 2026-09-03T19:18:59Z
+$ curl -sI https://warkopnusantara.id/staf/dashboard
+  HTTP 307  Location: https://staf.warkopnusantara.id/staf/dashboard
+$ curl -sI https://warkopnusantara.id/login
+  HTTP 307  Location: https://staf.warkopnusantara.id/login
+$ curl -sI https://staf.warkopnusantara.id/berita
+  HTTP 307  Location: https://staf.warkopnusantara.id/staf/dashboard
+$ curl -sI https://staf.warkopnusantara.id/
+  HTTP 307  Location: https://staf.warkopnusantara.id/staf/dashboard
+$ curl -sI https://staf.warkopnusantara.id/staf/dashboard
+  HTTP 307  Location: https://staf.warkopnusantara.id/login?lanjut=%2Fstaf%2Fdashboard
+$ curl -sI http://warkopnusantara.id/
+  HTTP 302  Location: https://warkopnusantara.id/
+$ curl -sI https://www.warkopnusantara.id/
+  HTTP 000  Location: 
+  (semua Location TANPA 0.0.0.0: 0 kemunculan 0.0.0.0)
+
+$ header keamanan produksi saat ini (sebelum B3):
+
+$ port dari internet (timeout 6 s):
+  :3306 -> 000 Connection timed out after 6004 milliseconds
+  :8000 -> 302 
+  :5050 -> 302 
+  :3000 -> 200 
+
+$ SSH dengan kata sandi (harus ditolak, hanya kunci):
+deployer@31.97.106.106: Permission denied (publickey,password).
+$ SSH root dengan kata sandi:
+root@31.97.106.106: Permission denied (publickey,password).

@@ -1,0 +1,52 @@
+# Uji keamanan Tahap 9 — 2026-09-03T19:31:12.185Z
+login: superadmin true, verifikator true, penulis true, pimpinan wilayah 13 true
+
+## B2. Injeksi SQL — payload ke setiap kolom pencarian/filter; tidak boleh 500, tidak boleh "lolos" (jumlah hasil tidak melonjak), tanpa pesan SQL
+  OK    B2: 154 payload × kolom — 0 gagal; setiap payload dibalas 200/400/404/422 tanpa 500, tanpa pesan SQL, jumlah hasil tidak melonjak
+  OK    B2: login dengan payload injeksi — HTTP 401
+
+## C13. Identitas pelapor tidak pernah keluar — pengaduan BERNAMA dibuat, lalu diperiksa di 5 saluran
+  pengaduan bernama -> 201 WRP-017853
+  OK    C13-1 HTML beranda (kasus berjalan publik) — 76618 byte, identitas: 0
+  OK    C13-2 JSON /api/pengaduan/lacak — kunci: pengaduan,riwayat
+  OK    C13-3 HTML /lacak — identitas: 0
+  id pengaduan: 1079
+  OK    C13-4 API detail untuk penulis — HTTP 403
+  OK    C13-5 API detail untuk pimpinan wilayah 13 (berhak lihat kasus, BUKAN identitas) — identitas: 0; kunci pengaduan: id,nomor_kasus,anonim,kategori_masalah,wilayah_id,wilayah_nama,lokasi_kejadian,deskripsi,status,petugas_id,petugas_nama,dibuat_pada
+  OK    C13-kontrol verifikator melihat identitas (harus ADA) — identitas: 4/4
+  OK    C13-6 daftar pengaduan pimpinan wilayah — identitas: 0
+  OK    C13-7 HTML dashboard pimpinan wilayah — identitas: 0
+
+## B6. Berkas unggahan — tebak URL lampiran, tanpa eksekusi, magic bytes, nama acak
+  OK    B6-1 /unggahan/pengaduan/<sub>/<nama> (lampiran pengaduan lewat penyaji publik) — HTTP 404
+  OK    B6-2 /unggahan/../.env — HTTP 404
+  OK    B6-3 /unggahan/galeri/x.php (ekstensi tak dikenal) — HTTP 404
+  OK    B6-4 lampiran terjaga tanpa login — HTTP 401
+  OK    B6-5 lampiran id tebakan (bukan milik pengaduan) — HTTP 404
+  OK    B6-6 lampiran oleh penulis — HTTP 403
+  (tidak ada gambar galeri terunggah untuk B6-7 — dilewati)
+  OK    B6-8 unggah PHP menyamar .jpg (magic bytes) — HTTP 415
+  OK    B6-9 unggah SVG (skrip) — HTTP 415
+
+## B5. CSRF — permintaan pengubah data dengan cookie sah tetapi Origin lintas asal
+  OK    B5-1 PATCH pengaturan Origin jahat.example — HTTP 403
+  OK    B5-2 PATCH pengaturan Origin same-origin (kontrol) — HTTP 422
+  OK    B5-3 DELETE artikel Referer jahat.example (tanpa Origin) — HTTP 403
+  OK    B5-4 POST login Origin jahat.example — HTTP 403
+  OK    B5-5 GET dengan Origin asing tetap boleh (bukan pengubah data) — HTTP 200
+  OK    B5-6 cookie sesi HttpOnly + SameSite=Lax — warkop_token=<…>; Path=/; Expires=Fri, 04 Sep 2026 03:31:33 GMT; Max-Age=28800; HttpOnly; SameSite=lax
+
+## C8. Daftar putih pengaturan — kunci tampilan = kunci API (satu sumber PENGATURAN_DEFINISI); simpan-muat ulang setiap kunci
+  OK    C8-1 kunci API (13) identik dengan definisi (13) — kontak_alamat_gedung,kontak_alamat_jalan,kontak_alamat_kota,kontak_email,kontak_hotline,misi,statistik_laporan_ditangani,statistik_provinsi_tercover,statistik_tahun_mengawasi,teks_faq,teks_kebijakan_privasi,teks_pedoman_komunitas,visi
+  OK    C8-2 kunci di luar daftar putih ditolak — HTTP 422
+  OK    C8-3 simpan-muat ulang 13 kunci — 0 gagal; nilai asli dipulihkan: true
+
+  pengaduan uji WRP-017853 dihapus lunak
+
+## B4. Rate limit — login, pengaduan, lacak, unggah (menghabiskan kuota IP dev; dijalankan terakhir)
+  OK    B4 login (gagal beruntun, per IP 20 / per akun 30) — 429 pada percobaan ke-20
+  OK    B4 pengaduan (10/60 menit per IP) — 429 pada percobaan ke-10
+  OK    B4 lacak (60/15 menit per IP) — 429 pada percobaan ke-52
+  OK    B4 unggah staf (60/jam per akun) — 429 pada percobaan ke-59
+
+RINGKASAN: LULUS — semua pemeriksaan OK

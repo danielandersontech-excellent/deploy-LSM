@@ -1,0 +1,47 @@
+# Bukti server produksi (baca-saja, objek warkop saja) — 2026-09-03T19:25:19Z
+
+## C1 zona waktu — host, container app, sesi DB, baris terbaru
+host: Fri Sep  4 02:25:24 WIB 2026 | Asia/Jakarta
+container app: re8snqu8jwyxdqg2wmzrbm3w-191020429903
+app: Fri Sep  4 02:25:24 WIB 2026 TZ=Asia/Jakarta NODE_ENV=production STAF_HOST=staf.warkopnusantara.id UPLOAD_PRIVATE_DIR=/app/unggahan-terjaga
+B7 .env di image: ls: /app/.env*: No such file or directory 
+C11 proxy.js di image: -rw-r--r--    1 nextjs   nodejs        4118 Sep  4 02:10 /ap
+server.js: /app/server.js
+unggahan-terjaga: drwxr-xr-x    2 nextjs   nodejs        4096 Sep  4 02:11 /app/unggahan-terjaga
+public/unggahan: drwxr-xr-x    2 nextjs   nodejs        4096 Sep  4 02:10 /app/public/unggahan
+docker port app: 
+mounts app:
+  volume warkop-unggahan/var/lib/docker/volumes/warkop-unggahan/_data -> /app/public/unggahan
+
+healthcheck: healthy (gagal beruntun 0)
+image warkop yang tersedia (rollback):
+re8snqu8jwyxdqg2wmzrbm3w:3c64be4751d2073f395db0a27c0739797a348210 1.11GB 13 minutes ago
+re8snqu8jwyxdqg2wmzrbm3w:d38129ebb1678d6cdb29fe2c88bdd6bf3d714d1a 1.09GB About an hour ago
+re8snqu8jwyxdqg2wmzrbm3w:0b4a1e8cf3ac4098e1a299c0e2c9dafe7ae5edbf 1.08GB 2 hours ago
+re8snqu8jwyxdqg2wmzrbm3w:d5c8f7bf2774e826da8a8cdcb4b21fe61bcd425f 1.07GB 3 hours ago
+re8snqu8jwyxdqg2wmzrbm3w:6e39a1bbc0d5571ba060dae60c745370792bdef6 1GB 3 hours ago
+re8snqu8jwyxdqg2wmzrbm3w:a2dbb534f16ad157a612b0eb2aee3a9e1a4d486d 998MB 4 hours ago
+DB container: kwoz3jwjb037hw3oh669g9c4 mariadb:11 Up 11 hours (healthy)
+df /: /dev/sda1       193G   35G  159G  18% /
+
+## C1/C7 — sesi DB produksi (mariadb di container DB, kata sandi via env MYSQL_PWD, tidak dicetak)
+now_sesi	tz_global	tz_sesi	tz_sistem
+2026-09-03 19:25:30	SYSTEM	SYSTEM	UTC
+id	nomor_kasus	status	dibuat_pada
+3	WRP-008994	selesai	2026-08-08 09:00:00
+yatim_tanpa_riwayat
+0
+artikel_tanpa_kategori
+0
+rantai_putus
+0
+pengaduan	anonim	anonim_dengan_identitas
+3	1	0
+users	aktif	superadmin_aktif
+6	1	1
+artikel
+12
+riwayat
+8
+audit
+3

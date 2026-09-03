@@ -16,7 +16,9 @@ export default async function HalamanLogin({ searchParams }) {
   return (
     // <body> desain: bg-background text-on-background min-h-screen flex items-center justify-center p-4
     // (body akar dipakai bersama; kelas tata letaknya dipindahkan ke pembungkus ini)
-    <div className="bg-background text-on-background min-h-screen flex items-center justify-center p-4 w-full">
+    // Tahap 9 (aturan 5): min-h-screen (100vh) desain -> min-h-dvh, preseden KerangkaStaf.
+    // Tahap 9 D6 (aksesibilitas): pembungkus <div> desain -> <main> (landmark untuk pembaca layar; kelas & tampilan sama). KEPUTUSAN BARU.
+    <main className="bg-background text-on-background min-h-dvh flex items-center justify-center p-4 w-full">
       {/* Watermark Background */}
       <div className="fixed inset-0 flex items-center justify-center overflow-hidden z-0">
         <Image
@@ -49,6 +51,6 @@ export default async function HalamanLogin({ searchParams }) {
           <p className="font-motto text-motto text-primary">&quot;Berani Karena Benar&quot;</p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

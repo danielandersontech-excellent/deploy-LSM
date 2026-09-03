@@ -1,0 +1,13 @@
+# C12 — cek await params/searchParams/cookies()/headers() 2026-09-03T19:15:30Z
+app\api\staf\program\route.js
+  - searchParams TANPA await
+app\api\staf\pengaduan\route.js
+  - searchParams TANPA await
+app\api\staf\galeri\route.js
+  - searchParams TANPA await
+app\api\staf\artikel\route.js
+  - searchParams TANPA await
+app\api\artikel\route.js
+  - searchParams TANPA await
+
+berkas diperiksa: 30; berkas bermasalah: 5

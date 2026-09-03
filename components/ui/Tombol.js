@@ -7,8 +7,7 @@
 //     'emas'    — "Masuk Staff" navbar kanonik (REFERENSI 18.3)
 //     'ringkas' — "Pantau Semua Kasus" kartu Status Advokasi (tanpa w-full/mt-4 konteksnya)
 //     'kirim'   — tombol kirim formulir kontak_pengaduan_..._updated_logo ("Kirim Laporan")
-//   href -> dirender sebagai <Link>; tanpa href -> <button type="button"> (atau type yang diberikan).
-import Link from 'next/link';
+// Tahap 9 (aturan 9): komponen <Tombol> tidak pernah diimpor — dihapus; hanya KELAS_TOMBOL yang dipakai (10 tempat).
 
 export const KELAS_TOMBOL = Object.freeze({
   primer: 'bg-primary text-on-primary hover:bg-primary-container px-8 py-4 rounded-lg font-label-md text-label-md transition-all shadow-[0_4px_14px_0_rgba(39,19,16,0.39)] hover:shadow-[0_6px_20px_rgba(39,19,16,0.23)] hover:-translate-y-0.5 flex items-center justify-center gap-2',
@@ -17,11 +16,3 @@ export const KELAS_TOMBOL = Object.freeze({
   ringkas: 'py-2 border border-outline rounded text-primary font-label-md text-sm hover:bg-surface-container transition-colors text-center',
   kirim: 'px-6 py-2 rounded-lg font-label-md text-label-md bg-primary text-on-primary hover:bg-primary-container transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50',
 });
-
-export default function Tombol({ varian = 'primer', href = null, type = 'button', className = '', children, ...props }) {
-  const kelas = `${KELAS_TOMBOL[varian] ?? KELAS_TOMBOL.primer}${className ? ` ${className}` : ''}`;
-  if (href) {
-    return <Link href={href} className={kelas} {...props}>{children}</Link>;
-  }
-  return <button type={type} className={kelas} {...props}>{children}</button>;
-}

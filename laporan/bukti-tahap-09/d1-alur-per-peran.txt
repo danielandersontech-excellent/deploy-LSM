@@ -1,0 +1,51 @@
+# D1 — alur ujung ke ujung per peran — http://127.0.0.1:3000 — 2026-09-03T19:59:39.882Z
+
+## Alur 1 — WARGA (tanpa login): beranda → baca artikel → kirim pengaduan anonim → lacak status
+   1. GET / (beranda) → 200 dan memuat "Pengaduan" → 200, 65874 byte
+   2. GET /berita → 200; pilih artikel pertama (slug dari HTML) → slug indikasi-penyelewengan-dana-desa-mekarsari
+   3. GET /berita/<slug> → 200 dengan judul artikel → 200
+   4. GET /kontak → 200 (formulir pengaduan) → 200
+   5. POST /api/pengaduan anonim (token formulir, tanpa identitas) → 201 nomor kasus → 201 WRP-908923, balasan hanya {nomorKasus, anonim, lampiran, diterima}
+   6. GET /api/pengaduan/lacak/<nomor> → 200 status "baru", 1 riwayat, tanpa identitas → status baru, riwayat 1
+   7. GET /lacak?nomor=<nomor> (halaman) → 200 menampilkan nomor → 200
+
+## Alur 2 — PENULIS: login → tulis draf → simpan → TIDAK bisa menerbitkan
+   8. POST /api/auth/login penulis (budi.santoso) → 200 cookie → cookie diterima
+   9. GET /staf/dashboard sebagai penulis → 200 → 200
+  10. POST /api/staf/artikel {judul, kategori_id:1, isi} → 201 status draf → 201 id 81 slug uji-d1-tahap-9-draf-penulis status draf
+  11. PATCH /api/staf/artikel/<id> ubah judul → 200 → 200
+  12. POST /api/staf/artikel/<id>/terbitkan sebagai penulis → 403 → 403 TIDAK_BERHAK
+  13. GET /api/artikel/<slug> publik sebelum terbit → 404 → 404 (draf tidak publik)
+
+## Alur 3 — REDAKTUR: login → tinjau draf → terbitkan → muncul di publik
+  14. POST /api/auth/login redaktur (siti.rahma) → 200 → cookie diterima
+  15. GET /api/staf/artikel?status=draf → memuat draf penulis → draf ditemukan (3 draf)
+  16. GET /api/staf/artikel/<id> (tinjau isi) → 200 → status draf, slug uji-d1-tahap-9-draf-penulis-disunting
+  17. POST /api/staf/artikel/<id>/terbitkan sebagai redaktur → 200 status terbit → 200 terbit terbit_pada 2026-09-03T19:59:42.000Z
+  18. GET /api/artikel/<slug> publik → 200 → 200
+  19. GET /berita/<slug> (halaman publik) → 200 memuat judul → 200
+
+## Alur 4 — VERIFIKATOR: login → lihat pengaduan baru → buka identitas → ubah status dengan catatan → riwayat tercatat
+  20. POST /api/auth/login verifikator (siti.aminah) → 200 → cookie diterima
+  21. GET /api/staf/pengaduan?status=baru → memuat pengaduan alur warga → id 1084
+  22. GET /api/staf/pengaduan/<id> (buka detail; anonim → identitas NULL; pembukaan identitas diaudit) → anonim=1, nama_pelapor=null
+  23. POST /api/staf/pengaduan/<id>/status tanpa catatan → 422 → 422 catatan wajib
+  24. POST /api/staf/pengaduan/<id>/status {diverifikasi, catatan} → 200 → 200
+  25. POST status {diproses, catatan} → 200; GET detail → riwayat 3 baris berantai → riwayat 3: -→baru, baru→diverifikasi, diverifikasi→diproses
+  26. GET /api/pengaduan/lacak/<nomor> (warga) → status diproses, riwayat tanpa catatan internal → status diproses, riwayat 3, catatan internal tidak tampil
+
+## Alur 5 — SUPERADMIN: login → kelola pengguna → ubah pengaturan → paksa keluar → periksa audit log
+  27. POST /api/auth/login superadmin → 200 → cookie diterima
+  28. POST /api/staf/pengguna {nama, email, peran: penulis, kata_sandi} → 201 → 201 id 41
+  29. Pengguna baru login → 200 (wajib ganti sandi? dilaporkan) → masuk sebagai penulis, wajib_ganti_sandi=0
+  30. PATCH /api/staf/pengaturan {kontak_hotline} → 200, lalu pulihkan → tersimpan & dipulihkan ke "0800-1-WARKOP (927567)"
+  31. POST /api/staf/pengguna/<id>/paksa-keluar → 200; sesi pengguna uji tak berlaku (401) → 200; sesi lama → 401
+  32. GET /api/staf/statistik (aktivitas audit superadmin) memuat aksi barusan → 10 aktivitas terbaru: pengguna_paksa_keluar, pengaturan_simpan, login_berhasil, pengguna_buat, pengaduan_ubah_status, artikel_terbit
+  33. DELETE /api/staf/pengguna/<id> yang sudah punya jejak audit → 409 PUNYA_DATA (Tahap 9: jejak pelaku tidak boleh hilang) → 409 — Pengguna memiliki jejak (audit 1, riwayat pengaduan 0, penugasan 0, artikel 0) sehingga ti
+  34. PATCH /api/staf/pengguna/<id> {aktif:false} (nonaktifkan, bukan hapus) → 200 → 200 nonaktif
+
+## Pembersihan data uji
+  35. DELETE /api/staf/artikel/<id> oleh redaktur → 200 → 200
+  36. Pengaduan uji dihapus lunak & pengguna uji dihapus (SQL, di luar API) → pengaduan 1 baris, pengguna uji 1 baris
+
+RINGKASAN D1: 36 langkah, 0 gagal -> LULUS

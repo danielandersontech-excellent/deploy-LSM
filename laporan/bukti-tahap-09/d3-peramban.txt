@@ -1,0 +1,19 @@
+# D3 — peramban: Microsoft Edge (Chromium) headless menjalankan uji B3 (halaman publik+staf, CSP, font, hidrasi, socket) — 2026-09-03T20:03:40Z
+versi Edge: 152.0.4191.53
+## 2. Peramban: pelanggaran CSP saat membuka halaman
+  login staf: HTTP 200 cookie diterima
+  OK    /login — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true
+  OK    / — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=2/3, hidrasi=true
+  OK    /berita — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=7/8, hidrasi=true
+  OK    /kontak — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=3/3, hidrasi=true
+  OK    /galeri — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=2/2, hidrasi=true
+  OK    /lacak — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=2/2, hidrasi=true
+  OK    /staf/dashboard — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true, realtime=tersambung, ws=ws://localhost:3000/socket.io/
+  OK    /staf/pengaduan — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true, realtime=tersambung, ws=ws://localhost:3000/socket.io/
+  OK    /staf/artikel/baru — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true
+  OK    /staf/galeri — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true
+
+RINGKASAN B3: LULUS
+
+versi Chrome: 152.0.7977.65 — seluruh uji CDP Tahap 6–9 memakai Chrome ini (B3, D6, kesetiaan 375 px emulasi, Lighthouse 12 mobile).
+Firefox: TIDAK terpasang di mesin uji. Safari macOS, Chrome Android, Safari iOS: TIDAK TERSEDIA (tidak ada perangkat/emulator) — TIDAK DIUJI; lihat risiko tersisa di laporan (aturan 5: 100vh sudah dihindari; min-h-dvh/h-dvh + useViewportTinggi).

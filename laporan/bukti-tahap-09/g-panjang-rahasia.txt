@@ -1,0 +1,4 @@
+  JWT_SECRET produksi: 96 karakter; kelas: huruf-kecil angka 
+  DB_PASSWORD produksi: 96 karakter; kelas: huruf-kecil angka 
+  SEED_ADMIN_PASSWORD produksi: 96 karakter; kelas: huruf-kecil angka 
+  COOLIFY_API_TOKEN produksi: 50 karakter; kelas: huruf-kecil HURUF-BESAR angka simbol

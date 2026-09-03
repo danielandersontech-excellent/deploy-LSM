@@ -1,0 +1,28 @@
+# B3 header keamanan — http://localhost:3000 / http://localhost:3000 — 2026-09-03T19:53:27.863Z
+
+## 1. Header pada balasan HTTP
+  OK    / (200) — 5/5 header wajib; HSTS=max-age=63072000; includeSubDomains; preload
+  OK    /berita (200) — 5/5 header wajib; HSTS=max-age=63072000; includeSubDomains; preload
+  OK    /api/health (200) — 5/5 header wajib; HSTS=max-age=63072000; includeSubDomains; preload
+  OK    /login (200) — 5/5 header wajib; HSTS=max-age=63072000; includeSubDomains; preload
+  OK    /_next/static/chunks/x.js (404) — 5/5 header wajib; HSTS=max-age=63072000; includeSubDomains; preload
+  OK    /unggahan/galeri/x.jpg (404) — 5/5 header wajib; HSTS=max-age=63072000; includeSubDomains; preload
+  CSP: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+  OK    CSP: object-src none, frame-ancestors none, base-uri self, form-action self
+  OK    CSP: unsafe-eval ada (dev saja)
+  X-Powered-By: tidak ada (poweredByHeader:false)
+
+## 2. Peramban: pelanggaran CSP saat membuka halaman
+  login staf: HTTP 200 cookie diterima
+  OK    /login — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true
+  OK    / — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=2/3, hidrasi=true
+  OK    /berita — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=7/8, hidrasi=true
+  OK    /kontak — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=3/3, hidrasi=true
+  OK    /galeri — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=2/2, hidrasi=true
+  OK    /lacak — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=2/2, hidrasi=true
+  OK    /staf/dashboard — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true, realtime=tersambung, ws=ws://localhost:3000/socket.io/
+  OK    /staf/pengaduan — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true, realtime=tersambung, ws=ws://localhost:3000/socket.io/
+  OK    /staf/artikel/baru — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true
+  OK    /staf/galeri — pelanggaran CSP=0, gagal muat=0, font=true, bg=rgb(250, 249, 245), gambar=1/1, hidrasi=true
+
+RINGKASAN B3: LULUS

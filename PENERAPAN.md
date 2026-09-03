@@ -47,6 +47,19 @@ Di Coolify setiap variabel punya pilihan **Available at Buildtime** /
 hanya `NEXT_PUBLIC_*` yang boleh ikut waktu build. Bila rahasia ikut build,
 nilainya tercetak terbuka di log build.
 
+> **TEMUAN TAHAP 9 (4 Sep 2026) — KRITIS, TINDAKAN PEMILIK.** `docker history`
+> image produksi (commit 3c64be4) menunjukkan Coolify menyuntikkan SELURUH
+> variabel yang berstatus *Available at Buildtime* sebagai build-arg pada tiga
+> layer `RUN`, termasuk `DB_PASSWORD`, `JWT_SECRET`, `SEED_ADMIN_PASSWORD`
+> (bukti: `laporan/bukti-tahap-09/c2-log-build-coolify.txt`, nilai tidak dicetak).
+> Artinya di produksi saat ini rahasia itu **belum** Runtime only. Lakukan:
+> (1) Coolify → aplikasi → Environment Variables → untuk setiap rahasia matikan
+> *Available at Buildtime* (sisakan hanya `NEXT_PUBLIC_*`); (2) Redeploy;
+> (3) verifikasi `docker history --no-trunc <image baru> | grep -c DB_PASSWORD`
+> = 0; (4) ROTASI ketiga rahasia (rahasia yang pernah masuk layer image dianggap
+> bocor) lalu Redeploy lagi. Dockerfile repo tidak mendeklarasikan ARG rahasia —
+> ini murni setelan Coolify.
+
 | Nama | Contoh | Waktu | Keterangan |
 |---|---|---|---|
 | **`DB_HOST`** | `mariadb-xyz` (nama container) | **Runtime only** | rahasia infrastruktur |
@@ -164,6 +177,12 @@ sudo docker exec -i <container_app> node scripts/seed.js
 galeri, pengurus) — `scripts/seed.js` menjalankannya; tinjau/ganti lewat ruang
 staf sebelum peluncuran publik.
 
+**Migrasi setelah skema awal.** `database/schema.sql` sudah memuat seluruh kolom
+terkini (termasuk `users.wajib_ganti_sandi`). Basis data yang dibuat SEBELUM
+4 Sep 2026 wajib menjalankan setiap berkas `database/migrations/*.sql` berurutan
+(idempoten, `IF NOT EXISTS`) lewat G.2 — aplikasi tidak menjalankan migrasi
+otomatis (ALUR 5). Periksa: `SHOW COLUMNS FROM users LIKE 'wajib_ganti_sandi'`.
+
 ### G.2 Menjalankan SQL manual
 
 ```bash
@@ -254,4 +273,29 @@ Hentikan `npm run dev` dulu — keduanya memakai port 3000.
 
 ## 3. Daftar periksa produksi — Tahap 9
 
-_(diisi di Tahap 9)_
+Diisi 4 Sep 2026 dari bukti `laporan/bukti-tahap-09/` (rincian di
+`laporan/LAPORAN-TAHAP-09-KESIAPAN.md` bagian 7). ✅ = terbukti; ⚠️ = butuh
+tindakan pemilik; ❌ = belum terpenuhi.
+
+| # | Butir (cetak biru 15) | Status | Bukti / tindakan |
+|---|---|---|---|
+| 1 | `JWT_SECRET` acak ≥ 48 byte, Runtime only | ⚠️ | panjang 96 karakter hex (48 byte) ✅ (`g-panjang-rahasia.txt`); **belum Runtime only** — ikut layer image (`c2-log-build-coolify.txt`) → matikan Buildtime + rotasi |
+| 2 | Kata sandi DB kuat, port 3306 tidak terbuka | ✅/⚠️ | 96 karakter; 3306 dari internet: timeout ✅ (`c11-g-proxy-port-ssh-produksi.txt`); nilai ikut layer image → rotasi |
+| 3 | SSH hanya kunci | ❌ | sshd masih menawarkan `password` (`Permission denied (publickey,password)`) → set `PasswordAuthentication no` (pemilik, butuh sudo) |
+| 4 | Panel Coolify tidak dapat diakses dari internet | ❌ | `http://31.97.106.106:8000` menjawab 302 dari internet (juga :5050, :3000 milik sistem lain) → firewall/binding (pemilik) |
+| 5 | Firewall hanya 22, 80, 443 | ❌ | lihat butir 4 |
+| 6 | `/api/health` ada, healthcheck hijau | ✅ | `docker inspect` healthy, gagal beruntun 0 (`c1-c7-b7-server-produksi.txt`) |
+| 7 | Zona waktu selaras OS/container/sesi DB | ✅ | host & container WIB; sesi pool aplikasi `+07:00` (`c1-sesi-db-produksi.txt`); server MariaDB global UTC (disengaja: aplikasi menyetel sesi) |
+| 8 | Setiap route API memeriksa peran | ✅ | 47 metode, 246 pemeriksaan curl 0 gagal (`b1-*.md/.txt`) |
+| 9 | Cadangan berkala, sudah diuji pulih | ✅ (lokal) / ⚠️ | dump→pulih→checksum sama→aplikasi jalan (`d5-e-pemulihan-cadangan.txt`); jadwal cron di server BELUM dipasang (pemilik, bagian G.3) |
+| 10 | Rollback `git revert` + Redeploy sudah dicoba | ✅ | revert 2 commit + build hijau (`c14-git-revert.txt`); rollback image di server tersedia 6 tag (`c1-c7-b7-server-produksi.txt`) |
+| 11 | `proxy.js` di image & terbukti berjalan | ✅ | `/app/proxy.js` ada; Location tanpa `0.0.0.0`, pemisahan host 307 (`c11-g-proxy-port-ssh-produksi.txt`) |
+| 12 | Tidak ada `cookies()/headers()/params/searchParams` tanpa `await` | ✅ | 30 berkas diperiksa, 0 masalah (`c12-await-params.txt`) |
+| 13 | Versi Next.js didukung, advisori diperiksa | ✅ | Next 16.3.4 = `latest` registry; `npm audit` 0 kerentanan (`b8-npm-audit.txt`) |
+| 14 | `npm run build` hijau (Turbopack) | ✅ | `build-produksi.txt` exit 0 |
+| 15 | Laporan anonim tidak menyimpan identitas | ✅ | produksi: anonim=1 → 0 baris beridentitas; lokal: uji C13 |
+| 16 | Halaman publik & `/lacak` tanpa identitas | ✅ | C13-1..3 (`b2-b4-b5-b6-c8-c13-keamanan.txt`) |
+| 17 | Muatan socket tanpa identitas | ✅ | Tahap 8 b + `siaran.js` daftar putih |
+| 18 | Setiap perubahan status punya baris riwayat | ✅ | yatim 0, rantai putus 0 (lokal & produksi) |
+| 19 | Lampiran tidak bisa dijelajahi dengan menebak URL | ✅ | B6-1..6 |
+| 20 | Volume unggahan bertahan melewati redeploy | ✅/⚠️ | `warkop-unggahan` → `/app/public/unggahan` ✅; **`/app/unggahan-terjaga` (lampiran pengaduan) BELUM bervolume** → tambah `warkop-lampiran` (pemilik) |

@@ -1,0 +1,33 @@
+# B8 npm audit — 2026-09-03T19:16:09Z
+$ npm audit
+found 0 vulnerabilities
+exit=0
+
+$ npm ls next react react-dom socket.io mysql2 jose sharp isomorphic-dompurify --depth=0
+warkop-nusantara@0.1.0 D:\Deploy\LSM
++-- bcryptjs@2.4.3
++-- isomorphic-dompurify@3.19.0
++-- jose@5.10.0
++-- mysql2@3.24.3
++-- next@16.3.4
++-- react-dom@19.2.8
++-- react@19.2.8
++-- sharp@0.35.4
++-- slugify@1.6.9
++-- socket.io-client@4.8.3
+`-- socket.io@4.8.3
+
+
+$ npm view next version dist-tags (versi terbaru di registry)
+{
+  'next-11': '11.1.4',
+  'next-12-2-6': '12.2.6',
+  'next-14-1': '14.1.1',
+  rc: '15.0.0-rc.1',
+  'next-13': '13.5.11',
+  'next-12-3-2': '12.3.7',
+  beta: '16.0.0-beta.0',
+next@16.3.2 '16.3.2'
+next@16.3.3 '16.3.3'
+next@16.3.4 '16.3.4'
+latest next: 16.3.4

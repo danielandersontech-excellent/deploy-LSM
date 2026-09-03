@@ -1,0 +1,32 @@
+# A — kode mati yang dihapus/diturunkan (Tahap 9)
+  hapus lib/auth/hakAkses.js: bolehAkses
+  hapus lib/auth/pembatasLaju.js: KONFIG_PEMBATAS
+  hapus lib/auth/pembatasLaju.js: setelUlangPembatas
+  hapus lib/db/pengaduan.js: hapusLunakPengaduan
+  hapus lib/db/program.js: ambilProgramBySlug
+  hapus lib/db/users.js: hitungUser
+  hapus lib/db/users.js: nonaktifkanUser
+  hapus lib/db/users.js: ubahKataSandi
+  hapus lib/db/wilayah.js: ambilSemuaWilayah
+  hapus lib/db/wilayah.js: ambilWilayah
+  hapus lib/kategoriGaleri.js: labelKategoriGaleri
+  hapus lib/pembatasLajuUmum.js: KONFIG_PEMBATAS_UMUM
+  hapus lib/pembatasLajuUmum.js: setelUlangPembatasUmum
+  unexport lib/auth/hakAkses.js: SEMUA_PERAN (dipakai internal saja)
+  unexport lib/auth/sesi.js: masaBerlakuDetik (dipakai internal saja)
+  unexport lib/auth/sesi.js: permintaanAman (dipakai internal saja)
+  unexport lib/db/pengaduan.js: nomorKasusAcak (dipakai internal saja)
+  unexport lib/kategoriPengaduan.js: SLUG_KATEGORI_PENGADUAN (dipakai internal saja)
+  unexport lib/navItems.js: menuStaf (dipakai internal saja)
+  unexport lib/pengaduanFormulir.js: BATAS_LAMPIRAN (dipakai internal saja)
+  unexport lib/pengaduanFormulir.js: DESKRIPSI_MIN (dipakai internal saja)
+  unexport lib/sanitasi.js: TAG_DIIZINKAN (dipakai internal saja)
+  unexport lib/sanitasi.js: ATRIBUT_DIIZINKAN (dipakai internal saja)
+  unexport lib/socket/server.js: ambilCookie (dipakai internal saja)
+  unexport lib/socket/server.js: roomUntuk (dipakai internal saja)
+  unexport lib/unggahan.js: JENIS_GAMBAR (dipakai internal saja)
+  unexport lib/unggahan.js: direktoriUnggahan (dipakai internal saja)
+  unexport lib/unggahan.js: direktoriTerjaga (dipakai internal saja)
+  unexport lib/validasi/pengaturan.js: validasiNilaiPengaturan (dipakai internal saja)
+  hapus components/ui/Tombol.js: default export Tombol (KELAS_TOMBOL dipertahankan)
+  app/robots.js: entri /uji-desain dihapus

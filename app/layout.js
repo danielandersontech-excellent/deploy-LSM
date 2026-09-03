@@ -27,7 +27,8 @@ export default function LayoutAkar({ children }) {
   return (
     <html lang="id" className={`${domine.variable} ${firaSans.variable}`}>
       {/* Kelas body persis dari <body> di beranda_warkop_nusantara/code.html */}
-      <body className="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+      {/* Tahap 9 (aturan 5): min-h-screen desain = 100vh -> min-h-dvh (tinggi viewport dinamis; preseden h-dvh di KerangkaStaf/SidebarStaf). KEPUTUSAN BARU. */}
+      <body className="bg-background text-on-background min-h-dvh flex flex-col font-body-md text-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
         {children}
       </body>
     </html>

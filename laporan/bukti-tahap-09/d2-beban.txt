@@ -1,0 +1,9 @@
+# D2 beban — http://127.0.0.1:3000 — 50 pengguna × 10 putaran (GET / + GET /berita) — 2026-09-03T19:48:55.200Z
+RSS server sebelum: 180 MB (PID 2344)
+/        n=500 p50=376 ms p95=784 ms maks=1289 ms rata=429 ms
+/berita  n=500 p50=551 ms p95=1122 ms maks=1411 ms rata=595 ms
+total 1000 permintaan dalam 10.4 s = 96.6 req/s; galat/non-200: 0
+RSS server di tengah: 546 MB (PID 2344); sesudah: 564 MB (PID 2344)
+RSS server 5 s kemudian: 342 MB (PID 2344)
+
+HASIL D2: LULUS — tanpa galat

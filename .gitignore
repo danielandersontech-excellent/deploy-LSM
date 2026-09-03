@@ -21,3 +21,7 @@ unggahan-terjaga/
 # --- lain-lain ---
 *.log
 .DS_Store
+
+# --- cadangan basis data lokal (uji E Tahap 9) ---
+cadangan/
+laporan/bukti-tahap-09/render-kesetiaan/

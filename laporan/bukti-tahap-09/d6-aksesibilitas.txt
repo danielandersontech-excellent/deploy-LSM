@@ -1,0 +1,49 @@
+# D6 aksesibilitas — http://localhost:3000 — 2026-09-03T19:52:48.749Z
+
+## /
+  OK    landmark & bahasa — {"header":true,"nav":true,"main":true,"footer":true,"h1":1,"lang":"id","judul":"WARKOP NUSANTARA — Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara"}
+  OK    tautan lewati ke konten — {"teks":"Lewati ke konten","tujuanAda":true}
+  OK    kontrol berlabel, tombol/tautan bernama, gambar ber-alt — tanpa label: [], tombol tanpa nama: 0, img tanpa alt: 0
+  OK    Tab menjangkau 23 dari 23 kontrol yang tampak; fokus terlihat pada semua — fokus tidak terlihat: 0
+  urutan fokus (awal): a:Lewati ke konten → a:WARKOP NUSANTARA → a:Beranda → a:Tentang Kami → a:Struktur → a:Program → a:Galeri → a:Kontak & Pengaduan
+
+## /berita
+  OK    landmark & bahasa — {"header":true,"nav":true,"main":true,"footer":true,"h1":1,"lang":"id","judul":"Berita & Investigasi · WARKOP NUSANTARA"}
+  OK    tautan lewati ke konten — {"teks":"Lewati ke konten","tujuanAda":true}
+  OK    kontrol berlabel, tombol/tautan bernama, gambar ber-alt — tanpa label: [], tombol tanpa nama: 0, img tanpa alt: 0
+  OK    Tab menjangkau 35 dari 35 kontrol yang tampak; fokus terlihat pada semua — fokus tidak terlihat: 0
+  urutan fokus (awal): a:Lewati ke konten → a:WARKOP NUSANTARA → a:Beranda → a:Tentang Kami → a:Struktur → a:Program → a:Galeri → a:Kontak & Pengaduan
+
+## /kontak
+  OK    landmark & bahasa — {"header":true,"nav":true,"main":true,"footer":true,"h1":1,"lang":"id","judul":"Kontak & Pengaduan · WARKOP NUSANTARA"}
+  OK    tautan lewati ke konten — {"teks":"Lewati ke konten","tujuanAda":true}
+  OK    kontrol berlabel, tombol/tautan bernama, gambar ber-alt — tanpa label: [], tombol tanpa nama: 0, img tanpa alt: 0
+  OK    Tab menjangkau 28 dari 29 kontrol yang tampak; fokus terlihat pada semua — fokus tidak terlihat: 0
+  urutan fokus (awal): a:Lewati ke konten → a:WARKOP NUSANTARA → a:Beranda → a:Tentang Kami → a:Struktur → a:Program → a:Galeri → a:Kontak & Pengaduan
+
+## /lacak
+  OK    landmark & bahasa — {"header":true,"nav":true,"main":true,"footer":true,"h1":1,"lang":"id","judul":"Lacak Pengaduan · WARKOP NUSANTARA"}
+  OK    tautan lewati ke konten — {"teks":"Lewati ke konten","tujuanAda":true}
+  OK    kontrol berlabel, tombol/tautan bernama, gambar ber-alt — tanpa label: [], tombol tanpa nama: 0, img tanpa alt: 0
+  OK    Tab menjangkau 18 dari 18 kontrol yang tampak; fokus terlihat pada semua — fokus tidak terlihat: 0
+  urutan fokus (awal): a:Lewati ke konten → a:WARKOP NUSANTARA → a:Beranda → a:Tentang Kami → a:Struktur → a:Program → a:Galeri → a:Kontak & Pengaduan
+
+## /login
+  OK    landmark & bahasa — {"header":false,"nav":false,"main":true,"footer":false,"h1":1,"lang":"id","judul":"Masuk Staf · WARKOP NUSANTARA"} (halaman mandiri: hanya <main> + h1 yang diharapkan)
+  OK    kontrol berlabel, tombol/tautan bernama, gambar ber-alt — tanpa label: [], tombol tanpa nama: 0, img tanpa alt: 0
+  OK    Tab menjangkau 4 dari 4 kontrol yang tampak; fokus terlihat pada semua — fokus tidak terlihat: 0
+  urutan fokus (awal): input[text]:ID Staff / Email Resmi → a:Lupa Kata Sandi? → input[password]:Kata Sandi → button[submit]:Masuk Sistem
+
+## Formulir pengaduan (/kontak) diisi & dikirim hanya dengan keyboard
+  input Situs web (biarkan kosong): ""
+  checkbox Sembunyikan Identitas Saya (Laporan Anon: true
+  select Kategori Masalah: korupsi
+  select Wilayah Kejadian: 2
+  textarea Deskripsi Lengkap Kejadian: 161 karakter
+  input berkas dilewati (opsional)
+  tombol kirim: "Kirim Laporan Resmi" -> Enter
+  OK    formulir dikirim dengan keyboard → nomor kasus tampil — WRP-248522
+  OK    wilayah aria-live/role=status untuk umpan balik — 1 elemen
+  pengaduan uji WRP-248522 dihapus lunak
+
+RINGKASAN D6: LULUS (kontras WCAG AA: lihat Lighthouse D4 audit color-contrast)

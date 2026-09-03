@@ -1,0 +1,21 @@
+# B7 pemindaian rahasia di RIWAYAT git — 2026-09-03T19:16:39Z
+$ git log --oneline | wc -l: 20 commit
+$ berkas .env* yang pernah ter-commit:
+  NIHIL (hanya .env.example)
+$ pola nilai rahasia di seluruh diff riwayat (nilai disamarkan):
+146443:+      MARIADB_PASSWORD: <disamarkan>
+146475:+      DB_PASSWORD: <disamarkan>
+146478:+      JWT_SECRET: <disamarkan>
+146481:+      SEED_ADMIN_PASSWORD: <disamarkan>
+147035:+  -e DB_HOST=<disamarkan> -e DB_PORT=3306 -e DB_USER=warkop -e DB_PASSWORD="$(grep '^DB_PASSWORD=' .env | cut -d= -f2)" -e DB_NAME=warkop_nusantara \
+147036:+  -e JWT_SECRET=<disamarkan> '^JWT_SECRET=' .env | cut -d= -f2)" -e STAF_HOST=staf.warkop.test warkop-nusantara:lokal >/dev/null
+  (jumlah baris cocok setelah penyaringan: 7)
+$ nilai sesungguhnya dari .env (dicari harfiah, hasil hanya jumlah):
+  DB_PASSWORD (lokal): 0 kemunculan di riwayat
+  DB_PASSWORD (produksi): 0 kemunculan di riwayat
+  JWT_SECRET (lokal): 0 kemunculan di riwayat
+  JWT_SECRET (produksi): 0 kemunculan di riwayat
+  SEED_ADMIN_PASSWORD (lokal): 0 kemunculan di riwayat
+  SEED_ADMIN_PASSWORD (produksi): 0 kemunculan di riwayat
+  COOLIFY_API_TOKEN (produksi): 0 kemunculan
+$ .gitignore memuat .env, .env.*, _backup*/: 3/3

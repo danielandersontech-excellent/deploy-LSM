@@ -12,7 +12,9 @@ export default async function HalamanTanpaAkses() {
   const pengguna = await ambilPenggunaSesi();
   const tujuan = pengguna ? halamanAwalPeran(pengguna.peran) : '/login';
   return (
-    <div className="bg-background text-on-background min-h-screen flex items-center justify-center p-4 w-full">
+    // Tahap 9 (aturan 5): min-h-screen (100vh) desain -> min-h-dvh, preseden KerangkaStaf.
+    // Tahap 9 D6 (aksesibilitas): pembungkus <div> desain -> <main> (landmark untuk pembaca layar; kelas & tampilan sama). KEPUTUSAN BARU.
+    <main className="bg-background text-on-background min-h-dvh flex items-center justify-center p-4 w-full">
       <div className="relative z-10 w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-lg paper-shadow overflow-hidden">
         <div className="bg-primary px-6 py-4 flex flex-col items-center justify-center border-b border-outline-variant">
           <h1 className="font-headline-md text-headline-md text-on-primary tracking-tight">WARKOP NUSANTARA</h1>
@@ -40,6 +42,6 @@ export default async function HalamanTanpaAkses() {
           <p className="font-motto text-motto text-primary">&quot;Berani Karena Benar&quot;</p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

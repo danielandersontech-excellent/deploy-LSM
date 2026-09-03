@@ -54,6 +54,9 @@ CREATE TABLE IF NOT EXISTS users (
   wilayah_id       INT UNSIGNED NULL,
   aktif            TINYINT(1) NOT NULL DEFAULT 1,
   token_version    INT UNSIGNED NOT NULL DEFAULT 0,
+  -- Tahap 7/9: 1 = wajib ganti kata sandi pada login berikutnya (disetel saat reset oleh superadmin).
+  -- Instalasi lama: jalankan database/migrations/20260904-0040-users-wajib-ganti-sandi.sql (idempoten).
+  wajib_ganti_sandi TINYINT(1) NOT NULL DEFAULT 0,
   terakhir_masuk   DATETIME NULL,
   dibuat_pada      DATETIME NOT NULL,
   diperbarui_pada  DATETIME NOT NULL,

@@ -1,0 +1,88 @@
+# C2 — rahasia tidak masuk image/log build: docker history image produksi 3c64be4 (seluruh perintah layer) dipindai — 2026-09-03T20:02:31Z
+(API Coolify: token hanya berizin deploy, tanpa 'read' → log deployment tidak dapat diambil lewat API; 403 'Missing required permissions: read'. Bukti log build bersih Tahap 3 tetap berlaku: laporan/bukti-tahap-03/.)
+image: re8snqu8jwyxdqg2wmzrbm3w:3c64be4751d2073f395db0a27c0739797a348210
+jumlah layer: 52
+  nilai DB_PASSWORD di layer image: 4 kali
+  nilai JWT_SECRET di layer image: 4 kali
+  nilai SEED_ADMIN_PASSWORD di layer image: 4 kali
+  nilai COOLIFY_API_TOKEN di layer image: 0 kali
+  layer ARG/ENV (nilai rahasia disamarkan bila ada):
+ENV UPLOAD_PRIVATE_DIR=/app/unggahan-terjaga
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
+ENV TZ=Asia/Jakarta
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+ARG COOLIFY_RESOURCE_UUID=re8snqu8jwyxdqg2wmzrbm3w
+ARG COOLIFY_BRANCH=main
+ARG COOLIFY_FQDN=warkopnusantara.id,staf.warkopnusantara.id
+ARG COOLIFY_URL=https://warkopnusantara.id,https://staf.warkopnusantara.id
+ARG TZ=Asia/Jakarta
+ARG UPLOAD_MAX_MB=20
+  layer yang menyebut .env: 0
+
+## Rincian: nama variabel yang dibakar sebagai ARG/ENV di layer image (nilai TIDAK dicetak; sumber: docker history)
+      1 ARG COOLIFY_BRANCH=
+      1 ARG COOLIFY_FQDN=
+      1 ARG COOLIFY_RESOURCE_UUID=
+      1 ARG COOLIFY_URL=
+      1 ARG DB_HOST=
+      1 ARG DB_NAME=
+      1 ARG DB_PASSWORD=
+      1 ARG DB_POOL_LIMIT=
+      1 ARG DB_PORT=
+      1 ARG DB_USER=
+      1 ARG JWT_EXPIRY=
+      1 ARG JWT_SECRET=
+      1 ARG NEXT_PUBLIC_APP_URL=
+      1 ARG SEED_ADMIN_EMAIL=
+      1 ARG SEED_ADMIN_PASSWORD=
+      1 ARG STAF_HOST=
+      1 ARG TZ=
+      1 ARG UPLOAD_DIR=
+      1 ARG UPLOAD_MAX_MB=
+      1 ENV HOSTNAME=
+      1 ENV NEXT_TELEMETRY_DISABLED=
+      1 ENV NODE_ENV=
+      1 ENV NODE_VERSION=
+      1 ENV PORT=
+      1 ENV TZ=
+      1 ENV UPLOAD_PRIVATE_DIR=
+      1 ENV YARN_VERSION=
+
+## Dockerfile repo: baris ARG/ENV yang dideklarasikan sendiri (tidak ada ARG rahasia):
+15:ENV NEXT_TELEMETRY_DISABLED=1
+22:ARG NEXT_PUBLIC_APP_URL
+23:ARG NEXT_PUBLIC_WS_URL
+24:ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
+25:ENV NEXT_PUBLIC_WS_URL=$NEXT_PUBLIC_WS_URL
+26:ENV NODE_ENV=production
+33:ENV NODE_ENV=production
+34:ENV NEXT_TELEMETRY_DISABLED=1
+35:ENV TZ=Asia/Jakarta
+36:ENV PORT=3000
+37:ENV HOSTNAME=0.0.0.0
+38:ENV UPLOAD_PRIVATE_DIR=/app/unggahan-terjaga
+
+KESIMPULAN C2/B7: Coolify menyuntikkan SELURUH variabel lingkungan yang ditandai 'Available at Buildtime' sebagai ARG pada setiap tahap build → nilai DB_PASSWORD, JWT_SECRET, SEED_ADMIN_PASSWORD TERSIMPAN di metadata layer image (dan tampil di log build Coolify). TINDAKAN PEMILIK (KRITIS): di Coolify → Environment Variables, matikan 'Available at Buildtime' untuk semua rahasia (hanya NEXT_PUBLIC_* yang butuh buildtime), Redeploy, lalu ROTASI ketiga rahasia tersebut (sudah termasuk daftar rotasi). Kode repo tidak dapat mencegahnya.
+
+## Rincian (ralat): nama build-arg yang dibakar di layer RUN (format docker history 'RUN |N VAR=nilai …'); nilai tidak dicetak
+      3 COOLIFY_BRANCH=
+      3 COOLIFY_FQDN=
+      3 COOLIFY_RESOURCE_UUID=
+      3 COOLIFY_URL=
+      3 DB_HOST=
+      3 DB_NAME=
+      3 DB_PASSWORD=
+      3 DB_POOL_LIMIT=
+      3 DB_PORT=
+      3 DB_USER=
+      3 JWT_EXPIRY=
+      3 JWT_SECRET=
+      3 NEXT_PUBLIC_APP_URL=
+      3 SEED_ADMIN_EMAIL=
+      3 SEED_ADMIN_PASSWORD=
+      3 STAF_HOST=
+      3 TZ=
+      3 UPLOAD_DIR=
+      3 UPLOAD_MAX_MB=

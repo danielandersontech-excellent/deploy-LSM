@@ -1,0 +1,44 @@
+# C4 !important — 2026-09-03T19:15:04Z
+app/globals.css:3:   yang tercatat di laporan tahap. Dilarang !important dan 100vh (aturan 4 dan 5). */
+components/ui/Dialog.js:3:// satu pendekatan, tanpa !important). Tinggi hamparan dari useViewportTinggi (aturan 5, bukan 100vh).
+jumlah: 2
+
+# C5 100vh / h-screen / min-h-screen
+app/(auth)/login/page.js:17:    // <body> desain: bg-background text-on-background min-h-screen flex items-center justify-center p-4
+app/(auth)/login/page.js:19:    <div className="bg-background text-on-background min-h-screen flex items-center justify-center p-4 w-full">
+app/(auth)/tanpa-akses/page.js:15:    <div className="bg-background text-on-background min-h-screen flex items-center justify-center p-4 w-full">
+app/(staf)/staf/artikel/page.js:85:    // KEPUTUSAN BARU: <main class="flex-1 ml-64 p-margin-desktop min-h-screen"> desain sudah
+app/(staf)/staf/artikel/page.js:87:    // min-h-screen (=100vh, aturan 5) tidak disalin.
+app/(staf)/staf/pengaduan/page.js:100:    // KEPUTUSAN BARU: <main class="flex-1 ml-0 md:ml-64 p-margin-mobile md:p-margin-desktop min-h-screen flex flex-col max-w-container-max">
+app/(staf)/staf/pengaduan/page.js:102:    // dan max-w dibawa pembungkus ini; min-h-screen (=100vh, aturan 5) -> min-h-full (main ber-h-full) agar
+app/(staf)/staf/pengaduan/[id]/page.js:167:    // KEPUTUSAN BARU: <main class="flex-1 ml-64 p-margin-desktop min-h-screen"> desain sudah digantikan
+app/globals.css:3:   yang tercatat di laporan tahap. Dilarang !important dan 100vh (aturan 4 dan 5). */
+app/layout.js:30:      <body className="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+components/staf/KelolaGaleri.js:267:    // p-margin-desktop dibawa pembungkus ini; min-h-screen (=100vh, aturan 5) tidak disalin.
+components/staf/KelolaPengguna.js:223:    // KEPUTUSAN BARU: <main class="flex-1 ml-64 p-margin-desktop min-h-screen"> desain sudah digantikan
+components/staf/KelolaPengurus.js:254:    // <main class="flex-1 ml-64 p-margin-desktop min-h-screen"> desain digantikan <main> layout staf;
+components/staf/KelolaPengurus.js:255:    // padding p-margin-desktop dibawa pembungkus ini; min-h-screen (=100vh, aturan 5) tidak disalin (preseden Kelola Artikel).
+components/staf/KelolaProgram.js:382:    // <main class="flex-1 ml-64 p-margin-desktop min-h-screen"> desain digantikan <main> layout staf;
+components/staf/KelolaProgram.js:383:    // padding p-margin-desktop dibawa pembungkus ini; min-h-screen (100vh, aturan 5) tidak disalin.
+components/staf/KerangkaStaf.js:4://   body: "flex h-screen overflow-hidden"  ->  div "flex h-dvh overflow-hidden" (h-screen = 100vh, aturan 5)
+components/staf/SidebarStaf.js:7:// KEPUTUSAN BARU: `h-screen` (=100vh, aturan 5) diganti `h-dvh`; di bawah md sidebar menjadi laci
+components/ui/Dialog.js:3:// satu pendekatan, tanpa !important). Tinggi hamparan dari useViewportTinggi (aturan 5, bukan 100vh).
+hooks/useViewportTinggi.js:2:// hooks/useViewportTinggi.js — pengganti 100vh (aturan 5, pelajaran Cap Jiki nomor 5).
+hooks/useViewportTinggi.js:6:// (Dialog, laci) — jangan pernah menulis 100vh di kelas maupun style.
+jumlah 100vh: 11; h-screen/min-h-screen: 17
+
+# C12 cookies()/headers()/params/searchParams tanpa await
+-- params/searchParams destructuring tanpa await:
+app/(auth)/login/page.js:13:export default async function HalamanLogin({ searchParams }) {
+app/(publik)/berita/page.js:68:export async function generateMetadata({ searchParams }) {
+app/(publik)/berita/page.js:80:export default async function HalamanBerita({ searchParams }) {
+app/(publik)/berita/[slug]/page.js:58:export async function generateMetadata({ params }) {
+app/(publik)/berita/[slug]/page.js:80:export default async function HalamanDetailArtikel({ params }) {
+app/(publik)/galeri/page.js:43:export default async function HalamanGaleri({ searchParams }) {
+app/(publik)/lacak/page.js:44:export default async function HalamanLacak({ searchParams }) {
+app/(publik)/program/page.js:79:export default async function HalamanProgram({ searchParams }) {
+app/(publik)/struktur/page.js:31:export default async function HalamanStruktur({ searchParams }) {
+app/(staf)/staf/artikel/page.js:47:export default async function HalamanKelolaArtikel({ searchParams }) {
+-- semua pemakaian params/searchParams (untuk audit manual):
+29
+17

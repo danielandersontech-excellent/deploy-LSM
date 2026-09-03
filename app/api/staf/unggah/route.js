@@ -8,6 +8,7 @@ import { HAK } from '@/lib/auth/hakAkses';
 import { simpanGambar, GalatUnggahan, batasByte } from '@/lib/unggahan';
 import { catatAudit } from '@/lib/db/audit';
 import { alamatIpPermintaan } from '@/lib/auth/sesi';
+import { periksaLaju, pesanDibatasi } from '@/lib/pembatasLajuUmum';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +16,9 @@ const TUJUAN_SAH = ['artikel', 'pengurus', 'program', 'galeri'];
 const MAKS_GAMBAR = Math.min(batasByte(), 5 * 1024 * 1024);
 
 export const POST = denganPeran(HAK.unggah, async (request, _konteks, pengguna) => {
+  // Tahap 9 B4: pembatas laju per akun (60/jam) — sebelum berkas dibaca.
+  const laju = periksaLaju('unggah_staf', `u:${pengguna.id}`);
+  if (laju.dibatasi) throw new GalatHttp(429, pesanDibatasi(laju.sisaDetik), 'DIBATASI');
   let form;
   try {
     form = await request.formData();

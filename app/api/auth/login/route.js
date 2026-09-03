@@ -8,7 +8,7 @@ import { catatAudit } from '@/lib/db/audit';
 import { terbitkanToken } from '@/lib/auth/jwt';
 import { NAMA_COOKIE, opsiCookieSesi, alamatIpPermintaan } from '@/lib/auth/sesi';
 import { periksaBatasLogin, catatGagalLogin, catatBerhasilLogin } from '@/lib/auth/pembatasLaju';
-import { balasGalat } from '@/lib/auth/penjaga';
+import { balasGalat, periksaAsal, GalatHttp } from '@/lib/auth/penjaga';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +17,8 @@ const PESAN_KREDENSIAL = 'Email atau kata sandi tidak sesuai';
 const HASH_PENAMPUNG = bcrypt.hashSync('penampung-waktu-konstan', 12);
 
 export async function POST(request) {
+  // Tahap 9 B5: login pun wajib same-origin bila peramban mengirim Origin/Referer (mencegah login-CSRF).
+  try { periksaAsal(request); } catch (g) { if (g instanceof GalatHttp) return balasGalat(g.status, g.message, g.kode); throw g; }
   let badan;
   try { badan = await request.json(); } catch { return balasGalat(400, 'Badan permintaan harus JSON', 'BADAN_TIDAK_SAH'); }
   const email = String(badan?.email ?? '').trim().toLowerCase();

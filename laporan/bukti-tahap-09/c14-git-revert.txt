@@ -1,0 +1,31 @@
+# C14 — setiap perubahan bisa dibatalkan — 2026-09-03T19:18:10Z
+Percobaan 1 (revert 3c64be4 saja) BENTROK dengan commit STATUS 35fe129 yang menyentuh STATUS.md/LAPORAN — dibatalkan (git revert --abort).
+Percobaan 2: revert berurutan mundur (35fe129 lalu 3c64be4) di cabang percobaan.
+
+$ git log --oneline | head -6
+35fe129 STATUS: Tahap 08 LULUS (3c64be4) — uji h wss produksi LULUS, redeploy 3c64be4 healthy
+3c64be4 Tahap 08: realtime Socket.io — autentikasi socket (cookie→jose→DB token_version), room per peran/wilayah, pembantu siaran tanpa identitas (3 event), klien same-origin + pemantau halus (refresh terbatas, tanpa geser gulir, penanda saat menyaring); 13 uji berbukti (socket, peramban CDP, beban 50×20, build)
+d38129e STATUS: Tahap 07 LULUS (dafb001)
+dafb001 Tahap 07: ruang kerja staf — dashboard per peran (angka DB, tren 12 bulan), CRUD pengurus/program/galeri/pengguna, pengaturan daftar putih tunggal + validasi tipe, paksa keluar/reset sandi/wajib ganti sandi (migrasi 03), 16 route API berpagar; 17 uji berbukti
+0b4a1e8 STATUS: Tahap 06 LULUS (cd04e3a)
+cd04e3a Tahap 06: modul pengaduan — formulir anonim (identitas tidak dikirim), token+honeypot+rate limit, lampiran terjaga di luar public/, lacak netral, kelola & detail pengaduan berperan, buku besar+catatan wajib; 17 uji berbukti; perbaikan navbar/laci/lebar Tahap 4-5
+
+$ git switch -c uji-revert-tahap-08 && git revert --no-edit 35fe129 3c64be4
+[uji-revert-tahap-08 c4fef9c] Revert "STATUS: Tahap 08 LULUS (3c64be4) — uji h wss produksi LULUS, redeploy 3c64be4 healthy"
+[uji-revert-tahap-08 1486a51] Revert "Tahap 08: realtime Socket.io — autentikasi socket (cookie→jose→DB token_version), room per peran/wilayah, pembantu siaran tanpa identitas (3 event), klien same-origin + pemantau halus (refresh terbatas, tanpa geser gulir, penanda saat menyaring); 13 uji berbukti (socket, peramban CDP, beban 50×20, build)"
+$ git log --oneline -3
+1486a51 Revert "Tahap 08: realtime Socket.io — autentikasi socket (cookie→jose→DB token_version), room per peran/wilayah, pembantu siaran tanpa identitas (3 event), klien same-origin + pemantau halus (refresh terbatas, tanpa geser gulir, penanda saat menyaring); 13 uji berbukti (socket, peramban CDP, beban 50×20, build)"
+c4fef9c Revert "STATUS: Tahap 08 LULUS (3c64be4) — uji h wss produksi LULUS, redeploy 3c64be4 healthy"
+35fe129 STATUS: Tahap 08 LULUS (3c64be4) — uji h wss produksi LULUS, redeploy 3c64be4 healthy
+$ ls lib/socket components/staf/PemantauRealtime.js hooks/useSocket.js (harus hilang)
+ls: cannot access 'components/staf/PemantauRealtime.js': No such file or directory
+ls: cannot access 'hooks/useSocket.js': No such file or directory
+lib/socket:
+$ rm -rf .next && npm run build
+exit build=0
+✓ Compiled successfully in 7.0s
+✓ Generating static pages using 15 workers (5/5) in 291ms
+$ git switch main && git branch -D uji-revert-tahap-08
+Deleted branch uji-revert-tahap-08 (was 1486a51).
+35fe129 STATUS: Tahap 08 LULUS (3c64be4) — uji h wss produksi LULUS, redeploy 3c64be4 healthy
+status bersih (tanpa berkas terlacak berubah): 0 perubahan
