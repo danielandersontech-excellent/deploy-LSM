@@ -1,0 +1,37 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/daftar_berita_investigasi/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-berita.html
+----------------------------------------------------------------
+Kelas desain       : 162
+Ditemukan di render: 152  (94%)
+Kelas hilang       : 10
+  antialiased
+  bg-primary-container
+  bg-surface-variant
+  border-primary-fixed-dim
+  light
+  max-w-sm
+  mx-1
+  px-margin-desktop
+  text-on-primary-container
+  text-secondary
+----------------------------------------------------------------
+Token desain dipakai desain : 31
+Token hilang di render      : 3  -> on-primary-container, primary-container, primary-fixed-dim
+----------------------------------------------------------------
+Teks tampak desain : 30   hilang di render: 4
+  Analisis Dokumen AMDAL Kawasan Industri Baru
+  Hukum & Kebijakan
+  Layanan Publik
+  Lingkungan
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

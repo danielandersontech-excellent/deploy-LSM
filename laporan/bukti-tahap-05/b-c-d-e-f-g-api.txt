@@ -1,0 +1,55 @@
+# Uji API Tahap 5 — 2026-09-03T16:32:03Z
+login superadmin=200 penulis=200 redaktur=200 verifikator=200 pimpinan_wilayah(wil 3)=200
+
+## f. Kategori wajib — POST tanpa kategori_id (superadmin)
+  -> HTTP 422 {"galat":"Kategori wajib dipilih (aturan 7: tidak ada artikel tanpa kategori)","kode":"KATEGORI_WAJIB"}
+
+## e1. Slug — dua artikel berjudul sama (penulis membuat draf)
+  artikel 1: HTTP 201 id=50 slug=uji-slug-bentrok-tahap-5
+  artikel 2: HTTP 201 id=51 slug=uji-slug-bentrok-tahap-5-2
+  HASIL e1: LULUS (slug kedua berakhiran, tidak menimpa)
+
+## b. UJI PERAN LEWAT CURL
+  penulis POST /terbitkan (miliknya id=50)      -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  penulis PATCH artikel orang lain (id=41, redaktur) -> HTTP 403 {"galat":"Penulis hanya boleh mengakses artikel miliknya sendiri","kode":"BUKAN_MILIK"}
+  penulis DELETE artikel miliknya (id=51)       -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  penulis DELETE artikel orang lain (id=41)      -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  verifikator GET /api/staf/artikel              -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  verifikator POST /api/staf/artikel             -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  pimpinan_wilayah POST /api/staf/artikel        -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  pimpinan_wilayah PATCH /api/staf/artikel/41    -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  pimpinan_wilayah (wil 3) GET /api/staf/artikel -> HTTP 200 wilayah_id di hasil: total=0 wilayah=[]  (seed: artikel wil 3 tidak ada -> total 0 = benar; artikel wil 12/13/14 tidak muncul)
+  pimpinan_wilayah GET /api/staf/artikel/41 (wil 13) -> HTTP 404 {"galat":"Artikel tidak ditemukan","kode":"TIDAK_DITEMUKAN"}
+  penulis GET /api/staf/artikel (hanya miliknya)  -> total=7 penulis_id=[2]
+  tanpa cookie POST /api/staf/artikel            -> HTTP 401
+  tanpa cookie + header x-user-role palsu        -> HTTP 401
+
+## c. UJI XSS — muatan lewat API langsung (penulis PATCH miliknya id=50)
+  PATCH -> HTTP 200
+  isi TERSIMPAN di DB (SELECT isi):
+    <h2>Judul aman</h2><p>Teks aman</p><img alt=""><a>tautan</a><p>para</p><a href="https://contoh.id/aman" target="_blank" rel="noopener noreferrer">aman</a><img src="/penampung/artikel-1.jpg" alt="ok">
+    sisa berbahaya: NIHIL
+    HASIL c (DB): LULUS — tersimpan sudah bersih; tautan luar diberi rel=noopener
+  terbitkan (redaktur) -> HTTP 200
+  halaman detail /berita/uji-xss-tahap-5 -> HTTP 404; di HTML render: <script>alert=0 onerror=0 javascript:=0 (harus 0 semua; bila halaman belum ada -> 404, diulang setelah halaman selesai)
+
+## g. Zona waktu — terbit_pada artikel id=50 di DB vs WIB aplikasi
+    terbit_pada tersimpan: 2026-09-03 23:32:07 | WIB aplikasi sekarang: 2026-09-03 23:32:08 | @@session.time_zone: +07:00 | selisih detik: 1
+    HASIL g: LULUS (WIB)
+
+## e2. Slug beku — ubah judul artikel TERBIT id=50 (redaktur PATCH)
+  PATCH judul baru -> HTTP 200 slug sesudah: uji-xss-tahap-5 (sebelum: uji-xss-tahap-5)
+
+## d. UJI UNGGAHAN (superadmin, POST /api/staf/unggah)
+  .php diganti nama .jpg      -> HTTP 415 {"galat":"Berkas bukan gambar JPG, PNG, atau WebP (isi berkas tidak cocok)","kode":"TIPE_TIDAK_SAH"}
+  6 MB (batas 5 MB)           -> HTTP 413 {"galat":"Ukuran berkas melebihi batas 5 MB","kode":"TERLALU_BESAR"}
+  .svg berisi script          -> HTTP 415 {"galat":"Berkas bukan gambar JPG, PNG, atau WebP (isi berkas tidak cocok)","kode":"TIPE_TIDAK_SAH"}
+  nama '../../evil.jpg' (JPG asli) -> HTTP 201 {"jalur":"/unggahan/artikel/706f08c32dbb5f6f6afa9cb8bae1b388.jpg","namaBerkas":"706f08c32dbb5f6f6afa9cb8bae1b388.jpg","tipeMime":"image/jpeg","ukuran":41418,"lebar":1200,"tinggi":800}
+  berkas tersimpan di: -rw-r--r-- FX506 public/unggahan/artikel/706f08c32dbb5f6f6afa9cb8bae1b388.jpg  (di dalam UPLOAD_DIR, nama acak)
+  disajikan GET /unggahan/artikel/706f08c32dbb5f6f6afa9cb8bae1b388.jpg -> HTTP 200 image/jpeg   GET /unggahan/../.env -> HTTP 404
+  verifikator boleh unggah (HAK.unggah) -> HTTP 201   pimpinan_wilayah -> HTTP 403
+  Content-Type palsu (PNG dikirim sebagai image/jpeg, isi PNG asli) -> HTTP 201 {"jalur":"/unggahan/artikel/ad8a66fbfff6aa3b61e68758357d89d3.png","namaBerkas":"ad8a66fbfff6aa3b61e68758357d89d3.png","t  (dikenali dari magic bytes sebagai png)
+
+## Bersihkan: hapus artikel uji (superadmin DELETE)
+  DELETE 50 -> HTTP 200
+  DELETE 51 -> HTTP 200

@@ -1,0 +1,10 @@
+# Uji m — kosongkan tabel artikel -> /berita (2026-09-03T16:43:12Z) [build produksi]
+artikel sebelum: 12
+artikel setelah DELETE: 0
+  /berita -> HTTP 200 | KeadaanKosong(role=status): 2 | judul: Belum ada berita|Belum ada data| | galat: 0
+  / -> HTTP 200 | KeadaanKosong(role=status): 1 | judul: Belum ada sorotan investigasi| | galat: 0
+  /berita?q=x -> HTTP 200 | KeadaanKosong(role=status): 2 | judul: Tidak ada berita yang cocok|Belum ada data| | galat: 0
+  /staf/artikel (superadmin, kosong): Belum ada artikel
+$ node scripts/seed.js (pulihkan)
+[seed] jumlah baris: wilayah=39 users=7 kategori_artikel=5 artikel=12 tag=8 artikel_tag=11 pengaduan=3 pengaduan_riwayat=11 pengurus=5 program=3 galeri=6 pengaturan=13
+[seed] selesai. CATATAN: artikel/pengaduan/program/galeri/pengurus adalah KONTEN CONTOH — tinjau sebelum publik.

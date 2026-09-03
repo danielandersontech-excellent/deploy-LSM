@@ -1,0 +1,36 @@
+# Uji a — alur penuh artikel (2026-09-03T16:40:17Z)
+login penulis=200 redaktur=200
+
+## 1. Penulis membuat DRAF (POST /api/staf/artikel) — isi memuat muatan XSS (uji c)
+  -> HTTP 201
+  id=54 slug=uji-alur-penuh-tahap-5 status=draf terbit_pada=null
+  draf TIDAK ada di publik: GET /api/artikel/uji-alur-penuh-tahap-5 -> HTTP 404 ; /berita/uji-alur-penuh-tahap-5 -> HTTP 404
+
+## 2. Penulis MENYUNTING drafnya (PATCH)
+  -> HTTP 200 judul=Uji Alur Penuh Tahap 5 (disunting) slug=uji-alur-penuh-tahap-5-disunting (draf: slug boleh mengikuti judul)
+
+## 3. Penulis mencoba MENERBITKAN -> harus 403; lalu REDAKTUR menerbitkan
+  penulis POST /terbitkan -> HTTP 403 {"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"}
+  redaktur POST /terbitkan -> HTTP 200 status=terbit terbit_pada=2026-09-03T16:40:22.000Z slug=uji-alur-penuh-tahap-5-disunting
+
+## 4. Muncul di /berita dan /api/artikel
+  GET /api/artikel?q=Alur -> HTTP 200 total=4 judul[0]=Uji Alur Penuh Tahap 5 (disunting)
+  GET /berita -> HTTP 200 ; judul ada di HTML: 1
+  [tangkapan] laporan/bukti-tahap-05/tangkapan/a-4-berita-terbit.png (465866 B)
+
+## 5. Buka DETAIL /berita/uji-alur-penuh-tahap-5-disunting (uji c: XSS tidak dieksekusi di HTML render)
+  -> HTTP 200 ; <script>alert: 0 onerror=: 0 javascript:: 0 ; <h2>Temuan Lapangan ada: 1 ; blockquote ada: 1
+  [tangkapan] laporan/bukti-tahap-05/tangkapan/a-5-detail-terbit.png (592966 B)
+
+## 6. Redaktur MENGARSIPKAN (PATCH {status:'arsip'}) -> hilang dari publik
+  -> HTTP 200 status=arsip
+  GET /api/artikel/uji-alur-penuh-tahap-5-disunting -> HTTP 404 ; /berita/uji-alur-penuh-tahap-5-disunting -> HTTP 404 ; /berita memuat judul: 0
+  [tangkapan] laporan/bukti-tahap-05/tangkapan/a-6-detail-arsip-404.png (12803 B)
+
+## 7. Jejak audit untuk artikel id=54
+  2026-09-03 23:40:18  artikel_buat  user=2
+  2026-09-03 23:40:22  artikel_sunting  user=2
+  2026-09-03 23:40:22  artikel_terbit  user=3
+  2026-09-03 23:40:27  artikel_arsip  user=3
+
+## Bersihkan (redaktur DELETE 54) -> HTTP 200

@@ -1,0 +1,192 @@
+
+> warkop-nusantara@0.1.0 build
+> next build
+
+▲ Next.js 16.3.4 (Turbopack)
+- Environments: .env
+✓ Running next.config.mjs took 27ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.7s
+  Running TypeScript ...
+  Finished TypeScript in 18ms ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/5) ...
+  Generating static pages using 15 workers (1/5) 
+  Generating static pages using 15 workers (2/5) 
+  Generating static pages using 15 workers (3/5) 
+✓ Generating static pages using 15 workers (5/5) in 257ms
+Turbopack build encountered 5 warnings:
+./lib/unggahan.js:89:18
+Warning: Dynamic filesystem access causes tracing of the whole project
+  [90m87 |[0m
+  [90m88 |[0m   [36mconst[0m sub = [33mString[0m(subfolder).replace([35m/[^a-z0-9_-]/gi[0m, [32m''[0m) || [32m'gambar'[0m;
+[33m[1m>[0m [90m89 |[0m   [36mconst[0m folder = path.join(direktoriUnggahan(), sub);
+  [90m   |[0m                  [33m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m90 |[0m   [36mawait[0m mkdir(folder, { recursive: [36mtrue[0m });
+  [90m91 |[0m   [36mconst[0m nama = namaAcak(tipe.ext);
+  [90m92 |[0m   [36mconst[0m jalurDisk = path.join(folder, nama);
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.join(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./lib/unggahan.js
+    ./app/unggahan/[...jalur]/route.js
+
+
+./lib/unggahan.js:92:21
+Warning: Dynamic filesystem access causes tracing of the whole project
+  [90m90 |[0m   [36mawait[0m mkdir(folder, { recursive: [36mtrue[0m });
+  [90m91 |[0m   [36mconst[0m nama = namaAcak(tipe.ext);
+[33m[1m>[0m [90m92 |[0m   [36mconst[0m jalurDisk = path.join(folder, nama);
+  [90m   |[0m                     [33m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m93 |[0m   [36mawait[0m writeFile(jalurDisk, keluaran, { mode: [35m0o644[0m, flag: [32m'wx'[0m });
+  [90m94 |[0m   [36mreturn[0m { jalur: [32m`/unggahan/[0m${sub[32m}/[0m${nama[32m}`[0m, namaBerkas: nama, tipeMime: tipe.mime, ukura...
+  [90m95 |[0m }
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.join(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./lib/unggahan.js
+    ./app/unggahan/[...jalur]/route.js
+
+
+./lib/unggahan.js:108:18
+Warning: Dynamic filesystem access causes tracing of the whole project
+  [90m106 |[0m   [36mif[0m (tipe.mime.startsWith([32m'image/'[0m)) [36mreturn[0m simpanGambar(buffer, { subfolder, maksByte });
+  [90m107 |[0m   [36mconst[0m sub = [33mString[0m(subfolder).replace([35m/[^a-z0-9_-]/gi[0m, [32m''[0m) || [32m'lampiran'[0m;
+[33m[1m>[0m [90m108 |[0m   [36mconst[0m folder = path.join(direktoriUnggahan(), sub);
+  [90m    |[0m                  [33m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m109 |[0m   [36mawait[0m mkdir(folder, { recursive: [36mtrue[0m });
+  [90m110 |[0m   [36mconst[0m nama = namaAcak(tipe.ext);
+  [90m111 |[0m   [36mawait[0m writeFile(path.join(folder, nama), buffer, { mode: [35m0o644[0m, flag: [32m'wx'[0m });
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.join(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./lib/unggahan.js
+    ./app/unggahan/[...jalur]/route.js
+
+
+./lib/unggahan.js:111:19
+Warning: Dynamic filesystem access causes tracing of the whole project
+  [90m109 |[0m   [36mawait[0m mkdir(folder, { recursive: [36mtrue[0m });
+  [90m110 |[0m   [36mconst[0m nama = namaAcak(tipe.ext);
+[33m[1m>[0m [90m111 |[0m   [36mawait[0m writeFile(path.join(folder, nama), buffer, { mode: [35m0o644[0m, flag: [32m'wx'[0m });
+  [90m    |[0m                   [33m[1m^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m112 |[0m   [36mreturn[0m { jalur: [32m`/unggahan/[0m${sub[32m}/[0m${nama[32m}`[0m, namaBerkas: nama, tipeMime: tipe.mime, ukur...
+  [90m113 |[0m }
+  [90m114 |[0m
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.join(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./lib/unggahan.js
+    ./app/unggahan/[...jalur]/route.js
+
+
+./lib/unggahan.js:32:10
+Warning: Dynamic filesystem access causes tracing of the whole project
+  [90m30 |[0m ...
+  [90m31 |[0m ...[36mnction[0m direktoriUnggahan() {
+[33m[1m>[0m [90m32 |[0m ...path.resolve(process.env.[33mUPLOAD_DIR[0m || path.join(process.cwd(), [32m'public'[0m, [32m'unggahan'[0m));
+  [90m   |[0m    [33m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m33 |[0m ...
+  [90m34 |[0m ...
+  [90m35 |[0m ...[36mnction[0m batasByte() {
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.resolve(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./lib/unggahan.js
+    ./app/unggahan/[...jalur]/route.js
+
+
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/artikel
+├ ƒ /api/artikel/[slug]
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/saya
+├ ƒ /api/health
+├ ƒ /api/staf/artikel
+├ ƒ /api/staf/artikel/[id]
+├ ƒ /api/staf/artikel/[id]/terbitkan
+├ ƒ /api/staf/pengaduan
+├ ƒ /api/staf/pengaduan/[id]
+├ ƒ /api/staf/statistik
+├ ƒ /api/staf/unggah
+├ ƒ /berita
+├ ƒ /berita/[slug]
+├ ƒ /faq
+├ ƒ /galeri
+├ ƒ /kebijakan-privasi
+├ ƒ /login
+├ ƒ /pedoman-komunitas
+├ ƒ /program
+├ ○ /robots.txt
+├ ƒ /sitemap.xml
+├ ƒ /staf/artikel
+├ ƒ /staf/artikel/[id]
+├ ƒ /staf/artikel/baru
+├ ƒ /staf/dashboard
+├ ƒ /struktur
+├ ƒ /tanpa-akses
+├ ƒ /tentang
+├ ○ /uji-desain
+└ ƒ /unggahan/[...jalur]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> warkop-nusantara@0.1.0 lint
+> eslint .
+

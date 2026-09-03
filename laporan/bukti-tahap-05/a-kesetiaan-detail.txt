@@ -1,0 +1,47 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/detail_artikel_investigasi/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-detail.html
+----------------------------------------------------------------
+Kelas desain       : 162
+Ditemukan di render: 141  (87%)
+Kelas hilang       : 21
+  antialiased
+  bg-surface-container-low
+  bg-white/10
+  border-l-4
+  border-secondary
+  bottom-0
+  hover:bg-white/20
+  left-2
+  max-w-sm
+  mb-4
+  my-10
+  opacity-30
+  p-6
+  pl-6
+  px-margin-desktop
+  rounded
+  text-4xl
+  text-outline-variant
+  text-right
+  top-2
+  z-10
+----------------------------------------------------------------
+Token desain dipakai desain : 31
+Token hilang di render      : 1  -> surface-container-low
+----------------------------------------------------------------
+Teks tampak desain : 20   hilang di render: 3
+  Laporan Rutin Audit Dana Desa Kuartal III: Temuan Awal Rangkuman hasil observasi tim regional terhadap alokasi dana desa di wilayah timur.
+  Opini Pentingnya Pengawasan Sipil Dalam Demokrasi Analisis peran aktif masyarakat sipil dalam menjaga keseimbangan kekuasaan pemerintahan lokal.
+  Panduan Cara Aman Menyampaikan Laporan Pengaduan Langkah demi langkah menggunakan platform kami untuk memastikan keamanan identitas pelapor.
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

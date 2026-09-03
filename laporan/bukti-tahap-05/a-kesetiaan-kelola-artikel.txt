@@ -1,0 +1,45 @@
+----------------------------------------------------------------
+UJI KESETIAAN  desain=desain/stitch_portal_berita_inklusif/kelola_artikel_admin/code.html
+               render=C:\Users\TUFA15~1\AppData\Local\Temp/render-kelola.html
+----------------------------------------------------------------
+Kelas desain       : 129
+Ditemukan di render: 115  (89%)
+Kelas hilang       : 14
+  bg-opacity-20
+  bg-surface-container-highest
+  flex-shrink-0
+  h-screen
+  justify-center
+  mb-1
+  ml-64
+  mt-4
+  mt-auto
+  no
+  pt-4
+  shadows
+  space-y-2
+  z-10
+----------------------------------------------------------------
+Token desain dipakai desain : 28
+Token hilang di render      : 0
+----------------------------------------------------------------
+Teks tampak desain : 19   hilang di render: 8
+  Staff Warkop
+  add Buat Laporan Baru
+  dashboard Dashboard
+  edit_document Kelola Artikel
+  gavel Kelola Pengaduan
+  logout Keluar
+  post_add Tulis Artikel Baru
+  settings Pengaturan
+----------------------------------------------------------------
+Sisa cacat export di render (semua HARUS 0):
+  ikonSebagaiTeks      0
+  googleusercontent    0
+  cdnTailwind          0
+  fontsGoogleapis      0
+  important            0
+  seratusVh            0
+  hrefKosong           0
+----------------------------------------------------------------
+HASIL: tidak ada cacat export tersisa. Periksa daftar kelas hilang di atas.

@@ -1,0 +1,43 @@
+# Uji akses halaman editor per peran — 2026-09-03T16:38:01Z
+# Cookie: login lewat /api/auth/login (email/sandi dari .env & DB, TIDAK dicetak). Artikel seed: 47 terbit (penulis_id 2, wilayah 13), 48 draf (penulis_id 4, wilayah 13), 44 arsip (penulis_id 3, wilayah 32).
+# user 1 superadmin | user 2 penulis | user 4 verifikator | user 6 pimpinan_wilayah (wilayah 3) | user 22 pimpinan_wilayah (wilayah 13)
+
+user 1  GET /staf/artikel/baru -> 200 
+user 1  GET /staf/artikel/47 -> 200 
+user 1  GET /staf/artikel/48 -> 200 
+user 1  GET /staf/artikel/44 -> 200 
+user 2  GET /staf/artikel/baru -> 200 
+user 2  GET /staf/artikel/47 -> 200 
+user 2  GET /staf/artikel/48 -> 307 http://127.0.0.1:3000/tanpa-akses
+user 2  GET /staf/artikel/44 -> 307 http://127.0.0.1:3000/tanpa-akses
+user 4  GET /staf/artikel/baru -> 307 http://127.0.0.1:3000/tanpa-akses
+user 4  GET /staf/artikel/47 -> 307 http://127.0.0.1:3000/tanpa-akses
+user 4  GET /staf/artikel/48 -> 307 http://127.0.0.1:3000/tanpa-akses
+user 4  GET /staf/artikel/44 -> 307 http://127.0.0.1:3000/tanpa-akses
+user 6  GET /staf/artikel/baru -> 307 http://127.0.0.1:3000/tanpa-akses
+user 6  GET /staf/artikel/47 -> 404 
+user 6  GET /staf/artikel/48 -> 404 
+user 6  GET /staf/artikel/44 -> 404 
+user 22  GET /staf/artikel/baru -> 307 http://127.0.0.1:3000/tanpa-akses
+user 22  GET /staf/artikel/47 -> 200 
+user 22  GET /staf/artikel/48 -> 200 
+user 22  GET /staf/artikel/44 -> 404 
+user 1  GET /staf/artikel/999999 -> 404
+user 1  GET /staf/artikel/abc -> 404
+tanpa cookie GET /staf/artikel/baru -> 307 http://127.0.0.1:3000/login?lanjut=%2Fstaf%2Fartikel%2Fbaru
+
+# Tombol yang dirender (jumlah kemunculan teks tombol di HTML):
+user 1 di /47: 'Simpan Draf'=1 'Terbitkan'=1 input judul disabled=0 contentEditable=contentEditable="true"
+user 2 di /47: 'Simpan Draf'=1 'Terbitkan'=0 input judul disabled=0 contentEditable=contentEditable="true"
+user 22 di /47: 'Simpan Draf'=0 'Terbitkan'=0 input judul disabled=1 contentEditable=contentEditable="false"
+
+# Nilai baca-saja di /47 (superadmin):
+type="datetime-local" id="terbit-pada" readOnly="" aria-describedby="terbit-pada-keterangan" name="terbit_pada" value="2026-09-01T08:30"
+id="penulis" readOnly="" name="penulis" value="Budi Santoso"
+aria-pressed="false" disabled="">Draf</button>
+aria-pressed="true" disabled="">Publik</button>
+aria-label="Hapus tag Dana Desa"
+aria-label="Hapus tag Investigasi"
+<option value="1" selected="">Investigasi
+<option value="13" selected="">Jawa Barat
+status arsip (/44): aria-pressed="false" disabled="">Draf</button> aria-pressed="false" disabled="">Publik</button>  sr-only 'Status: Arsip'=1

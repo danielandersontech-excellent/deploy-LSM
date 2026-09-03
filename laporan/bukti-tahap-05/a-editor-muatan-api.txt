@@ -1,0 +1,33 @@
+# Uji kecocokan muatan JSON editor (muatan() di components/staf/EditorArtikel.js) dengan API — 2026-09-03T16:37Z
+# Dijalankan dengan curl.exe + cookie superadmin. Bentuk JSON persis seperti yang dikirim editor:
+#   {judul, ringkasan:'', isi(innerHTML), gambar_utama, kategori_id(angka), wilayah_id(angka|null), tag[]}
+# Artikel uji (id 53) DIHAPUS lagi di akhir (DELETE 200). Catatan: uji ini dijalankan sebelum ringkasan:'' ditambahkan;
+# perbedaannya hanya ringkasan ikut dihitung ulang dari isi terbaru saat PATCH (validasiMuatanArtikel: teksPolos(isi,200)).
+
+## POST /api/staf/artikel
+{"artikel":{"id":53,"judul":"Uji Editor Artikel (sementara)","slug":"uji-editor-artikel-sementara","ringkasan":"Isi uji dari editor tebal","gambar_utama":null,"status":"draf","jumlah_dibaca":0,"terbit_pada":null,"dibuat_pada":"2026-09-03T16:37:05.000Z","diperbarui_pada":"2026-09-03T16:37:05.000Z","kategori_id":2,"kategori_nama":"Siaran Pers","kategori_slug":"siaran-pers","penulis_id":1,"penulis_nama":"Superadmin","wilayah_id":null,"wilayah_nama":null,"isi":"<p>Isi uji dari editor <b>tebal</b> </p>"}}
+HTTP 201
+(<script>alert(1)</script> dalam isi DIBUANG oleh sanitasi server — isi tersimpan sudah bersih)
+
+## PATCH /api/staf/artikel/53
+{"artikel":{"id":53,"judul":"Uji Editor Artikel (sementara) v2","slug":"uji-editor-artikel-sementara-v2","ringkasan":"Isi uji dari editor tebal","gambar_utama":"/penampung/artikel-1.jpg","status":"draf","jumlah_dibaca":0,"terbit_pada":null,"dibuat_pada":"2026-09-03T16:37:05.000Z","diperbarui_pada":"2026-09-03T16:37:05.000Z","kategori_id":3,"kategori_nama":"Opini Publik","kategori_slug":"opini-publik","penulis_id":1,"penulis_nama":"Superadmin","wilayah_id":13,"wilayah_nama":"Jawa Barat","isi":"<p>Isi uji diperbarui, cukup panjang.</p>"},"tag":[{"id":22,"nama":"uji-editor","slug":"uji-editor"}]}
+HTTP 200
+
+## POST tanpa kategori (kategori_id: null) — galat yang ditampilkan editor di dekat tombol
+{"galat":"Kategori wajib dipilih (aturan 7: tidak ada artikel tanpa kategori)","kode":"KATEGORI_WAJIB"}
+HTTP 422
+
+## POST isi kosong (editor membuang penampung placeholder -> isi '')
+{"galat":"Isi artikel wajib diisi (minimal 10 karakter teks)","kode":"ISI_WAJIB"}
+HTTP 422
+
+## POST /api/staf/artikel/53/terbitkan
+{"artikel":{"id":53,"judul":"Uji Editor Artikel (sementara) v2","slug":"uji-editor-artikel-sementara-v2","ringkasan":"Isi uji dari editor tebal","gambar_utama":"/penampung/artikel-1.jpg","status":"terbit","jumlah_dibaca":0,"terbit_pada":"2026-09-03T16:37:05.000Z", ...}}
+HTTP 200   (terbit_pada 16:37Z = 23:37 WIB, diisi server)
+
+## GET /staf/artikel/47?terbit=1 — pesan awal setelah router.replace dari halaman baru
+role="alert" aria-live="polite" class="bg-secondary-fixed text-on-secondary-fixed border border-secondary/20 rounded px-3 py-2 font-body-md text-body-md text-sm">Artikel berhasil diterbitkan.<!-- --> <a class="underline" href="http://localhost:3000/berita/indikasi-penyele…
+
+## DELETE /api/staf/artikel/53 (bersihkan)
+{"dihapus":true,"id":53}
+HTTP 200

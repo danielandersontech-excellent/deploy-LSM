@@ -1,12 +1,28 @@
-// app/(staf)/staf/layout.js — LAPISAN 3: requireUser untuk seluruh /staf/*.
-// Sidebar kanonik (dashboard_staff_warkop) dibangun di Tahap 7; tahap ini hanya penjaga.
+// app/(staf)/staf/layout.js — LAPISAN 3: requireUser untuk seluruh /staf/* (pagar), lalu kerangka
+// ruang staf dengan sidebar kanonik (REFERENSI 18.3, dashboard_staff_warkop). Menu dari
+// lib/navItems.js menuUntukPeran (aturan: menu hanya dari navItems). Tombol aksi utama sidebar
+// bergantung peran (KEPUTUSAN BARU, lihat SidebarStaf.js).
 import { requireUser } from '@/lib/auth/penjaga';
 import { HAK } from '@/lib/auth/hakAkses';
+import { menuUntukPeran } from '@/lib/navItems';
+import KerangkaStaf from '@/components/staf/KerangkaStaf';
 
 export const dynamic = 'force-dynamic';
 
+function aksiUtamaUntuk(peran) {
+  if (HAK.artikel_buat.includes(peran)) return { href: '/staf/artikel/baru', label: 'Tulis Artikel Baru' };
+  if (peran === 'verifikator') return { href: '/staf/pengaduan', label: 'Proses Pengaduan' };
+  return { href: null, label: null };
+}
+
 export default async function LayoutStaf({ children }) {
   // Sesi diverifikasi terhadap DB (aktif + token_version). Tanpa sesi -> /login; peran asing -> /tanpa-akses.
-  await requireUser(HAK.ruang_staf);
-  return <>{children}</>;
+  const pengguna = await requireUser(HAK.ruang_staf);
+  const menu = menuUntukPeran(pengguna.peran);
+  const aksi = aksiUtamaUntuk(pengguna.peran);
+  return (
+    <KerangkaStaf pengguna={{ id: pengguna.id, nama: pengguna.nama, peran: pengguna.peran }} menu={menu} hrefAksiUtama={aksi.href} labelAksiUtama={aksi.label}>
+      {children}
+    </KerangkaStaf>
+  );
 }

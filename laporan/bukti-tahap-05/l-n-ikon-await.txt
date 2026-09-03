@@ -1,0 +1,7 @@
+# Uji l & n — nama ikon bocor + await (2026-09-03T16:41:54Z)
+  /berita: edit_document|gavel|settings|logout|dashboard sebagai teks: 0 ; material-symbols-outlined: 0 ; googleusercontent: 0 ; href="#": 0 ; 100vh: 0 ; !important: 0
+  /detail: edit_document|gavel|settings|logout|dashboard sebagai teks: 0 ; material-symbols-outlined: 0 ; googleusercontent: 0 ; href="#": 0 ; 100vh: 0 ; !important: 0
+  /kelola: edit_document|gavel|settings|logout|dashboard sebagai teks: 0 ; material-symbols-outlined: 0 ; googleusercontent: 0 ; href="#": 0 ; 100vh: 0 ; !important: 0
+  /editor-baru: edit_document|gavel|settings|logout|dashboard sebagai teks: 0 ; material-symbols-outlined: 0 ; googleusercontent: 0 ; href="#": 0 ; 100vh: 0 ; !important: 0
+  /editor-47: edit_document|gavel|settings|logout|dashboard sebagai teks: 0 ; material-symbols-outlined: 0 ; googleusercontent: 0 ; href="#": 0 ; 100vh: 0 ; !important: 0
+  n. params/searchParams tanpa await di app/: 0 (harus 0)

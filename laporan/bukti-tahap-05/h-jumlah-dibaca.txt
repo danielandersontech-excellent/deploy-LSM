@@ -1,0 +1,23 @@
+UJI h — jumlah_dibaca (TAHAP-05) — 2026-09-03T16:33:37Z UTC
+Rute: http://127.0.0.1:3000/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+Cara membedakan bot: lib/bot.js adalahBot(User-Agent) — regex (bot|crawl|spider|slurp|facebookexternalhit|whatsapp|telegram|preview|lighthouse|headless|curl|wget|python-requests|Go-http-client), UA kosong = bot.
+
+jumlah_dibaca awal                      : 2310
+  Mozilla #1 -> HTTP 200
+  Mozilla #2 -> HTTP 200
+  Mozilla #3 -> HTTP 200
+  Mozilla #4 -> HTTP 200
+  Mozilla #5 -> HTTP 200
+setelah 5x UA Mozilla (manusia)         : 2315  (naik 5, harapan 5)
+  Googlebot #1 -> HTTP 200
+  Googlebot #2 -> HTTP 200
+  Googlebot #3 -> HTTP 200
+  Googlebot #4 -> HTTP 200
+  Googlebot #5 -> HTTP 200
+setelah 5x UA Googlebot (bot)           : 2315  (naik 0, harapan 0)
+  curl bawaan -> HTTP 200
+  UA kosong   -> HTTP 200
+  WhatsApp    -> HTTP 200
+setelah curl bawaan + UA kosong + WhatsApp: 2315  (naik 0, harapan 0)
+
+HASIL: LULUS

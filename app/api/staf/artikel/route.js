@@ -1,10 +1,16 @@
-// GET /api/staf/artikel — daftar artikel ruang staf (redaktur, penulis, superadmin, pimpinan_wilayah).
-// Pembatasan: penulis = miliknya; pimpinan_wilayah = wilayahnya — keduanya di SQL (lib/db/artikel.js).
-// POST (buat artikel) dibuat di Tahap 5.
+// /api/staf/artikel
+//   GET  — daftar artikel ruang staf (redaktur, penulis, superadmin, pimpinan_wilayah).
+//          Pembatasan: penulis = miliknya; pimpinan_wilayah = wilayahnya — keduanya di SQL.
+//   POST — buat artikel (penulis, redaktur, superadmin), status awal DRAF. Kategori wajib (aturan 7),
+//          isi disanitasi di server (lib/validasi/artikel.js -> lib/sanitasi.js), slug otomatis unik,
+//          audit_log 'artikel_buat'.
 import { NextResponse } from 'next/server';
-import { denganPeran } from '@/lib/auth/penjaga';
+import { denganPeran, GalatHttp, bacaJson } from '@/lib/auth/penjaga';
 import { HAK, wilayahTerbatas } from '@/lib/auth/hakAkses';
-import { ambilArtikelStaf } from '@/lib/db/artikel';
+import { ambilArtikelStaf, buatArtikel, ambilArtikelById } from '@/lib/db/artikel';
+import { validasiMuatanArtikel, GalatValidasi } from '@/lib/validasi/artikel';
+import { catatAudit } from '@/lib/db/audit';
+import { alamatIpPermintaan } from '@/lib/auth/sesi';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,4 +29,20 @@ export const GET = denganPeran(HAK.artikel_lihat, async (request, _konteks, peng
     perHalaman: sp.get('perHalaman'),
   });
   return NextResponse.json(hasil, { headers: { 'cache-control': 'no-store' } });
+});
+
+export const POST = denganPeran(HAK.artikel_buat, async (request, _konteks, pengguna) => {
+  const body = await bacaJson(request);
+  let muatan;
+  try {
+    muatan = validasiMuatanArtikel(body);
+  } catch (galat) {
+    if (galat instanceof GalatValidasi) throw new GalatHttp(galat.status, galat.message, galat.kode);
+    throw galat;
+  }
+  const id = await buatArtikel({ ...muatan, penulisId: pengguna.id });
+  await catatAudit({ userId: pengguna.id, aksi: 'artikel_buat', tabelTerkait: 'artikel', idTerkait: id,
+    detail: { judul: muatan.judul, kategoriId: muatan.kategoriId }, ip: await alamatIpPermintaan(request) });
+  const artikel = await ambilArtikelById(id);
+  return NextResponse.json({ artikel }, { status: 201, headers: { 'cache-control': 'no-store' } });
 });

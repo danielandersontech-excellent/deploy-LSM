@@ -1,0 +1,80 @@
+== login penulis (id 2, Budi Santoso)
+{"pengguna":{"id":2,"nama":"Budi Santoso","email":"<disembunyikan>","peran":"penulis","wilayah_id":null},"tujuan":"/staf/dashboard"}
+== penulis GET /staf/artikel
+ HTTP 200
+ baris: 5
+    Indikasi Penyelewengan Dana Desa Mekarsari | Budi Santoso | Published | Preview→/berita/indikasi-penyelewengan-dana-desa-mekarsari Edit→/staf/artikel/47
+    Membongkar Tabir Ketidakadilan: Laporan Khusus Dari Garis Depan | Budi Santoso | Published | Preview→/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan Edit→/staf/artikel/43
+    Evaluasi Proyek Jalan Trans-Sumatera Sektor Selatan | Budi Santoso | Published | Preview→/berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan Edit→/staf/artikel/40
+    Dugaan Penyelewengan Dana Desa di Sektor Infrastruktur Terungkap | Budi Santoso | Published | Preview→/berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap Edit→/staf/artikel/38
+    Fasilitas Kesehatan Mangkrak di Daerah Pelosok | Budi Santoso | Published | Preview→/berita/fasilitas-kesehatan-mangkrak-di-daerah-pelosok Edit→/staf/artikel/39
+ kaki: Menampilkan 1-5 dari 5 artikel
+ paginasi: «  1  »
+ tombolBaru: true  KeadaanKosong: false  selectedStatus:   q: 
+== penulis GET /staf/artikel?status=draf
+ HTTP 200
+ baris: 0
+ kaki: 
+ paginasi: 
+ tombolBaru: true  KeadaanKosong: true  selectedStatus: draf  q: 
+== penulis GET /staf/artikel?q=Redaksi
+ HTTP 200
+ baris: 0
+ kaki: 
+ paginasi: 
+ tombolBaru: true  KeadaanKosong: true  selectedStatus:   q: Redaksi
+== login pimpinan_wilayah (id 6, wilayah_id 3)
+{"pengguna":{"id":6,"nama":"Rahmat Siregar","email":"<disembunyikan>","peran":"pimpinan_wilayah","wilayah_id":3},"tujuan":"/staf/dashboard"}
+== pimpinan_wilayah GET /staf/artikel
+ HTTP 200
+ baris: 0
+ kaki: 
+ paginasi: 
+ tombolBaru: false  KeadaanKosong: true  selectedStatus:   q: 
+== pimpinan_wilayah GET /staf/artikel?status=terbit
+ HTTP 200
+ baris: 0
+ kaki: 
+ paginasi: 
+ tombolBaru: false  KeadaanKosong: true  selectedStatus: terbit  q: 
+== tanpa cookie GET /staf/artikel
+ HTTP 307 Location=http://127.0.0.1:3000/login?lanjut=%2Fstaf%2Fartikel
+== penulis DELETE /api/staf/artikel/47 (harus 403)
+{"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"} HTTP 403
+== pimpinan_wilayah DELETE /api/staf/artikel/47 (harus 403)
+{"galat":"Peran Anda tidak berhak mengakses sumber daya ini","kode":"TIDAK_BERHAK"} HTTP 403
+== login pimpinan_wilayah (id 22, wilayah_id 13 — akun uji)
+{"pengguna":{"id":22,"nama":"Pimpinan Jawa Barat (uji)","email":"<disembunyikan>","peran":"pimpinan_wilayah","wilayah_id":13},"tujuan":"/staf/dashboard"}
+== pimpinan_wilayah(13) GET /staf/artikel
+ HTTP 200
+ baris: 3
+    Indikasi Penyelewengan Dana Desa Mekarsari | Budi Santoso | Published | Preview→/berita/indikasi-penyelewengan-dana-desa-mekarsari
+    Laporan Infrastruktur Jalan Rusak di Kab. Bandung | Siti Aminah | Draft | Preview→/staf/artikel/48
+    Rapat Dengar Pendapat Mengenai Kualitas Air Bersih Regional | Siti Rahma | Published | Preview→/berita/rapat-dengar-pendapat-mengenai-kualitas-air-bersih-regional
+ kaki: Menampilkan 1-3 dari 3 artikel
+ paginasi: «  1  »
+ tombolBaru: false  KeadaanKosong: false  selectedStatus:   q: 
+== pimpinan_wilayah(13) GET /staf/artikel?q=dana
+ HTTP 200
+ baris: 1
+    Indikasi Penyelewengan Dana Desa Mekarsari | Budi Santoso | Published | Preview→/berita/indikasi-penyelewengan-dana-desa-mekarsari
+ kaki: Menampilkan 1-1 dari 1 artikel
+ paginasi: «  1  »
+ tombolBaru: false  KeadaanKosong: false  selectedStatus:   q: dana
+== pembanding DB: artikel wilayah_id=13
+[{"id":47,"judul":"Indikasi Penyelewengan Dana Desa Mekarsari","status":"terbit"},{"id":48,"judul":"Laporan Infrastruktur Jalan Rusak di Kab. Bandung","status":"draf"},{"id":41,"judul":"Rapat Dengar Pendapat Mengenai Kualitas Air Bersih Regional","status":"terbit"}]
+== alur hapus (API yang dipanggil AksiArtikel): superadmin POST artikel uji lalu DELETE
+ id artikel uji: 52
+ sebelum hapus:
+ baris: 1
+    Artikel Uji Hapus Kelola | Superadmin | Draft | Preview→/staf/artikel/52 Edit→/staf/artikel/52 Delete
+ kaki: Menampilkan 1-1 dari 1 artikel
+ paginasi: «  1  »
+ tombolBaru: true  KeadaanKosong: false  selectedStatus:   q: Uji Hapus
+{"dihapus":true,"id":52} HTTP 200
+ sesudah hapus:
+ baris: 0
+ kaki: 
+ paginasi: 
+ tombolBaru: true  KeadaanKosong: true  selectedStatus:   q: Uji Hapus
+{"galat":"Artikel tidak ditemukan","kode":"TIDAK_DITEMUKAN"} HTTP 404

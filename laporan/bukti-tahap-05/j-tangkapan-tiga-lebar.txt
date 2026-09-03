@@ -1,0 +1,7 @@
+laporan/bukti-tahap-05/tangkapan/berita-375.png 263972 B
+laporan/bukti-tahap-05/tangkapan/berita-768.png 396009 B
+laporan/bukti-tahap-05/tangkapan/berita-1280.png 559688 B
+laporan/bukti-tahap-05/tangkapan/detail-375.png 279273 B
+laporan/bukti-tahap-05/tangkapan/detail-768.png 366420 B
+laporan/bukti-tahap-05/tangkapan/detail-1280.png 401989 B
+(halaman staf: tidak ada tangkapan — Chrome headless tanpa otomasi tidak bisa membawa cookie login; bukti = HTML render + uji kesetiaan)

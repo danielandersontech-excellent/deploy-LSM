@@ -1,0 +1,32 @@
+== superadmin GET /staf/artikel
+ HTTP 200
+ baris: 10
+    Indikasi Penyelewengan Dana Desa Mekarsari | Budi Santoso | Published | Preview→/berita/indikasi-penyelewengan-dana-desa-mekarsari Edit→/staf/artikel/47 Delete
+    Audit Dana Desa Kuartal III: Temuan Awal | Siti Rahma | Arsip | Preview→/staf/artikel/44 Edit→/staf/artikel/44 Delete
+    Laporan Infrastruktur Jalan Rusak di Kab. Bandung | Siti Aminah | Draft | Preview→/staf/artikel/48 Edit→/staf/artikel/48 Delete
+    Membongkar Tabir Ketidakadilan: Laporan Khusus Dari Garis Depan | Budi Santoso | Published | Preview→/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan Edit→/staf/artikel/43 Delete
+    Evaluasi Proyek Jalan Trans-Sumatera Sektor Selatan | Budi Santoso | Published | Preview→/berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan Edit→/staf/artikel/40 Delete
+    Dugaan Penyelewengan Dana Desa di Sektor Infrastruktur Terungkap | Budi Santoso | Published | Preview→/berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap Edit→/staf/artikel/38 Delete
+    Rapat Dengar Pendapat Mengenai Kualitas Air Bersih Regional | Siti Rahma | Published | Preview→/berita/rapat-dengar-pendapat-mengenai-kualitas-air-bersih-regional Edit→/staf/artikel/41 Delete
+    Fasilitas Kesehatan Mangkrak di Daerah Pelosok | Budi Santoso | Published | Preview→/berita/fasilitas-kesehatan-mangkrak-di-daerah-pelosok Edit→/staf/artikel/39 Delete
+    Analisis Dokumen AMDAL Kawasan Industri Baru | Redaksi Warkop | Draft | Preview→/staf/artikel/42 Edit→/staf/artikel/42 Delete
+    Opini: Transparansi Anggaran Pendidikan 2025 | Redaksi Warkop | Published | Preview→/berita/opini-transparansi-anggaran-pendidikan-2025 Edit→/staf/artikel/49 Delete
+ kaki: Menampilkan 1-10 dari 12 artikel
+ paginasi: «  1  2→/staf/artikel?halaman=2  »→/staf/artikel?halaman=2
+ tombolBaru: true  KeadaanKosong: false  selectedStatus:   q: 
+== superadmin GET /staf/artikel?q=dana&status=terbit
+ HTTP 200
+ baris: 2
+    Indikasi Penyelewengan Dana Desa Mekarsari | Budi Santoso | Published | Preview→/berita/indikasi-penyelewengan-dana-desa-mekarsari Edit→/staf/artikel/47 Delete
+    Dugaan Penyelewengan Dana Desa di Sektor Infrastruktur Terungkap | Budi Santoso | Published | Preview→/berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap Edit→/staf/artikel/38 Delete
+ kaki: Menampilkan 1-2 dari 2 artikel
+ paginasi: «  1  »
+ tombolBaru: true  KeadaanKosong: false  selectedStatus: terbit  q: dana
+== superadmin GET /staf/artikel?halaman=2
+ HTTP 200
+ baris: 2
+    Pentingnya Pengawasan Sipil Dalam Demokrasi | Redaksi Warkop | Published | Preview→/berita/pentingnya-pengawasan-sipil-dalam-demokrasi Edit→/staf/artikel/46 Delete
+    Cara Aman Menyampaikan Laporan Pengaduan | Redaksi Warkop | Published | Preview→/berita/cara-aman-menyampaikan-laporan-pengaduan Edit→/staf/artikel/45 Delete
+ kaki: Menampilkan 11-12 dari 12 artikel
+ paginasi: «→/staf/artikel  1→/staf/artikel  2  »
+ tombolBaru: true  KeadaanKosong: false  selectedStatus:   q: 
