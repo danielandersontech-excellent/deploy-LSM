@@ -1,0 +1,5 @@
+# container lama (595e48f): 551120449c92  mulai tangkap 2026-09-04T22:51:15Z
+[warkop] SIGTERM diterima: menutup peladen, menunggu permintaan berjalan selesai (maks 20 s)
+[warkop] pool basis data ditutup
+[warkop] peladen ditutup rapi
+# aliran log berakhir 2026-09-04T22:54:07Z (container lama dihapus Coolify)

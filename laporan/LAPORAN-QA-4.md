@@ -2,7 +2,7 @@
 
 Mode: OTONOM. Perintah: "SITUS BERITA-DULU + BILAH KATEGORI + HEADER SELULER + PERBURUAN BUG TOTAL".
 Mulai 5 September 2026 sekitar 04:35 WIB, selesai 5 September 2026 (jam penutupan di STATUS.md).
-Produksi akhir: image `__IMAGE_AKHIR__` (HEALTHY) di https://warkopnusantara.id dan https://staf.warkopnusantara.id.
+Produksi akhir: image `010e303` (HEALTHY, redeploy penutup 05:53 WIB; kode aplikasi terakhir berubah pada `595e48f`, commit sesudahnya hanya laporan) di https://warkopnusantara.id dan https://staf.warkopnusantara.id.
 Semua bukti ada di `laporan/bukti-qa-4/` (skrip di `skrip/`, tangkapan di `tangkapan/`), redeploy di `laporan/bukti-server/21-*` (A-D), `22-*` (F/G) dan `23-*` (penutup).
 
 ## 1. Ringkasan
@@ -197,7 +197,10 @@ Layar lain identik dengan dasar QA-3. Layar 14 (kelola pengaduan 63%) tetap peny
   pada pengaduan (pagar peran) -> dihapus lunak (SELECT dulu, lacak 404), K2 0 dash di halaman + 0 di DB produksi (8 tabel),
   container `595e48f` healthy restart 0; satu-satunya baris "error" di log app 24 jam adalah ringkasan `clientError kode=EPIPE`
   yang memang dijaga server.js (klien memutus sambungan), bukan galat aplikasi.
-- Redeploy penutup (`bukti-server/23-redeploy-qa4-penutup.txt`): __POOL_PROD__.
+- Redeploy penutup (`bukti-server/23-redeploy-qa4-penutup.txt`, `23-log-container-lama-sigterm.txt`): image `010e303` HEALTHY;
+  log container lama (595e48f, kode dengan perbaikan F5-3) saat dimatikan Coolify: "SIGTERM diterima" -> "**pool basis data
+  ditutup**" -> "peladen ditutup rapi"; log MariaDB sejak 22:53Z (menit penghentian 22:54Z): **0** "Aborted connection"
+  (bandingkan 9 baris pada redeploy 22:43Z ketika container lama masih memakai kode lama). Temuan F4 terbukti selesai di produksi.
 
 ## 11. Yang TIDAK diuji atau perlu perhatian (jujur)
 

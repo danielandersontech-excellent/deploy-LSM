@@ -28,3 +28,7 @@ dimatikan), tetapi log DB kotor dan menyulitkan menemukan masalah sungguhan.
 Efeknya hanya terlihat pada redeploy SETELAH kode ini tayang (container lama yang dimatikan harus sudah
 memuat kode baru). Diverifikasi pada redeploy penutup RUN QA-4: log container lama harus memuat
 "[warkop] pool basis data ditutup" dan log MariaDB pada menit itu tidak boleh memuat "Aborted connection".
+
+## HASIL verifikasi (redeploy penutup 010e303, 2026-09-04T22:54Z)
+Log container lama 595e48f (bukti-server/23-log-container-lama-sigterm.txt): "SIGTERM diterima" -> "pool basis data ditutup" -> "peladen ditutup rapi".
+Log MariaDB sejak 22:53Z: 0 baris "Aborted connection" (redeploy sebelumnya pukul 22:43Z, container lama masih kode lama: 9 baris). TERBUKTI.

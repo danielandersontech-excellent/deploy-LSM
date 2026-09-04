@@ -1,0 +1,9 @@
+# Redeploy produksi QA-4 penutup (laporan; bukti tutupPool) (commit 010e303) — 2026-09-04T22:51:23Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"au2o2a9xgoc678nbp94sjp1y"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[22:53:30Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:010e3039df04eb61927227d439c05df757cddd50 Up 7 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:595e48fe5d4981c349ed53039c3a35eef38189c9 Up 11 minutes (healthy) 
+HASIL: image 010e303 HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-05T05:53:35+07:00","basisData":"terhubung","versi":"0.1.0"}
