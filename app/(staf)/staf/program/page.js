@@ -14,7 +14,8 @@ import { ambilPenggunaSesi } from '@/lib/auth/sesi';
 import { HAK } from '@/lib/auth/hakAkses';
 import { ambilProgram } from '@/lib/db/program';
 import { ambilProvinsi } from '@/lib/db/wilayah';
-import { KATEGORI_PROGRAM, STATUS_PROGRAM } from '@/lib/kategoriProgram';
+import { STATUS_PROGRAM } from '@/lib/kategoriProgram';
+import { ambilKategoriProgram } from '@/lib/db/kategoriProgram';
 import KelolaProgram from '@/components/staf/KelolaProgram';
 
 export const metadata = {
@@ -44,7 +45,7 @@ export default async function HalamanKelolaProgram() {
   if (!pengguna) redirect('/login?lanjut=%2Fstaf%2Fprogram');
   if (!HAK.konten_lihat.includes(pengguna.peran)) redirect('/tanpa-akses');
 
-  const [{ baris, total }, provinsi] = await Promise.all([ambilProgram({ perHalaman: 50 }), ambilProvinsi()]);
+  const [{ baris, total }, provinsi, kategoriProgram] = await Promise.all([ambilProgram({ perHalaman: 50 }), ambilProvinsi(), ambilKategoriProgram()]);
 
   // Hanya kolom yang dibutuhkan klien; tanggal diseragamkan menjadi "YYYY-MM-DD" (serialisasi ke client component).
   const program = baris.map((p) => ({
@@ -67,7 +68,7 @@ export default async function HalamanKelolaProgram() {
       program={program}
       total={total}
       provinsi={provinsi.map((w) => ({ id: w.id, nama: w.nama }))}
-      kategori={KATEGORI_PROGRAM.map((k) => ({ slug: k.slug, label: k.label }))}
+      kategori={kategoriProgram.map((k) => ({ slug: k.slug, label: k.nama }))}
       daftarStatus={STATUS_PROGRAM.map((s) => ({ slug: s.slug, label: s.label }))}
       bolehKelola={HAK.konten_kelola.includes(pengguna.peran)}
       dasarUrlPublik={(process.env.NEXT_PUBLIC_APP_URL || '').replace(/\/$/, '')}

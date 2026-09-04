@@ -56,7 +56,7 @@ const KELAS_TOMBOL_SIMPAN = 'px-6 py-2 rounded-lg bg-primary text-on-primary fon
 const KELAS_TOMBOL_BATAL = 'px-6 py-2 rounded-lg border border-outline font-label-md text-label-md text-primary hover:bg-surface-container transition-colors';
 
 const FORMULIR_KOSONG = Object.freeze({
-  judul: '', ringkasan: '', isi: '', gambar: null, kategori: '', status: 'berjalan', wilayah_id: '', mulai_pada: '', selesai_pada: '',
+  judul: '', ringkasan: '', isi: '', gambar: null, kategori: '', kategori_baru: '', status: 'berjalan', wilayah_id: '', mulai_pada: '', selesai_pada: '',
 });
 
 function formulirDari(p) {
@@ -67,6 +67,7 @@ function formulirDari(p) {
     isi: p.isi ?? '',
     gambar: p.gambar ?? null,
     kategori: p.kategori ?? '',
+    kategori_baru: '',
     status: p.status ?? 'berjalan',
     wilayah_id: p.wilayah_id ? String(p.wilayah_id) : '',
     mulai_pada: p.mulai_pada ?? '',
@@ -90,6 +91,10 @@ function periode(mulai, selesai) {
   const akhir = selesai ? formatTanggalID(selesai) : 'Sekarang';
   return `${awal} s.d. ${akhir}`;
 }
+
+// QA-3 F: nilai penanda pada <select> kategori yang memunculkan kolom "Nama Kategori Baru".
+// Sengaja bukan slug yang mungkin dipakai (tanda __) supaya tidak bisa bentrok dengan kategori sungguhan.
+const KATEGORI_LAINNYA = '__lainnya__';
 
 export default function KelolaProgram({ program = [], total = 0, provinsi = [], kategori = [], daftarStatus = [], bolehKelola = false, dasarUrlPublik = '' }) {
   const router = useRouter();
@@ -162,7 +167,8 @@ export default function KelolaProgram({ program = [], total = 0, provinsi = [], 
       ringkasan: formulir.ringkasan.trim() || null,
       isi: formulir.isi.trim() || null,
       gambar: formulir.gambar || null,
-      kategori: formulir.kategori,
+      kategori: formulir.kategori === KATEGORI_LAINNYA ? '' : formulir.kategori,
+      kategori_baru: formulir.kategori === KATEGORI_LAINNYA ? formulir.kategori_baru.trim() : '',
       status: formulir.status,
       wilayah_id: formulir.wilayah_id ? Number(formulir.wilayah_id) : null,
       mulai_pada: formulir.mulai_pada || null,
@@ -266,14 +272,38 @@ export default function KelolaProgram({ program = [], total = 0, provinsi = [], 
               <div className="flex p-4 gap-4 bg-surface-container-lowest">
                 <div className="flex-1 relative">
                   <label className={KELAS_LABEL_MENGAMBANG} htmlFor="program-kategori">Kategori</label>
+                  {/* QA-3 F: daftar kategori dinamis + pilihan "Kategori Lainnya..." yang memunculkan kolom isian.
+                      Kategori baru dibuat server (nama wajar, tanpa duplikat, slug otomatis) lalu langsung muncul
+                      di filter publik /program dan di ruang staf. */}
                   <select className={KELAS_SELECT} id="program-kategori" name="kategori" value={formulir.kategori} onChange={ubahBidang('kategori')} disabled={memuat} required>
                     <option disabled value="">Pilih Kategori</option>
                     {kategori.map((k) => (
                       <option key={k.slug} value={k.slug}>{k.label}</option>
                     ))}
+                    <option value={KATEGORI_LAINNYA}>Kategori Lainnya...</option>
                   </select>
                   <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
                 </div>
+                {formulir.kategori === KATEGORI_LAINNYA ? (
+                  <div className="flex-1 relative">
+                    <label className={KELAS_LABEL_MENGAMBANG} htmlFor="program-kategori-baru">Nama Kategori Baru</label>
+                    <input
+                      className={KELAS_BIDANG}
+                      id="program-kategori-baru"
+                      name="kategori_baru"
+                      type="text"
+                      placeholder="Mis. Pendidikan Warga"
+                      value={formulir.kategori_baru}
+                      onChange={ubahBidang('kategori_baru')}
+                      minLength={3}
+                      maxLength={60}
+                      required
+                      disabled={memuat}
+                      aria-describedby="program-kategori-baru-ket"
+                    />
+                    <p id="program-kategori-baru-ket" className="font-body-md text-[12px] text-outline mt-1">Kategori baru langsung dapat dipakai program lain dan muncul di filter halaman Program.</p>
+                  </div>
+                ) : null}
                 <div className="flex-1 relative">
                   <label className={KELAS_LABEL_MENGAMBANG} htmlFor="program-wilayah">Wilayah</label>
                   <select className={KELAS_SELECT} id="program-wilayah" name="wilayah_id" value={formulir.wilayah_id} onChange={ubahBidang('wilayah_id')} disabled={memuat}>

@@ -4,6 +4,7 @@ import { denganPeran, GalatHttp, bacaJson } from '@/lib/auth/penjaga';
 import { HAK } from '@/lib/auth/hakAkses';
 import { ambilProgramById, perbaruiProgram, hapusProgram } from '@/lib/db/program';
 import { validasiProgram, GalatValidasiKonten } from '@/lib/validasi/konten';
+import { tentukanKategoriProgram } from '@/lib/validasi/kategoriProgram';
 import { catatAudit } from '@/lib/db/audit';
 import { alamatIpPermintaan } from '@/lib/auth/sesi';
 
@@ -29,9 +30,11 @@ export const PATCH = denganPeran(HAK.konten_kelola, async (request, { params }, 
   const body = await bacaJson(request);
   let m;
   try { m = validasiProgram({ ...lama, wilayah_id: lama.wilayah_id, mulai_pada: lama.mulai_pada, selesai_pada: lama.selesai_pada, ...body }); } catch (g) { if (g instanceof GalatValidasiKonten) throw new GalatHttp(g.status, g.message, g.kode); throw g; }
+  const kat = await tentukanKategoriProgram(body, m.kategori);
+  m.kategori = kat.slug;
   await perbaruiProgram(id, m);
-  await catatAudit({ userId: pengguna.id, aksi: 'program_ubah', tabelTerkait: 'program', idTerkait: id, detail: { judul: m.judul }, ip: await alamatIpPermintaan(request) });
-  return NextResponse.json({ program: await ambilProgramById(id) }, { headers: { 'cache-control': 'no-store' } });
+  await catatAudit({ userId: pengguna.id, aksi: 'program_ubah', tabelTerkait: 'program', idTerkait: id, detail: { judul: m.judul, kategori: kat.slug, kategoriBaru: kat.baru }, ip: await alamatIpPermintaan(request) });
+  return NextResponse.json({ program: await ambilProgramById(id), kategori: kat }, { headers: { 'cache-control': 'no-store' } });
 });
 
 export const DELETE = denganPeran(HAK.konten_kelola, async (request, { params }, pengguna) => {

@@ -4,7 +4,7 @@
 //   (a) span material-symbols -> <Ikon>, (b) img googleusercontent -> next/image lokal,
 //   (c) href="#" -> rute lib/navItems.js, (f) sintaks JSX.
 // Aturan turunan 18.3: tautan aktif = kelas "Kontak & Pengaduan"; tautan lain = kelas "Beranda";
-// kotak cari = <form action="/berita" method="get" name="q">; "Masuk Staff" = <a> ke STAF_HOST.
+// kotak cari = <form action="/berita" method="get" name="q">. Tombol "Masuk Staff" dihapus (QA-3 C).
 // KEPUTUSAN BARU (diwajibkan 18.3): tombol hamburger di bawah md membuka laci bg-primary
 // berisi menu yang sama, ditumpuk vertikal, gap-4, tanpa animasi.
 import { useId, useState } from 'react';
@@ -21,7 +21,7 @@ function tautanAktif(pathname, href) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export default function NavPublik({ menu, hrefStaf }) {
+export default function NavPublik({ menu }) {
   const pathname = usePathname() || '/';
   const [laciTerbuka, setLaciTerbuka] = useState(false);
   const [jalurTerakhir, setJalurTerakhir] = useState(pathname);
@@ -61,21 +61,20 @@ export default function NavPublik({ menu, hrefStaf }) {
         {/* flex-wrap justify-center (kelas nav di layar tentang/struktur/program ZIP) — Tahap 6: tanpa itu navbar
             meluap mendatar pada 768–1024 px (merek + 7 tautan + tombol > lebar); nowrap merek hanya lg+. */}
         {/* QA-1: kelas nav desain (tanpa flex-wrap) — item menyusut & membungkus teksnya sendiri seperti desain ("Tentang Kami", "Kontak & Pengaduan" dua baris) sehingga menu tetap satu baris */}
-        {/* QA-2 B1 (KEPUTUSAN PEMILIK): desain membuat "Berita" menyentuh kotak cari di 1280 px. Jarak item gap-4 (xl: gap-6),
-            teks item satu baris mulai lg, merek satu baris mulai lg, kotak cari w-40 (xl: w-48) -> 7 menu + cari + Masuk Staff rapi 1280-1920. */}
-        <nav className="hidden md:flex items-center gap-4 2xl:gap-6 mt-4 md:mt-0" aria-label="Navigasi utama">
+        {/* QA-2 B1 (KEPUTUSAN PEMILIK): desain membuat "Berita" menyentuh kotak cari di 1280 px.
+            QA-3 C (KEPUTUSAN PEMILIK, menyimpang dari desain): tombol "Masuk Staff" DIHAPUS dari seluruh situs
+            publik (navbar dan laci seluler). Halaman masuk tetap berfungsi lewat URL langsung ke host staf,
+            tetapi tidak lagi diiklankan kepada pengunjung. Ruang yang kosong dipakai untuk melegakan menu:
+            jarak antaritem gap-5 (2xl: gap-8) dan kotak cari w-48 (2xl: w-64). */}
+        <nav className="hidden md:flex items-center gap-5 2xl:gap-8 mt-4 md:mt-0" aria-label="Navigasi utama">
           {daftarTautan()}
         </nav>
         <div className="flex items-center gap-4">
           <form className="relative hidden lg:block" action="/berita" method="get" role="search">
             <Ikon nama="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" />
             <label className="sr-only" htmlFor={`${idLaci}-cari`}>Cari berita</label>
-            <input id={`${idLaci}-cari`} name="q" className="pl-9 pr-3 py-1.5 rounded-full bg-surface text-on-surface text-sm border border-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary w-40 2xl:w-48 transition-all" placeholder="Cari..." type="text" />
+            <input id={`${idLaci}-cari`} name="q" className="pl-9 pr-3 py-1.5 rounded-full bg-surface text-on-surface text-sm border border-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary w-48 2xl:w-64 transition-all" placeholder="Cari..." type="text" />
           </form>
-          <a className="hidden md:flex items-center gap-2 bg-secondary text-on-secondary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors" href={hrefStaf}>
-            Masuk Staff
-            <Ikon nama="login" />
-          </a>
           {/* Hamburger (KEPUTUSAN BARU 18.3) — hanya di bawah md */}
           <button
             type="button"
@@ -98,10 +97,6 @@ export default function NavPublik({ menu, hrefStaf }) {
         aria-label="Navigasi utama (seluler)"
       >
         {daftarTautan()}
-        <a className="flex items-center gap-2 bg-secondary text-on-secondary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors self-start" href={hrefStaf}>
-          Masuk Staff
-          <Ikon nama="login" />
-        </a>
       </nav>
       ) : null}
     </header>

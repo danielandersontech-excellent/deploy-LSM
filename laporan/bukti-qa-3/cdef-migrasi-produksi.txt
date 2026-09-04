@@ -1,0 +1,23 @@
+# QA-3 D2/E/F — migrasi PRODUKSI (SELECT dulu) — 2026-09-04T12:24:29Z
+## SELECT sebelum
+kategori
+bantuan-hukum
+observasi-kebijakan
+pengawasan-dana
+
+## jalankan 20260905-1000-pengaturan-sosial-peta.sql
+## jalankan 20260905-1030-kategori-program.sql
+
+## SELECT sesudah
+kunci	nilai
+kontak_peta_url	https://www.google.com/maps/dir/?api=1&destination=0.504192,
+sosial_facebook	
+sosial_instagram	
+sosial_tiktok	https://www.tiktok.com/@warkop.nusantara_media
+sosial_youtube	
+id	nama	slug	ikon	urutan
+1	Pengawasan Dana	pengawasan-dana	account_balance	1
+2	Observasi Kebijakan	observasi-kebijakan	policy	2
+3	Bantuan Hukum	bantuan-hukum	gavel	3
+program_tanpa_kategori_terdaftar
+0

@@ -100,6 +100,11 @@ INSERT IGNORE INTO pengaturan (kunci, nilai, deskripsi, diperbarui_pada) VALUES
   ('statistik_tahun_mengawasi',   '15',    'Angka "15 Tahun Mengawasi" di beranda',        '2026-06-01 09:00:00'),
   ('kontak_email',         'pengaduan@warkopnusantara.id',     'Email pengaduan di footer dan halaman kontak', '2026-06-01 09:00:00'),
   ('kontak_hotline',       '0800-1-WARKOP (927567)',           'Hotline 24/7 di halaman kontak dan footer',   '2026-06-01 09:00:00'),
+  ('kontak_peta_url',  'https://www.google.com/maps/dir/?api=1&destination=0.504192,101.427052', 'Tautan petunjuk arah ke kantor pusat (footer, tab baru)', '2026-06-01 09:00:00'),
+  ('sosial_tiktok',    'https://www.tiktok.com/@warkop.nusantara_media', 'Akun TikTok resmi', '2026-06-01 09:00:00'),
+  ('sosial_instagram', '', 'Akun Instagram resmi (kosong = tidak ditampilkan)', '2026-06-01 09:00:00'),
+  ('sosial_youtube',   '', 'Kanal YouTube resmi (kosong = tidak ditampilkan)', '2026-06-01 09:00:00'),
+  ('sosial_facebook',  '', 'Halaman Facebook resmi (kosong = tidak ditampilkan)', '2026-06-01 09:00:00'),
   ('kontak_alamat_gedung', 'Komplek Perkantoran CNN',           'Baris pertama alamat kantor pusat',           '2026-06-01 09:00:00'),
   ('kontak_alamat_jalan',  'Jl. Tuanku Tambusai No. B 15, Labuh Baru Tim., Payung Sekaki', 'Baris kedua alamat kantor pusat',           '2026-06-01 09:00:00'),
   ('kontak_alamat_kota',   'Kota Pekanbaru, Riau 28123',               'Baris ketiga alamat kantor pusat',            '2026-06-01 09:00:00'),
@@ -322,6 +327,14 @@ INSERT IGNORE INTO pengurus (id, nama, jabatan, tingkat, kelompok, bagian, wilay
   (25, 'Kanisius',                      'Kepala Satgas (Kasatgas)', 'pusat', 'satgas', NULL, NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 6, 1),
   -- MENUNGGU PENEMPATAN ULANG OLEH PEMILIK (dinonaktifkan oleh migrasi 20260905-0900)
   (14, 'Andreas Reynaldho, S.H., M.H.', 'Sekjen DPP Warkop Nusantara', 'pusat', NULL, NULL, NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 3, 0);
+
+-- ---------------------------------------------------------------------
+-- KATEGORI PROGRAM — QA-3 F (dinamis; pemilik bisa menambah lewat Kelola Program)
+-- ---------------------------------------------------------------------
+INSERT IGNORE INTO kategori_program (nama, slug, ikon, urutan) VALUES
+  ('Pengawasan Dana',     'pengawasan-dana',     'account_balance', 1),
+  ('Observasi Kebijakan', 'observasi-kebijakan', 'policy',          2),
+  ('Bantuan Hukum',       'bantuan-hukum',       'gavel',           3);
 
 -- ---------------------------------------------------------------------
 -- PROGRAM — 3 (satu per kategori), dari program_kegiatan/code.html

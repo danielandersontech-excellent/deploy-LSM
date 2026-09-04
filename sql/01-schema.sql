@@ -230,6 +230,22 @@ CREATE TABLE IF NOT EXISTS pengurus (
 -- ---------------------------------------------------------------------
 -- program — kategori = slug dari lib/kategoriProgram.js
 -- ---------------------------------------------------------------------
+-- kategori_program — QA-3 F: daftar kategori program yang DINAMIS (bisa ditambah
+-- pemilik lewat ruang staf). program.kategori tetap menyimpan SLUG (bukan foreign key)
+-- agar baris program lama dan tautan filter /program?kategori=<slug> tidak berubah.
+-- Instalasi lama: database/migrations/20260905-1030-kategori-program.sql
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS kategori_program (
+  id      INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nama    VARCHAR(80) NOT NULL,
+  slug    VARCHAR(50) NOT NULL,
+  ikon    VARCHAR(40) NOT NULL DEFAULT 'explore',
+  urutan  INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_kategori_program_slug (slug)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS program (
   id            INT UNSIGNED NOT NULL AUTO_INCREMENT,
   judul         VARCHAR(255) NOT NULL,

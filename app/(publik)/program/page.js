@@ -16,7 +16,8 @@ import Ikon from '@/components/ui/Ikon';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
 import { KELAS_TOMBOL } from '@/components/ui/Tombol';
 import { ambilProgram } from '@/lib/db/program';
-import { KATEGORI_PROGRAM, SLUG_KATEGORI_PROGRAM, STATUS_PROGRAM, labelKategoriProgram } from '@/lib/kategoriProgram';
+import { STATUS_PROGRAM } from '@/lib/kategoriProgram';
+import { ambilKategoriProgram } from '@/lib/db/kategoriProgram';
 import { formatTanggalID } from '@/lib/utils';
 
 export const metadata = {
@@ -60,8 +61,8 @@ function periodeProgram(mulai, selesai) {
   return awal.slice(-4) === akhir.slice(-4) ? `${awal.slice(0, 3)} - ${akhir}` : `${awal} - ${akhir}`;
 }
 
-function ikonKategoriProgram(slug) {
-  return KATEGORI_PROGRAM.find((k) => k.slug === slug)?.ikon ?? 'explore';
+function ikonKategoriProgram(daftarKategori, slug) {
+  return daftarKategori.find((k) => k.slug === slug)?.ikon ?? 'explore';
 }
 
 /** Nomor halaman paginasi: semua bila ≤ 7; selain itu 1, tetangga aktif, terakhir (null = elipsis). */
@@ -84,7 +85,11 @@ export default async function HalamanProgram({ searchParams }) {
   const urutMentah = satuNilai(sp?.urut);
   const halamanMentah = Number.parseInt(satuNilai(sp?.halaman), 10);
 
-  const kategori = SLUG_KATEGORI_PROGRAM.includes(kategoriMentah) ? kategoriMentah : '';
+  // QA-3 F: daftar kategori kini dari basis data (tabel kategori_program), bukan konstanta.
+  const daftarKategori = await ambilKategoriProgram();
+  const slugKategoriSah = daftarKategori.map((k) => k.slug);
+  const labelKategoriProgram = (slug) => daftarKategori.find((k) => k.slug === slug)?.nama ?? slug;
+  const kategori = slugKategoriSah.includes(kategoriMentah) ? kategoriMentah : '';
   const status = STATUS_SAH.includes(statusMentah) ? statusMentah : '';
   const urut = URUT_SAH.includes(urutMentah) ? urutMentah : '';
   const halamanDiminta = Number.isInteger(halamanMentah) && halamanMentah >= 1 ? halamanMentah : 1;
@@ -122,7 +127,7 @@ export default async function HalamanProgram({ searchParams }) {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-outline-variant pb-6">
           {/* Chip kategori: tombol desain -> <Link> ?kategori= (bekerja tanpa JavaScript); chip aktif memakai kelas tombol pertama */}
           <nav className="flex flex-wrap gap-2" aria-label="Filter kategori program">
-            {[{ slug: '', label: 'Semua Kategori' }, ...KATEGORI_PROGRAM].map((k) =>
+            {[{ slug: '', label: 'Semua Kategori' }, ...daftarKategori.map((k) => ({ slug: k.slug, label: k.nama }))].map((k) =>
               k.slug === kategori ? (
                 <Link scroll={false} key={k.slug || 'semua'} className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full pressed-paper-shadow transition-transform hover:scale-105" href={buatHref({ ...filterAktif, kategori: k.slug })} aria-current="true">{k.label}</Link>
               ) : (
@@ -186,7 +191,7 @@ export default async function HalamanProgram({ searchParams }) {
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <div className="flex items-center gap-2 mb-3 text-on-surface-variant font-label-md text-label-md">
-                      <Ikon nama={ikonKategoriProgram(p.kategori)} className="text-[18px]" />
+                      <Ikon nama={ikonKategoriProgram(daftarKategori, p.kategori)} className="text-[18px]" />
                       <span className="">{labelKategoriProgram(p.kategori)}</span>
                       <span className="mx-1">•</span>
                       <span className="">{periodeProgram(p.mulai_pada, p.selesai_pada)}</span>

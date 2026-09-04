@@ -40,6 +40,7 @@ const KELOMPOK = Object.freeze({
   statistik: { judul: 'Statistik Beranda', ikon: 'trending_up' },
   kontak: { judul: 'Kontak', ikon: 'contact_phone' },
   profil: { judul: 'Teks Organisasi', ikon: 'account_balance' },
+  sosial: { judul: 'Media Sosial', ikon: 'campaign' },
   halaman_statis: { judul: 'Halaman Teks Statis', ikon: 'article' },
 });
 
@@ -138,7 +139,7 @@ export default function FormulirPengaturan({ nilaiAwal = {}, definisi = [] }) {
                             ) : d.tipe === 'angka' ? (
                               <input {...umum} type="number" inputMode="numeric" min={0} step={1} />
                             ) : (
-                              <input {...umum} type={d.kunci === 'kontak_email' ? 'email' : 'text'} />
+                              <input {...umum} type={d.tipe === 'url' ? 'url' : d.kunci === 'kontak_email' ? 'email' : 'text'} placeholder={d.tipe === 'url' ? 'https://...' : undefined} />
                             )}
                           </div>
                           {d.deskripsi ? <p id={idKet} className="font-body-md text-[14px] text-outline mt-2">{d.deskripsi}</p> : null}

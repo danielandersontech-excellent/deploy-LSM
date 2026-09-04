@@ -1,0 +1,11 @@
+# QA-3 C+D1 — navbar & footer pada beberapa lebar — http://localhost:3000 — 2026-09-04T12:23:34.849Z
+| lebar | gulir mendatar | "Masuk Staff" | baris menu | menu kanan vs kotak cari | tumpang tindih | footer kiri/lebar | isi kiri/lebar |
+|---|---|---|---|---|---|---|---|
+| 375 | tidak | tidak ada | 1 | - vs - aman | tidak ada | 0/375 PENUH | 16/375 (padding 16) di kontainer |
+| 768 | tidak | tidak ada | 1 | 729 vs - aman | tidak ada | 0/753 PENUH | 40/753 (padding 40) di kontainer |
+| 1280 | tidak | tidak ada | 1 | 976 vs 1033 aman | tidak ada | 0/1265 PENUH | 40/1265 (padding 40) di kontainer |
+| 1366 | tidak | tidak ada | 1 | 1019 vs 1084 aman | tidak ada | 0/1351 PENUH | 76/1280 (padding 40) di kontainer |
+| 1440 | tidak | tidak ada | 1 | 1056 vs 1121 aman | tidak ada | 0/1425 PENUH | 113/1280 (padding 40) di kontainer |
+| 1920 | tidak | tidak ada | 1 | 1320 vs 1336 aman | tidak ada | 0/1905 PENUH | 353/1280 (padding 40) di kontainer |
+
+RINGKASAN C+D1 (lokal): LULUS; tangkapan di laporan/bukti-qa-3/tangkapan/lokal-beranda-*.png
