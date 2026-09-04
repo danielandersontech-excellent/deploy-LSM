@@ -1,0 +1,14 @@
+# QA-1 butir 4a — rayapan & konsol — https://warkopnusantara.id / https://staf.warkopnusantara.id — 2026-09-04T04:56:11.241Z
+
+## Rayapan publik (tanpa login) dari https://warkopnusantara.id/: 31 URL, bukan-200: 0
+login superadmin: ok
+
+## Rayapan staf superadmin dari https://staf.warkopnusantara.id/staf/dashboard: 39 URL, bukan-200: 0
+
+## Konsol peramban per halaman (error/exception; warning dicatat terpisah)
+  [publik (tanpa login)] membuka 31 halaman…
+  [publik (tanpa login)] 31 halaman dibuka
+  [staf superadmin] membuka 39 halaman…
+  [staf superadmin] 39 halaman dibuka
+
+RINGKASAN 4a: URL bukan-200 (selain 401): 0; halaman dibuka: 70; halaman dengan error konsol: 0 -> LULUS

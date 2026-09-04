@@ -1,0 +1,13 @@
+# Redeploy produksi QA-1 butir 4-5 (commit 3069d7d) — 2026-09-04T04:47:06Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"dbl8kwdrxt7abocbcp9vd9ko"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[04:49:11Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:6831eff633cdc35f5c026d1126efadc53e7bf02b Up 59 minutes (healthy) 
+[04:49:43Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:6831eff633cdc35f5c026d1126efadc53e7bf02b Up About an hour (healthy) 
+[04:50:15Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:6831eff633cdc35f5c026d1126efadc53e7bf02b Up About an hour (healthy) 
+[04:50:47Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:6831eff633cdc35f5c026d1126efadc53e7bf02b Up About an hour (healthy) 
+[04:51:19Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 5 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:6831eff633cdc35f5c026d1126efadc53e7bf02b Up About an hour (healthy) 
+HASIL: image 3069d7d HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T11:51:20+07:00","basisData":"terhubung","versi":"0.1.0"}
