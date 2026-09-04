@@ -1,0 +1,88 @@
+# Migrasi DB produksi QA-2 (SELECT dulu) 2026-09-04T07:43:34Z
+id	nama	jabatan	tingkat
+1	Bpk. H. Soedirman	Ketua Umum	pusat
+2	Ibu Hj. Ratna Sari	Sekretaris Jenderal	pusat
+3	Ir. Rahmat Siregar	Kepala Regional	wilayah
+4	Dr. Budi Santoso	Kepala Regional	wilayah
+5	Yohanes Rumbiak, S.H.	Kepala Regional	wilayah
+kunci	nilai
+kontak_alamat_gedung	Gedung Aspirasi Rakyat
+kontak_alamat_jalan	Jl. Kebenaran No. 1, Jakarta Pusat
+kontak_alamat_kota	DKI Jakarta, 10110
+id	judul	jenis	berkas	thumbnail
+3	Kampanye Hak Lapor Warga	video	/penampung/galeri-3.mp4	/penampung/galeri-3.jpg
+--- jalankan migrasi 1500 + 1510
+ok database/migrations/20260904-1500-pengurus-kelompok.sql
+ok database/migrations/20260904-1510-pengurus-dpp-data.sql
+--- alamat & galeri-3
+kelompok	n
+dewan_pembina	3
+dewan_penasehat	3
+dewan_pengawas	3
+pengurus_dpp	4
+direktorat_eksekutif	2
+direktorat	9
+satgas	6
+dpw	3
+dpd	3
+dpc	3
+kunci	nilai
+kontak_alamat_gedung	Komplek Perkantoran CNN
+kontak_alamat_jalan	Jl. Tuanku Tambusai No. B 15, Labuh Baru Tim., Payung Sekaki
+kontak_alamat_kota	Kota Pekanbaru, Riau 28123
+id	jenis	berkas
+3	foto	/penampung/galeri-3.jpg
+
+# VERIFIKASI ULANG MIGRASI (sesi lanjutan, SELECT saja, aman diulang) — 2026-09-04T08:26:28Z
+bagian
+-- kolom kelompok ada?
+COLUMN_NAME	COLUMN_TYPE
+kelompok	varchar(40)
+bagian
+-- indeks kelompok
+INDEX_NAME
+idx_pengurus_kelompok_urutan
+bagian
+-- jumlah pengurus per kelompok
+kelompok	n
+dewan_pembina	3
+dewan_penasehat	3
+dewan_pengawas	3
+pengurus_dpp	4
+direktorat_eksekutif	2
+direktorat	9
+satgas	6
+dpw	3
+dpd	3
+dpc	3
+bagian
+-- total pengurus & sisa contoh lama
+total	sisa_contoh
+39	0
+bagian
+-- alamat pengaturan
+kunci	nilai
+kontak_alamat_gedung	Komplek Perkantoran CNN
+kontak_alamat_jalan	Jl. Tuanku Tambusai No. B 15, Labuh Baru Tim., Payung Sekaki
+kontak_alamat_kota	Kota Pekanbaru, Riau 28123
+bagian
+-- galeri butir 3
+id	judul	jenis	berkas
+3	Kampanye Hak Lapor Warga	foto	/penampung/galeri-3.jpg
+(kueri em/en dash percobaan pertama salah nama kolom -> diulang dengan kolom sesuai skema di bawah)
+
+-- em/en dash di kolom teks tampil (kolom sesuai skema)
+tabel	n
+artikel	0
+pengaturan	0
+pengurus	0
+program	0
+galeri	0
+kategori_artikel	0
+wilayah	0
+
+-- render produksi
+/struktur: Dewan Pembina/Penasehat/Pengawas, Pengurus DPP, Direktorat Eksekutif, Satgas, 'Jonni Tan', 'Boy Juan', 'Johan Elvianus Hondro' = ADA semua
+/ (footer): 'Komplek Perkantoran CNN', 'Tuanku Tambusai', 'Pekanbaru' = ADA; em/en dash pada HTML beranda = 0
+HASIL: migrasi 1500 + 1510 TUNTAS di produksi (kolom + indeks + 39 posisi, 0 sisa pengurus contoh),
+alamat resmi Pekanbaru terpasang, galeri butir 3 = foto, DB produksi 0 em/en dash. Idempoten: hanya SELECT dijalankan ulang.

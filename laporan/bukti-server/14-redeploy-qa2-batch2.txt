@@ -1,0 +1,13 @@
+# Redeploy produksi QA-2 batch2 (commit c024580) — 2026-09-04T07:43:44Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"rb685uh7yhvz9ul8fa3cosbt"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+
+# VERIFIKASI ULANG (sesi lanjutan) — 2026-09-04T08:26:18Z
+$ ssh deployer@server 'docker ps --filter name=re8snqu --format "{{.Image}} | {{.Status}}"'
+re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 | Up 26 minutes (healthy)
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T15:26:19+07:00","basisData":"terhubung","versi":"0.1.0"}
+$ curl.exe -o /dev/null -w '%{http_code}' https://staf.warkopnusantara.id/login -> 200
+HASIL: image c024580 (batch K2/A1/A2/B1-B8) HEALTHY di produksi, health 200 — redeploy TUNTAS.
