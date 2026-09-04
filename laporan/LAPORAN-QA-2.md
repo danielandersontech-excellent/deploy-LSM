@@ -24,7 +24,7 @@ variabel yang tidak pernah dideklarasikan. `eslint.config.mjs` kini menyalakan
 
 Sesudah perbaikan: **C1 579 sel LULUS, C2 24 pemeriksaan LULUS, C3 59 langkah LULUS,
 C4 16 langkah LULUS, C5 (regresi + produksi) LULUS.** Produksi menjalankan image
-`3c34e9d`, HEALTHY, dan seluruh perbaikan diverifikasi langsung di domain.
+`f3e2833`, HEALTHY, dan seluruh perbaikan diverifikasi langsung di domain.
 
 ## 2. Verifikasi batch sebelumnya (prasyarat run ini)
 
@@ -139,6 +139,11 @@ setelah diperbaiki lint bersih (exit 0).
 **Regresi:** C2 dijalankan ulang — 118 klik di `/staf/pengurus`, 0 galat; dan di
 **produksi** tombol "Tambah Pengurus" diklik lewat Chrome: formulir terbuka lengkap
 dengan kolom nama dan select "Kelompok Bagan", 0 galat konsol.
+**Bukti pemakaian nyata:** `audit_log` produksi menunjukkan **pemilik sendiri** masuk sore
+itu juga dan benar-benar memakai Kelola Pengurus sesudah perbaikan dipasang —
+`pengurus_ubah` 17:46:37, 17:47:52, 17:49:03; `pengurus_hapus` 17:43:20; delapan
+`pengurus_urutan` (menyusun ulang bagan) antara 17:41 dan 17:46 WIB. Sebelum perbaikan
+seluruh aksi itu mustahil dilakukan karena formulirnya tidak pernah terbuka.
 
 ### Bug 2 — lampiran dan unggahan 10–20 MB ditolak "Muatan tidak sah"
 Next.js 16 memotong badan permintaan yang melewati `proxy.js` pada 10 MB (bawaan
@@ -247,7 +252,10 @@ pemilik, cacat export tetap 0 di seluruh layar):
 
 Sebelas layar lain tidak berubah.
 
-**Verifikasi akhir di domain produksi** (image `3c34e9d`, HEALTHY):
+**Verifikasi akhir di domain produksi** (uji lengkap yang menulis data dijalankan pada
+image `3c34e9d`; pemeriksaan penutup baca-saja diulang pada image final `f3e2833`,
+`c5-verifikasi-produksi-final.txt` — uji yang menulis TIDAK diulang karena audit_log
+menunjukkan pemilik sedang bekerja di ruang staf saat itu):
 `/api/health` sehat dengan zona waktu `+07:00`; pemisahan host dua arah dengan `Location`
 tanpa `0.0.0.0`; CSP tanpa `unsafe-eval`, HSTS `preload`, `X-Frame-Options: DENY`,
 `nosniff`; formulir Kelola Pengurus terbuka tanpa galat; lampiran 16 MB dan 15 MB
@@ -266,19 +274,21 @@ sesinya dipaksa keluar (login → 401, sesi lama → 401).
 - **Penjaga `uncaughtException`** tidak berhasil dipicu sesuai permintaan: kejadian aslinya
   tidak dapat direproduksi. Yang terbukti adalah jalur `clientError` (di lokal **dan** di
   log produksi) serta ketahanan peladen terhadap seluruh pemicu nyata yang dicoba.
-  Penutupan rapi `SIGTERM` belum terbukti berjalan karena Windows tidak mengirim SIGTERM;
-  baris `[warkop] SIGTERM diterima…` akan tampak di log container pada redeploy berikutnya.
+  Penutupan rapi `SIGTERM` belum terbukti berjalan: Windows tidak mengirim SIGTERM, dan
+  pada redeploy penutup Coolify **menghapus container lama sebelum lognya sempat dibaca**
+  (`No such container`). Baris `[warkop] SIGTERM diterima…` perlu dilihat pada redeploy
+  berikutnya, dengan mengambil log container lama sebelum Coolify membuangnya.
 - **Bagian "Pimpinan Regional" di /struktur sekarang kosong** karena susunan DPP belum
   memuat pengurus dengan wilayah. Filter wilayah dan tampilan peta tetap diuji dengan
   membuat satu pengurus berwilayah sementara, lalu dihapus.
 
 ## 9. MENUNGGU PEMILIK (baru dari RUN QA-2)
 
-1. **Selesaikan pemulihan akun superadmin (B0d).** Sampai laporan ini ditulis, sandi
-   sementara di `.env.produksi` masih berlaku dan status `wajib_ganti_sandi` masih 1 —
-   artinya pemilik belum masuk dan mengganti sandinya. Masuk di
-   `https://staf.warkopnusantara.id/login`, ganti sandi, setelah itu nilai di
-   `.env.produksi` tidak berlaku lagi.
+1. ~~Selesaikan pemulihan akun superadmin (B0d).~~ **SUDAH SELESAI oleh pemilik** saat
+   run ini berlangsung: `users` id 1 kini `wajib_ganti_sandi=0`, `token_version=3`,
+   terakhir masuk 4 Sep 2026 17:37:59 WIB, dan sandi sementara di `.env.produksi` sudah
+   tidak berlaku (login dengan nilai itu → 401). Nilai `SEED_ADMIN_PASSWORD` di
+   `.env.produksi` boleh dihapus/diganti agar tidak menyesatkan.
 2. **Isi DPW/DPD/DPC beserta wilayahnya** lewat Kelola Pengurus agar bagian "Pimpinan
    Regional" dan tampilan peta di `/struktur` terisi. Perlu keputusan: apakah pengurus
    DPW/DPD/DPC yang sudah punya wilayah juga ingin muncul di bagian Pimpinan Regional dan

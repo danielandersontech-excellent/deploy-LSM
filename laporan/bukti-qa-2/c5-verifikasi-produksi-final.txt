@@ -1,0 +1,51 @@
+# QA-2 C5 — verifikasi akhir BACA-SAJA pada image f3e2833 — 2026-09-04T10:52:51Z
+# Catatan: audit_log menunjukkan PEMILIK sedang bekerja di ruang staf saat verifikasi ini dijalankan,
+# sehingga uji yang menulis data TIDAK dijalankan lagi (sudah dijalankan penuh pada image 3c34e9d:
+# laporan/bukti-qa-2/c5-verifikasi-produksi.txt, 9 langkah 0 gagal).
+
+$ docker ps --filter name=re8snqu
+re8snqu8jwyxdqg2wmzrbm3w:f3e2833284c0e51a00da40f37b3600f5f28b1052 | Up About a minute (healthy)
+
+$ curl.exe https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T17:52:55+07:00","basisData":"terhubung","versi":"0.1.0"}
+
+-- pemisahan host --
+  publik /staf/dashboard -> 307 https://staf.warkopnusantara.id/staf/dashboard
+  staf /berita          -> 307 https://staf.warkopnusantara.id/staf/dashboard
+  staf /login           -> 200
+
+-- halaman publik: HTTP + em/en dash --
+  /                      HTTP 200  dash 0
+  /tentang               HTTP 200  dash 0
+  /struktur              HTTP 200  dash 0
+  /program               HTTP 200  dash 0
+  /galeri                HTTP 200  dash 0
+  /kontak                HTTP 200  dash 0
+  /berita                HTTP 200  dash 0
+  /lacak                 HTTP 200  dash 0
+  /faq                   HTTP 200  dash 0
+  /kebijakan-privasi     HTTP 200  dash 0
+  /pedoman-komunitas     HTTP 200  dash 0
+
+-- header keamanan beranda --
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blo
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+-- BUKTI PEMAKAIAN NYATA: pemilik memakai Kelola Pengurus di produksi --
+audit_log produksi (baca-saja) menunjukkan pemilik masuk dan MENGUBAH pengurus lewat ruang staf
+pada sore yang sama, sesudah perbaikan bug crash dipasang:
+  117 pengurus_ubah    2026-09-04 17:46:37 WIB
+  122 pengurus_ubah    2026-09-04 17:47:52 WIB
+  123 pengurus_ubah    2026-09-04 17:49:03 WIB
+  114 pengurus_hapus   2026-09-04 17:43:20 WIB
+  113/115/116/118-121 pengurus_urutan (susun ulang bagan)
+Sebelum perbaikan, menekan Tambah/Ubah Pengurus melempar ReferenceError dan halaman jatuh ke
+batas galat, sehingga aksi-aksi ini MUSTAHIL dilakukan.
+
+-- TINDAKAN PEMILIK B0d SUDAH SELESAI --
+users id 1 (superadmin): wajib_ganti_sandi=0, token_version=3, terakhir_masuk 2026-09-04 17:37:59 WIB.
+Sandi sementara di .env.produksi TIDAK berlaku lagi (login dengan nilai itu -> 401, audit id 124
+login_gagal 17:52:03 adalah percobaan skrip verifikasi ini). Pemilik sudah mengganti sandinya sendiri.

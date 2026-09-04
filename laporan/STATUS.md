@@ -123,13 +123,13 @@ Aturan konten: K1 tanpa foto internet & tanpa berita nyata; K2 tanpa em/en dash 
 | C5 | Regresi (b1, kesetiaan 14 layar, penjaga dash, build, lint) + verifikasi akhir produksi + LAPORAN-QA-2.md + STATUS, BERHENTI | SELESAI | b1 **246/0**; kesetiaan 14 layar cacat export **0** (beranda -1, struktur -6, galeri -5 poin, sebab tercatat); penjaga dash bersih; lint bersih (kini termasuk no-undef); build hijau; verifikasi produksi **9 langkah 0 gagal** (`c5-verifikasi-produksi.txt`); `laporan/LAPORAN-QA-2.md` |
 
 ### MENUNGGU PEMILIK (RUN QA-2)
-1. **Selesaikan pemulihan akun superadmin (B0d).** Diperiksa 4 Sep 2026 sore: sandi sementara di `.env.produksi` MASIH berlaku dan `wajib_ganti_sandi` masih 1, artinya pemilik belum masuk dan mengganti sandi. Masuk di `https://staf.warkopnusantara.id/login`, ganti sandi; sesudah itu nilai di `.env.produksi` tidak berlaku lagi.
+1. ~~Pemulihan akun superadmin (B0d)~~ **SUDAH SELESAI oleh pemilik** 4 Sep 2026 17:37:59 WIB saat run ini berlangsung: `users` id 1 kini `wajib_ganti_sandi=0`, `token_version=3`; sandi sementara di `.env.produksi` tidak berlaku lagi (login dengan nilai itu -> 401). Nilai `SEED_ADMIN_PASSWORD` di `.env.produksi` boleh dihapus/diganti agar tidak menyesatkan. Audit produksi juga menunjukkan pemilik langsung memakai Kelola Pengurus (pengurus_ubah/urutan/hapus 17:41-17:49 WIB) - modul yang sebelum perbaikan C4 tidak bisa dibuka sama sekali.
 2. **Isi DPW/DPD/DPC beserta wilayahnya** lewat Kelola Pengurus agar bagian "Pimpinan Regional" dan tampilan peta di `/struktur` terisi (sekarang kosong; keadaan kosong tampil benar). KEPUTUSAN yang dibutuhkan: apakah pengurus DPW/DPD/DPC yang sudah punya wilayah juga ingin muncul di bagian Pimpinan Regional dan di peta, atau cukup di blok kerangkanya masing-masing (perilaku sekarang).
 3. **Akun staf seed di produksi semuanya nonaktif** (redaktur, penulis, verifikator, pimpinan wilayah; `aktif=0`). Aktifkan dan setel sandinya bila pengurus sungguhan akan memakainya. Ada satu akun uji `qa2.verifikasi.*` (id 10) yang sengaja ditinggalkan NONAKTIF: route hapus menolak akun yang sudah punya jejak audit (disengaja demi keutuhan buku besar).
 4. Butir MENUNGGU PEMILIK dari RUN QA-1 dan DAFTAR TINDAKAN PEMILIK Tahap 9 tetap berlaku seluruhnya.
 
 ### Posisi terakhir RUN QA-2
 RUN QA-2 SELESAI (4 Sep 2026 sekitar 17:30 WIB). Seluruh butir B0, K2, A1, A2, B1-B8, dan C1-C5 SELESAI.
-Produksi menjalankan image `3c34e9d` HEALTHY; verifikasi akhir di domain LULUS (9 langkah, 0 gagal).
+Produksi menjalankan image `f3e2833` HEALTHY; verifikasi akhir di domain LULUS (9 langkah, 0 gagal pada image 3c34e9d; pemeriksaan penutup baca-saja diulang pada f3e2833).
 Laporan: `laporan/LAPORAN-QA-2.md`. Run BERHENTI sesuai perintah.
 Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di atas.

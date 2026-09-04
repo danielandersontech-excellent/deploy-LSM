@@ -1,0 +1,20 @@
+# Redeploy produksi QA-2 penutup (commit f3e2833) — 2026-09-04T10:37:07Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"hsfi2u341wrxq2qgom8emdlt"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[10:39:11Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 50 minutes (healthy) 
+[10:39:44Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 50 minutes (healthy) 
+[10:40:16Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 51 minutes (healthy) 
+[10:40:48Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 51 minutes (healthy) 
+[10:41:20Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 52 minutes (healthy) 
+[10:41:52Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 52 minutes (healthy) 
+[10:42:25Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 53 minutes (healthy) 
+[10:42:57Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 54 minutes (healthy) 
+[10:43:37Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 54 minutes (healthy) 
+[10:44:10Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 55 minutes (healthy) 
+[10:44:42Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 55 minutes (healthy) 
+[10:45:14Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 Up 56 minutes (healthy) 
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T17:45:47+07:00","basisData":"terhubung","versi":"0.1.0"}
+HASIL: image belum f3e2833 setelah pemantauan — perlu Redeploy manual
