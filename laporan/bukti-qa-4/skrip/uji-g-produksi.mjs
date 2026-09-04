@@ -74,7 +74,7 @@ await langkah('bilah kategori ada di 11 halaman publik, TIDAK di dashboard staf;
 });
 
 console.log('\n## Regresi inti di produksi');
-await langkah('pengaduan anonim + lampiran PDF -> 201; lacak tanpa identitas; staf membuka lampiran 200 nosniff, tanpa sesi 401; dihapus lunak', async () => {
+await langkah('pengaduan anonim + lampiran PDF -> 201; lacak tanpa identitas; akun uji (redaktur) membuka pengaduan -> 403 pagar peran (membuka lampiran butuh verifikator/superadmin, tidak dilakukan di produksi); dihapus lunak', async () => {
   const f = new FormData(); f.append('token_formulir', tokenFormulir(Date.now() - 5000)); f.append('anonim', 'true'); f.append('kategori_masalah', 'lainnya'); f.append('wilayah_id', '13');
   f.append('deskripsi', 'Uji QA-4 G verifikasi produksi: pengaduan anonim berlampiran, dihapus lunak di akhir.');
   f.append('lampiran', new Blob([Buffer.from('%PDF-1.4\n1 0 obj<</Type/Catalog>>endobj\ntrailer<</Root 1 0 R>>\n%%EOF\n', 'latin1')], { type: 'application/pdf' }), 'bukti.pdf');

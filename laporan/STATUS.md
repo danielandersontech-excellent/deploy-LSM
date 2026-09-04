@@ -188,12 +188,18 @@ Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di at
 | B | Bilah kategori semua halaman publik | SELESAI (46ca511) | bg-primary/on-primary, 11 item urut, geser di 375/768, aktif emas, keyboard, tanpa lompat gulir; staf tidak diberi; diuji 6 halaman x 3 lebar lokal+produksi |
 | C | Beranda = berita | SELESAI (46ca511) | KEPUTUSAN PEMILIK; statistik + Status Advokasi dipindah ke sisi beranda berita (KEPUTUSAN BARU); komponen bersama components/publik/berita/*; alur beranda->kategori->artikel->kembali LULUS |
 | D | Header seluler sejajar | SELESAI (46ca511) | 320/375/414/767 merek kiri + hamburger kanan sebaris, laci berfungsi |
-| F1 | Inventaris halaman x 6 identitas x 3 lebar | SEDANG | skrip `uji-f1-inventaris.mjs` (metode QA-2 C1 + halaman baru) berjalan lokal |
-| F2 | Interaksi semua elemen & kolom | BELUM | `uji-f2-interaksi.mjs` (metode QA-2 C2) dijalankan setelah F1 |
-| F3 | Alur end-to-end diulang semua | SELESAI (lokal) | 8 suite LULUS: c3a lampiran+batas 12, c3c 11, c3d 25 aksi, c4 regresi 11, QA-3 A+B 11, QA-3 C/D/E/F 15, realtime+lampiran terjaga+sosial 6 (`f3-ringkasan.txt`); C3b (kembali/muat ulang) menyusul setelah F1 |
-| F4 | Server sehat | SELESAI (temuan diperbaiki, belum tayang) | restart 0, OOM tidak, disk 25%, log app bersih 24 jam, rotasi log 10m x3; TEMUAN: "Aborted connection" MariaDB tiap redeploy -> pool per-bundel + tidak ditutup saat SIGTERM; diperbaiki (lib/db globalThis + server.js tutupPool) (`f4-temuan-pool-redeploy.txt`) |
-| F5 | Bug ditemukan-diperbaiki + regresi | SEDANG | daftar di LAPORAN-QA-4.md |
-| G | Regresi + verifikasi akhir + laporan | BELUM | |
+| F1 | Inventaris halaman x 6 identitas x 3 lebar | SELESAI | 633 sel LULUS (35 halaman x tamu + 5 peran x 375/768/1280): 0 galat konsol/jaringan, 0 gulir mendatar, 0 tumpang tindih (`f1-inventaris-lokal.txt`) |
+| F2 | Interaksi semua elemen & kolom | SELESAI | 25 pemeriksaan LULUS: klik semua elemen 23 halaman, 47 kolom diketik penuh, anti klik ganda login + pengaduan (`f2-interaksi-lokal.txt`) |
+| F3 | Alur end-to-end diulang semua | SELESAI | 9 suite 108 langkah LULUS: c3a lampiran+batas 12, c3b kembali/muat ulang 11, c3c 11, c3d 25 aksi, c4 regresi 11, QA-3 A+B 11, QA-3 C/D/E/F 15, realtime+lampiran terjaga+sosial 6 (`f3-ringkasan.txt`); C3b lari pertama menemukan BUG lompat gulir bilah (F5) |
+| F4 | Server sehat | SELESAI (595e48f) | restart 0, OOM tidak, disk 25%, log app bersih 24 jam, rotasi log 10m x3; TEMUAN: "Aborted connection" MariaDB tiap redeploy -> pool per-bundel + tidak ditutup saat SIGTERM; diperbaiki (lib/db globalThis + server.js tutupPool), tayang 595e48f; pembuktian log pada redeploy penutup (`f4-temuan-pool-redeploy.txt`, `bukti-server/23-*`) |
+| F5 | Bug ditemukan-diperbaiki + regresi | SELESAI (595e48f) | 4 bug produk diperbaiki + regresi: (1) API artikel menerima kategori nonaktif/tidak ada -> 422; (2) kelas `hide-scrollbar` desain tidak pernah didefinisikan; (3) pool DB per-bundel + tidak ditutup saat SIGTERM; (4) bilah kategori membuat halaman melompat saat ganti kategori dalam keadaan tergulir (scrollIntoView -> scrollLeft ul saja). 2 temuan perangkat uji (ruang IP 429 palsu, suite lama pra-QA-3) diperbaiki. Rincian LAPORAN-QA-4.md bagian 9 |
+| G | Regresi + verifikasi akhir + laporan | SELESAI | uji-b1 246/0; kesetiaan 14 layar HTTP 200 cacat export 0 (dasar diperbarui + alasan, `g-regresi-kesetiaan-selisih.txt`); penjaga dash bersih lokal + DB produksi; lint + build hijau; uji-abcd 18 langkah lokal + produksi LULUS; sapu konsol 69 sel lokal + 69 produksi 0 gagal; verifikasi produksi 10 langkah 0 gagal; `laporan/LAPORAN-QA-4.md` |
+
+### MENUNGGU PEMILIK (RUN QA-4)
+1. **Volume lampiran** (P2): pasang volume Coolify dengan mount path `/app/unggahan-terjaga` lalu redeploy; sampai itu, lampiran pengaduan hilang pada tiap redeploy (baris DB tetap, berkas 404).
+2. **Ejaan "Podcash"** dipakai persis; konfirmasi bila maksudnya "Podcast" (cukup ubah nama di `lib/kategoriBerita.js` + baris id 15).
+3. **Pemetaan 8 artikel kategori lama** (tabel di LAPORAN-QA-4.md bagian 4): pindahkan lewat ruang staf bila ada yang kurang pas.
+4. Butir MENUNGGU PEMILIK RUN QA-1/QA-2/QA-3 dan DAFTAR TINDAKAN PEMILIK Tahap 9 tetap berlaku.
 
 ### Posisi terakhir RUN QA-4
-A-D tayang di produksi (image 46ca511, verifikasi produksi 17 langkah LULUS). Perbaikan F4 (pool DB) sudah ditulis di lokal, BELUM di-commit/deploy. Sedang: F1 lokal; berikutnya F2, C3b, rebuild, regresi G, verifikasi produksi, LAPORAN-QA-4.md.
+RUN QA-4 SELESAI (5 Sep 2026, jam penutupan di bawah). Produksi: image __IMAGE_AKHIR__ HEALTHY, health 200. Semua butir P1, A-D, F1-F5, G SELESAI; P2 MENUNGGU PEMILIK. Laporan `laporan/LAPORAN-QA-4.md`. Run BERHENTI. Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di atas.

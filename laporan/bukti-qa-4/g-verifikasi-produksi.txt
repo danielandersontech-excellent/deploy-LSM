@@ -1,0 +1,28 @@
+# QA-4 G — verifikasi akhir di domain produksi — 2026-09-04T22:48:47.057Z
+# sesi staf uji: ada
+
+## Kesehatan, pemisahan host, header keamanan
+   1. /api/health sehat (WIB); host publik /staf -> 307 host staf; host staf /berita -> dashboard; /login staf 200; Location tanpa 0.0.0.0 → health 2026-09-05T05:48:50+07:00; pengalihan benar; /login 200
+   2. header keamanan: CSP tanpa unsafe-eval + frame-ancestors none, HSTS preload, X-Frame DENY, nosniff → lengkap
+
+## A — kategori berita final di produksi
+   3. DB: 11 kategori aktif urut final, 4 lama nonaktif, 0 artikel di kategori nonaktif → 11 aktif urut final; 4 nonaktif; 0 artikel yatim
+   4. filter /berita produksi menerima 11 slug (200) dan dropdown = 11 slug final → 11 slug 200; dropdown final
+   5. editor artikel staf menawarkan 11 kategori; API menolak kategori nonaktif 422 → 11 opsi; kategori nonaktif -> 422 KATEGORI_NONAKTIF
+
+## B + C + D — bilah kategori, beranda berita, header (HTML produksi)
+   6. bilah kategori ada di 11 halaman publik, TIDAK di dashboard staf; beranda memuat sorotan h1 + Berita Terkini + sisi → 11 halaman berbilah; dashboard tanpa bilah; beranda lengkap
+
+## Regresi inti di produksi
+   7. pengaduan anonim + lampiran PDF -> 201; lacak tanpa identitas; staf membuka lampiran 200 nosniff, tanpa sesi 401; dihapus lunak → 201 WRP-144833; lacak bersih; redaktur -> 403 pada pengaduan (pagar peran)
+   8. K2: 11 halaman publik + beranda kategori 0 em/en dash; DB produksi 0 dash (8 tabel) → 0 di halaman; 0 di DB
+   9. container: image = HEAD terbaru, healthy, restart 0; log app 24 jam tanpa error → re8snqu8jwyxdqg2wmzrbm3w:595e48fe5d4981c349ed53039c3a35eef38189c9 Up 6 minutes (healthy) | restart=0 | 1
+
+## Pembersihan
+  10. pengaduan uji dihapus lunak (SQL di container, SELECT dulu); lacak -> 404 → WRP-144833 dihapus lunak; lacak 404 (2 baris SELECT)
+
+RINGKASAN QA-4 G produksi: 10 langkah, 0 gagal -> LULUS
+
+# Catatan kejujuran: label langkah 7 pada lari ini masih menyebut "staf membuka lampiran 200 nosniff"; yang benar-benar diuji adalah teks hasilnya:
+# akun uji berperan redaktur -> 403 pada daftar pengaduan (pagar peran). Membuka lampiran di produksi butuh verifikator/superadmin dan TIDAK dilakukan
+# (superadmin pemilik tidak dipakai). Pembukaan lampiran oleh staf berperan dibuktikan di lokal (f3-c3a-lampiran-batas.txt, f3-realtime-lampiran.txt). Label skrip sudah diperbaiki.

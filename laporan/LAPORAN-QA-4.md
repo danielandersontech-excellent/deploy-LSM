@@ -3,7 +3,7 @@
 Mode: OTONOM. Perintah: "SITUS BERITA-DULU + BILAH KATEGORI + HEADER SELULER + PERBURUAN BUG TOTAL".
 Mulai 5 September 2026 sekitar 04:35 WIB, selesai 5 September 2026 (jam penutupan di STATUS.md).
 Produksi akhir: image `__IMAGE_AKHIR__` (HEALTHY) di https://warkopnusantara.id dan https://staf.warkopnusantara.id.
-Semua bukti ada di `laporan/bukti-qa-4/` (skrip di `skrip/`, tangkapan di `tangkapan/`), redeploy di `laporan/bukti-server/21-*` dan `22-*`.
+Semua bukti ada di `laporan/bukti-qa-4/` (skrip di `skrip/`, tangkapan di `tangkapan/`), redeploy di `laporan/bukti-server/21-*` (A-D), `22-*` (F/G) dan `23-*` (penutup).
 
 ## 1. Ringkasan
 
@@ -149,7 +149,7 @@ kiri, hamburger kanan, pusat vertikal selisih <= 4 px, tidak tumpang tindih, lac
 |---|---|---|---|---|
 | 1 | API artikel menerima `kategori_id` apa pun, termasuk kategori yang baru dinonaktifkan atau id yang tidak ada (artikel bisa "hilang" dari semua filter) | tidak ada validasi kategori di route tulis artikel | `lib/validasi/kategoriArtikel.js` dipanggil di POST dan PUT -> 422 | `uji-abcd.mjs` langkah A (lokal + produksi), `uji-g-produksi.mjs` |
 | 2 | Kelas `hide-scrollbar` dipakai markup desain (`/program`) tetapi tidak ada definisinya: batang gulir mendatar tampak di bilah kategori/tab program pada peramban tertentu | kelas khusus desain tidak pernah disalin ke `globals.css` | ditambahkan di `app/globals.css` (scrollbar-width none + ::-webkit-scrollbar none) | kesetiaan 14 layar: `hide-scrollbar` kini "ada" di layar program; `uji-g-konsol.mjs` memeriksa `overflow-x` bilah |
-| 3 | Log MariaDB produksi: 4-14 baris "Aborted connection ... Got an error reading communication packets" pada **setiap** redeploy | (a) `server.js` menutup HTTP rapi saat SIGTERM tetapi tidak menutup pool DB; (b) `lib/db/index.js` menyimpan pool di variabel modul sehingga tiap bundel Next (server, route, halaman) punya pool sendiri dan `tutupPool()` tidak menjangkau pool route | pool disimpan di `globalThis[Symbol.for('warkop.pool')]` (satu pool per proses, pola sama dengan instance Socket.io); `server.js` memanggil `tutupPool()` setelah `server.close()` lalu keluar; kegagalan menutup pool dicatat tanpa menahan penutupan (batas 20 s tetap) | skrip sekali jalan lokal (pool tunggal, tutup, dibuat ulang); bukti produksi pada redeploy penutup: `bukti-server/22-redeploy-qa4-penutup.txt` (log container lama memuat "pool basis data ditutup", log DB tanpa "Aborted connection") |
+| 3 | Log MariaDB produksi: 4-14 baris "Aborted connection ... Got an error reading communication packets" pada **setiap** redeploy | (a) `server.js` menutup HTTP rapi saat SIGTERM tetapi tidak menutup pool DB; (b) `lib/db/index.js` menyimpan pool di variabel modul sehingga tiap bundel Next (server, route, halaman) punya pool sendiri dan `tutupPool()` tidak menjangkau pool route | pool disimpan di `globalThis[Symbol.for('warkop.pool')]` (satu pool per proses, pola sama dengan instance Socket.io); `server.js` memanggil `tutupPool()` setelah `server.close()` lalu keluar; kegagalan menutup pool dicatat tanpa menahan penutupan (batas 20 s tetap) | skrip sekali jalan lokal (pool tunggal, tutup, dibuat ulang); bukti produksi pada redeploy penutup: `bukti-server/23-redeploy-qa4-penutup.txt` (log container lama memuat "pool basis data ditutup", log DB tanpa "Aborted connection") |
 | 4 | Mengganti kategori di `/berita` saat halaman sudah digulir (300 px) membuat halaman melompat ke atas (300 -> 51). Ditemukan C3b langkah 1; lolos uji B semula karena uji itu mengganti kategori dari posisi gulir 0 | `useEffect` bilah memanggil `scrollIntoView({ block: 'nearest' })` pada item aktif; bila bilah di luar layar, peramban menggulir **halaman** agar bilah terlihat | hanya `scrollLeft` `<ul>` yang diubah (pusat item vs pusat ul); sumbu vertikal tidak disentuh | `uji-abcd.mjs` langkah 9 baru: gulir 300 -> klik bilah dan ubah select filter -> gulir tetap 300; 375 item aktif tetap digulir ke pandangan |
 
 Temuan **di perangkat uji**, bukan produk (diperbaiki juga agar suite bisa dipercaya):
@@ -187,20 +187,24 @@ Layar lain identik dengan dasar QA-3. Layar 14 (kelola pengaduan 63%) tetap peny
   beranda berita ujung ke ujung, header sejajar 320-767).
 - `uji-g-konsol.mjs` lokal (14 halaman publik + 9 halaman staf x 3 lebar): 69 sel, 0 gagal (`g-konsol-lokal.txt`).
 
-### Verifikasi akhir produksi (setelah redeploy `__IMAGE_AKHIR__`)
+### Verifikasi akhir produksi (pada image `595e48f`, kode akhir; redeploy penutup hanya menambah laporan)
 
-- `uji-abcd.mjs --produksi`: __ABCD_PROD__ (`abcd-uji-produksi.txt`).
-- `uji-g-konsol.mjs --produksi` (14 halaman publik + 9 halaman staf x 3 lebar): __KONSOL_PROD__ (`g-konsol-produksi.txt`).
-- `uji-g-produksi.mjs`: __G_PROD__ (`g-verifikasi-produksi.txt`): health WIB, pemisahan host, header keamanan, 11 kategori
+- `uji-abcd.mjs --produksi`: 18 langkah, 0 gagal (`abcd-uji-produksi.txt`; tangkapan `tangkapan/produksi-*.png` diperbarui).
+- `uji-g-konsol.mjs --produksi` (14 halaman publik + 9 halaman staf x 3 lebar): 69 sel, 0 gagal (`g-konsol-produksi.txt`).
+- `uji-g-produksi.mjs`: 10 langkah, 0 gagal (`g-verifikasi-produksi.txt`): health WIB, pemisahan host, header keamanan, 11 kategori
   aktif urut + 4 nonaktif + 0 artikel yatim di DB produksi, dropdown/filter/editor 11 kategori, 422 kategori nonaktif,
-  bilah di 11 halaman dan tidak di dashboard, pengaduan anonim berlampiran 201 -> lacak bersih -> redaktur 403 -> dihapus lunak,
-  K2 0 dash halaman + DB, container healthy restart 0.
-- Redeploy penutup (`bukti-server/22-redeploy-qa4-penutup.txt`): __POOL_PROD__.
+  bilah di 11 halaman dan tidak di dashboard, pengaduan anonim berlampiran PDF 201 -> lacak bersih -> akun uji (redaktur) 403
+  pada pengaduan (pagar peran) -> dihapus lunak (SELECT dulu, lacak 404), K2 0 dash di halaman + 0 di DB produksi (8 tabel),
+  container `595e48f` healthy restart 0; satu-satunya baris "error" di log app 24 jam adalah ringkasan `clientError kode=EPIPE`
+  yang memang dijaga server.js (klien memutus sambungan), bukan galat aplikasi.
+- Redeploy penutup (`bukti-server/23-redeploy-qa4-penutup.txt`): __POOL_PROD__.
 
 ## 11. Yang TIDAK diuji atau perlu perhatian (jujur)
 
-- Lampiran di produksi: F3 membuktikan penyimpanan di jalur terjaga **di lokal**; di produksi berkas akan tetap hilang saat
-  redeploy sampai volume dipasang (P2). Uji produksi hanya memakai satu PDF kecil dan menghapus lunak pengaduannya.
+- Lampiran di produksi: F3 membuktikan penyimpanan di jalur terjaga dan pembukaan oleh staf berperan **di lokal**; di produksi
+  uji hanya mengirim satu PDF kecil (201) lalu menghapus lunak pengaduannya. Membuka lampiran di produksi butuh verifikator/
+  superadmin dan sengaja TIDAK dilakukan (akun uji berperan redaktur -> 403; superadmin pemilik tidak dipakai). Berkas di
+  produksi tetap hilang saat redeploy sampai volume dipasang (P2).
 - Realtime diuji di lokal (socket same-origin). Di produksi hanya diperiksa lewat log (tidak ada galat socket) karena uji
   realtime menulis pengaduan; sengaja tidak dilakukan berulang di data produksi.
 - "Podcash": dibuat persis seperti ejaan pemilik. Bila maksudnya "Podcast", cukup ubah `nama` (dan bila mau `slug`) di

@@ -1,0 +1,10 @@
+# Redeploy produksi QA-4 F/G (pool DB + bilah + suite) (commit 595e48f) — 2026-09-04T22:40:19Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"r6csmk6xbp7pimwvs8zjutan"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[22:42:22Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:46ca511fe7aeb8bb3ccb62f1bf922e75e0e06053 Up 43 minutes (healthy) 
+[22:42:55Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:595e48fe5d4981c349ed53039c3a35eef38189c9 Up 26 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:46ca511fe7aeb8bb3ccb62f1bf922e75e0e06053 Up 44 minutes (healthy) 
+HASIL: image 595e48f HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-05T05:42:59+07:00","basisData":"terhubung","versi":"0.1.0"}
