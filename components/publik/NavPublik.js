@@ -53,13 +53,15 @@ export default function NavPublik({ menu, hrefStaf }) {
             pada 768–1280 px — di seluruh screen.png desain merek selalu satu baris. nowrap hanya md+ (Tahap 6:
             di 375 px nowrap membuat halaman melebar melewati viewport). Dijadikan tautan ke beranda
             seperti varian beranda_warkop_nusantara. */}
-        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 max-w-full lg:shrink-0 lg:whitespace-nowrap" href="/">
-          <Image alt="WARKOP NUSANTARA Logo" className="h-16 w-16 object-contain rounded-full" src="/logo-warkop.png" width={64} height={64} priority />
+        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 max-w-full" href="/">
+          {/* QA-1: ukuran logo mengikuti desain (h-8 w-8); h-16 sebelumnya membuat merek melebar dan menu turun ke baris kedua di 1280 px */}
+          <Image alt="WARKOP NUSANTARA Logo" className="h-8 w-8 object-cover rounded-full" src="/logo-warkop.png" width={32} height={32} priority />
           <span className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight">WARKOP NUSANTARA</span>
         </Link>
         {/* flex-wrap justify-center (kelas nav di layar tentang/struktur/program ZIP) — Tahap 6: tanpa itu navbar
             meluap mendatar pada 768–1024 px (merek + 7 tautan + tombol > lebar); nowrap merek hanya lg+. */}
-        <nav className="hidden md:flex flex-wrap justify-center items-center gap-6 mt-4 md:mt-0" aria-label="Navigasi utama">
+        {/* QA-1: kelas nav desain (tanpa flex-wrap) — item menyusut & membungkus teksnya sendiri seperti desain ("Tentang Kami", "Kontak & Pengaduan" dua baris) sehingga menu tetap satu baris */}
+        <nav className="hidden md:flex items-center gap-6 mt-4 md:mt-0" aria-label="Navigasi utama">
           {daftarTautan()}
         </nav>
         <div className="flex items-center gap-4">

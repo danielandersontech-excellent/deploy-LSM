@@ -17,6 +17,7 @@
 // dengan ambilArtikelSorotan(1) tanpa kueri tambahan dan tanpa duplikasi kartu.
 import Link from 'next/link';
 import TautanKartu from '@/components/publik/TautanKartu';
+import KirimOtomatis from '@/components/publik/KirimOtomatis';
 import Image from 'next/image';
 import { cache } from 'react';
 import Ikon from '@/components/ui/Ikon';
@@ -145,10 +146,13 @@ export default async function HalamanBerita({ searchParams }) {
                 <Ikon nama="arrow_drop_down" className="absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" />
               </div>
             </div>
-            {/* Tombol kirim tidak digambar desain — KEPUTUSAN BARU (sama seperti /program): KELAS_TOMBOL.ringkas + px-4 */}
-            <div className="w-full md:w-auto relative z-10">
-              <button type="submit" className={`${KELAS_TOMBOL.ringkas} px-4 w-full`}>Terapkan</button>
-            </div>
+            {/* QA-1: desain tanpa tombol — <select> langsung berlaku (KirimOtomatis); tombol hanya tampil tanpa JavaScript */}
+            <KirimOtomatis />
+            <noscript>
+              <div className="w-full md:w-auto relative z-10">
+                <button type="submit" className={`${KELAS_TOMBOL.ringkas} px-4 w-full`}>Terapkan</button>
+              </div>
+            </noscript>
           </div>
         </form>
       </section>
@@ -206,7 +210,8 @@ export default async function HalamanBerita({ searchParams }) {
             </KeadaanKosong>
           ) : kartu.length > 0 ? (
             <div>
-              <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" aria-label="Daftar artikel">
+              {/* QA-1: di dalam kolom utama (2/3 lebar) grid mengikuti portal_berita_beranda "Berita Terkini" (md:grid-cols-2 gap-6); lg:grid-cols-3 membuat kartu terjepit & judul terpotong */}
+              <section className="grid grid-cols-1 md:grid-cols-2 gap-6" aria-label="Daftar artikel">
                 {kartu.map((a) => (
                   <article key={a.id} className="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden group hover:border-secondary-fixed-dim transition-all duration-300 relative shadow-sm hover:shadow-md cursor-pointer">
                     <TautanKartu href={`/berita/${a.slug}`} />

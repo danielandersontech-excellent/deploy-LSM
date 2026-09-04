@@ -92,10 +92,10 @@ export default async function HalamanGaleri({ searchParams }) {
             <label className="block font-label-md text-label-md text-on-surface mb-2" htmlFor="date-range">Rentang Tanggal</label>
             {/* KEPUTUSAN BARU: desain menggambar SATU kotak teks untuk rentang; dibutuhkan dua nilai (dari/sampai)
                 -> dua <input type="date"> berkelas verbatim berdampingan di dalam div .relative yang sama. */}
-            <div className="relative flex flex-wrap items-center gap-2">
-              <input className="w-full bg-surface border border-outline-variant rounded px-4 py-2 text-on-surface focus:border-secondary-fixed-dim focus:ring-0 font-body-md text-body-md" id="date-range" name="dari" placeholder="Pilih Tanggal..." type="date" defaultValue={dari ?? ''} />
+            <div className="relative flex items-center gap-2">
+              <input className="w-full min-w-0 flex-1 bg-surface border border-outline-variant rounded px-4 py-2 text-on-surface focus:border-secondary-fixed-dim focus:ring-0 font-body-md text-body-md" id="date-range" name="dari" placeholder="Pilih Tanggal..." type="date" defaultValue={dari ?? ''} />
               <label className="sr-only" htmlFor="date-range-sampai">Tanggal akhir</label>
-              <input className="w-full bg-surface border border-outline-variant rounded px-4 py-2 text-on-surface focus:border-secondary-fixed-dim focus:ring-0 font-body-md text-body-md [&::-webkit-calendar-picker-indicator]:opacity-0" id="date-range-sampai" name="sampai" type="date" defaultValue={sampai ?? ''} />
+              <input className="w-full min-w-0 flex-1 bg-surface border border-outline-variant rounded px-4 py-2 text-on-surface focus:border-secondary-fixed-dim focus:ring-0 font-body-md text-body-md [&::-webkit-calendar-picker-indicator]:opacity-0" id="date-range-sampai" name="sampai" type="date" defaultValue={sampai ?? ''} />
               <Ikon nama="calendar_today" className="absolute right-3 top-2.5 text-on-surface-variant pointer-events-none" />
             </div>
           </div>

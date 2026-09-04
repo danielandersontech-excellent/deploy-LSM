@@ -96,7 +96,7 @@ export default async function HalamanDetailArtikel({ params }) {
   ]);
 
   const tanggal = formatTanggalID(artikel.terbit_pada, 'panjang');
-  const gambarUtama = artikel.gambar_utama || '/logo-warkop-besar.png';
+  const gambarUtama = artikel.gambar_utama || '/penampung/artikel-1.jpg';
   const isiHtml = siapkanIsi(artikel.isi);
   const dasarUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
@@ -176,7 +176,7 @@ export default async function HalamanDetailArtikel({ params }) {
             {terkait.map((a) => (
               <Link key={a.id} className="group block bg-surface rounded-lg border border-outline-variant overflow-hidden hover:shadow-md transition-shadow duration-300 relative flex flex-col h-full" href={`/berita/${a.slug}`}>
                 <div className="h-48 w-full overflow-hidden bg-surface-container relative">
-                  <Image alt={a.judul} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={a.gambar_utama || '/logo-warkop-besar.png'} fill sizes="(max-width: 768px) 100vw, 400px" />
+                  <Image alt={a.judul} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={a.gambar_utama || '/penampung/artikel-1.jpg'} fill sizes="(max-width: 768px) 100vw, 400px" />
                 </div>
                 <div className="p-5 flex flex-col flex-grow">
                   <div className="font-label-md text-label-md text-secondary mb-2">{a.kategori_nama}</div>

@@ -126,7 +126,7 @@ export default async function HalamanStruktur({ searchParams }) {
           // KEPUTUSAN BARU: tampilan peta tidak digambar Stitch; aset peta tidak ada -> segel logo besar
           // (memuat peta Nusantara) dalam kartu berkelas sama dengan kartu regional, tanpa kelas baru.
           <div className="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 flex flex-col mb-4">
-            <Image className="w-full h-full object-cover" src="/logo-warkop-besar.png" alt="Peta jangkauan WARKOP NUSANTARA di seluruh Nusantara" width={1024} height={1024} />
+            <Image className="w-full h-full object-cover" src="/penampung/peta-penampung.jpg" alt="Peta jangkauan WARKOP NUSANTARA di seluruh Nusantara" width={1200} height={800} />
           </div>
         ) : null}
         {regionalTersaring.length === 0 ? (

@@ -5,6 +5,7 @@
 // Penyaringan peran DI SQL (ambilArtikelStaf): penulis hanya miliknya, pimpinan_wilayah hanya
 // wilayahnya (baca-saja). Tombol yang tidak berhak TIDAK dirender; API tetap memagari (requireRole).
 import Link from 'next/link';
+import KirimOtomatis from '@/components/publik/KirimOtomatis';
 import { redirect } from 'next/navigation';
 import Ikon from '@/components/ui/Ikon';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
@@ -118,7 +119,8 @@ export default async function HalamanKelolaArtikel({ searchParams }) {
               <option value="arsip">Arsip</option>
             </select>
             {/* KEPUTUSAN BARU: tombol kirim agar filter bekerja tanpa JavaScript (preseden app/(publik)/program) */}
-            <button type="submit" className={`${KELAS_TOMBOL.ringkas} px-4`}>Terapkan</button>
+            <KirimOtomatis />
+            <noscript><button type="submit" className={`${KELAS_TOMBOL.ringkas} px-4`}>Terapkan</button></noscript>
           </div>
         </form>
         {/* Data Table */}

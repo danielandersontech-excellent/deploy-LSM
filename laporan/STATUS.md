@@ -74,7 +74,7 @@ Perintah pemilik (dokumen/PERINTAH-PEMILIK-SERVER.md tetap berlaku). Ritme per b
 
 | # | Butir | Status | Catatan |
 |---|---|---|---|
-| 1 | Berita tidak bisa diklik (beranda, /berita, terkait, dashboard) — reproduksi produksi+lokal, akar masalah, perbaikan semua kartu, bukti klik CDP berpindah | SEDANG | |
+| 1 | Berita tidak bisa diklik (beranda, /berita, terkait, dashboard) — reproduksi produksi+lokal, akar masalah, perbaikan semua kartu, bukti klik CDP berpindah | SELESAI (12d850f) | Akar: kartu bergaya klik tetapi hanya teks judul ber-`<a>`; gambar/ringkasan/badan tanpa tautan (produksi: 25 klik tidak berpindah, `bukti-qa-1/1-klik-kartu-sebelum-produksi.txt`). Perbaikan: `components/publik/TautanKartu.js` (tautan peregang, aria-hidden/tabIndex -1) di beranda 2 kartu, /berita unggulan+daftar+sidebar; artikel terkait sudah `<Link>` penuh; butir panel dashboard ber-tautan. Sesudah: lokal & produksi LULUS (`1-klik-kartu-sesudah-*.txt`). Redeploy 12d850f healthy |
 | 2 | Kesetiaan visual menurut mata — 14 layar: tangkapan pada lebar code.html vs screen.png, tabel selisih per layar, perbaiki yang dari kode, sisanya MENUNGGU PEMILIK | BELUM | |
 | 3 | Gambar jelek & posisi buruk — penampung dibangkitkan ulang, object-cover + posisi seragam, dimensi next/image benar; daftar foto sungguhan → MENUNGGU PEMILIK | BELUM | |
 | 4 | Fungsional total (build produksi lokal + spot-check produksi): rayapan semua tautan internal, semua aksi utama end-to-end, konsol CDP bersih | BELUM | |
@@ -86,4 +86,4 @@ Perintah pemilik (dokumen/PERINTAH-PEMILIK-SERVER.md tetap berlaku). Ritme per b
 (diisi selama run)
 
 ### Posisi terakhir RUN QA-1
-Butir 1 dimulai (reproduksi di produksi).
+Butir 1 SELESAI & ter-deploy (12d850f). Butir 2 dimulai: tangkapan 14 layar vs desain (code.html dirender + screen.png; 3 screen.png rusak: portal_berita_beranda, program_kegiatan, tentang_kami_warkop_nusantara).

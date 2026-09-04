@@ -11,6 +11,7 @@
 //   ?halaman=N        — paginasi (markup code.html sendiri; berbeda dari daftar_berita_investigasi)
 // Nilai tak sah diperlakukan sebagai kosong.
 import Link from 'next/link';
+import KirimOtomatis from '@/components/publik/KirimOtomatis';
 import Ikon from '@/components/ui/Ikon';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
 import { KELAS_TOMBOL } from '@/components/ui/Tombol';
@@ -110,7 +111,7 @@ export default async function HalamanProgram({ searchParams }) {
           <div className="w-full md:w-1/3 flex justify-end">
             {/* Minimalist illustrative placeholder for theme context — KEPUTUSAN BARU: ilustrasi Stitch tidak ada berkasnya -> segel logo besar lokal */}
             <div className="w-full max-w-sm aspect-video rounded-lg overflow-hidden border border-tertiary relative pressed-paper-shadow">
-              <div className="bg-cover bg-center w-full h-full absolute inset-0" role="img" aria-label="Segel WARKOP NUSANTARA — pengawasan dan transparansi" style={{ backgroundImage: "url('/logo-warkop-besar.png')" }}></div>
+              <div className="bg-cover bg-center w-full h-full absolute inset-0" role="img" aria-label="Segel WARKOP NUSANTARA — pengawasan dan transparansi" style={{ backgroundImage: "url('/penampung/program-hero.jpg')" }}></div>
             </div>
           </div>
         </div>
@@ -137,15 +138,16 @@ export default async function HalamanProgram({ searchParams }) {
               <option value="terbaru">Terbaru</option>
               <option value="terlama">Terlama</option>
             </select>
-            <label htmlFor="status" className="sr-only">Status program</label>
-            <select id="status" name="status" defaultValue={status} className="bg-surface border-tertiary text-on-surface font-body-md text-body-md rounded-lg focus:ring-secondary focus:border-secondary">
+            {/* QA-1: select status tidak digambar desain -> tidak dirender (parameter ?status= tetap didukung URL/API) */}
+            {status ? <input type="hidden" name="status" value={status} /> : null}
+            {false ? <select id="status" name="status" defaultValue={status} className="bg-surface border-tertiary text-on-surface font-body-md text-body-md rounded-lg focus:ring-secondary focus:border-secondary">
               <option value="">Semua Status</option>
               {STATUS_PROGRAM.map((s) => (
                 <option key={s.slug} value={s.slug}>Status: {s.label}</option>
               ))}
-            </select>
-            {/* Tombol kirim tidak digambar desain — KEPUTUSAN BARU: KELAS_TOMBOL.ringkas + px-4 (kelas yang ada di ZIP) */}
-            <button type="submit" className={`${KELAS_TOMBOL.ringkas} px-4`}>Terapkan</button>
+            </select> : null}
+            <KirimOtomatis />
+            <noscript><button type="submit" className={`${KELAS_TOMBOL.ringkas} px-4`}>Terapkan</button></noscript>
           </form>
         </div>
         {/* Grid Layout */}
@@ -195,7 +197,7 @@ export default async function HalamanProgram({ searchParams }) {
                     <p className="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">{p.ringkasan}</p>
                     <Link href={tautan} className="flex items-center justify-between w-full border-t border-outline-variant pt-4 text-primary font-label-md text-label-md hover:text-secondary-container transition-colors group/btn" aria-label={`${teksTombol}: ${p.judul}`}>
                       <span className="">{teksTombol}</span>
-                      <Ikon nama="arrow_forward" className="transform group-hover/btn:translate-x-1 transition-transform" />
+                      <Ikon nama="arrow_forward" className="text-2xl transform group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </article>

@@ -1,0 +1,20 @@
+# Redeploy produksi QA-1 butir 1 (commit 12d850f) — 2026-09-04T02:55:23Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"i7jtusx8y6fiyq5hpxwzxdzr"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[02:57:28Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[02:58:01Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[02:58:34Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[02:59:06Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[02:59:40Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[03:00:12Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[03:00:46Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[03:01:18Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[03:01:54Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[03:02:27Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[03:03:01Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+[03:03:34Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:12d850f55fbfa589de028965583bdf43403112b8 Up 29 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:f0696fbb96ed166333dc6b04ae22bfa91e471696 Up 7 hours (healthy) 
+HASIL: image 12d850f HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T10:03:35+07:00","basisData":"terhubung","versi":"0.1.0"}

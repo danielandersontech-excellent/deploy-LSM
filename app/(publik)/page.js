@@ -54,7 +54,7 @@ export default async function HalamanBeranda() {
       <section className="relative pt-20 pb-32 overflow-hidden bg-surface-container-lowest">
         {/* Background Map Watermark (Decorative) — KEPUTUSAN BARU: segel logo (memuat peta Nusantara) sebagai watermark lokal */}
         <div className="absolute inset-0 opacity-5 pointer-events-none flex items-center justify-center" aria-hidden="true">
-          <Image className="w-full h-full object-cover" src="/logo-warkop-besar.png" alt="" width={1024} height={1024} priority />
+          <Image className="w-full h-full object-cover" src="/logo-warkop-cap-air.png" alt="" width={1024} height={1024} priority />
         </div>
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
           <div className="max-w-3xl">

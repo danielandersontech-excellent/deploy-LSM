@@ -87,7 +87,7 @@ export default async function HalamanKontak() {
               Kantor Regional
             </h3>
             <div className="w-full h-48 bg-surface-variant rounded flex items-center justify-center text-on-surface-variant relative overflow-hidden group">
-              <Image alt="Peta kantor regional WARKOP NUSANTARA" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity grayscale contrast-125" src="/logo-warkop-besar.png" fill sizes="(min-width: 1024px) 33vw, 100vw" />
+              <Image alt="Peta kantor regional WARKOP NUSANTARA" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity grayscale contrast-125" src="/penampung/peta-penampung.jpg" fill sizes="(min-width: 1024px) 33vw, 100vw" />
               <div className="absolute inset-0 bg-primary opacity-20 mix-blend-multiply"></div>
               <Link className="relative z-10 bg-surface-container-lowest px-3 py-1 rounded-full text-xs font-semibold shadow flex items-center gap-1" href="/struktur#regional">
                 <Ikon nama="explore" className="text-[14px]" /> Lihat Peta Penuh

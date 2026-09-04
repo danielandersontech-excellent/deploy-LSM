@@ -55,7 +55,7 @@ export default async function HalamanTentang() {
           {/* Latar hias: desain memakai ilustrasi googleusercontent tanpa berkas lokal -> segel logo (KEPUTUSAN BARU) */}
           <div
             className="bg-cover bg-center w-full h-full opacity-20 mix-blend-multiply"
-            style={{ backgroundImage: "url('/logo-warkop-besar.png')" }}
+            style={{ backgroundImage: "url('/logo-warkop-cap-air.png')" }}
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />

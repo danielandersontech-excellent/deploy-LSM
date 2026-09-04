@@ -23,7 +23,7 @@ export default async function HalamanLogin({ searchParams }) {
       <div className="fixed inset-0 flex items-center justify-center overflow-hidden z-0">
         <Image
           className="watermark w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] object-contain"
-          src="/logo-warkop-besar.png"
+          src="/logo-warkop-cap-air.png"
           alt=""
           width={1024}
           height={1024}
