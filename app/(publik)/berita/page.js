@@ -16,16 +16,17 @@
 // Sorotan utama = baris pertama hasil pada tampilan bawaan (tanpa filter, halaman 1) — sama
 // dengan ambilArtikelSorotan(1) tanpa kueri tambahan dan tanpa duplikasi kartu.
 import Link from 'next/link';
-import TautanKartu from '@/components/publik/TautanKartu';
 import KirimOtomatis from '@/components/publik/KirimOtomatis';
-import Image from 'next/image';
 import { cache } from 'react';
 import Ikon from '@/components/ui/Ikon';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
 import Paginasi from '@/components/ui/Paginasi';
 import { KELAS_TOMBOL } from '@/components/ui/Tombol';
+import SorotanBerita from '@/components/publik/berita/SorotanBerita';
+import KartuBerita from '@/components/publik/berita/KartuBerita';
+import { PalingDibaca, WidgetLaporan } from '@/components/publik/berita/SisiBerita';
 import { ambilArtikelTerbit, ambilArtikelPalingDibaca, ambilKategoriArtikel } from '@/lib/db/artikel';
-import { formatTanggalID, formatAngkaID } from '@/lib/utils';
+// RUN QA-4 C: markup sorotan, kartu, dan sisi kanan dipindah ke components/publik/berita/* (dipakai juga beranda berita).
 
 // 3 kolom (lg:grid-cols-3) × 2 baris per halaman.
 const PER_HALAMAN = 6;
@@ -161,40 +162,7 @@ export default async function HalamanBerita({ searchParams }) {
         {/* Main Content Area */}
         <div className="flex-1 min-w-0 flex flex-col gap-12">
           {/* Featured Investigasi — sorotan utama (portal_berita_beranda) */}
-          {sorotan ? (
-            <section aria-label="Sorotan utama">
-              <div className="group cursor-pointer relative overflow-hidden rounded-xl border border-tertiary/10 bg-surface-lowest shadow-sm hover:shadow-md transition-shadow">
-                {/* QA-1: seluruh kartu unggulan bisa diklik */}
-                <TautanKartu href={`/berita/${sorotan.slug}`} />
-                <div className="aspect-video w-full overflow-hidden relative">
-                  <Image className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={sorotan.gambar_utama || '/penampung/artikel-1.jpg'} alt={`Gambar utama: ${sorotan.judul}`} fill sizes="(min-width: 1280px) 880px, (min-width: 768px) calc(100vw - 424px), 100vw" priority />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-secondary-fixed-dim text-primary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1 shadow-sm">
-                      <Ikon nama="visibility" className="text-[16px]" />
-                      {sorotan.kategori_nama}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6 md:p-8 bg-surface-bright border-t-4 border-secondary-fixed-dim">
-                  <div className="flex items-center gap-4 text-on-surface-variant font-label-md text-label-md mb-4">
-                    <span className="flex items-center gap-1"><Ikon nama="calendar_today" className="text-[18px]" /> {formatTanggalID(sorotan.terbit_pada, 'panjang')}</span>
-                    <span className="text-tertiary/20">|</span>
-                    <span className="flex items-center gap-1"><Ikon nama="person" className="text-[18px]" /> Oleh {sorotan.penulis_nama}</span>
-                  </div>
-                  {/* h1 desain -> h2: h1 halaman sudah "Arsip Berita & Observasi" (hierarki judul, aksesibilitas) */}
-                  <h2 className="font-headline-lg md:font-headline-xl text-headline-lg md:text-headline-xl text-primary mb-4 group-hover:text-secondary-fixed-dim transition-colors">
-                    <Link href={`/berita/${sorotan.slug}`} className="focus:outline-none focus:underline">{sorotan.judul}</Link>
-                  </h2>
-                  <p className="font-body-lg text-body-lg text-on-surface-variant mb-6 line-clamp-3">
-                    {sorotan.ringkasan}
-                  </p>
-                  <Link className="inline-flex items-center gap-2 font-label-md text-label-md text-primary hover:text-secondary-fixed-dim transition-colors font-bold uppercase tracking-wider" href={`/berita/${sorotan.slug}`} aria-label={`Baca Laporan Lengkap: ${sorotan.judul}`}>
-                    Baca Laporan Lengkap <Ikon nama="arrow_forward" />
-                  </Link>
-                </div>
-              </div>
-            </section>
-          ) : null}
+          {sorotan ? <SorotanBerita sorotan={sorotan} /> : null}
           {/* Divider */}
           {sorotan && kartu.length > 0 ? <hr className="border-tertiary/10" /> : null}
           {/* Article Grid */}
@@ -212,35 +180,7 @@ export default async function HalamanBerita({ searchParams }) {
             <div>
               {/* QA-1: di dalam kolom utama (2/3 lebar) grid mengikuti portal_berita_beranda "Berita Terkini" (md:grid-cols-2 gap-6); lg:grid-cols-3 membuat kartu terjepit & judul terpotong */}
               <section className="grid grid-cols-1 md:grid-cols-2 gap-6" aria-label="Daftar artikel">
-                {kartu.map((a) => (
-                  <article key={a.id} className="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden group hover:border-secondary-fixed-dim transition-all duration-300 relative shadow-sm hover:shadow-md cursor-pointer">
-                    <TautanKartu href={`/berita/${a.slug}`} />
-                    <div className="h-48 w-full relative overflow-hidden bg-surface-container-high border-b border-outline-variant">
-                      <Image className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={a.gambar_utama || '/penampung/artikel-1.jpg'} alt={`Gambar utama: ${a.judul}`} fill sizes="(min-width: 1280px) 280px, (min-width: 768px) 50vw, 100vw" />
-                    </div>
-                    <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex justify-between items-start mb-4">
-                        <span className="bg-secondary-container text-on-secondary-container font-label-md text-label-md px-3 py-1 rounded-full border border-secondary">{a.kategori_nama}</span>
-                        <div className="flex items-center text-outline text-sm gap-1" title="Verified Truth">
-                          <Ikon nama="verified" className="text-base" />
-                        </div>
-                      </div>
-                      <h2 className="font-headline-md text-headline-md text-primary mb-3 leading-tight group-hover:text-secondary transition-colors line-clamp-2">
-                        <Link href={`/berita/${a.slug}`} className="focus:outline-none focus:underline">{a.judul}</Link>
-                      </h2>
-                      <p className="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow line-clamp-3">
-                        {a.ringkasan}
-                      </p>
-                      <div className="pt-4 border-t border-outline-variant flex justify-between items-center mt-auto">
-                        <div className="flex items-center gap-2">
-                          <Ikon nama="account_circle" className="text-outline" />
-                          <span className="font-label-md text-label-md text-on-surface">{a.penulis_nama}</span>
-                        </div>
-                        <span className="font-body-md text-body-md text-on-surface-variant text-sm">{formatTanggalID(a.terbit_pada, 'singkat')}</span>
-                      </div>
-                    </div>
-                  </article>
-                ))}
+                {kartu.map((a) => <KartuBerita key={a.id} a={a} />)}
               </section>
               {/* Pagination — tombol desain -> <Link> ?halaman= yang mempertahankan q/kategori/rentang */}
               <Paginasi halaman={halaman} totalHalaman={totalHalaman} buatHref={(n) => buatHref({ ...filterAktif, halaman: n })} />
@@ -250,46 +190,8 @@ export default async function HalamanBerita({ searchParams }) {
         </div>
         {/* Sidebar (portal_berita_beranda) */}
         <aside className="w-full md:w-80 flex-shrink-0 flex flex-col gap-8">
-          {/* Most Read */}
-          <div className="bg-surface-container-low rounded-xl border border-tertiary/10 p-6 shadow-sm">
-            <div className="flex items-center gap-2 mb-6 border-b border-tertiary/10 pb-4">
-              <Ikon nama="trending_up" className="text-secondary-container text-2xl" />
-              <h2 className="font-headline-md text-[20px] text-primary uppercase tracking-wide">Paling Banyak Dibaca</h2>
-            </div>
-            {palingDibaca.length === 0 ? (
-              <KeadaanKosong ikon="trending_up" judul="Belum ada data" keterangan="Artikel yang paling banyak dibaca akan tampil di sini." />
-            ) : (
-              <ul className="flex flex-col gap-4">
-                {palingDibaca.map((a, i) => (
-                  // Item pertama tanpa garis atas; item berikutnya "pt-4 border-t border-tertiary/5" persis seperti desain
-                  <li key={a.id} className={i === 0 ? 'group cursor-pointer flex gap-4 items-start relative' : 'group cursor-pointer flex gap-4 items-start pt-4 border-t border-tertiary/5 relative'}>
-                    <TautanKartu href={`/berita/${a.slug}`} />
-                    <span className="font-headline-lg text-secondary-container/50 group-hover:text-secondary-container transition-colors font-bold text-4xl leading-none">{i + 1}</span>
-                    <div>
-                      <h4 className="font-headline-md text-[16px] leading-snug text-primary group-hover:text-secondary-container transition-colors mb-1">
-                        <Link href={`/berita/${a.slug}`} className="focus:outline-none focus:underline">{a.judul}</Link>
-                      </h4>
-                      <span className="font-label-md text-[12px] text-on-surface-variant">{a.kategori_nama} • {formatAngkaID(a.jumlah_dibaca)} Tayangan</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          {/* Call to Action / Citizen Report Widget */}
-          <div className="bg-primary text-on-primary rounded-xl p-6 relative overflow-hidden shadow-sm">
-            {/* Abstract pattern overlay */}
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '10px 10px' }}></div>
-            <div className="relative z-10">
-              <Ikon nama="campaign" className="text-4xl text-secondary-fixed mb-4" />
-              <h3 className="font-headline-md text-[22px] font-bold mb-2">Punya Info Penting?</h3>
-              <p className="font-body-md text-[14px] text-on-primary/80 mb-6">Jadilah mata dan telinga masyarakat. Laporkan indikasi penyimpangan yang Anda temui dengan bukti pendukung.</p>
-              <Link href="/kontak" className="w-full bg-secondary-fixed text-primary font-label-md py-3 rounded-lg hover:bg-secondary-fixed-dim transition-colors flex items-center justify-center gap-2 font-bold uppercase tracking-wide">
-                Buat Laporan <Ikon nama="shield" />
-              </Link>
-              <p className="text-center mt-3 text-[11px] text-on-primary/60 font-body-md">Identitas pelapor dilindungi kerahasiaannya.</p>
-            </div>
-          </div>
+          <PalingDibaca palingDibaca={palingDibaca} />
+          <WidgetLaporan />
         </aside>
       </div>
     </main>

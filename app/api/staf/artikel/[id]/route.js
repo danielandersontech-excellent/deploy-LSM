@@ -10,6 +10,7 @@ import { denganPeran, GalatHttp, bacaJson } from '@/lib/auth/penjaga';
 import { HAK, wilayahTerbatas } from '@/lib/auth/hakAkses';
 import { ambilArtikelById, perbaruiArtikel, hapusArtikel, arsipkanArtikel, kembalikanKeDraf, ambilTagArtikel } from '@/lib/db/artikel';
 import { validasiMuatanArtikel, GalatValidasi } from '@/lib/validasi/artikel';
+import { pastikanKategoriArtikelAktif } from '@/lib/validasi/kategoriArtikel';
 import { catatAudit } from '@/lib/db/audit';
 import { alamatIpPermintaan } from '@/lib/auth/sesi';
 
@@ -66,6 +67,7 @@ export const PATCH = denganPeran(HAK.artikel_sunting, async (request, { params }
     if (galat instanceof GalatValidasi) throw new GalatHttp(galat.status, galat.message, galat.kode);
     throw galat;
   }
+  await pastikanKategoriArtikelAktif(muatan.kategoriId);
   await perbaruiArtikel(id, { ...muatan, tag: Array.isArray(body.tag) || typeof body.tag === 'string' ? muatan.tag : null });
   await catatAudit({ userId: pengguna.id, aksi: 'artikel_sunting', tabelTerkait: 'artikel', idTerkait: id,
     detail: { judul: muatan.judul }, ip: await alamatIpPermintaan(request) });

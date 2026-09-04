@@ -47,13 +47,16 @@ export default function NavPublik({ menu }) {
 
   return (
     <header className="bg-primary dark:bg-primary-container docked full-width top-0 border-b border-outline-variant dark:border-outline shadow-sm z-50 sticky">
-      <div className="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto md:gap-4">
+      {/* RUN QA-4 D (KEPUTUSAN PEMILIK): di bawah md merek dan tombol hamburger SEJAJAR SATU BARIS (logo kiri,
+          hamburger kanan, tengah vertikal). Sebelumnya flex-col membuat hamburger jatuh ke baris kedua di bawah
+          merek. Desktop (md+) tidak berubah: flex-row seperti semula. gap-3 menjaga jarak merek-hamburger di 320 px. */}
+      <div className="flex flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto gap-3 md:gap-4">
         {/* Merek: kelas verbatim + shrink-0 whitespace-nowrap (KEPUTUSAN BARU Tahap 4, TEMUAN navbar): tanpa itu
             Chrome menyusutkan merek sehingga teks "WARKOP NUSANTARA" membungkus dua baris dan ditimpa tautan menu
             pada 768–1280 px — di seluruh screen.png desain merek selalu satu baris. nowrap hanya md+ (Tahap 6:
             di 375 px nowrap membuat halaman melebar melewati viewport). Dijadikan tautan ke beranda
             seperti varian beranda_warkop_nusantara. */}
-        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 max-w-full lg:whitespace-nowrap lg:shrink-0" href="/">
+        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 max-w-full min-w-0 lg:whitespace-nowrap lg:shrink-0" href="/">
           {/* QA-1: ukuran logo mengikuti desain (h-8 w-8); h-16 sebelumnya membuat merek melebar dan menu turun ke baris kedua di 1280 px */}
           <Image alt="WARKOP NUSANTARA Logo" className="h-8 w-8 object-cover rounded-full" src="/logo-warkop.png" width={32} height={32} priority />
           <span className="font-headline-md text-headline-md lg:text-xl font-bold text-on-primary uppercase tracking-tight">WARKOP NUSANTARA</span>
@@ -66,10 +69,10 @@ export default function NavPublik({ menu }) {
             publik (navbar dan laci seluler). Halaman masuk tetap berfungsi lewat URL langsung ke host staf,
             tetapi tidak lagi diiklankan kepada pengunjung. Ruang yang kosong dipakai untuk melegakan menu:
             jarak antaritem gap-5 (2xl: gap-8) dan kotak cari w-48 (2xl: w-64). */}
-        <nav className="hidden md:flex items-center gap-5 2xl:gap-8 mt-4 md:mt-0" aria-label="Navigasi utama">
+        <nav className="hidden md:flex items-center gap-5 2xl:gap-8" aria-label="Navigasi utama">
           {daftarTautan()}
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 shrink-0">
           <form className="relative hidden lg:block" action="/berita" method="get" role="search">
             <Ikon nama="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" />
             <label className="sr-only" htmlFor={`${idLaci}-cari`}>Cari berita</label>

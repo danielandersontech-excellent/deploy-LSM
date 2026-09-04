@@ -73,12 +73,18 @@ SELECT v.nama, 'provinsi', (SELECT id FROM wilayah WHERE kode = '00'), v.kode FR
 -- ---------------------------------------------------------------------
 -- KATEGORI ARTIKEL (REFERENSI 10)
 -- ---------------------------------------------------------------------
-INSERT IGNORE INTO kategori_artikel (nama, slug, deskripsi, urutan) VALUES
-  ('Investigasi',     'investigasi',     'Laporan investigasi lapangan tim pengawas', 1),
-  ('Siaran Pers',     'siaran-pers',     'Pernyataan resmi lembaga',                  2),
-  ('Opini Publik',    'opini-publik',    'Analisis dan pandangan redaksi',             3),
-  ('Kegiatan Daerah', 'kegiatan-daerah', 'Kegiatan dan observasi kantor regional',     4),
-  ('Fasilitas Umum',  'fasilitas-umum',  'Laporan kondisi fasilitas dan layanan publik', 5);
+INSERT IGNORE INTO kategori_artikel (id, nama, slug, deskripsi, urutan, ikon, aktif) VALUES
+  (6,  'Nasional',         'nasional',         'Berita dan sikap lembaga pada isu tingkat nasional',          1,  'account_balance',   1),
+  (7,  'Daerah',           'daerah',           'Liputan dan kegiatan pengawasan di kabupaten/kota/provinsi',   2,  'location_on',       1),
+  (8,  'Hukum',            'hukum',            'Penegakan hukum, advokasi, dan bantuan hukum',                3,  'gavel',             1),
+  (9,  'Kebijakan Publik', 'kebijakan-publik', 'Regulasi, anggaran, dan pelayanan publik',                    4,  'policy',            1),
+  (1,  'Investigasi',      'investigasi',      'Laporan investigasi lapangan tim pengawas',                   5,  'zoom_in',           1),
+  (10, 'Lingkungan',       'lingkungan',       'Lingkungan hidup dan sumber daya alam',                       6,  'explore',           1),
+  (11, 'Pekerja',          'pekerja',          'Buruh, pekerja, dan ketenagakerjaan',                         7,  'badge',             1),
+  (12, 'UMKM',             'umkm',             'Usaha mikro, kecil, dan menengah',                            8,  'sell',              1),
+  (13, 'Sosial',           'sosial',           'Isu kemasyarakatan dan kemanusiaan',                          9,  'forum',             1),
+  (14, 'PPA',              'ppa',              'Perlindungan perempuan dan anak',                             10, 'shield',            1),
+  (15, 'Podcash',          'podcash',          'Konten suara dan siniar WARKOP NUSANTARA',                    11, 'record_voice_over', 1);
 
 -- ---------------------------------------------------------------------
 -- AKUN STAF CONTOH (nonaktif, hash '!' tidak pernah cocok). Nama mengikuti
@@ -137,7 +143,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Laporan warga terkait puskesmas pembantu yang tidak beroperasi selama 6 bulan meski pembangunan telah selesai.',
   '<p>Laporan warga terkait puskesmas pembantu yang tidak beroperasi selama 6 bulan meski pembangunan telah selesai.</p><p>Bangunan berdiri lengkap dengan papan nama, namun pintunya terkunci sejak serah terima. Warga harus menempuh perjalanan lebih dari satu jam untuk mencapai fasilitas kesehatan terdekat, padahal fasilitas baru ini hanya berjarak beberapa ratus meter dari permukiman.</p><h2>Yang kami temukan</h2><p>Dari penelusuran dokumen, pembangunan fisik memang telah dinyatakan selesai. Yang belum tersedia adalah tenaga kesehatan, perabot medis, dan sambungan listrik. Ketiganya berada di bawah pos anggaran yang berbeda dan belum terealisasi.</p><p>WARKOP NUSANTARA mengirimkan surat permintaan informasi kepada instansi terkait dan mendampingi warga menyusun pengaduan resmi. Kami akan memperbarui laporan ini begitu ada tanggapan.</p>',
   '/penampung/artikel-2.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'fasilitas-umum'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'kebijakan-publik'),
   (SELECT id FROM users WHERE email = 'budi.santoso@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '33'),
   'terbit', 863, '2026-08-08 10:00:00', '2026-08-07 16:20:00', '2026-08-08 10:00:00'
@@ -148,7 +154,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Tim observasi Warkop Nusantara menemukan adanya keterlambatan distribusi material yang berpotensi menunda penyelesaian target kuartal ketiga. Laporan warga setempat menguatkan temuan ini.',
   '<p>Tim observasi Warkop Nusantara menemukan adanya keterlambatan distribusi material yang berpotensi menunda penyelesaian target kuartal ketiga. Laporan warga setempat menguatkan temuan ini.</p><p>Observasi dilakukan pada beberapa segmen pekerjaan yang dapat diakses publik. Pada titik-titik tersebut, tumpukan material yang seharusnya sudah terpasang masih tertahan di lokasi penyimpanan, sementara alat berat tidak beroperasi pada jam kerja normal.</p><h2>Dampak bagi warga</h2><p>Warga mengeluhkan debu dan akses jalan alternatif yang rusak akibat lalu lintas kendaraan proyek. Beberapa pelaku usaha kecil di sepanjang jalur melaporkan penurunan pendapatan karena akses ke tempat usaha terganggu lebih lama dari jadwal yang diumumkan.</p><p>Kami merekomendasikan agar pengelola proyek menyampaikan jadwal ulang secara terbuka kepada masyarakat terdampak dan menyediakan jalur pengaduan yang mudah dijangkau.</p>',
   '/penampung/artikel-3.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'fasilitas-umum'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'kebijakan-publik'),
   (SELECT id FROM users WHERE email = 'budi.santoso@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '16'),
   'terbit', 540, '2026-08-12 15:00:00', '2026-08-11 09:00:00', '2026-08-12 15:00:00'
@@ -159,7 +165,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Dokumentasi lengkap hasil dengar pendapat antara perwakilan masyarakat dan PDAM terkait penurunan kualitas air selama musim kemarau. Komitmen perbaikan dicatat secara resmi.',
   '<p>Dokumentasi lengkap hasil dengar pendapat antara perwakilan masyarakat dan PDAM terkait penurunan kualitas air selama musim kemarau. Komitmen perbaikan dicatat secara resmi.</p><p>Pertemuan berlangsung di balai pertemuan wilayah dan dihadiri perwakilan warga dari beberapa kelurahan, pengelola layanan air, serta tim pemantau WARKOP NUSANTARA sebagai fasilitator.</p><h2>Poin kesepakatan</h2><p>Pengelola layanan berkomitmen melakukan pengujian kualitas air berkala dan mengumumkan hasilnya secara terbuka. Warga sepakat membentuk kelompok pemantau mandiri yang akan melaporkan setiap gangguan melalui kanal resmi.</p><p>Seluruh notulen pertemuan dapat diminta oleh warga melalui kantor regional kami. Tindak lanjut akan kami pantau dan laporkan pada kegiatan berikutnya.</p>',
   '/penampung/artikel-4.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'kegiatan-daerah'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'daerah'),
   (SELECT id FROM users WHERE email = 'siti.rahma@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '32'),
   'terbit', 412, '2026-08-10 11:00:00', '2026-08-09 13:30:00', '2026-08-10 11:00:00'
@@ -192,7 +198,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Rangkuman hasil observasi tim regional terhadap alokasi dana desa di wilayah timur.',
   '<p>Rangkuman hasil observasi tim regional terhadap alokasi dana desa di wilayah timur.</p><p>Pada kuartal ini tim regional memeriksa laporan realisasi dari sejumlah desa yang dipilih secara acak. Fokus pemeriksaan adalah kesesuaian antara pos anggaran, bukti pembayaran, dan keluaran fisik yang dapat diverifikasi warga.</p><h2>Temuan umum</h2><p>Sebagian besar desa telah memasang papan informasi anggaran di tempat umum, meskipun beberapa di antaranya belum diperbarui. Laporan pertanggungjawaban umumnya tersedia, namun tidak semua warga mengetahui haknya untuk membacanya.</p><p>Laporan ini bersifat awal dan telah digantikan oleh laporan kuartal berikutnya. Diarsipkan sebagai rujukan.</p>',
   '/penampung/artikel-7.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'kegiatan-daerah'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'daerah'),
   (SELECT id FROM users WHERE email = 'siti.rahma@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '81'),
   'arsip', 305, '2026-07-15 09:00:00', '2026-07-14 09:00:00', '2026-08-30 09:00:00'
@@ -203,7 +209,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Langkah demi langkah menggunakan platform kami untuk memastikan keamanan identitas pelapor.',
   '<p>Langkah demi langkah menggunakan platform kami untuk memastikan keamanan identitas pelapor.</p><h2>1. Putuskan apakah Anda ingin anonim</h2><p>Formulir pengaduan menyediakan pilihan untuk menyembunyikan identitas. Bila dipilih, tidak ada nama, NIK, telepon, atau email yang disimpan. Anda tetap mendapat nomor kasus untuk memantau perkembangan.</p><h2>2. Tulis kronologi secara runtut</h2><p>Sebutkan apa yang terjadi, kapan, di mana, dan siapa saja pihak yang terlibat sejauh Anda ketahui. Hindari menyertakan data pribadi orang lain yang tidak relevan.</p><h2>3. Lampirkan bukti seperlunya</h2><p>Foto, dokumen, atau video pendukung membantu verifikasi. Pastikan berkas tidak memuat informasi pribadi Anda bila Anda memilih anonim.</p><h2>4. Simpan nomor kasus Anda</h2><p>Nomor kasus berformat WRP-XXXXXX. Gunakan pada halaman Lacak Pengaduan. Jangan membagikannya kepada orang yang tidak Anda percaya.</p><p>Identitas pelapor hanya dapat dibuka oleh petugas berwenang, dan setiap pembukaan tercatat dalam jejak audit.</p>',
   '/penampung/artikel-8.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'siaran-pers'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'nasional'),
   (SELECT id FROM users WHERE email = 'redaksi@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '00'),
   'terbit', 1975, '2026-06-20 08:00:00', '2026-06-18 15:00:00', '2026-06-20 08:00:00'
@@ -214,7 +220,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Analisis peran aktif masyarakat sipil dalam menjaga keseimbangan kekuasaan pemerintahan lokal.',
   '<p>Analisis peran aktif masyarakat sipil dalam menjaga keseimbangan kekuasaan pemerintahan lokal.</p><p>Demokrasi tidak berhenti di bilik suara. Setelah pemilihan usai, kekuasaan yang dititipkan rakyat perlu diawasi setiap hari: bagaimana anggaran dibelanjakan, bagaimana layanan diberikan, dan bagaimana keputusan diambil.</p><h2>Hak atas informasi publik</h2><p>Undang-undang keterbukaan informasi memberi setiap warga hak untuk meminta dokumen publik. Hak ini adalah alat pengawasan paling dasar, namun masih jarang dipakai. Lembaga swadaya seperti kami berperan mendampingi warga menggunakannya.</p><h2>Pengawasan yang beradab</h2><p>Pengawasan sipil bukan berarti curiga pada semua orang. Ia berarti meminta bukti, membaca dokumen, dan menyampaikan temuan melalui jalur yang sah. Keberanian yang lahir dari kebenaran, bukan dari prasangka.</p>',
   '/penampung/artikel-9.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'opini-publik'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'kebijakan-publik'),
   (SELECT id FROM users WHERE email = 'redaksi@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '00'),
   'terbit', 688, '2026-07-02 09:00:00', '2026-07-01 11:00:00', '2026-07-02 09:00:00'
@@ -236,7 +242,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Kompilasi laporan warga tentang ruas jalan kabupaten yang rusak berat dan belum tersentuh perbaikan selama dua musim hujan.',
   '<p>Kompilasi laporan warga tentang ruas jalan kabupaten yang rusak berat dan belum tersentuh perbaikan selama dua musim hujan.</p><p>Relawan memetakan titik-titik kerusakan dengan foto berkoordinat dan mengelompokkannya menurut tingkat bahaya bagi pengguna jalan. Beberapa titik berada di jalur yang dilalui angkutan anak sekolah.</p><h2>Langkah berikutnya</h2><p>Kami akan menyampaikan peta kerusakan kepada instansi terkait dan meminta jadwal perbaikan yang dapat dipantau publik.</p><p>Artikel ini masih berupa draf dan menunggu verifikasi data lapangan.</p>',
   '/penampung/artikel-11.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'fasilitas-umum'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'kebijakan-publik'),
   (SELECT id FROM users WHERE email = 'siti.aminah@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '32'),
   'draf', 0, NULL, '2026-08-28 10:10:00', '2026-08-28 10:10:00'
@@ -247,7 +253,7 @@ INSERT IGNORE INTO artikel (judul, slug, ringkasan, isi, gambar_utama, kategori_
   'Mengapa rincian belanja pendidikan daerah harus mudah dibaca orang tua murid, bukan hanya auditor.',
   '<p>Mengapa rincian belanja pendidikan daerah harus mudah dibaca orang tua murid, bukan hanya auditor.</p><p>Anggaran pendidikan adalah salah satu pos terbesar dalam belanja daerah. Namun, dokumen anggaran umumnya disajikan dalam format yang sulit dipahami warga awam. Akibatnya, pengawasan hanya bergantung pada auditor resmi yang jumlahnya terbatas.</p><h2>Usulan kami</h2><p>Setiap sekolah negeri sebaiknya memasang ringkasan anggaran dan realisasinya di papan pengumuman dan situs resmi. Komite sekolah perlu dilibatkan dalam pembahasan anggaran sejak awal, bukan hanya saat pengesahan.</p><p>Transparansi bukan ancaman bagi pengelola yang bekerja dengan benar. Ia justru melindungi mereka dari prasangka.</p>',
   '/penampung/artikel-12.jpg',
-  (SELECT id FROM kategori_artikel WHERE slug = 'opini-publik'),
+  (SELECT id FROM kategori_artikel WHERE slug = 'kebijakan-publik'),
   (SELECT id FROM users WHERE email = 'redaksi@warkopnusantara.id'),
   (SELECT id FROM wilayah WHERE kode = '00'),
   'terbit', 421, '2026-07-28 09:00:00', '2026-07-27 14:00:00', '2026-07-28 09:00:00'

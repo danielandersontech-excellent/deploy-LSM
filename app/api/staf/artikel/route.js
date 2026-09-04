@@ -9,6 +9,7 @@ import { denganPeran, GalatHttp, bacaJson } from '@/lib/auth/penjaga';
 import { HAK, wilayahTerbatas } from '@/lib/auth/hakAkses';
 import { ambilArtikelStaf, buatArtikel, ambilArtikelById } from '@/lib/db/artikel';
 import { validasiMuatanArtikel, GalatValidasi } from '@/lib/validasi/artikel';
+import { pastikanKategoriArtikelAktif } from '@/lib/validasi/kategoriArtikel';
 import { catatAudit } from '@/lib/db/audit';
 import { alamatIpPermintaan } from '@/lib/auth/sesi';
 
@@ -40,6 +41,7 @@ export const POST = denganPeran(HAK.artikel_buat, async (request, _konteks, peng
     if (galat instanceof GalatValidasi) throw new GalatHttp(galat.status, galat.message, galat.kode);
     throw galat;
   }
+  await pastikanKategoriArtikelAktif(muatan.kategoriId);
   const id = await buatArtikel({ ...muatan, penulisId: pengguna.id });
   await catatAudit({ userId: pengguna.id, aksi: 'artikel_buat', tabelTerkait: 'artikel', idTerkait: id,
     detail: { judul: muatan.judul, kategoriId: muatan.kategoriId }, ip: await alamatIpPermintaan(request) });

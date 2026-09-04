@@ -38,3 +38,8 @@
   font-weight: 700;
   color: #735c00; /* secondary */
 }
+
+/* QA-4 B: kelas `hide-scrollbar` dipakai desain (pil status kelola_pengaduan_admin) dan bilah kategori
+   publik, tetapi tidak pernah didefinisikan sehingga batang gulir mendatar tetap tampak. */
+.hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }

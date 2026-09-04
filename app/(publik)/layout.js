@@ -2,10 +2,26 @@
 // Tautan "lewati ke konten" (aksesibilitas, TAHAP-04) menuju #konten-utama — setiap halaman
 // memberi id itu pada <main>-nya. Seluruh halaman publik membaca basis data saat permintaan,
 // jadi segmen ini dinamis (tidak diprarender saat `next build` di dalam image Docker tanpa DB).
+import { Suspense } from 'react';
 import HeaderPublik from '@/components/publik/HeaderPublik';
 import FooterPublik from '@/components/publik/FooterPublik';
+import BilahKategori from '@/components/publik/BilahKategori';
+import { ambilKategoriArtikel } from '@/lib/db/artikel';
 
 export const dynamic = 'force-dynamic';
+
+// RUN QA-4 B: bilah kategori berita tepat di bawah navbar pada SEMUA halaman publik (bukan halaman staf).
+// Daftar dibaca di server (kategori aktif, urutan final); penanda aktif butuh searchParams sehingga komponen
+// bilahnya client dan dibungkus Suspense (aturan useSearchParams App Router).
+async function BilahKategoriServer() {
+  let kategori = [];
+  try {
+    kategori = (await ambilKategoriArtikel()).map((k) => ({ slug: k.slug, nama: k.nama, ikon: k.ikon }));
+  } catch {
+    // basis data tidak terjangkau: halaman tetap tampil tanpa bilah (error.js menangani kegagalan lain)
+  }
+  return <BilahKategori kategori={kategori} />;
+}
 
 export default function LayoutPublik({ children }) {
   return (
@@ -17,6 +33,9 @@ export default function LayoutPublik({ children }) {
         Lewati ke konten
       </a>
       <HeaderPublik />
+      <Suspense fallback={null}>
+        <BilahKategoriServer />
+      </Suspense>
       {children}
       <FooterPublik />
     </>

@@ -76,6 +76,10 @@ CREATE TABLE IF NOT EXISTS kategori_artikel (
   slug       VARCHAR(80)  NOT NULL,
   deskripsi  VARCHAR(255) NULL,
   urutan     INT NOT NULL DEFAULT 0,
+  -- QA-4 A: ikon Material Symbols (dari 77 ikon resmi) + status aktif (kategori lama dinonaktifkan, tidak dihapus);
+  -- instalasi lama: database/migrations/20260905-1100-kategori-berita-final.sql
+  ikon       VARCHAR(40)  NOT NULL DEFAULT 'article',
+  aktif      TINYINT(1)   NOT NULL DEFAULT 1,
   PRIMARY KEY (id),
   UNIQUE KEY uq_kategori_artikel_slug (slug)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

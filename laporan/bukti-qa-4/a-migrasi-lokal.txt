@@ -1,0 +1,37 @@
+# QA-4 A — migrasi kategori berita final di LOKAL — 2026-09-04T21:45:12Z
+## sebelum
+1 | Investigasi | investigasi | 1 | artikel=4
+2 | Siaran Pers | siaran-pers | 2 | artikel=1
+3 | Opini Publik | opini-publik | 3 | artikel=2
+4 | Kegiatan Daerah | kegiatan-daerah | 4 | artikel=2
+5 | Fasilitas Umum | fasilitas-umum | 5 | artikel=3
+## jalankan
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #1: affectedRows=0
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #2: affectedRows=0
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #3: affectedRows=12
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #4: affectedRows=1
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #5: affectedRows=2
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #6: affectedRows=2
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #7: affectedRows=3
+  [database/migrations/20260905-1100-kategori-berita-final.sql] #8: affectedRows=4
+database/migrations/20260905-1100-kategori-berita-final.sql: 8 statement dijalankan
+## sesudah
+6 | Nasional | nasional | urut=1 | account_balance | aktif=1 | artikel=1
+7 | Daerah | daerah | urut=2 | location_on | aktif=1 | artikel=2
+8 | Hukum | hukum | urut=3 | gavel | aktif=1 | artikel=0
+9 | Kebijakan Publik | kebijakan-publik | urut=4 | policy | aktif=1 | artikel=5
+1 | Investigasi | investigasi | urut=5 | zoom_in | aktif=1 | artikel=4
+10 | Lingkungan | lingkungan | urut=6 | explore | aktif=1 | artikel=0
+11 | Pekerja | pekerja | urut=7 | badge | aktif=1 | artikel=0
+12 | UMKM | umkm | urut=8 | sell | aktif=1 | artikel=0
+13 | Sosial | sosial | urut=9 | forum | aktif=1 | artikel=0
+14 | PPA | ppa | urut=10 | shield | aktif=1 | artikel=0
+15 | Podcash | podcash | urut=11 | record_voice_over | aktif=1 | artikel=0
+2 | Siaran Pers | siaran-pers | urut=92 | article | aktif=0 | artikel=0
+3 | Opini Publik | opini-publik | urut=93 | article | aktif=0 | artikel=0
+4 | Kegiatan Daerah | kegiatan-daerah | urut=94 | article | aktif=0 | artikel=0
+5 | Fasilitas Umum | fasilitas-umum | urut=95 | article | aktif=0 | artikel=0
+artikel di kategori nonaktif: [{"n":0}]
+## IDEMPOTEN: lari kedua
+6
+jumlah kategori sesudah lari kedua: [{"n":15,"aktif":"11"}]

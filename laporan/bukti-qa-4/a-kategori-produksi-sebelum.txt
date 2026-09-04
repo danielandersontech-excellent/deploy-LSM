@@ -1,0 +1,25 @@
+id	nama	slug	urutan	artikel
+1	Investigasi	investigasi	1	4
+2	Siaran Pers	siaran-pers	2	1
+3	Opini Publik	opini-publik	3	2
+4	Kegiatan Daerah	kegiatan-daerah	4	2
+5	Fasilitas Umum	fasilitas-umum	5	3
+Field	Type	Null	Key	Default	Extra
+id	int(10) unsigned	NO	PRI	NULL	auto_increment
+nama	varchar(80)	NO		NULL	
+slug	varchar(80)	NO	UNI	NULL	
+deskripsi	varchar(255)	YES		NULL	
+urutan	int(11)	NO		0	
+id	kategori_id	kategori	status	judul
+1	1	Investigasi	terbit	Dugaan Penyelewengan Dana Desa di Sektor Infrastruktur Terungkap
+5	1	Investigasi	draf	Analisis Dokumen AMDAL Kawasan Industri Baru
+6	1	Investigasi	terbit	Membongkar Tabir Ketidakadilan: Laporan Khusus Dari Garis Depan
+10	1	Investigasi	terbit	Indikasi Penyelewengan Dana Desa Mekarsari
+8	2	Siaran Pers	terbit	Cara Aman Menyampaikan Laporan Pengaduan
+9	3	Opini Publik	terbit	Pentingnya Pengawasan Sipil Dalam Demokrasi
+12	3	Opini Publik	terbit	Opini: Transparansi Anggaran Pendidikan 2025
+4	4	Kegiatan Daerah	terbit	Rapat Dengar Pendapat Mengenai Kualitas Air Bersih Regional
+7	4	Kegiatan Daerah	arsip	Audit Dana Desa Kuartal III: Temuan Awal
+2	5	Fasilitas Umum	terbit	Fasilitas Kesehatan Mangkrak di Daerah Pelosok
+3	5	Fasilitas Umum	terbit	Evaluasi Proyek Jalan Trans-Sumatera Sektor Selatan
+11	5	Fasilitas Umum	draf	Laporan Infrastruktur Jalan Rusak di Kab. Bandung

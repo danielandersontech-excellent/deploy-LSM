@@ -1,0 +1,58 @@
+# QA-4 P1 — sinkron produksi — 2026-09-04T21:38:21Z
+$ curl.exe https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-05T04:38:25+07:00","basisData":"terhubung","versi":"0.1.0"}
+$ docker ps (warkop)
+re8snqu8jwyxdqg2wmzrbm3w:359b0233d77c2588d1f5f97eca9182af1ce5bbcc | Up 9 hours (healthy) | restart=9 hours ago
+mariadb:11 | Up 37 hours (healthy)
+$ koneksi DB dari container app (node + env container, tanpa mencetak rahasia)
+DB dari container OK, pengurus: 22
+$ webhook Coolify (token .env.produksi) -> hanya GET status tanpa memicu deploy
+HTTP 403
+$ kredensial DB di .env.produksi vs env container (dibandingkan hash, tidak dicetak)
+DB_PASSWORD BERBEDA antara .env.produksi dan container (pemilik merotasi?)
+$ token webhook: coba endpoint deploy dengan uuid PALSU (token sah -> 404/400 'not found', token mati -> 401)
+{"message":"No resources found."}
+HTTP 404
+$ JWT_SECRET .env.produksi vs env container (hash)
+JWT_SECRET BERBEDA (dirotasi pemilik)
+$ kunci lain yang berbeda? (dibandingkan hash per kunci)
+  DB_USER BERBEDA
+  DB_HOST BERBEDA
+  DB_NAME BERBEDA
+  SEED_ADMIN_EMAIL BERBEDA
+  STAF_HOST BERBEDA
+  UPLOAD_PRIVATE_DIR BERBEDA
+
+## Perbandingan ulang (hash node, cara sebelumnya salah karena sha256sum membaca baris baru)
+  STAF_HOST cocok
+  DB_NAME cocok
+  DB_USER cocok
+  DB_HOST cocok
+  DB_PASSWORD cocok
+  JWT_SECRET cocok
+  SEED_ADMIN_EMAIL cocok
+  SEED_ADMIN_PASSWORD BERBEDA
+
+## KESIMPULAN P1: TIDAK BLOKIR
+- /api/health 200; DB dari container app OK; token webhook SAH (endpoint deploy membalas 404 'No resources found' untuk uuid palsu, bukan 401);
+- seluruh kredensial .env.produksi masih sama dengan env container (DB_*, JWT_SECRET, STAF_HOST);
+- hanya SEED_ADMIN_PASSWORD yang berbeda: wajar, pemilik sudah mengganti sandi admin lewat aplikasi (QA-2 B0d);
+  nilai seed itu memang tidak dipakai lagi. Baris 'BERBEDA' pada percobaan pertama di atas adalah kesalahan
+  cara membandingkan (sha256sum ikut menghitung baris baru), dikoreksi pada perbandingan ulang.
+- HTTP 403 pada /api/v1/applications/<uuid>: token sengaja hanya berizin deploy (tindakan pemilik Tahap 9), bukan tanda token mati.
+
+# QA-4 P2 — volume lampiran terjaga
+$ docker inspect warkop-app: Mounts
+volume warkop-unggahan -> /app/public/unggahan (rw=true)
+
+$ docker volume ls | grep warkop
+warkop-unggahan
+$ isi /app/unggahan-terjaga di container (jumlah berkas)
+total 12
+drwxr-xr-x    2 nextjs   nodejs        4096 Sep  4 19:39 .
+drwxr-xr-x    1 root     root          4096 Sep  4 19:39 ..
+0
+
+# QA-4 P1b — login akun staf uji (pola uji-g-produksi QA-3: aktifkan, masuk, nonaktifkan)
+login akun uji (qa2.verifikasi.1788515626317@warkopnusantara.id) -> HTTP 200
+sesudah dinonaktifkan lagi -> HTTP 401

@@ -1,27 +1,38 @@
-// app/(publik)/page.js — BERANDA. PROTOKOL KONVERSI LAYAR (REFERENSI 18):
-// DOM + kelas Tailwind disalin apa adanya dari beranda_warkop_nusantara/code.html (830 px).
-// Enam perubahan 18.2 yang dipakai: (a) ikon -> <Ikon>, (b) gambar -> lokal/DB,
-// (c) href="#" -> rute, (d) bagian DINAMIS (statistik, sorotan, status advokasi) -> DB,
-// (e) kartu berulang -> .map(), (f) JSX. Navbar/footer dari layout (18.3).
-// Aturan 13: Status Advokasi HANYA nomor kasus, kategori, wilayah, status (SQL tanpa identitas).
-import Image from 'next/image';
+// app/(publik)/page.js — BERANDA = PORTAL BERITA (RUN QA-4 C, KEPUTUSAN PEMILIK, menyimpang dari desain
+// beranda_warkop_nusantara/code.html; dasar kesetiaan diperbarui beserta alasannya di LAPORAN-QA-4.md).
+//
+// Susunan (memakai pola portal_berita_beranda + daftar_berita_investigasi, token desain penuh):
+//   1. Strip identitas LSM (dari hero beranda lama, dipadatkan): lencana "Pengawasan Sipil Independen", nama
+//      panjang, motto "Berani Karena Benar", tombol "Sampaikan Pengaduan" dan "Lacak Kasus" (misi tetap menonjol).
+//   2. Bilah kategori (layout publik, RUN QA-4 B) sudah tepat di bawah navbar.
+//   3. Kolom utama: SOROTAN UTAMA bergambar besar (artikel terbit terbaru) + "Berita Terkini" 6 kartu +
+//      tautan "Lihat Semua Berita".
+//   4. Sisi kanan: Paling Banyak Dibaca, widget Buat Laporan, dan dua modul yang DIPINDAHKAN dari beranda lama
+//      (KEPUTUSAN BARU: dipilih sisi beranda berita, bukan /tentang, supaya statistik dan status advokasi tetap
+//      terlihat di halaman pertama tanpa mendesak berita): Status Advokasi (aturan 13: tanpa identitas) dan
+//      Rekam Jejak (statistik dari pengaturan).
+// /berita tetap ada sebagai arsip lengkap dengan filter; kartu dan sorotan memakai komponen bersama
+// components/publik/berita/* sehingga tampilannya identik.
 import Link from 'next/link';
-import TautanKartu from '@/components/publik/TautanKartu';
 import Ikon from '@/components/ui/Ikon';
-import Lencana from '@/components/ui/Lencana';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
+import SorotanBerita from '@/components/publik/berita/SorotanBerita';
+import KartuBerita from '@/components/publik/berita/KartuBerita';
+import { PalingDibaca, WidgetLaporan, StatusAdvokasi, RekamJejak } from '@/components/publik/berita/SisiBerita';
 import { ambilPengaturan } from '@/lib/db/pengaturan';
-import { ambilArtikelSorotan } from '@/lib/db/artikel';
+import { ambilArtikelTerbit, ambilArtikelPalingDibaca } from '@/lib/db/artikel';
 import { ambilKasusBerjalanPublik } from '@/lib/db/pengaduan';
-import { labelKategoriPengaduan } from '@/lib/kategoriPengaduan';
-import { formatAngkaID, formatTanggalID } from '@/lib/utils';
+import { formatAngkaID } from '@/lib/utils';
 
 export const metadata = {
-  title: { absolute: 'WARKOP NUSANTARA - Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara' },
-  description: 'Lembaga pengawasan sipil independen: kanal pengaduan masyarakat yang melindungi identitas pelapor dan portal berita investigasi. Berani Karena Benar.',
+  title: { absolute: 'WARKOP NUSANTARA - Berita, Investigasi, dan Kanal Pengaduan Masyarakat' },
+  description: 'Portal berita dan investigasi WARKOP NUSANTARA (Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara) beserta kanal pengaduan masyarakat yang melindungi identitas pelapor. Berani Karena Benar.',
   alternates: { canonical: '/' },
-  openGraph: { title: 'WARKOP NUSANTARA', description: 'Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar.', url: '/' },
+  openGraph: { title: 'WARKOP NUSANTARA - Berita & Investigasi', description: 'Berita, laporan investigasi, dan kanal pengaduan masyarakat. Berani Karena Benar.', url: '/' },
 };
+
+const JUMLAH_TERKINI = 7; // 1 sorotan + 6 kartu (grid 2 kolom x 3 baris)
+const JUMLAH_PALING_DIBACA = 5;
 
 const JSON_LD_ORGANISASI = {
   '@context': 'https://schema.org',
@@ -34,186 +45,89 @@ const JSON_LD_ORGANISASI = {
 };
 
 export default async function HalamanBeranda() {
-  const [setelan, artikel, kasus] = await Promise.all([
+  const [setelan, terkini, palingDibaca, kasus] = await Promise.all([
     ambilPengaturan(['statistik_laporan_ditangani', 'statistik_provinsi_tercover', 'statistik_tahun_mengawasi']),
-    ambilArtikelSorotan(2),
+    ambilArtikelTerbit({ halaman: 1, perHalaman: JUMLAH_TERKINI }),
+    ambilArtikelPalingDibaca(JUMLAH_PALING_DIBACA),
     ambilKasusBerjalanPublik(2),
   ]);
-  const [utama, kedua] = artikel;
-  // Angka statistik dari `pengaturan` (bukan dipaku). Label + keterangan verbatim dari code.html.
+  const [sorotan, ...kartu] = terkini.baris;
   const statistik = [
-    { angka: `${formatAngkaID(setelan.statistik_laporan_ditangani)}+`, label: 'Laporan Ditangani', keterangan: 'Diselesaikan melalui mediasi dan advokasi hukum yang transparan.', kelas: 'text-center md:text-left md:pr-8 pt-6 md:pt-0' },
-    { angka: formatAngkaID(setelan.statistik_provinsi_tercover), label: 'Provinsi Tercover', keterangan: 'Jaringan relawan pengawas yang tersebar di seluruh pelosok negeri.', kelas: 'text-center md:text-left md:px-8 pt-6 md:pt-0' },
-    { angka: formatAngkaID(setelan.statistik_tahun_mengawasi), label: 'Tahun Mengawasi', keterangan: 'Konsisten mengawal kebijakan publik sejak didirikan.', kelas: 'text-center md:text-left md:pl-8 pt-6 md:pt-0' },
+    { angka: `${formatAngkaID(setelan.statistik_laporan_ditangani)}+`, label: 'Laporan Ditangani', keterangan: 'Diselesaikan melalui mediasi dan advokasi hukum yang transparan.' },
+    { angka: formatAngkaID(setelan.statistik_provinsi_tercover), label: 'Provinsi Tercover', keterangan: 'Jaringan relawan pengawas yang tersebar di seluruh pelosok negeri.' },
+    { angka: formatAngkaID(setelan.statistik_tahun_mengawasi), label: 'Tahun Mengawasi', keterangan: 'Konsisten mengawal kebijakan publik sejak didirikan.' },
   ];
 
   return (
     <main id="konten-utama" className="flex-grow">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_ORGANISASI) }} />
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden bg-surface-container-lowest">
-        {/* Background Map Watermark (Decorative) — KEPUTUSAN BARU: segel logo (memuat peta Nusantara) sebagai watermark lokal */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none flex items-center justify-center" aria-hidden="true">
-          <Image className="w-full h-full object-cover" src="/logo-warkop-cap-air.png" alt="" width={1024} height={1024} priority />
-        </div>
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10 flex items-center justify-between gap-gutter">
+      {/* Strip identitas LSM — kelas dari hero beranda_warkop_nusantara, dipadatkan (misi tetap menonjol) */}
+      <section className="bg-surface-container-lowest border-b border-outline-variant" aria-label="Identitas lembaga">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-6 md:py-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/20 border border-secondary-fixed/50 mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/20 border border-secondary-fixed/50 mb-3">
               <Ikon nama="verified_user" terisi className="text-secondary text-sm" />
               <span className="font-label-md text-label-md text-secondary">Pengawasan Sipil Independen</span>
             </div>
-            <h1 className="font-headline-xl text-headline-xl text-primary mb-4 leading-tight">
-              Wadah Aspirasi Rakyat,<br />
-              <span className="text-secondary">Kontrol, Observasi dan Pengawasan Nusantara</span>
-            </h1>
-            <p className="font-motto text-motto text-on-surface-variant text-xl italic mb-8 border-l-4 border-secondary pl-4">
-              &quot;Berani Karena Benar.&quot;
+            <p className="font-headline-md text-headline-md text-primary leading-tight">
+              Wadah Aspirasi Rakyat, <span className="text-secondary">Kontrol, Observasi dan Pengawasan Nusantara</span>
             </p>
-            <p className="font-body-lg text-body-lg text-on-surface mb-10 max-w-2xl leading-relaxed">
-              Kami adalah mata dan telinga rakyat. Lembaga independen yang berdedikasi untuk memastikan transparansi, keadilan, dan akuntabilitas di setiap lapisan pemerintahan dan pelayanan publik di Indonesia.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/kontak" className="bg-primary text-on-primary hover:bg-primary-container px-8 py-4 rounded-lg font-label-md text-label-md transition-all shadow-[0_4px_14px_0_rgba(39,19,16,0.39)] hover:shadow-[0_6px_20px_rgba(39,19,16,0.23)] hover:-translate-y-0.5 flex items-center justify-center gap-2">
-                <Ikon nama="campaign" />
-                Sampaikan Pengaduan
-              </Link>
-              <Link href="/faq" className="bg-surface text-primary border border-outline hover:bg-surface-container-low px-8 py-4 rounded-lg font-label-md text-label-md transition-colors flex items-center justify-center gap-2">
-                <Ikon nama="menu_book" />
-                Pelajari Prosedur
-              </Link>
-            </div>
+            <p className="font-motto text-motto text-on-surface-variant italic mt-2 border-l-4 border-secondary pl-4">&quot;Berani Karena Benar.&quot;</p>
           </div>
-          {/* QA-2 B2 (KEPUTUSAN PEMILIK): visual hero kanan = logo segel besar WARKOP; hanya lg+ agar teks hero tetap utuh di ponsel/tablet */}
-          <div className="hidden lg:flex shrink-0 items-center justify-center w-80 xl:w-96" aria-hidden="true">
-            <Image className="w-full h-auto object-contain drop-shadow-[0_12px_28px_rgba(39,19,16,0.25)]" src="/logo-warkop-besar.png" alt="" width={1024} height={1024} priority />
-          </div>
-        </div>
-      </section>
-      {/* Stats Section — angka dari pengaturan */}
-      <section className="bg-primary text-on-primary py-16 border-y border-outline" aria-label="Statistik lembaga">
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
-            {statistik.map((s) => (
-              <div key={s.label} className={s.kelas}>
-                <div className="font-headline-xl text-headline-xl text-secondary-fixed mb-2">{s.angka}</div>
-                <div className="font-label-md text-label-md text-on-primary-container uppercase tracking-wider">{s.label}</div>
-                <p className="font-body-md text-body-md mt-2 text-on-primary/80">{s.keterangan}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* Latest News Section (Bento Grid Style) */}
-      <section className="py-24 bg-surface">
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="font-headline-lg text-headline-lg text-primary mb-2">Sorotan Investigasi</h2>
-              <p className="font-body-lg text-body-lg text-on-surface-variant">Laporan terkini dari lapangan oleh tim pengawas Warkop Nusantara.</p>
-            </div>
-            <Link className="hidden md:flex items-center gap-1 text-secondary font-label-md text-label-md hover:underline" href="/berita">
-              Lihat Semua Berita
-              <Ikon nama="arrow_forward" className="text-sm" />
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            <Link href="/kontak" className="bg-primary text-on-primary hover:bg-primary-container px-8 py-4 rounded-lg font-label-md text-label-md transition-all shadow-[0_4px_14px_0_rgba(39,19,16,0.39)] hover:shadow-[0_6px_20px_rgba(39,19,16,0.23)] hover:-translate-y-0.5 flex items-center justify-center gap-2">
+              <Ikon nama="campaign" />
+              Sampaikan Pengaduan
+            </Link>
+            <Link href="/lacak" className="bg-surface text-primary border border-outline hover:bg-surface-container-low px-8 py-4 rounded-lg font-label-md text-label-md transition-colors flex items-center justify-center gap-2">
+              <Ikon nama="search" />
+              Lacak Kasus
             </Link>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Featured Article (Takes up 2 columns on large screens) */}
-            {utama ? (
-              <article className="lg:col-span-2 group cursor-pointer bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row relative">
-                {/* QA-1: seluruh kartu bisa diklik (tautan peregang); judul tetap <Link> untuk keyboard */}
-                <TautanKartu href={`/berita/${utama.slug}`} />
-                <div className="absolute top-4 left-4 z-20">
-                  <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-error text-on-error font-label-md text-xs shadow-sm">
-                    <Ikon nama="warning" terisi className="text-[14px]" />
-                    {utama.kategori_nama}
-                  </div>
-                </div>
-                <div className="w-full sm:w-2/5 h-64 sm:h-auto relative overflow-hidden">
-                  <div className="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-700" role="img" aria-label={`Gambar utama: ${utama.judul}`} style={{ backgroundImage: `url('${utama.gambar_utama || '/penampung/artikel-1.jpg'}')` }}></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent sm:hidden"></div>
-                </div>
-                <div className="w-full sm:w-3/5 p-6 md:p-8 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-4 text-on-surface-variant font-label-md text-xs mb-3">
-                      <span className="flex items-center gap-1"><Ikon nama="calendar_today" className="text-[14px]" /> {formatTanggalID(utama.terbit_pada)}</span>
-                      {utama.wilayah_nama ? <span className="flex items-center gap-1"><Ikon nama="location_on" className="text-[14px]" /> {utama.wilayah_nama}</span> : null}
-                    </div>
-                    <h3 className="font-headline-md text-headline-md text-primary mb-3 group-hover:text-secondary transition-colors line-clamp-2">
-                      <Link href={`/berita/${utama.slug}`} className="focus:outline-none focus:underline">{utama.judul}</Link>
-                    </h3>
-                    <p className="font-body-md text-body-md text-on-surface mb-6 line-clamp-3">{utama.ringkasan}</p>
-                  </div>
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant">
-                        <Ikon nama="person" className="text-on-surface-variant text-sm" />
-                      </div>
-                      <span className="font-label-md text-xs text-on-surface-variant">{utama.penulis_nama}</span>
-                    </div>
-                    <Ikon nama="arrow_forward" className="text-secondary opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0" />
-                  </div>
-                </div>
-              </article>
-            ) : (
-              <div className="lg:col-span-2">
-                <KeadaanKosong ikon="article" judul="Belum ada sorotan investigasi" keterangan="Artikel yang diterbitkan redaksi akan tampil di sini." />
-              </div>
-            )}
-            {/* Article 2 */}
-            {kedua ? (
-              <article className="group cursor-pointer bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col relative">
-                <TautanKartu href={`/berita/${kedua.slug}`} />
-                <div className="h-48 relative overflow-hidden border-b border-outline-variant">
-                  <div className="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-700" role="img" aria-label={`Gambar utama: ${kedua.judul}`} style={{ backgroundImage: `url('${kedua.gambar_utama || '/penampung/artikel-2.jpg'}')` }}></div>
-                  <div className="absolute top-3 left-3">
-                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface text-primary font-label-md text-[10px] uppercase border border-outline-variant shadow-sm">
-                      {kedua.kategori_nama}
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-4 text-on-surface-variant font-label-md text-xs mb-2">
-                    <span className="flex items-center gap-1"><Ikon nama="calendar_today" className="text-[14px]" /> {formatTanggalID(kedua.terbit_pada)}</span>
-                  </div>
-                  <h3 className="font-headline-md text-lg font-semibold text-primary mb-2 group-hover:text-secondary transition-colors line-clamp-2">
-                    <Link href={`/berita/${kedua.slug}`} className="focus:outline-none focus:underline">{kedua.judul}</Link>
-                  </h3>
-                  <p className="font-body-md text-body-md text-on-surface text-sm mb-4 line-clamp-3">{kedua.ringkasan}</p>
-                  <Link href={`/berita/${kedua.slug}`} className="mt-auto pt-4 flex items-center justify-between text-secondary font-label-md text-sm" aria-label={`Baca selengkapnya: ${kedua.judul}`}>
-                    <span className="">Baca Selengkapnya</span>
-                    <Ikon nama="east" className="text-sm" />
-                  </Link>
-                </div>
-              </article>
-            ) : null}
-            {/* Article 3 — Status Advokasi (aturan 13: tanpa identitas pelapor) */}
-            <article className="group cursor-pointer bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col lg:col-start-3">
-              <div className="p-6 flex flex-col h-full bg-surface-container-low border-b-4 border-secondary-fixed">
-                <div className="flex items-center gap-2 mb-4">
-                  <Ikon nama="gavel" className="text-secondary text-3xl" />
-                  <h4 className="font-headline-md text-lg text-primary">Status Advokasi</h4>
-                </div>
-                <div className="space-y-4 flex-grow">
-                  {kasus.length === 0 ? (
-                    <p className="font-body-md text-sm text-on-surface-variant">Belum ada kasus yang sedang berjalan.</p>
-                  ) : (
-                    kasus.map((k) => (
-                      <div key={k.nomor_kasus} className="border-l-2 border-outline pl-4 py-1">
-                        <p className="font-label-md text-xs text-on-surface-variant mb-1">Kasus {k.nomor_kasus} - {labelKategoriPengaduan(k.kategori_masalah)}</p>
-                        <p className="font-body-md text-sm font-medium text-primary">{k.wilayah_nama || 'Lingkup nasional'}</p>
-                        <Lencana status={k.status} className="mt-2" />
-                      </div>
-                    ))
-                  )}
-                </div>
-                <Link href="/lacak" className="w-full py-2 mt-4 border border-outline rounded text-primary font-label-md text-sm hover:bg-surface-container transition-colors text-center block">
-                  Pantau Semua Kasus
-                </Link>
-              </div>
-            </article>
-          </div>
         </div>
       </section>
+
+      {/* Portal berita: dua kolom (portal_berita_beranda) */}
+      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+        <div className="flex flex-col md:flex-row gap-gutter">
+          <div className="flex-1 min-w-0 flex flex-col gap-12">
+            {sorotan ? <SorotanBerita sorotan={sorotan} tingkatJudul="h1" /> : (
+              <>
+                <h1 className="sr-only">Berita WARKOP NUSANTARA</h1>
+                <KeadaanKosong ikon="article" judul="Belum ada berita" keterangan="Berita dan laporan investigasi yang diterbitkan akan tampil di sini." />
+              </>
+            )}
+            {kartu.length > 0 ? (
+              <>
+                <hr className="border-tertiary/10" />
+                <section aria-labelledby="judul-terkini">
+                  <div className="flex justify-between items-end mb-6">
+                    <h2 id="judul-terkini" className="font-headline-lg text-headline-lg text-primary">Berita Terkini</h2>
+                    <Link className="hidden md:flex items-center gap-1 text-secondary font-label-md text-label-md hover:underline" href="/berita">
+                      Lihat Semua Berita
+                      <Ikon nama="arrow_forward" className="text-sm" />
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {kartu.map((a) => <KartuBerita key={a.id} a={a} />)}
+                  </div>
+                  <div className="mt-8 md:hidden">
+                    <Link className="flex items-center justify-center gap-1 text-secondary font-label-md text-label-md hover:underline" href="/berita">
+                      Lihat Semua Berita <Ikon nama="arrow_forward" className="text-sm" />
+                    </Link>
+                  </div>
+                </section>
+              </>
+            ) : null}
+          </div>
+          <aside className="w-full md:w-80 flex-shrink-0 flex flex-col gap-8">
+            <PalingDibaca palingDibaca={palingDibaca} />
+            <WidgetLaporan />
+            <StatusAdvokasi kasus={kasus} />
+            <RekamJejak statistik={statistik} />
+          </aside>
+        </div>
+      </div>
     </main>
   );
 }
