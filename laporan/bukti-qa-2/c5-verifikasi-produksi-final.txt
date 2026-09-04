@@ -49,3 +49,13 @@ batas galat, sehingga aksi-aksi ini MUSTAHIL dilakukan.
 users id 1 (superadmin): wajib_ganti_sandi=0, token_version=3, terakhir_masuk 2026-09-04 17:37:59 WIB.
 Sandi sementara di .env.produksi TIDAK berlaku lagi (login dengan nilai itu -> 401, audit id 124
 login_gagal 17:52:03 adalah percobaan skrip verifikasi ini). Pemilik sudah mengganti sandinya sendiri.
+
+-- PENUTUPAN RAPI SIGTERM: TERBUKTI DI PRODUKSI --
+Log container lama diikuti (docker logs -f) selama redeploy 7d6a46e, sehingga baris terakhirnya
+sempat terbaca sebelum Coolify membuang container:
+  [warkop] siap di http://0.0.0.0:3000  mode=produksi  STAF_HOST=staf.warkopnusantara.id
+  [warkop] SIGTERM diterima: menutup peladen, menunggu permintaan berjalan selesai (maks 20 s)
+  [warkop] peladen ditutup rapi
+Container baru: re8snqu...:7d6a46e | Up About a minute (healthy); /api/health 200.
+Artinya pada setiap redeploy, permintaan yang sedang berjalan (mis. pengaduan 20 MB yang sedang
+diunggah) diberi kesempatan selesai, bukan diputus mendadak.

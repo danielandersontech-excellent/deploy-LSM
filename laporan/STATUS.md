@@ -130,6 +130,6 @@ Aturan konten: K1 tanpa foto internet & tanpa berita nyata; K2 tanpa em/en dash 
 
 ### Posisi terakhir RUN QA-2
 RUN QA-2 SELESAI (4 Sep 2026 sekitar 17:30 WIB). Seluruh butir B0, K2, A1, A2, B1-B8, dan C1-C5 SELESAI.
-Produksi menjalankan image `f3e2833` HEALTHY; verifikasi akhir di domain LULUS (9 langkah, 0 gagal pada image 3c34e9d; pemeriksaan penutup baca-saja diulang pada f3e2833).
+Produksi menjalankan image `7d6a46e` HEALTHY (commit terakhir hanya menambah bukti & laporan, tidak mengubah kode aplikasi). Verifikasi akhir di domain LULUS: 9 langkah 0 gagal pada image 3c34e9d, pemeriksaan penutup baca-saja diulang pada f3e2833, dan penutupan rapi SIGTERM terbukti di log container saat redeploy 7d6a46e (`[warkop] SIGTERM diterima ... peladen ditutup rapi`).
 Laporan: `laporan/LAPORAN-QA-2.md`. Run BERHENTI sesuai perintah.
 Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di atas.

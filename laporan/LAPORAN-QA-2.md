@@ -271,13 +271,15 @@ sesinya dipaksa keluar (login → 401, sesi lama → 401).
   Seluruh uji peramban memakai Chrome headless dengan emulasi 375/768/1280.
 - **Lighthouse Performance** tidak dijalankan ulang pada run ini; temuan Tahap 9 masih
   berlaku (70–77, di bawah 90, karena font Fira Sans belum disubset — keputusan pemilik).
-- **Penjaga `uncaughtException`** tidak berhasil dipicu sesuai permintaan: kejadian aslinya
+- **Penjaga `uncaughtException`** tidak berhasil dipicu sesuai permintaan (satu-satunya bagian penjaga proses yang belum terbukti langsung): kejadian aslinya
   tidak dapat direproduksi. Yang terbukti adalah jalur `clientError` (di lokal **dan** di
   log produksi) serta ketahanan peladen terhadap seluruh pemicu nyata yang dicoba.
-  Penutupan rapi `SIGTERM` belum terbukti berjalan: Windows tidak mengirim SIGTERM, dan
-  pada redeploy penutup Coolify **menghapus container lama sebelum lognya sempat dibaca**
-  (`No such container`). Baris `[warkop] SIGTERM diterima…` perlu dilihat pada redeploy
-  berikutnya, dengan mengambil log container lama sebelum Coolify membuangnya.
+  Penutupan rapi `SIGTERM` **sudah terbukti di produksi** pada redeploy berikutnya: log
+  container lama diikuti dengan `docker logs -f` sehingga baris terakhirnya sempat terbaca
+  sebelum Coolify membuang container:
+  `[warkop] SIGTERM diterima: menutup peladen, menunggu permintaan berjalan selesai (maks 20 s)`
+  lalu `[warkop] peladen ditutup rapi`, sementara container baru naik HEALTHY dan
+  `/api/health` 200.
 - **Bagian "Pimpinan Regional" di /struktur sekarang kosong** karena susunan DPP belum
   memuat pengurus dengan wilayah. Filter wilayah dan tampilan peta tetap diuji dengan
   membuat satu pengurus berwilayah sementara, lalu dihapus.
