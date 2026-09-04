@@ -1,0 +1,70 @@
+total_pengurus	nonaktif
+15	0
+total_wilayah
+39
+Field	Type	Null	Key	Default	Extra
+id	int(10) unsigned	NO	PRI	NULL	auto_increment
+nama	varchar(100)	NO		NULL	
+jenis	enum('pusat','provinsi','kabupaten_kota')	NO	MUL	NULL	
+induk_id	int(10) unsigned	YES	MUL	NULL	
+kode	varchar(10)	YES	UNI	NULL	
+id	kode	nama
+1	00	Pusat
+2	11	Aceh
+3	12	Sumatera Utara
+4	13	Sumatera Barat
+5	14	Riau
+6	15	Jambi
+7	16	Sumatera Selatan
+8	17	Bengkulu
+9	18	Lampung
+10	19	Kepulauan Bangka Belitung
+11	21	Kepulauan Riau
+12	31	DKI Jakarta
+13	32	Jawa Barat
+14	33	Jawa Tengah
+15	34	DI Yogyakarta
+16	35	Jawa Timur
+17	36	Banten
+18	51	Bali
+19	52	Nusa Tenggara Barat
+20	53	Nusa Tenggara Timur
+21	61	Kalimantan Barat
+22	62	Kalimantan Tengah
+23	63	Kalimantan Selatan
+24	64	Kalimantan Timur
+25	65	Kalimantan Utara
+26	71	Sulawesi Utara
+27	72	Sulawesi Tengah
+28	73	Sulawesi Selatan
+29	74	Sulawesi Tenggara
+30	75	Gorontalo
+31	76	Sulawesi Barat
+32	81	Maluku
+33	82	Maluku Utara
+34	91	Papua
+35	92	Papua Barat
+36	93	Papua Selatan
+37	94	Papua Tengah
+38	95	Papua Pegunungan
+39	96	Papua Barat Daya
+kunci	nilai
+kontak_alamat_gedung	Kantor DPP Warkop Nusantara
+kontak_alamat_jalan	Komplek Perkantoran CNN Jl. Tuanku Tambusai No. B 15, Labuh 
+kontak_alamat_kota	Kota Pekanbaru, Riau 28123
+kontak_email	warkopnusantara06@gmail.com
+kontak_hotline	+62 23-6213-5909
+misi	1. Menjadi wadah aspirasi rakyat yang aman dan terpercaya.\n2
+statistik_laporan_ditangani	0
+statistik_provinsi_tercover	38
+statistik_tahun_mengawasi	0
+teks_faq	Apakah saya bisa melapor tanpa menyebut identitas?\nBisa. Pil
+teks_kebijakan_privasi	WARKOP NUSANTARA menghormati privasi setiap pelapor dan peng
+teks_pedoman_komunitas	Setiap laporan yang disampaikan melalui kanal WARKOP NUSANTA
+visi	Terwujudnya tata kelola pemerintahan dan pelayanan publik ya
+kategori
+bantuan-hukum
+observasi-kebijakan
+pengawasan-dana
+n
+8

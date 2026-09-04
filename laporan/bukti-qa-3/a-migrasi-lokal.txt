@@ -1,0 +1,87 @@
+# QA-3 A1+A2 — migrasi restrukturisasi organisasi di LOKAL (salinan data produksi) — 2026-09-04T11:54:45Z
+## SELECT sebelum
+10 | Boy Joean | Ketua Umum DPP Warkop Nusantara | pengurus_dpp | 1 | 1
+3 | Sukri Tambusai, S.H. | Wakil Ketua Umum DPP Warkop Nusantara | pengurus_dpp | 2 | 1
+14 | Andreas Reynaldho, S.H., M.H. | Sekjen DPP Warkop Nusantara | (NULL) | 3 | 1
+43 | Soni | Bendahara DPP Warkop Nusantara | pengurus_dpp | 4 | 1
+1 | Jonni Tan | Ketua | dewan_pembina | 5 | 1
+12 | Johan Elvianus Hondro | Direktur Humas dan Kerjasama Antar Lembaga | direktorat | 5 | 1
+16 | Dian Lestari Gultom, S.H. | Direktur Hukum dan Advokasi | pengurus_dpp | 6 | 1
+25 | Kanisius | Kepala Satgas (Kasatgas) | satgas | 6 | 1
+2 | Florida Herawati | Wakil | dewan_pembina | 12 | 1
+17 | Sopan Pangabean, S.H. | Direktorat Investigasi | direktorat | 13 | 1
+19 | Jasrivai Manulang, S.H. | Direktorat Organisasi dan Kaderisasi | direktorat | 21 | 1
+21 | Ronald Eldiner, S.H. | Direktorat Lingkungan Hidup | direktorat | 26 | 1
+22 | Roy Jensen Sidabutar, S.Kom. | Direktorat Media | direktorat | 27 | 1
+23 | Yefrizal, S.E. | Direktorat Humas dan Kerja Sama Antar Lembaga | direktorat | 28 | 1
+24 | Dedek | Direktorat Pemberdayaan Masyarakat dan UMKM | direktorat | 29 | 1
+
+## jalankan migrasi
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #1: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #2: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #3: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #4: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #5: affectedRows=1
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #6: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #7: affectedRows=1
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #8: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #9: affectedRows=1
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #10: affectedRows=2
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #11: affectedRows=1
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #12: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #13: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #14: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #15: affectedRows=1
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #16: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #17: affectedRows=1
+database/migrations/20260905-0900-restrukturisasi-organisasi.sql: 17 statement dijalankan
+
+## SELECT sesudah
+10 | Boy Joean | Ketua Umum DPP Warkop Nusantara | pengurus_dpp | - | 1 | aktif=1
+3 | Sukri Tambusai, S.H. | Wakil Ketua Umum DPP Warkop Nusantara | pengurus_dpp | - | 2 | aktif=1
+43 | Soni | Bendahara DPP Warkop Nusantara | pengurus_dpp | - | 4 | aktif=1
+1 | Jonni Tan | Ketua | dewan_pembina | - | 5 | aktif=1
+12 | Johan Elvianus Hondro | Direktur Humas dan Kerjasama Antar Lembaga | direktorat | humas-kerja-sama | 5 | aktif=1
+16 | Dian Lestari Gultom, S.H. | Direktur Hukum dan Advokasi | pengurus_dpp | - | 6 | aktif=1
+25 | Kanisius | Kepala Satgas (Kasatgas) | satgas | - | 6 | aktif=1
+2 | Florida Herawati | Wakil | dewan_pembina | - | 12 | aktif=1
+17 | Sopan Pangabean, S.H. | Direktorat Investigasi | direktorat | investigasi | 13 | aktif=1
+19 | Jasrivai Manulang, S.H. | Direktorat Organisasi dan Kaderisasi | direktorat | organisasi-kaderisasi | 21 | aktif=1
+21 | Ronald Eldiner, S.H. | Direktorat Lingkungan Hidup | direktorat | lingkungan-hidup | 26 | aktif=1
+22 | Roy Jensen Sidabutar, S.Kom. | Direktorat Media | direktorat | media | 27 | aktif=1
+23 | Yefrizal, S.E. | Direktorat Humas dan Kerja Sama Antar Lembaga | direktorat | humas-kerja-sama | 28 | aktif=1
+24 | Dedek | Direktorat Pemberdayaan Masyarakat dan UMKM | direktorat | pemberdayaan-masyarakat-umkm | 29 | aktif=1
+14 | Andreas Reynaldho, S.H., M.H. | Sekjen DPP Warkop Nusantara | (NULL) | - | 3 | aktif=0
+
+## IDEMPOTEN: migrasi dijalankan ULANG (semua affectedRows harus 0)
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #1: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #2: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #3: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #4: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #5: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #6: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #7: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #8: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #9: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #10: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #11: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #12: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #13: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #14: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #15: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #16: affectedRows=0
+  [database/migrations/20260905-0900-restrukturisasi-organisasi.sql] #17: affectedRows=0
+database/migrations/20260905-0900-restrukturisasi-organisasi.sql: 17 statement dijalankan
+
+## Ringkasan perubahan baris (dibandingkan SELECT sebelum)
+DIPETAKAN ke bagian direktorat (kelompok & jabatan TIDAK diubah):
+  12 Johan Elvianus Hondro       -> humas-kerja-sama
+  17 Sopan Pangabean, S.H.       -> investigasi
+  19 Jasrivai Manulang, S.H.     -> organisasi-kaderisasi
+  21 Ronald Eldiner, S.H.        -> lingkungan-hidup
+  22 Roy Jensen Sidabutar, S.Kom. -> media
+  23 Yefrizal, S.E.              -> humas-kerja-sama (bagian ini berisi DUA orang, diizinkan A2)
+  24 Dedek                       -> pemberdayaan-masyarakat-umkm
+DINONAKTIFKAN (aktif 1 -> 0, TIDAK dihapus, menunggu penempatan ulang oleh pemilik):
+  14 Andreas Reynaldho, S.H., M.H. | Sekjen DPP Warkop Nusantara | kelompok NULL
+TIDAK DISENTUH sama sekali: 10, 3, 43, 1, 16, 25, 2 (nama/jabatan/urutan/aktif tetap)

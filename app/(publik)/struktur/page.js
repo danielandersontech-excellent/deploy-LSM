@@ -7,31 +7,28 @@
 // RUN QA-2 A2/B5 (KEPUTUSAN PEMILIK): bagan BERTINGKAT susunan DPP asli pemilik, dikelompokkan lewat kolom
 // pengurus.kelompok (lib/kelompokPengurus.js):
 //   Dewan (Pembina | Penasehat | Pengawas) -> Pengurus DPP (Ketua Umum = kartu Pimpinan Pusat desain; lainnya kartu
-//   Dewan Eksekutif) -> Direktorat Eksekutif -> Direktorat (grid kartu regional desain) -> Satgas -> kerangka DPW/DPD/DPC
-//   (template posisi tanpa nama) -> Pimpinan Regional (pengurus tingkat wilayah ber-wilayah, filter & peta tetap).
+//   Dewan Eksekutif) -> Direktorat (12 BAGIAN, tiap bagian satu kartu berisi pejabatnya) -> Satgas ->
+//   Dewan Pimpinan Wilayah (DPW, satu kartu per provinsi) -> Koordinator Daerah (kabupaten/kota, dikelompokkan
+//   per provinsi). Filter wilayah & tampilan peta tetap seperti desain.
+//
+// RUN QA-3 A1/A2/A3 (PERINTAH PEMILIK): DPC dan Direktorat Eksekutif ditiadakan; kerangka bagan TIDAK lagi
+// disimpan sebagai baris "(Belum terisi)" di basis data melainkan dirender dari definisi lib/kelompokPengurus.js
+// dan daftar provinsi, supaya Kelola Pengurus tidak penuh baris kosong (K3 tetap: pemilik cukup menambah orang).
 // Posisi kosong bernama '(Belum terisi)' ditampilkan redup. Responsif: kolom 1 (375) / 2 (768) / 3 (1280).
 import Image from 'next/image';
 import Link from 'next/link';
 import Ikon from '@/components/ui/Ikon';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
 import { ambilPengurusAktif } from '@/lib/db/pengurus';
-import { formatTanggalID } from '@/lib/utils';
-import { KELOMPOK_PENGURUS, belumTerisi } from '@/lib/kelompokPengurus';
+import { ambilProvinsi } from '@/lib/db/wilayah';
+import { KELOMPOK_PENGURUS, BAGIAN_DIREKTORAT, NAMA_BELUM_TERISI, labelBagian, belumTerisi } from '@/lib/kelompokPengurus';
 
 export const metadata = {
   title: 'Struktur Organisasi',
   description:
-    'Jajaran kepengurusan WARKOP NUSANTARA: Dewan Pembina, Penasehat, dan Pengawas, Pengurus DPP, Direktorat, Satgas, serta kerangka DPW/DPD/DPC dan Pimpinan Regional.',
+    'Jajaran kepengurusan WARKOP NUSANTARA: Dewan Pembina, Penasehat, dan Pengawas, Pengurus DPP, Direktorat, Satgas, Dewan Pimpinan Wilayah, dan Koordinator Daerah.',
   alternates: { canonical: '/struktur' },
 };
-
-/** Tahun "Aktif sejak": kolom aktif_sejak SMALLINT (mis. 2021); tetap aman bila Date / 'YYYY-MM-DD'. */
-function tahunAktif(nilai) {
-  if (nilai === null || nilai === undefined || nilai === '') return '';
-  if (nilai instanceof Date) return formatTanggalID(nilai, 'panjang').slice(-4);
-  const cocok = String(nilai).match(/^(\d{4})/);
-  return cocok ? cocok[1] : '';
-}
 
 // Kelas verbatim desain (struktur_organisasi/code.html)
 const KELAS_KARTU_PUSAT = 'bg-surface-container-lowest border border-outline-variant rounded-xl p-6 w-full max-w-md text-center pressed-paper-shadow relative';
@@ -104,23 +101,32 @@ export default async function HalamanStruktur({ searchParams }) {
   const wilayahDipilih = /^\d+$/.test(String(sp?.wilayah ?? '')) ? Number(sp.wilayah) : null;
   const tampilanPeta = sp?.tampilan === 'peta';
 
-  const semua = await ambilPengurusAktif();
+  const [semua, provinsi] = await Promise.all([ambilPengurusAktif(), ambilProvinsi()]);
   const perKelompok = (slug) => semua.filter((p) => p.kelompok === slug);
   const dewan = KELOMPOK_PENGURUS.filter((k) => k.tahap === 'dewan');
   const dpp = perKelompok('pengurus_dpp');
   const ketuaUmum = dpp.find((p) => /ketua umum/i.test(p.jabatan) && !/wakil/i.test(p.jabatan)) || dpp[0] || null;
   const dppLain = dpp.filter((p) => p !== ketuaUmum);
-  const direktoratEksekutif = perKelompok('direktorat_eksekutif');
   const direktorat = perKelompok('direktorat');
   const satgas = perKelompok('satgas');
-  const kerangka = KELOMPOK_PENGURUS.filter((k) => k.tahap === 'kerangka');
-  // Pimpinan Regional = tingkat wilayah (bukan template DPW/DPD/DPC) DAN pengurus mana pun tanpa kelompok.
-  // QA-2 C4 (BUG DIPERBAIKI): sebelumnya hanya tingkat 'wilayah', sehingga pengurus tingkat 'pusat' yang ditambahkan
-  // lewat Kelola Pengurus dengan pilihan "Tanpa kelompok (Pimpinan Regional)" tersimpan tetapi TIDAK PERNAH tampil
-  // di halaman publik mana pun (melanggar K3 dan menyalahi label pilihannya sendiri).
-  const regional = semua.filter((p) => !/^dp[wdc]$/.test(p.kelompok || '') && (p.tingkat === 'wilayah' || !p.kelompok));
-  const regionalTersaring = wilayahDipilih === null ? regional : regional.filter((p) => Number(p.wilayah_id) === wilayahDipilih);
-  const namaWilayahDipilih = wilayahDipilih === null ? null : (regional.find((p) => Number(p.wilayah_id) === wilayahDipilih)?.wilayah_nama ?? null);
+  // RUN QA-3 A2: Direktorat ditampilkan per BAGIAN; bagian tanpa pejabat tetap muncul sebagai "(Belum terisi)".
+  const direktoratPerBagian = BAGIAN_DIREKTORAT.map((b) => ({ ...b, anggota: direktorat.filter((p) => p.bagian === b.slug) }));
+  // Baris direktorat yang bagiannya belum dikenali (mis. data lama) tidak boleh hilang dari halaman.
+  const direktoratTanpaBagian = direktorat.filter((p) => !BAGIAN_DIREKTORAT.some((b) => b.slug === p.bagian));
+
+  // RUN QA-3 A3: DPW = satu kartu per PROVINSI; Koordinator Daerah dikelompokkan per provinsi induk.
+  const dpw = perKelompok('dpw');
+  const korda = perKelompok('korda');
+  const dpwTersaring = wilayahDipilih === null ? dpw : dpw.filter((p) => Number(p.wilayah_id) === wilayahDipilih);
+  const kordaTersaring = wilayahDipilih === null ? korda : korda.filter((p) => Number(p.induk_id) === wilayahDipilih || Number(p.wilayah_id) === wilayahDipilih);
+  const provinsiTampil = wilayahDipilih === null ? provinsi : provinsi.filter((w) => Number(w.id) === wilayahDipilih);
+  const dpwPerProvinsi = provinsiTampil.map((w) => ({ ...w, anggota: dpwTersaring.filter((p) => Number(p.wilayah_id) === Number(w.id)) }));
+  // Koordinator Daerah: hanya provinsi yang SUDAH punya koordinator yang ditampilkan (kalau seluruh 514
+  // kabupaten/kota dirender sebagai kerangka, halaman ini menjadi ratusan kartu kosong).
+  const kordaPerProvinsi = provinsiTampil
+    .map((w) => ({ ...w, anggota: kordaTersaring.filter((p) => Number(p.induk_id) === Number(w.id)) }))
+    .filter((w) => w.anggota.length > 0);
+  const namaWilayahDipilih = wilayahDipilih === null ? null : (provinsi.find((w) => Number(w.id) === wilayahDipilih)?.nama ?? null);
   const adaBagan = semua.some((p) => p.kelompok);
 
   // Tautan tombol ikon (KEPUTUSAN BARU): filter_list = kembali ke semua wilayah; map = tampilan peta.
@@ -195,20 +201,34 @@ export default async function HalamanStruktur({ searchParams }) {
             </div>
           </section>
 
-          {/* Tahap 3: Direktorat Eksekutif + Direktorat */}
+          {/* Tahap 3: Direktorat — 12 bagian (RUN QA-3 A2) */}
           <section className="mb-16" aria-labelledby="judul-direktorat">
-            <JudulTahap keterangan="Direktur dan Wakil Direktur Eksekutif membawahi sembilan direktorat bidang">
+            <JudulTahap keterangan="Dua belas bagian direktorat; setiap bagian dapat berisi Direktur, Wakil Direktur, dan anggota">
               <span id="judul-direktorat">Direktorat</span>
             </JudulTahap>
-            <div className="flex flex-col items-center gap-12">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full max-w-3xl justify-items-center">
-                {direktoratEksekutif.map((p) => <KartuPengurus key={p.id} p={p} lencana="Direktorat Eksekutif" ikon="gavel" />)}
-              </div>
-              <div className={KELAS_GARIS}></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter w-full">
-                {direktorat.map((p) => <KartuAnggota key={p.id} p={p} />)}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+              {direktoratPerBagian.map((b) => (
+                <div key={b.slug} className="bg-surface-container-low rounded-xl border border-outline-variant p-4 md:p-5">
+                  <h3 className="font-label-md text-label-md text-secondary uppercase tracking-wide mb-4 flex items-center gap-2">
+                    <Ikon nama="account_circle" className="text-sm" />
+                    {b.label}
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                    {b.anggota.length
+                      ? b.anggota.map((p) => <KartuAnggota key={p.id} p={p} />)
+                      : <KartuAnggota p={{ id: `bagian-${b.slug}`, nama: NAMA_BELUM_TERISI, jabatan: `Direktur ${b.label}` }} />}
+                  </div>
+                </div>
+              ))}
             </div>
+            {direktoratTanpaBagian.length ? (
+              <div className="mt-8">
+                <h3 className="font-label-md text-label-md text-secondary uppercase tracking-wide mb-4">Direktorat lain</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                  {direktoratTanpaBagian.map((p) => <KartuAnggota key={p.id} p={p} />)}
+                </div>
+              </div>
+            ) : null}
           </section>
 
           {/* Tahap 4: Satgas */}
@@ -221,25 +241,6 @@ export default async function HalamanStruktur({ searchParams }) {
             </div>
           </section>
 
-          {/* Tahap 5: Kerangka DPW / DPD / DPC */}
-          <section className="mb-24" aria-labelledby="judul-kerangka">
-            <JudulTahap keterangan="Kerangka posisi kepengurusan wilayah, daerah, dan cabang; diisi bertahap oleh pengelola">
-              <span id="judul-kerangka">Kerangka DPW, DPD, dan DPC</span>
-            </JudulTahap>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-              {kerangka.map((k) => (
-                <div key={k.slug} className="bg-surface-container-low rounded-xl border border-outline-variant p-4 md:p-5">
-                  <h3 className="font-label-md text-label-md text-secondary uppercase tracking-wide mb-4 flex items-center gap-2">
-                    <Ikon nama={k.ikon} className="text-sm" />
-                    {k.label}
-                  </h3>
-                  <div className="flex flex-col gap-3">
-                    {perKelompok(k.slug).map((p) => <KartuAnggota key={p.id} p={p} />)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
         </>
       )}
 
@@ -270,43 +271,56 @@ export default async function HalamanStruktur({ searchParams }) {
             <Image className="w-full h-full object-cover" src="/penampung/peta-penampung.jpg" alt="Peta jangkauan WARKOP NUSANTARA di seluruh Nusantara" width={1200} height={800} />
           </div>
         ) : null}
-        {regionalTersaring.length === 0 ? (
+        {/* RUN QA-3 A3: Dewan Pimpinan Wilayah — satu kartu per PROVINSI (kerangka + pejabat terisi) */}
+        <h3 className="font-headline-md text-headline-md text-primary mb-4">Dewan Pimpinan Wilayah (DPW)</h3>
+        <p className="font-body-md text-body-md text-on-surface-variant mb-6">Satu DPW untuk setiap provinsi. Provinsi yang belum memiliki pengurus ditandai belum terisi.</p>
+        {dpwPerProvinsi.length === 0 ? (
           <KeadaanKosong
             ikon="location_on"
-            judul={wilayahDipilih === null ? 'Belum ada pimpinan regional' : 'Tidak ada pimpinan regional untuk wilayah ini'}
-            keterangan={wilayahDipilih === null ? 'Daftar pimpinan wilayah akan ditampilkan setelah diperbarui oleh pengelola lewat Kelola Pengurus.' : 'Coba tampilkan semua wilayah.'}
+            judul="Tidak ada provinsi untuk filter ini"
+            keterangan="Coba tampilkan semua wilayah."
           >
-            {wilayahDipilih !== null ? (
-              <Link href={hrefSemuaWilayah} className="text-secondary hover:text-primary transition-colors flex items-center gap-1 font-label-md text-label-md text-sm">
-                Tampilkan semua wilayah <Ikon nama="arrow_forward" className="text-[16px]" />
-              </Link>
-            ) : null}
+            <Link href={hrefSemuaWilayah} className="text-secondary hover:text-primary transition-colors flex items-center gap-1 font-label-md text-label-md text-sm">
+              Tampilkan semua wilayah <Ikon nama="arrow_forward" className="text-[16px]" />
+            </Link>
           </KeadaanKosong>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-            {regionalTersaring.map((p) => (
-              // Kartu regional: kelas dari kartu pertama (North Sumatra) di desain
-              <div key={p.id} id={`pengurus-${p.id}`} className={KELAS_KARTU_KECIL}>
-                <div className="absolute top-0 right-0 w-16 h-16 bg-surface-variant -mr-8 -mt-8 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
-                <div className="flex items-start gap-4 mb-4 relative z-10">
-                  <Foto p={p} kelasKotak="w-16 h-16 rounded bg-surface-variant overflow-hidden shrink-0 border border-outline-variant" ukuran="64px" />
-                  <div>
-                    <h4 className="font-label-md text-label-md text-primary text-base font-bold">{p.nama}</h4>
-                    <p className="font-body-md text-body-md text-on-surface-variant text-sm">{p.jabatan}</p>
-                    {p.wilayah_id ? (
-                      // Lencana wilayah = tautan filter ?wilayah=<id> (div -> Link, kelas sama)
-                      <Link href={hrefWilayah(p.wilayah_id)} className="inline-flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded text-xs mt-1 border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-variant transition-colors">
-                        <Ikon nama="location_on" className="text-[14px]" />
-                        {p.wilayah_nama}
-                      </Link>
-                    ) : null}
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter mb-16">
+            {dpwPerProvinsi.map((w) => (
+              <div key={w.id} className="bg-surface-container-low rounded-xl border border-outline-variant p-4 md:p-5">
+                <h4 className="font-label-md text-label-md text-secondary uppercase tracking-wide mb-4 flex items-center gap-2">
+                  <Ikon nama="location_on" className="text-sm" />
+                  <Link href={hrefWilayah(w.id)} className="hover:text-primary transition-colors">{w.nama}</Link>
+                </h4>
+                <div className="flex flex-col gap-3">
+                  {w.anggota.length
+                    ? w.anggota.map((p) => <KartuAnggota key={p.id} p={p} />)
+                    : <KartuAnggota p={{ id: `dpw-${w.id}`, nama: NAMA_BELUM_TERISI, jabatan: `Ketua DPW ${w.nama}` }} />}
                 </div>
-                <div className="mt-auto pt-4 border-t border-outline-variant flex justify-between items-center relative z-10">
-                  <span className="font-body-md text-body-md text-xs text-on-surface-variant">{tahunAktif(p.aktif_sejak) ? `Aktif sejak ${tahunAktif(p.aktif_sejak)}` : ''}</span>
-                  <Link href={`/struktur#pengurus-${p.id}`} className="text-secondary hover:text-primary transition-colors flex items-center gap-1 font-label-md text-label-md text-sm" aria-label={`Profil ${p.nama}`}>
-                    Profil <Ikon nama="arrow_forward" className="text-[16px]" />
-                  </Link>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* RUN QA-3 A3: Koordinator Daerah — kabupaten/kota, dikelompokkan per provinsi induk */}
+        <h3 className="font-headline-md text-headline-md text-primary mb-4">Koordinator Daerah</h3>
+        <p className="font-body-md text-body-md text-on-surface-variant mb-6">Koordinator tingkat kabupaten/kota, berada di bawah DPW provinsinya. Daerah ditampilkan setelah koordinatornya ditetapkan.</p>
+        {kordaPerProvinsi.length === 0 ? (
+          <KeadaanKosong
+            ikon="location_on"
+            judul="Belum ada koordinator daerah"
+            keterangan="Koordinator kabupaten/kota akan tampil di sini setelah ditetapkan oleh pengelola lewat Kelola Pengurus."
+          />
+        ) : (
+          <div className="flex flex-col gap-8">
+            {kordaPerProvinsi.map((w) => (
+              <div key={w.id}>
+                <h4 className="font-label-md text-label-md text-secondary uppercase tracking-wide mb-4 flex items-center gap-2">
+                  <Ikon nama="location_on" className="text-sm" />
+                  <Link href={hrefWilayah(w.id)} className="hover:text-primary transition-colors">{w.nama}</Link>
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                  {w.anggota.map((p) => <KartuAnggota key={p.id} p={p} />)}
                 </div>
               </div>
             ))}

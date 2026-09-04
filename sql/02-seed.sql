@@ -294,59 +294,34 @@ WHERE p.nomor_kasus IN ('WRP-009021', 'WRP-009018', 'WRP-008994')
   AND NOT EXISTS (SELECT 1 FROM pengaduan_riwayat r WHERE r.pengaduan_id = p.id);
 
 -- ---------------------------------------------------------------------
--- PENGURUS — dari struktur_organisasi/code.html (foto = penampung lokal).
--- KEPUTUSAN BARU: nama pengurus regional Papua & Maluku pada export desain
--- adalah nama pejabat nyata; diganti nama fiktif.
+-- PENGURUS — RUN QA-3 A1/A2: susunan resmi (lihat lib/kelompokPengurus.js dan
+-- database/migrations/20260905-0900-restrukturisasi-organisasi.sql).
+-- Hanya orang yang BENAR-BENAR menjabat yang dimasukkan; kerangka posisi kosong TIDAK lagi
+-- disimpan sebagai baris "(Belum terisi)" melainkan dirender halaman /struktur dari definisi,
+-- supaya Kelola Pengurus tidak penuh baris kosong.
+-- Data ini disalin dari basis data PRODUKSI setelah pemilik menyuntingnya sendiri.
 -- ---------------------------------------------------------------------
--- QA-2 A2: susunan DPP asli pemilik (lihat database/migrations/20260904-1510-pengurus-dpp-data.sql)
-INSERT IGNORE INTO pengurus (id, nama, jabatan, tingkat, kelompok, wilayah_id, foto, deskripsi, aktif_sejak, urutan, aktif) VALUES
+INSERT IGNORE INTO pengurus (id, nama, jabatan, tingkat, kelompok, bagian, wilayah_id, foto, deskripsi, aktif_sejak, urutan, aktif) VALUES
   -- DEWAN PEMBINA
-  (1,  'Jonni Tan',                    'Ketua',   'pusat', 'dewan_pembina',   NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 1, 1),
-  (2,  'Florida Herawati',             'Wakil',   'pusat', 'dewan_pembina',   NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 2, 1),
-  (3,  'Sukri Tambusai',               'Anggota', 'pusat', 'dewan_pembina',   NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 3, 1),
-  -- DEWAN PENASEHAT
-  (4,  '(Belum terisi)',               'Ketua',   'pusat', 'dewan_penasehat', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 1, 1),
-  (5,  '(Belum terisi)',               'Wakil',   'pusat', 'dewan_penasehat', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 2, 1),
-  (6,  '(Belum terisi)',               'Anggota', 'pusat', 'dewan_penasehat', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 3, 1),
-  -- DEWAN PENGAWAS
-  (7,  '(Belum terisi)',               'Ketua',   'pusat', 'dewan_pengawas',  NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 1, 1),
-  (8,  '(Belum terisi)',               'Wakil',   'pusat', 'dewan_pengawas',  NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 2, 1),
-  (9,  '(Belum terisi)',               'Anggota', 'pusat', 'dewan_pengawas',  NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 3, 1),
+  (1,  'Jonni Tan',                     'Ketua', 'pusat', 'dewan_pembina', NULL, NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 5,  1),
+  (2,  'Florida Herawati',              'Wakil', 'pusat', 'dewan_pembina', NULL, NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 12, 1),
   -- PENGURUS DPP
-  (10, 'Boy Juan',                     'Ketua Umum',          'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 1, 1),
-  (11, '(Belum terisi)',               'Wakil Ketua Umum',    'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 2, 1),
-  (12, 'Johan Elvianus Hondro',        'Sekretaris Jenderal', 'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 3, 1),
-  (13, 'Sonia',                        'Bendahara Umum',      'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 4, 1),
-  -- DIREKTORAT EKSEKUTIF
-  (14, 'Andreas Reynaldho, S.H., M.H.', 'Direktur',       'pusat', 'direktorat_eksekutif', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 1, 1),
-  (15, '(Belum terisi)',               'Wakil Direktur', 'pusat', 'direktorat_eksekutif', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 2, 1),
-  -- DIREKTORAT (bidang)
-  (16, 'Dian',                         'Direktorat Hukum dan Advokasi',                       'pusat', 'direktorat', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 1, 1),
-  (17, 'Sopan Pangabean, S.H.',        'Direktorat Investigasi',                              'pusat', 'direktorat', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 2, 1),
-  (18, 'Arsyad',                       'Direktorat Pengawasan Kebijakan Publik',              'pusat', 'direktorat', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 3, 1),
-  (19, 'Jasrivai Manulang, S.H.',      'Direktorat Organisasi dan Kaderisasi',                'pusat', 'direktorat', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 4, 1),
-  (20, 'Kak Utet',                     'Direktorat Sosial dan Kemanusiaan',                   'pusat', 'direktorat', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 5, 1),
-  (21, 'Ronald Eldiner, S.H.',         'Direktorat Lingkungan Hidup',                         'pusat', 'direktorat', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 6, 1),
-  (22, 'Roy Jensen Sidabutar, S.Kom.', 'Direktorat Media',                                    'pusat', 'direktorat', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 7, 1),
-  (23, 'Yefrizal, S.E.',               'Direktorat Humas dan Kerja Sama Antar Lembaga',       'pusat', 'direktorat', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 8, 1),
-  (24, 'Dedek',                        'Direktorat Pemberdayaan Masyarakat dan UMKM',         'pusat', 'direktorat', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 9, 1),
+  (10, 'Boy Joean',                     'Ketua Umum DPP Warkop Nusantara',       'pusat', 'pengurus_dpp', NULL, NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 1, 1),
+  (3,  'Sukri Tambusai, S.H.',          'Wakil Ketua Umum DPP Warkop Nusantara', 'pusat', 'pengurus_dpp', NULL, NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 2, 1),
+  (43, 'Soni',                          'Bendahara DPP Warkop Nusantara',        'pusat', 'pengurus_dpp', NULL, NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 4, 1),
+  (16, 'Dian Lestari Gultom, S.H.',     'Direktur Hukum dan Advokasi',           'pusat', 'pengurus_dpp', NULL, NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 6, 1),
+  -- DIREKTORAT (12 bagian, hanya bagian yang sudah ada pejabatnya)
+  (12, 'Johan Elvianus Hondro',         'Direktur Humas dan Kerjasama Antar Lembaga',    'pusat', 'direktorat', 'humas-kerja-sama',             NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 5,  1),
+  (17, 'Sopan Pangabean, S.H.',         'Direktorat Investigasi',                        'pusat', 'direktorat', 'investigasi',                  NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 13, 1),
+  (19, 'Jasrivai Manulang, S.H.',       'Direktorat Organisasi dan Kaderisasi',          'pusat', 'direktorat', 'organisasi-kaderisasi',        NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 21, 1),
+  (21, 'Ronald Eldiner, S.H.',          'Direktorat Lingkungan Hidup',                   'pusat', 'direktorat', 'lingkungan-hidup',             NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 26, 1),
+  (22, 'Roy Jensen Sidabutar, S.Kom.',  'Direktorat Media',                              'pusat', 'direktorat', 'media',                        NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 27, 1),
+  (23, 'Yefrizal, S.E.',                'Direktorat Humas dan Kerja Sama Antar Lembaga', 'pusat', 'direktorat', 'humas-kerja-sama',             NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 28, 1),
+  (24, 'Dedek',                         'Direktorat Pemberdayaan Masyarakat dan UMKM',   'pusat', 'direktorat', 'pemberdayaan-masyarakat-umkm', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 29, 1),
   -- SATGAS
-  (25, 'Kanisius',                     'Kepala Satgas (Kasatgas)', 'pusat', 'satgas', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 1, 1),
-  (26, '(Belum terisi)',               'Wakil Kasatgas',           'pusat', 'satgas', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 2, 1),
-  (27, '(Belum terisi)',               'Komandan Wilayah',         'pusat', 'satgas', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 3, 1),
-  (28, '(Belum terisi)',               'Komandan Daerah',          'pusat', 'satgas', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 4, 1),
-  (29, '(Belum terisi)',               'Komandan Rayon',           'pusat', 'satgas', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 5, 1),
-  (30, '(Belum terisi)',               'Anggota',                  'pusat', 'satgas', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 6, 1),
-  -- KERANGKA DPW / DPD / DPC (template posisi tanpa nama, tanpa wilayah)
-  (31, '(Belum terisi)', 'Ketua DPW',      'wilayah', 'dpw', NULL, NULL, NULL, NULL, 1, 1),
-  (32, '(Belum terisi)', 'Sekretaris DPW', 'wilayah', 'dpw', NULL, NULL, NULL, NULL, 2, 1),
-  (33, '(Belum terisi)', 'Bendahara DPW',  'wilayah', 'dpw', NULL, NULL, NULL, NULL, 3, 1),
-  (34, '(Belum terisi)', 'Ketua DPD',      'wilayah', 'dpd', NULL, NULL, NULL, NULL, 1, 1),
-  (35, '(Belum terisi)', 'Sekretaris DPD', 'wilayah', 'dpd', NULL, NULL, NULL, NULL, 2, 1),
-  (36, '(Belum terisi)', 'Bendahara DPD',  'wilayah', 'dpd', NULL, NULL, NULL, NULL, 3, 1),
-  (37, '(Belum terisi)', 'Ketua DPC',      'wilayah', 'dpc', NULL, NULL, NULL, NULL, 1, 1),
-  (38, '(Belum terisi)', 'Sekretaris DPC', 'wilayah', 'dpc', NULL, NULL, NULL, NULL, 2, 1),
-  (39, '(Belum terisi)', 'Bendahara DPC',  'wilayah', 'dpc', NULL, NULL, NULL, NULL, 3, 1);
+  (25, 'Kanisius',                      'Kepala Satgas (Kasatgas)', 'pusat', 'satgas', NULL, NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 6, 1),
+  -- MENUNGGU PENEMPATAN ULANG OLEH PEMILIK (dinonaktifkan oleh migrasi 20260905-0900)
+  (14, 'Andreas Reynaldho, S.H., M.H.', 'Sekjen DPP Warkop Nusantara', 'pusat', NULL, NULL, NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 3, 0);
 
 -- ---------------------------------------------------------------------
 -- PROGRAM — 3 (satu per kategori), dari program_kegiatan/code.html

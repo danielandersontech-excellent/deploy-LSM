@@ -1,0 +1,15 @@
+# QA-3 A3 — migrasi wilayah kabupaten/kota di LOKAL — 2026-09-04T11:58:28Z
+## sebelum
+[{"jenis":"pusat","n":1,"min_id":1,"max_id":1},{"jenis":"provinsi","n":38,"min_id":2,"max_id":39}]
+## jalankan
+  [database/migrations/20260905-0930-wilayah-kabupaten-kota.sql] #37: affectedRows=8
+  [database/migrations/20260905-0930-wilayah-kabupaten-kota.sql] #38: affectedRows=6
+database/migrations/20260905-0930-wilayah-kabupaten-kota.sql: 38 statement dijalankan
+## sesudah
+[{"jenis":"pusat","n":1,"min_id":1,"max_id":1},{"jenis":"provinsi","n":38,"min_id":2,"max_id":39},{"jenis":"kabupaten_kota","n":514,"min_id":77,"max_id":821}]
+kabupaten tanpa induk: [{"n":0}]
+id 1-39 utuh: [{"n":39}]
+contoh Riau: [{"id":209,"nama":"Kabupaten Bengkalis"},{"id":204,"nama":"Kabupaten Indragiri Hilir"},{"id":203,"nama":"Kabupaten Indragiri Hulu"},{"id":207,"nama":"Kabupaten Kampar"}]
+## IDEMPOTEN: dijalankan ulang
+0
+jumlah sesudah lari kedua: [{"n":553}]

@@ -27,14 +27,14 @@
 //   7. Urutan bawaan pengurus baru = urutan terbesar se-tingkat + 1. Tanpa data -> KeadaanKosong.
 // Peran konten_lihat tanpa konten_kelola (pimpinan_wilayah) -> bolehKelola=false: tanpa tombol tambah,
 // kolom Aksi, dan formulir (API tetap menolak sendiri).
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Ikon from '@/components/ui/Ikon';
 import Dialog from '@/components/ui/Dialog';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
 import { KELAS_TOMBOL } from '@/components/ui/Tombol';
-import { KELOMPOK_PENGURUS } from '@/lib/kelompokPengurus';
+import { KELOMPOK_PENGURUS, BAGIAN_DIREKTORAT, kelompokPengurus, kelompokBerbagian, jenisWilayahKelompok, labelBagian, jabatanBawaanBagian } from '@/lib/kelompokPengurus';
 
 const KELAS_PESAN_GALAT = 'bg-error-container text-on-error-container border border-error/20 rounded px-3 py-2 font-body-md text-body-md text-sm';
 const KELAS_PESAN_SUKSES = 'bg-secondary-fixed text-on-secondary-fixed border border-secondary/20 rounded px-3 py-2 font-body-md text-body-md text-sm';
@@ -54,9 +54,26 @@ const KELAS_TD_TEKS = 'px-6 py-4 hidden md:table-cell text-on-surface-variant fo
 
 const LABEL_TINGKAT = Object.freeze({ pusat: 'Pusat', wilayah: 'Wilayah' });
 
+// RUN QA-3 B: baris tabel dikelompokkan mengikuti urutan bagan (lib/kelompokPengurus.js), lalu bagian
+// direktorat, lalu kolom `urutan`. Baris yang kelompoknya sudah tidak ada di susunan final jatuh ke
+// paling bawah supaya pemilik langsung melihatnya dan bisa menempatkan ulang.
+const URUTAN_KELOMPOK = new Map(KELOMPOK_PENGURUS.map((k, i) => [k.slug, i]));
+const URUTAN_BAGIAN = new Map(BAGIAN_DIREKTORAT.map((b, i) => [b.slug, i]));
+const peringkat = (p) => [
+  URUTAN_KELOMPOK.has(p.kelompok) ? URUTAN_KELOMPOK.get(p.kelompok) : 99,
+  URUTAN_BAGIAN.has(p.bagian) ? URUTAN_BAGIAN.get(p.bagian) : 99,
+  Number(p.urutan) || 0,
+  Number(p.id) || 0,
+];
+function bandingPengurus(a, b) {
+  const x = peringkat(a); const y = peringkat(b);
+  for (let i = 0; i < x.length; i++) { if (x[i] !== y[i]) return x[i] - y[i]; }
+  return 0;
+}
+
 function formulirKosong(daftar, tingkat = 'pusat') {
   const terbesar = daftar.filter((p) => p.tingkat === tingkat).reduce((m, p) => Math.max(m, p.urutan), 0);
-  return { nama: '', jabatan: '', tingkat, kelompok: '', wilayah_id: '', foto: null, deskripsi: '', aktif_sejak: '', urutan: String(terbesar + 1), aktif: true };
+  return { nama: '', jabatan: '', tingkat, kelompok: '', bagian: '', wilayah_id: '', foto: null, deskripsi: '', aktif_sejak: '', urutan: String(terbesar + 1), aktif: true };
 }
 
 function formulirDari(p) {
@@ -65,6 +82,7 @@ function formulirDari(p) {
     jabatan: p.jabatan,
     tingkat: p.tingkat,
     kelompok: p.kelompok || '',
+    bagian: p.bagian || '',
     wilayah_id: p.wilayah_id == null ? '' : String(p.wilayah_id),
     foto: p.foto,
     deskripsi: p.deskripsi ?? '',
@@ -83,11 +101,12 @@ function teksGalat(data, cadangan) {
   return data?.galat ? `${data.galat}${data.kode ? ` (${data.kode})` : ''}` : cadangan;
 }
 
-export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
+export default function KelolaPengurus({ pengurus, wilayah, wilayahKabupaten = [], bolehKelola }) {
   const router = useRouter();
   // Urutan sementara (optimis) — otomatis dibuang begitu server mengirim `pengurus` baru (referensi berubah).
   const [urutanSementara, setUrutanSementara] = useState({ dasar: null, daftar: null });
-  const daftar = urutanSementara.dasar === pengurus ? urutanSementara.daftar : pengurus;
+  // Daftar dari server diurutkan per kelompok/bagian; daftar optimis (sesudah tombol naik/turun) dipakai apa adanya.
+  const daftar = urutanSementara.dasar === pengurus ? urutanSementara.daftar : [...pengurus].sort(bandingPengurus);
   const [formulir, setFormulir] = useState(null); // null | { id: null|number, nilai }
   const [hapus, setHapus] = useState(null); // null | pengurus
   const [sibuk, setSibuk] = useState(false);
@@ -96,21 +115,65 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
   const [galatUnggah, setGalatUnggah] = useState(null);
   const [galatHapus, setGalatHapus] = useState(null);
 
+  const [cariDaerah, setCariDaerah] = useState('');
+
   const nilai = formulir?.nilai ?? null;
   const modeUbah = formulir?.id != null;
+  const kelompokTerpilih = nilai ? kelompokPengurus(nilai.kelompok) : null;
+  const jumlahKolom = bolehKelola ? 8 : 7; // jumlah kolom tabel, untuk colSpan baris kepala kelompok
+
+  // Kabupaten/kota dikelompokkan per provinsi dan disaring kotak cari (daftarnya ratusan baris).
+  const kabupatenPerProvinsi = (() => {
+    if (!nilai || jenisWilayahKelompok(nilai.kelompok) !== 'kabupaten_kota') return [];
+    const q = cariDaerah.trim().toLowerCase();
+    const peta = new Map();
+    for (const w of wilayahKabupaten) {
+      if (q && !w.nama.toLowerCase().includes(q) && !String(w.provinsi).toLowerCase().includes(q)) continue;
+      if (!peta.has(w.provinsi)) peta.set(w.provinsi, []);
+      peta.get(w.provinsi).push(w);
+    }
+    return [...peta.entries()];
+  })();
 
   function ubahNilai(kunci, v) {
     setFormulir((f) => (f ? { ...f, nilai: { ...f.nilai, [kunci]: v } } : f));
   }
 
+  /** Kelompok menentukan tingkat, kebutuhan bagian, dan jenis wilayah -> nilai yang tidak berlaku dibersihkan. */
+  function gantiKelompok(slug) {
+    const k = kelompokPengurus(slug);
+    setCariDaerah('');
+    setFormulir((f) => (f ? {
+      ...f,
+      nilai: {
+        ...f.nilai,
+        kelompok: slug,
+        tingkat: k?.tingkat ?? f.nilai.tingkat,
+        bagian: k?.berbagian ? f.nilai.bagian : '',
+        // wilayah dibersihkan bila jenis wilayah yang boleh dipilih berubah
+        wilayah_id: jenisWilayahKelompok(slug) === jenisWilayahKelompok(f.nilai.kelompok) ? f.nilai.wilayah_id : '',
+      },
+    } : f));
+  }
+
+  /** Memilih bagian mengusulkan teks jabatan bila kolom jabatan masih kosong (pemilik bebas mengubah). */
+  function gantiBagian(slug) {
+    setFormulir((f) => (f ? {
+      ...f,
+      nilai: { ...f.nilai, bagian: slug, jabatan: f.nilai.jabatan.trim() ? f.nilai.jabatan : jabatanBawaanBagian(slug) },
+    } : f));
+  }
+
   function bukaTambah() {
     setPesan(null);
+    setCariDaerah('');
     setGalatFormulir(null);
     setGalatUnggah(null);
     setFormulir({ id: null, nilai: formulirKosong(daftar) });
   }
   function bukaUbah(p) {
     setPesan(null);
+    setCariDaerah('');
     setGalatFormulir(null);
     setGalatUnggah(null);
     setFormulir({ id: p.id, nilai: formulirDari(p) });
@@ -149,8 +212,10 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
     e.preventDefault();
     if (!formulir || sibuk) return;
     setGalatFormulir(null);
-    if (nilai.tingkat === 'wilayah' && !nilai.wilayah_id && !/^dp[wdc]$/.test(nilai.kelompok || '')) {
-      setGalatFormulir('Pengurus tingkat wilayah wajib memilih wilayah.');
+    if (!nilai.kelompok) { setGalatFormulir('Kelompok wajib dipilih.'); return; }
+    if (kelompokBerbagian(nilai.kelompok) && !nilai.bagian) { setGalatFormulir('Bagian direktorat wajib dipilih.'); return; }
+    if (jenisWilayahKelompok(nilai.kelompok) && !nilai.wilayah_id) {
+      setGalatFormulir(jenisWilayahKelompok(nilai.kelompok) === 'provinsi' ? 'DPW wajib memilih provinsi.' : 'Koordinator Daerah wajib memilih kabupaten/kota.');
       return;
     }
     const muatan = {
@@ -158,7 +223,8 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
       jabatan: nilai.jabatan.trim(),
       tingkat: nilai.tingkat,
       kelompok: nilai.kelompok || null,
-      wilayah_id: nilai.tingkat === 'wilayah' && nilai.wilayah_id ? Number(nilai.wilayah_id) : null,
+      bagian: kelompokBerbagian(nilai.kelompok) ? (nilai.bagian || null) : null,
+      wilayah_id: nilai.wilayah_id ? Number(nilai.wilayah_id) : null,
       foto: nilai.foto || null,
       deskripsi: nilai.deskripsi.trim() || null,
       aktif_sejak: nilai.aktif_sejak === '' ? null : Number(nilai.aktif_sejak),
@@ -192,7 +258,9 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
   function indeksTetangga(i, arah) {
     const j = i + arah;
     if (j < 0 || j >= daftar.length) return -1;
-    return daftar[j].tingkat === daftar[i].tingkat ? j : -1;
+    // RUN QA-3 B: pertukaran hanya di dalam kelompok (dan bagian) yang sama, karena tabel kini dikelompokkan.
+    const sama = daftar[j].kelompok === daftar[i].kelompok && (daftar[j].bagian ?? null) === (daftar[i].bagian ?? null);
+    return sama ? j : -1;
   }
   async function geser(i, arah) {
     const j = indeksTetangga(i, arah);
@@ -294,36 +362,65 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
                   <input className={KELAS_INPUT} id="pengurus-jabatan" name="jabatan" type="text" placeholder="Mis. Ketua Umum" value={nilai.jabatan} onChange={(e) => ubahNilai('jabatan', e.target.value)} maxLength={150} required disabled={sibuk} />
                 </div>
               </div>
-              <div className="flex p-4 gap-4 bg-surface-container-lowest">
+              {/* RUN QA-3 A1/A2/A3: kelompok WAJIB dan menentukan sisanya. Tingkat diturunkan dari kelompok
+                  (tidak lagi diisi manual) supaya kombinasi mustahil tidak bisa dibuat. Direktorat memunculkan
+                  pilihan BAGIAN; DPW memilih PROVINSI; Koordinator Daerah memilih KABUPATEN/KOTA. */}
+              <div className="flex flex-col lg:flex-row p-4 gap-4 bg-surface-container-lowest">
                 <div className="flex-1 relative">
-                  <label className={KELAS_LABEL} htmlFor="pengurus-tingkat">Tingkat</label>
-                  <select className={KELAS_SELECT} id="pengurus-tingkat" name="tingkat" value={nilai.tingkat} onChange={(e) => ubahNilai('tingkat', e.target.value)} required disabled={sibuk}>
-                    <option value="pusat">Pusat</option>
-                    <option value="wilayah">Wilayah</option>
-                  </select>
-                  <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
-                </div>
-                <div className="flex-1 relative">
-                  {/* QA-2 A2: kelompok bagan struktur (Dewan/DPP/Direktorat/Satgas/DPW-DPD-DPC) */}
-                  <label className={KELAS_LABEL} htmlFor="pengurus-kelompok">Kelompok Bagan</label>
-                  <select className={KELAS_SELECT} id="pengurus-kelompok" name="kelompok" value={nilai.kelompok} onChange={(e) => ubahNilai('kelompok', e.target.value)} disabled={sibuk}>
-                    <option value="">Tanpa kelompok (Pimpinan Regional)</option>
+                  <label className={KELAS_LABEL} htmlFor="pengurus-kelompok">Kelompok (wajib)</label>
+                  <select className={KELAS_SELECT} id="pengurus-kelompok" name="kelompok" value={nilai.kelompok} onChange={(e) => gantiKelompok(e.target.value)} required disabled={sibuk}>
+                    <option value="">Pilih kelompok</option>
                     {KELOMPOK_PENGURUS.map((k) => (
                       <option key={k.slug} value={k.slug}>{k.label}</option>
                     ))}
                   </select>
                   <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
+                  <p className="font-body-md text-[12px] text-outline mt-1">{kelompokTerpilih ? `${kelompokTerpilih.tingkatLabel} (tingkat ${LABEL_TINGKAT[kelompokTerpilih.tingkat]})` : 'Tingkat mengikuti kelompok yang dipilih.'}</p>
                 </div>
-                <div className="flex-1 relative">
-                  <label className={KELAS_LABEL} htmlFor="pengurus-wilayah">Wilayah{nilai.tingkat === 'wilayah' ? ' (wajib)' : ' (opsional)'}</label>
-                  <select className={KELAS_SELECT} id="pengurus-wilayah" name="wilayah_id" value={nilai.wilayah_id} onChange={(e) => ubahNilai('wilayah_id', e.target.value)} required={nilai.tingkat === 'wilayah'} disabled={sibuk}>
-                    <option value="">Pilih Wilayah</option>
-                    {wilayah.map((w) => (
-                      <option key={w.id} value={String(w.id)}>{w.nama}</option>
-                    ))}
-                  </select>
-                  <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
-                </div>
+                {kelompokBerbagian(nilai.kelompok) ? (
+                  <div className="flex-1 relative">
+                    <label className={KELAS_LABEL} htmlFor="pengurus-bagian">Bagian Direktorat (wajib)</label>
+                    <select className={KELAS_SELECT} id="pengurus-bagian" name="bagian" value={nilai.bagian} onChange={(e) => gantiBagian(e.target.value)} required disabled={sibuk}>
+                      <option value="">Pilih bagian</option>
+                      {BAGIAN_DIREKTORAT.map((b) => (
+                        <option key={b.slug} value={b.slug}>{b.label}</option>
+                      ))}
+                    </select>
+                    <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
+                  </div>
+                ) : null}
+                {jenisWilayahKelompok(nilai.kelompok) === 'provinsi' ? (
+                  <div className="flex-1 relative">
+                    <label className={KELAS_LABEL} htmlFor="pengurus-wilayah">Provinsi (wajib)</label>
+                    <select className={KELAS_SELECT} id="pengurus-wilayah" name="wilayah_id" value={nilai.wilayah_id} onChange={(e) => ubahNilai('wilayah_id', e.target.value)} required disabled={sibuk}>
+                      <option value="">Pilih provinsi</option>
+                      {wilayah.map((w) => (
+                        <option key={w.id} value={String(w.id)}>{w.nama}</option>
+                      ))}
+                    </select>
+                    <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
+                  </div>
+                ) : null}
+                {jenisWilayahKelompok(nilai.kelompok) === 'kabupaten_kota' ? (
+                  <div className="flex-1 relative">
+                    <label className={KELAS_LABEL} htmlFor="pengurus-wilayah">Kabupaten/Kota (wajib)</label>
+                    {/* Daftar panjang: kotak cari menyaring, <optgroup> mengelompokkan per provinsi. */}
+                    <input className={`${KELAS_INPUT} mb-2`} id="pengurus-cari-daerah" type="search" placeholder="Ketik untuk menyaring daerah atau provinsi..." value={cariDaerah} onChange={(e) => setCariDaerah(e.target.value)} disabled={sibuk} aria-controls="pengurus-wilayah" />
+                    <select className={KELAS_SELECT} id="pengurus-wilayah" name="wilayah_id" value={nilai.wilayah_id} onChange={(e) => ubahNilai('wilayah_id', e.target.value)} required disabled={sibuk} size={8}>
+                      <option value="">Pilih kabupaten/kota</option>
+                      {kabupatenPerProvinsi.map(([provinsi, daerah]) => (
+                        <optgroup key={provinsi} label={provinsi}>
+                          {daerah.map((w) => (
+                            <option key={w.id} value={String(w.id)}>{w.nama}</option>
+                          ))}
+                        </optgroup>
+                      ))}
+                    </select>
+                    {kabupatenPerProvinsi.length === 0 ? (
+                      <p className="font-body-md text-[12px] text-error mt-1">Tidak ada daerah yang cocok dengan pencarian.</p>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
               {/* Foto — kotak unggah putus-putus editor_artikel_admin */}
               <label htmlFor="pengurus-foto" className="bg-surface-container-lowest rounded-xl border border-tertiary p-6 shadow-sm flex flex-col items-center justify-center border-dashed gap-3 min-h-[200px] cursor-pointer hover:bg-surface-container-low transition-colors group">
@@ -389,8 +486,30 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant">
-                {daftar.map((p, i) => (
-                  <tr key={p.id} className="hover:bg-surface-container-low transition-colors bg-surface-container-lowest">
+                {daftar.map((p, i) => {
+                  // RUN QA-3 B: baris KEPALA KELOMPOK bergaya kepala tabel desain (bg-primary/on-primary,
+                  // colspan penuh) + sub-kepala per bagian untuk Direktorat.
+                  const sebelum = i > 0 ? daftar[i - 1] : null;
+                  const kepalaKelompok = !sebelum || sebelum.kelompok !== p.kelompok;
+                  const kepalaBagian = p.kelompok === 'direktorat' && (kepalaKelompok || (sebelum.bagian ?? null) !== (p.bagian ?? null));
+                  const k = kelompokPengurus(p.kelompok);
+                  return (
+                  <Fragment key={p.id}>
+                  {kepalaKelompok ? (
+                    <tr className="bg-primary text-on-primary">
+                      <th scope="colgroup" colSpan={jumlahKolom} className="px-6 py-3 text-left font-label-md text-label-md">
+                        {k ? `${k.label} - ${k.tingkatLabel}` : 'Di luar susunan resmi - perlu ditempatkan ulang oleh pengelola'}
+                      </th>
+                    </tr>
+                  ) : null}
+                  {kepalaBagian ? (
+                    <tr className="bg-surface-container-high">
+                      <th scope="colgroup" colSpan={jumlahKolom} className="px-6 py-2 text-left font-label-md text-label-md text-primary">
+                        {`Bagian: ${labelBagian(p.bagian) || 'belum ditentukan'}`}
+                      </th>
+                    </tr>
+                  ) : null}
+                  <tr className="hover:bg-surface-container-low transition-colors bg-surface-container-lowest">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
@@ -416,7 +535,9 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
                       </td>
                     ) : null}
                   </tr>
-                ))}
+                  </Fragment>
+                  );
+                })}
               </tbody>
             </table></div>
             <div className="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-between items-center text-sm text-on-surface-variant">

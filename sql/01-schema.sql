@@ -211,6 +211,8 @@ CREATE TABLE IF NOT EXISTS pengurus (
   tingkat      ENUM('pusat','wilayah') NOT NULL,
   -- QA-2 A2: kelompok bagan (lib/kelompokPengurus.js); instalasi lama: migrasi 20260904-1500
   kelompok     VARCHAR(40) NULL,
+  -- QA-3 A2: bagian direktorat (lib/kelompokPengurus.js); instalasi lama: migrasi 20260905-0900
+  bagian       VARCHAR(60) NULL,
   wilayah_id   INT UNSIGNED NULL,
   foto         VARCHAR(255) NULL,
   deskripsi    TEXT NULL,
@@ -220,6 +222,7 @@ CREATE TABLE IF NOT EXISTS pengurus (
   PRIMARY KEY (id),
   KEY idx_pengurus_tingkat_urutan (tingkat, urutan),
   KEY idx_pengurus_kelompok_urutan (kelompok, urutan),
+  KEY idx_pengurus_kelompok_bagian (kelompok, bagian, urutan),
   KEY idx_pengurus_wilayah (wilayah_id),
   CONSTRAINT fk_pengurus_wilayah FOREIGN KEY (wilayah_id) REFERENCES wilayah (id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

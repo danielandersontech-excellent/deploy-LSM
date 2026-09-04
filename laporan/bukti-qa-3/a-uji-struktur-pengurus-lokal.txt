@@ -1,0 +1,26 @@
+# QA-3 A+B — restrukturisasi organisasi — http://127.0.0.1:3000 — 2026-09-04T12:09:36.811Z
+
+## A1 — susunan kelompok final
+   1. kelompok kosong DITOLAK 422 (dulu diterima, dan itulah sebab pengurus hilang dari bagan) → 422 KELOMPOK_WAJIB
+   2. kelompok yang ditiadakan (dpc, direktorat_eksekutif, dpd) DITOLAK 422 → dpc→422, direktorat_eksekutif→422, dpd→422
+   3. delapan kelompok resmi diterima: dewan_pembina, dewan_penasehat, dewan_pengawas, pengurus_dpp, direktorat, satgas, dpw, korda → dewan_pembina→201, dewan_penasehat→201, dewan_pengawas→201, pengurus_dpp→201, direktorat→201, satgas→201, dpw→201, korda→201
+
+## A2 — Direktorat 12 bagian
+   4. kelompok direktorat TANPA bagian ditolak 422; bagian tak dikenal ditolak 422 → 422 BAGIAN_WAJIB; 422 BAGIAN_TIDAK_SAH
+   5. halaman /struktur menampilkan 12 bagian direktorat; bagian kosong tertulis (Belum terisi) → 12 bagian tampil; penanda kosong ada
+
+## A3 — wilayah dua tingkat
+   6. DPW dengan KABUPATEN ditolak 422; Koordinator Daerah dengan PROVINSI ditolak 422 → 422 x3 (jenis tidak cocok x2, wilayah wajib x1)
+   7. DPW & Koordinator Daerah uji tampil di /struktur pada blok yang benar → blok DPW lalu Koordinator Daerah; keduanya memuat pengurus uji
+   8. jumlah kabupaten/kota lengkap 514 dan semuanya punya provinsi induk → 514 kabupaten/kota, 0 tanpa induk, 39 baris lama utuh
+
+## BUG — menyunting pengurus tidak boleh menghapus kelompoknya
+   9. PATCH hanya jabatan → kelompok & bagian TETAP (dulu terhapus diam-diam) → jabatan berubah, kelompok=direktorat, bagian=media tetap
+
+## B — Kelola Pengurus: baris kepala kelompok
+  10. /staf/pengurus memuat baris kepala kelompok (bg-primary, colspan) + sub-kepala bagian → 8 kepala kelompok: Dewan Pembina, Dewan Penasehat, Dewan Pengawas, Pengurus DPP, Direktorat, Satuan Tugas (Satgas), DPW, Koordinator Daerah
+
+## Pembersihan
+  11. pengurus uji dihapus → 53:200 54:200 55:200 56:200 57:200 58:200 59:200 60:200 61:200
+
+RINGKASAN QA-3 A+B: 11 langkah, 0 gagal -> LULUS
