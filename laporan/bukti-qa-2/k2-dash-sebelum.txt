@@ -1,0 +1,43 @@
+PENJAGA DASH: 42 pelanggaran em/en dash pada teks tampil/seed:
+  app\(auth)\tanpa-akses\page.js:26: <h2 className="font-headline-md text-headline-md text-primary">403 — Tidak Berhak</h2>
+  app\(publik)\berita\page.js:76: if (q && namaKategori) title = `Pencarian "${q}" di ${namaKategori} — Berita & Investigasi`;
+  app\(publik)\berita\page.js:77: else if (q) title = `Pencarian "${q}" — Berita & Investigasi`;
+  app\(publik)\berita\page.js:78: else if (namaKategori) title = `${namaKategori} — Berita & Investigasi`;
+  app\(publik)\berita\[slug]\page.js:140: <Image alt={`${artikel.penulis_nama} — lambang WARKOP NUSANTARA`} className="w-12 h-12 rounded-full object-cov
+  app\(publik)\faq\page.js:15: pembuka="Prosedur pengaduan, pelacakan nomor kasus, dan perlindungan identitas pelapor — dijawab singkat."
+  app\(publik)\galeri\page.js:136: const labelGambar = `${item.judul} — ${kat.label}`;
+  app\(publik)\kontak\page.js:21: 'Pusat Layanan Pengaduan Masyarakat WARKOP NUSANTARA: sampaikan laporan dugaan korupsi, pelayanan publik, agra
+  app\(publik)\lacak\page.js:205: <p className="font-body-md text-body-md text-on-surface-variant">{pengaduan.wilayah_nama || '—'}</p>
+  app\(publik)\page.js:20: title: { absolute: 'WARKOP NUSANTARA — Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara' },
+  app\(publik)\program\page.js:24: description: 'Inisiatif pengawasan dana, observasi kebijakan, dan bantuan hukum WARKOP NUSANTARA — yang sedang
+  app\(publik)\program\page.js:114: <div className="bg-cover bg-center w-full h-full absolute inset-0" role="img" aria-label="Segel WARKOP NUSANTA
+  app\(publik)\tentang\page.js:19: 'Mengenal WARKOP NUSANTARA — Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara: makna akronim
+  app\(publik)\tentang\page.js:31: { ikon: 'article', judul: 'Tulisan Kepanjangan (Empat Fungsi)', makna: 'Wadah Aspirasi Rakyat, Kontrol, Observ
+  app\(publik)\tentang\page.js:205: Keberanian yang lahir dari keyakinan pada kebenaran dan hukum. Kami bersuara bukan karena kuat, melainkan kare
+  app\(staf)\staf\dashboard\page.js:392: <td className="py-4 px-6">{p.wilayah_nama ?? '—'}</td>
+  app\(staf)\staf\pengaduan\page.js:184: <td className="py-4 px-6 font-body-md text-on-surface">{p.wilayah_nama ?? '—'}</td>
+  app\(staf)\staf\pengaduan\[id]\page.js:105: <h4 id="judul-identitas" className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">Laporan 
+  app\(staf)\staf\pengaduan\[id]\page.js:123: <h4 id="judul-identitas" className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">DATA SEN
+  app\(staf)\staf\pengaduan\[id]\page.js:129: <p className="font-body-md text-body-md text-on-surface">{b.nilai || '—'}</p>
+  app\api\staf\pengaduan\[id]\status\route.js:25: if (catatan.length < CATATAN_MIN) throw new GalatHttp(422, `Catatan internal wajib diisi (minimal ${CATATAN_MI
+  app\api\staf\pengguna\[id]\route.js:68: throw new GalatHttp(409, `Pengguna memiliki jejak (audit ${jejak.audit}, riwayat pengaduan ${jejak.riwayat}, p
+  app\api\staf\pengguna\[id]\route.js:74: throw new GalatHttp(409, 'Pengguna memiliki data terkait sehingga tidak dapat dihapus — nonaktifkan akunnya sa
+  components\publik\FormulirPengaduan.js:186: setPesan({ jenis: 'info', teks: 'Papan klip tidak tersedia — catat nomor kasus di atas secara manual.' });
+  components\publik\FormulirPengaduan.js:244: <h4 className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">Laporan Anonim — Simpan Nomor
+  components\publik\TombolBagikan.js:25: const teks = ringkasan ? `${judul} — ${ringkasan}` : judul;
+  components\staf\FormulirPengaturan.js:168: Seluruh kunci di halaman ini berasal dari <code>lib/pengaturanDefinisi.js</code> — daftar putih tunggal yang j
+  components\staf\KelolaGaleri.js:369: ? `Format JPG, PNG, atau WEBP. Maks ${batasMb}MB. Thumbnail video tidak dibangkitkan otomatis — unggah gambar 
+  components\staf\KelolaGaleri.js:406: <div className={`absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105${
+  components\staf\KelolaPengguna.js:349: <td className={`${KELAS_TD_VARIAN} hidden lg:table-cell`}>{u.wilayah_nama ?? '—'}</td>
+  components\staf\KelolaPengguna.js:393: {dialog.pengguna.id === idSaya ? ' Ini akun Anda sendiri — Anda juga akan keluar dan harus masuk kembali.' : '
+  components\staf\KelolaPengguna.js:410: Pengguna <strong>{dialog.pengguna.nama}</strong> akan dihapus permanen. Tindakan ini tidak dapat dibatalkan. B
+  components\staf\KelolaPengurus.js:390: <td className="px-6 py-4 hidden lg:table-cell text-on-surface-variant font-body-md text-body-md">{p.wilayah_na
+  components\staf\KelolaPengurus.js:391: <td className="px-6 py-4 hidden sm:table-cell text-on-surface-variant font-body-md text-body-md">{p.aktif_seja
+  components\staf\KelolaProgram.js:88: if (!mulai && !selesai) return '—';
+  components\staf\KelolaProgram.js:91: return `${awal} – ${akhir}`;
+  components\staf\KelolaProgram.js:436: <td className="px-6 py-4 hidden lg:table-cell text-on-surface-variant font-body-md text-body-md">{p.wilayah_na
+  components\staf\PanelStatusPengaduan.js:149: <option value="">— Belum ditugaskan —</option>
+  components\staf\PemantauRealtime.js:86: <span className={KELAS_TERPUTUS}><Ikon nama="update" className="text-[14px]" /> Sambungan langsung terputus — 
+  components\staf\PemantauRealtime.js:91: <Ikon nama="fiber_new" className="text-[14px]" /> Ada {tertunda.length} laporan baru — muat ulang
+  lib\galeriUnggah.js:41: if (!t) throw new GalatHttp(415, 'Berkas harus JPG, PNG, WebP (foto) atau MP4 (video) — isi berkas tidak cocok
+  lib\pembatasLajuUmum.js:59: return `Terlalu banyak permintaan dari jaringan Anda dalam waktu singkat. Ini pengaman otomatis, bukan penolak

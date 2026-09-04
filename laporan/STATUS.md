@@ -100,21 +100,21 @@ Aturan konten: K1 tanpa foto internet & tanpa berita nyata; K2 tanpa em/en dash 
 
 | # | Butir | Status | Catatan |
 |---|---|---|---|
-| B0a | Loop redirect /login (cookie basi) | SELESAI (lokal) | Reproduksi: ERR_TOO_MANY_REDIRECTS (`bukti-qa-2/b0a-sesi-sebelum.txt`). Akar: proxy mengalihkan /login → dashboard hanya karena tanda tangan JWT sah (token_version naik = sesi basi), lalu layout menendang balik ke /login. Perbaikan: proxy tidak mengalihkan /login; halaman /login memverifikasi sesi PENUH (DB) → dashboard / ganti-sandi; cookie ada tapi tak sah → `GET /api/auth/bersihkan-sesi` (hapus cookie, 307 ke /login); `requireUser` juga lewat pembersih. Uji 5 keadaan × 5 jalur (25 sel) + Chrome: nol loop, nol layar kosong (`b0a-sesi-sesudah-lokal.txt`) |
-| B0b | Alur ganti sandi utuh end-to-end | SELESAI (lokal) | Lewat UI (ketik sungguhan) desktop 1280 & ponsel 375: reset → login sandi sementara → dipaksa ke /staf/ganti-sandi → ganti (3 kolom ≥ 20 karakter, fokus bertahan) → dashboard sesi baru → Keluar → login sandi baru 200, lama 401 (`b0b-ganti-sandi-ui-lokal.txt`, tangkapan) |
+| B0a | Loop redirect /login (cookie basi) | SELESAI (e3b3238, produksi LULUS `b0a-sesi-produksi.txt`) | Reproduksi: ERR_TOO_MANY_REDIRECTS (`bukti-qa-2/b0a-sesi-sebelum.txt`). Akar: proxy mengalihkan /login → dashboard hanya karena tanda tangan JWT sah (token_version naik = sesi basi), lalu layout menendang balik ke /login. Perbaikan: proxy tidak mengalihkan /login; halaman /login memverifikasi sesi PENUH (DB) → dashboard / ganti-sandi; cookie ada tapi tak sah → `GET /api/auth/bersihkan-sesi` (hapus cookie, 307 ke /login); `requireUser` juga lewat pembersih. Uji 5 keadaan × 5 jalur (25 sel) + Chrome: nol loop, nol layar kosong (`b0a-sesi-sesudah-lokal.txt`) |
+| B0b | Alur ganti sandi utuh end-to-end | SELESAI (produksi LULUS `b0b-ganti-sandi-ui-produksi.txt`) | Lewat UI (ketik sungguhan) desktop 1280 & ponsel 375: reset → login sandi sementara → dipaksa ke /staf/ganti-sandi → ganti (3 kolom ≥ 20 karakter, fokus bertahan) → dashboard sesi baru → Keluar → login sandi baru 200, lama 401 (`b0b-ganti-sandi-ui-lokal.txt`, tangkapan) |
 | B0c | Bug input satu huruf + audit semua formulir | SELESAI (tidak tereproduksi) | Audit ketik CDP 44 kolom di 14 halaman/formulir (login, kontak, cari, lacak, ganti-sandi, editor, pengurus/program/galeri/pengguna, pengaturan, catatan status): nilai utuh, fokus bertahan, 0 error konsol (`b0c-ketik-sebelum.txt`); juga di produksi (halaman publik). Tidak ada pola komponen-dalam-render/key berubah. Dugaan gejala pemilik: efek loop B0a (halaman /login dimuat ulang berulang) — diverifikasi ulang di produksi setelah deploy |
-| B0d | Pemulihan akun superadmin produksi | BELUM | |
-| K2 | Sapu em/en dash kode + DB lokal & produksi + penjaga regresi | BELUM | |
-| A1 | Alamat resmi lewat pengaturan (footer + kontak) | BELUM | |
-| A2 | Struktur DPP asli pemilik (migrasi pengelompokan, seed, produksi) | BELUM | |
-| B1 | Navbar rapi 1280/1366/1440/1920 (keputusan pemilik) | BELUM | |
-| B2 | Hero beranda: logo segel besar di kanan | BELUM | |
-| B3 | Footer verbatim desain + alamat A1 | BELUM | |
-| B4 | Tentang: logo segel utuh semua lebar | BELUM | |
-| B5 | Struktur: bagan bertingkat A2, responsif | BELUM | |
-| B6 | Filter/paginasi tidak melompat ke atas (publik + staf) | BELUM | |
-| B7 | galeri-3.mp4 → butir foto (produksi + seed) | BELUM | |
-| B8 | Pratinjau artikel ala WordPress di editor (komponen detail publik, ber-sesi, draf tidak bocor) | BELUM | |
+| B0d | Pemulihan akun superadmin produksi | SELESAI | Temuan audit_log: pemilik me-reset sandinya sendiri 13:37 WIB (wajib_ganti_sandi=1), masuk 13:45, TIDAK ada `ganti_sandi_sendiri` → ganti sandi separuh jalan; sandi sementara pemilik tidak diketahui. Tindakan: sandi sementara ACAK baru disetel via node di container (bcrypt 12), `wajib_ganti_sandi=1`, `token_version` 1→2 (sesi lama batal), disimpan HANYA di `.env.produksi` `SEED_ADMIN_PASSWORD` (tidak dicetak); login 200 (`b0d-pemulihan-superadmin.txt`). **INSTRUKSI PEMILIK: masuk di https://staf.warkopnusantara.id/login dengan email admin + nilai SEED_ADMIN_PASSWORD di D:\Deploy\LSM\.env.produksi, Anda langsung diminta mengganti sandi; setelah itu sandi di .env.produksi tidak berlaku lagi.** |
+| K2 | Sapu em/en dash | SELESAI | 42 pelanggaran di 26 berkas tampil diganti (judul ' - ', klausa ', ', placeholder '-', rentang 's.d.', label '(Belum ditugaskan)'); seed & migrasi bersih; DB lokal 0, DB produksi 0 baris (artikel/pengaturan/pengurus/program/galeri). Penjaga `scripts/penjaga-dash.mjs [--db]` (exit 1 bila ada) dipakai di regresi (`k2-dash-*.txt`) |
+| A1 | Alamat resmi lewat pengaturan | SELESAI (kode) | Kunci `kontak_alamat_gedung/jalan/kota` (sudah ada, K3 bisa diubah di Pengaturan) diisi alamat resmi: Komplek Perkantoran CNN / Jl. Tuanku Tambusai No. B 15, Labuh Baru Tim., Payung Sekaki / Kota Pekanbaru, Riau 28123 (bawaan definisi + seed + UPDATE DB lokal; produksi saat deploy). Tampil di halaman kontak (sudah) dan footer (baris baru berikon location_on, kelas sama baris email/hotline) |
+| A2 | Struktur DPP asli pemilik | SELESAI (kode+lokal) | Migrasi `20260904-1500-pengurus-kelompok.sql` (kolom `kelompok`) + `20260904-1510-pengurus-dpp-data.sql` (39 posisi: Dewan Pembina/Penasehat/Pengawas, Pengurus DPP, Direktorat Eksekutif, 9 Direktorat, Satgas, kerangka DPW/DPD/DPC; kosong = '(Belum terisi)'; foto siluet); `lib/kelompokPengurus.js`; validasi + select Kelompok di Kelola Pengurus (K3); seed.sql diselaraskan. `aset-pemilik/struktur-dpp.jpg` TIDAK ADA di repo → teks perintah = sumber. Produksi: dijalankan saat deploy |
+| B1 | Navbar rapi 1280+ | SELESAI | Merek `lg:text-xl` satu baris, menu `gap-4` (2xl: gap-6) `lg:whitespace-nowrap`, cari `w-40` (2xl: w-48), wadah `md:gap-4` → 7 menu + cari + Masuk Staff tanpa tumpang tindih di 1280/1366/1440/1920 (`tangkapan/b1-navbar-komposit.png`) |
+| B2 | Hero beranda segel kanan | SELESAI | Kolom kanan `hidden lg:flex w-80 xl:w-96` berisi logo segel besar (drop-shadow), teks hero tetap `max-w-3xl` (`tangkapan/b2-beranda-1280.png`) |
+| B3 | Footer | SELESAI | Markup footer sudah verbatim desain (diverifikasi ulang); ditambah baris alamat A1 dari pengaturan |
+| B4 | Tentang logo utuh | SELESAI | `object-cover` → `object-contain` + padding + latar surface-container-low pada kotak 500 px (`tangkapan/b4-tentang-375.png`) |
+| B5 | Struktur bagan bertingkat | SELESAI | `app/(publik)/struktur/page.js` ditulis ulang: Dewan (3 kolom) → Pengurus DPP (Ketua Umum kartu Pimpinan Pusat + 3 kartu) → Direktorat Eksekutif → 9 Direktorat → Satgas → kerangka DPW/DPD/DPC → Pimpinan Regional (filter/peta tetap); kelas kartu desain; 1/2/3 kolom (`tangkapan/b5-struktur-{1280,375}.png`) |
+| B6 | Filter/paginasi tidak melompat | SELESAI | `KirimOtomatis` → `router.replace(url, {scroll:false})` (change & submit; tanpa JS tetap GET), `scroll={false}` pada 16 tautan paginasi/pil (Paginasi, program, galeri, staf artikel/pengaduan), galeri ikut KirimOtomatis; uji CDP 8 skenario gulir tetap (`b6-gulir-filter-lokal.txt`) |
+| B7 | galeri-3 video → foto | SELESAI (lokal+seed) | seed.sql & sql/02-seed.sql: butir 3 jenis foto `/penampung/galeri-3.jpg`; UPDATE DB lokal 1 baris; produksi saat deploy (SELECT dulu) |
+| B8 | Pratinjau artikel | SELESAI | `components/publik/BadanArtikel.js` (markup <article> detail publik dipindah, sanitasi lapisan kedua) dipakai /berita/[slug] dan `/staf/artikel/[id]/pratinjau` (pita status, hak = editor: penulis miliknya, wilayah); tombol Pratinjau di kepala editor (tab baru; artikel baru: simpan dulu). Uji: pratinjau 200 ber-sesi, 307 tanpa sesi, draf publik 404, detail terbit 200 |
 | C1 | Inventaris halaman × 6 identitas × 3 lebar: konsol & jaringan bersih, tanpa gulir mendatar/tumpang tindih | BELUM | |
 | C2 | Interaksi: klik semua elemen, ketik penuh semua kolom, klik ganda, tombol kirim dinonaktifkan | BELUM | |
 | C3 | Alur end-to-end lengkap (lampiran jpg/png/pdf/mp4 + batas, tombol kembali, muat ulang di tengah formulir) | BELUM | |
@@ -125,4 +125,4 @@ Aturan konten: K1 tanpa foto internet & tanpa berita nyata; K2 tanpa em/en dash 
 (diisi selama run)
 
 ### Posisi terakhir RUN QA-2
-B0a dimulai.
+K2, A1, A2, B1–B8 selesai di lokal; berikutnya build + commit + migrasi DB produksi + redeploy + verifikasi, lalu C1–C5.

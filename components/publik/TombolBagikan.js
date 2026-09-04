@@ -22,7 +22,7 @@ export default function TombolBagikan({ judul, ringkasan = '' }) {
 
   async function bagikan() {
     const url = window.location.href;
-    const teks = ringkasan ? `${judul} — ${ringkasan}` : judul;
+    const teks = ringkasan ? `${judul}: ${ringkasan}` : judul;
     if (typeof navigator.share === 'function') {
       try {
         await navigator.share({ title: judul, text: teks, url });

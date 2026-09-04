@@ -16,7 +16,7 @@ import { ambilPengaturan } from '@/lib/db/pengaturan';
 export const metadata = {
   title: 'Tentang Kami',
   description:
-    'Mengenal WARKOP NUSANTARA — Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara: makna akronim, filosofi lambang, visi, misi, dan motto Berani Karena Benar.',
+    'Mengenal WARKOP NUSANTARA - Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara: makna akronim, filosofi lambang, visi, misi, dan motto Berani Karena Benar.',
 };
 
 // Sembilan unsur filosofi lambang (REFERENSI bagian 1). Empat pertama: judul + makna verbatim dari
@@ -28,7 +28,7 @@ const FILOSOFI_LAMBANG = [
   { ikon: 'balance', judul: 'Timbangan (Keadilan)', makna: 'Prinsip objektivitas dan perlakuan setara di mata hukum tanpa memandang latar belakang.' },
   { ikon: 'gavel', judul: 'Palu Hukum (Penegakan Hukum)', makna: 'Penegakan hukum, kepastian hukum, dan penyelesaian setiap temuan lewat jalur resmi.' },
   { ikon: 'badge', judul: 'Tulisan Nama (Identitas)', makna: 'Tulisan WARKOP NUSANTARA adalah identitas sekaligus akronim organisasi.' },
-  { ikon: 'article', judul: 'Tulisan Kepanjangan (Empat Fungsi)', makna: 'Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara — penegasan empat fungsi utama lembaga.' },
+  { ikon: 'article', judul: 'Tulisan Kepanjangan (Empat Fungsi)', makna: 'Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara, penegasan empat fungsi utama lembaga.' },
   { ikon: 'campaign', judul: 'Motto (Keberanian)', makna: 'Berani Karena Benar: keberanian yang lahir dari keyakinan pada kebenaran dan hukum.' },
   { ikon: 'verified', judul: 'Cokelat & Emas (Warna)', makna: 'Cokelat melambangkan kesederhanaan, kedewasaan, dan kedekatan dengan rakyat. Emas melambangkan integritas, kehormatan, kepercayaan, dan profesionalisme.' },
 ];
@@ -147,9 +147,10 @@ export default async function HalamanTentang() {
                 ))}
               </ul>
             </div>
-            <div className="relative h-[500px] rounded-lg overflow-hidden border border-outline shadow-sm">
+            {/* QA-2 B4: object-cover memotong segel di lebar tertentu -> object-contain + padding, latar surface-container-low */}
+            <div className="relative h-[500px] rounded-lg overflow-hidden border border-outline shadow-sm bg-surface-container-low p-6">
               <Image
-                className="object-cover w-full h-full"
+                className="object-contain w-full h-full p-6"
                 src="/logo-warkop-besar.png"
                 alt="Lambang WARKOP NUSANTARA: burung hantu, timbangan, palu hukum, dan peta Nusantara di dalam lingkaran cokelat dan emas"
                 fill
@@ -202,7 +203,7 @@ export default async function HalamanTentang() {
           <span className="font-label-md text-label-md text-secondary-fixed tracking-widest uppercase mb-4 block relative z-10">Motto</span>
           <h2 className="font-headline-lg text-headline-lg text-secondary-fixed mb-6 relative z-10">Berani Karena Benar</h2>
           <p className="font-body-lg text-body-lg text-on-primary/90 max-w-2xl mx-auto relative z-10">
-            Keberanian yang lahir dari keyakinan pada kebenaran dan hukum. Kami bersuara bukan karena kuat, melainkan karena benar — dan kebenaran itu kami tegakkan lewat jalur hukum yang resmi.
+            Keberanian yang lahir dari keyakinan pada kebenaran dan hukum. Kami bersuara bukan karena kuat, melainkan karena benar, dan kebenaran itu kami tegakkan lewat jalur hukum yang resmi.
           </p>
         </section>
       </main>

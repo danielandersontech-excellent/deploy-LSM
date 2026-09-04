@@ -1,0 +1,19 @@
+# Redeploy produksi QA-2 B0 (commit e3b3238) — 2026-09-04T07:03:28Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"c6ksrjllve8gpdp5a6is35bo"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[07:05:32Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:06:04Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:06:36Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:07:08Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:07:41Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:08:14Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:08:47Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:09:19Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:09:51Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:10:24Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+[07:10:57Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:e3b32388ab1c0f311e3a61c514c426f0d5ccabf7 Up 20 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:3069d7da273f3d384fd1aea12354575a57c222ee Up 2 hours (healthy) 
+HASIL: image e3b3238 HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T14:10:58+07:00","basisData":"terhubung","versi":"0.1.0"}

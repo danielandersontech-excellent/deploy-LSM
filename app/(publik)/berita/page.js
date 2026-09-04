@@ -73,9 +73,9 @@ export async function generateMetadata({ searchParams }) {
   const { q, kategori } = bacaFilter(sp, kategoriList.map((k) => k.slug));
   const namaKategori = kategoriList.find((k) => k.slug === kategori)?.nama;
   let title = 'Berita & Investigasi';
-  if (q && namaKategori) title = `Pencarian "${q}" di ${namaKategori} — Berita & Investigasi`;
-  else if (q) title = `Pencarian "${q}" — Berita & Investigasi`;
-  else if (namaKategori) title = `${namaKategori} — Berita & Investigasi`;
+  if (q && namaKategori) title = `Pencarian "${q}" di ${namaKategori} - Berita & Investigasi`;
+  else if (q) title = `Pencarian "${q}" - Berita & Investigasi`;
+  else if (namaKategori) title = `${namaKategori} - Berita & Investigasi`;
   return { title, description: DESKRIPSI };
 }
 

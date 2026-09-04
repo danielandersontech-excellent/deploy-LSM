@@ -102,7 +102,7 @@ function PanelIdentitas({ pengaduan }) {
           <Ikon nama="visibility_off" terisi className="text-[28px]" />
         </div>
         <div>
-          <h4 id="judul-identitas" className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">Laporan anonim — identitas tidak disimpan</h4>
+          <h4 id="judul-identitas" className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">Laporan anonim, identitas tidak disimpan</h4>
           <p className="font-body-md text-body-md text-on-surface-variant text-sm">Pelapor memilih merahasiakan identitas. Tidak ada nama, NIK, telepon, maupun email yang tersimpan di sistem.</p>
         </div>
       </section>
@@ -120,13 +120,13 @@ function PanelIdentitas({ pengaduan }) {
         <Ikon nama="security" terisi className="text-[28px]" />
       </div>
       <div>
-        <h4 id="judul-identitas" className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">DATA SENSITIF — Identitas Pelapor</h4>
+        <h4 id="judul-identitas" className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">DATA SENSITIF, Identitas Pelapor</h4>
         <p className="font-body-md text-body-md text-on-surface-variant text-sm">Hanya terlihat oleh superadmin dan verifikator. Pembukaan panel ini tercatat di jejak audit. Jangan disalin ke luar sistem.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {bidang.map((b) => (
             <div key={b.label}>
               <p className={KELAS_LABEL}>{b.label}</p>
-              <p className="font-body-md text-body-md text-on-surface">{b.nilai || '—'}</p>
+              <p className="font-body-md text-body-md text-on-surface">{b.nilai || '-'}</p>
             </div>
           ))}
         </div>

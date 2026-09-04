@@ -83,12 +83,12 @@ export default function PemantauRealtime({ mode = 'dashboard', bebasFilter = tru
     // tidak menggeser isi/gulir halaman (uji i: scrollTop sempat bergeser 42 px saat penanda masuk ke alur di atas tabel).
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2 max-w-[min(90vw,28rem)]" aria-live="polite">
       {keadaan === 'terputus' ? (
-        <span className={KELAS_TERPUTUS}><Ikon nama="update" className="text-[14px]" /> Sambungan langsung terputus — data diperbarui saat tersambung kembali</span>
+        <span className={KELAS_TERPUTUS}><Ikon nama="update" className="text-[14px]" /> Sambungan langsung terputus, data diperbarui saat tersambung kembali</span>
       ) : null}
       {pesan ? <span className={KELAS_PENANDA}><Ikon nama="fiber_new" className="text-[14px]" /> {pesan}</span> : null}
       {adaTertunda ? (
         <button type="button" className={`${KELAS_PENANDA} hover:bg-secondary-fixed-dim transition-colors`} onClick={() => { setTertunda([]); router.refresh(); }}>
-          <Ikon nama="fiber_new" className="text-[14px]" /> Ada {tertunda.length} laporan baru — muat ulang
+          <Ikon nama="fiber_new" className="text-[14px]" /> Ada {tertunda.length} laporan baru, muat ulang
         </button>
       ) : null}
     </div>

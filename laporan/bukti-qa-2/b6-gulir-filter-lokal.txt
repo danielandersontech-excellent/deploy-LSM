@@ -1,0 +1,12 @@
+# QA-2 B6 — posisi gulir saat filter/paginasi — http://localhost:3000 — 2026-09-04T07:36:19.488Z
+  OK    /program urutan: ubah select → terlama | gulir 169 → 169 — URL ?urut=terlama
+  OK    /program kategori pil: klik /program?kategori=pengawasan-dana | gulir 169 → 169 — URL /program?kategori=pengawasan-dana
+  OK    /berita kategori: ubah select → investigasi | gulir 5 → 5 — URL ?kategori=investigasi
+  OK    /berita rentang: ubah select → 30 | gulir 5 → 5 — URL ?rentang=30
+  OK    /berita paginasi: klik /berita?halaman=2 | gulir 2626 → 1233 — URL /berita?halaman=2
+  OK    /galeri kategori: ubah select → investigasi-lapangan | gulir 21 → 21 — URL ?kategori=investigasi-lapangan
+  OK    /staf/artikel status: ubah select → terbit | gulir 0 → 0 — URL ?status=terbit
+  OK    /staf/pengaduan pil status: klik /staf/pengaduan?status=baru | gulir 0 → 0 — URL /staf/pengaduan?status=baru
+  (info) /staf/pengaduan paginasi: tautan a[href*="halaman=2"] tidak ada (data kurang dari satu halaman) - dilewati
+
+RINGKASAN B6: LULUS

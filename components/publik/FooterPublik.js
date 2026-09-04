@@ -16,7 +16,7 @@ const TAUTAN_CEPAT = [
 ];
 
 export default async function FooterPublik() {
-  const setelan = await ambilPengaturan(['kontak_email', 'kontak_hotline']);
+  const setelan = await ambilPengaturan(['kontak_email', 'kontak_hotline', 'kontak_alamat_gedung', 'kontak_alamat_jalan', 'kontak_alamat_kota']);
   const tahun = new Date().getFullYear();
   return (
     <footer className="bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container w-full px-margin-mobile md:px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-start gap-gutter max-w-container-max mx-auto border-t border-outline flat">
@@ -45,6 +45,11 @@ export default async function FooterPublik() {
           <p className="font-body-md text-body-md text-surface-variant flex items-center gap-2">
             <Ikon nama="call" className="text-sm" />
             {setelan.kontak_hotline}
+          </p>
+          {/* QA-2 A1/B3: alamat resmi dari pengaturan (kelas sama dengan baris email/hotline desain) */}
+          <p className="font-body-md text-body-md text-surface-variant flex items-start gap-2 max-w-xs">
+            <Ikon nama="location_on" className="text-sm mt-1" />
+            <span>{setelan.kontak_alamat_gedung}, {setelan.kontak_alamat_jalan}, {setelan.kontak_alamat_kota}</span>
           </p>
         </div>
       </div>

@@ -282,6 +282,16 @@ export default function EditorArtikel({
           <h1 className="font-headline-lg text-headline-lg text-primary tracking-tight">{judulHalaman}</h1>
         </div>
         <div className="flex flex-wrap items-center gap-3">
+          {/* QA-2 B8: pratinjau ala WordPress (tab baru); artikel baru harus disimpan dulu agar punya id */}
+          {modeSunting && artikel?.id ? (
+            <a href={`/staf/artikel/${artikel.id}/pratinjau`} target="_blank" rel="noopener" className="px-6 py-2 rounded-lg font-label-md text-label-md border border-outline-variant text-primary hover:bg-surface-container transition-colors flex items-center gap-2">
+              <Ikon nama="visibility" className="text-[16px]" /> Pratinjau
+            </a>
+          ) : (
+            <span className="px-6 py-2 rounded-lg font-label-md text-label-md border border-outline-variant text-outline flex items-center gap-2" title="Simpan draf dulu untuk melihat pratinjau">
+              <Ikon nama="visibility" className="text-[16px]" /> Pratinjau
+            </span>
+          )}
           {pesan ? (
             <div role="alert" aria-live="polite" className={pesan.jenis === 'galat' ? KELAS_PESAN_GALAT : KELAS_PESAN_SUKSES}>
               {pesan.teks}

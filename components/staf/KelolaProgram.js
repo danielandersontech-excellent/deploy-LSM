@@ -85,10 +85,10 @@ function teksGalat(data, cadangan) {
 
 /** "01 Okt 2023 – Sekarang" / "01 Jan 2023 – 30 Jun 2023" / "—" bila keduanya kosong. */
 function periode(mulai, selesai) {
-  if (!mulai && !selesai) return '—';
+  if (!mulai && !selesai) return '-';
   const awal = mulai ? formatTanggalID(mulai) : '…';
   const akhir = selesai ? formatTanggalID(selesai) : 'Sekarang';
-  return `${awal} – ${akhir}`;
+  return `${awal} s.d. ${akhir}`;
 }
 
 export default function KelolaProgram({ program = [], total = 0, provinsi = [], kategori = [], daftarStatus = [], bolehKelola = false, dasarUrlPublik = '' }) {
@@ -433,7 +433,7 @@ export default function KelolaProgram({ program = [], total = 0, provinsi = [], 
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 hidden lg:table-cell text-on-surface-variant font-body-md text-body-md">{p.wilayah_nama ?? '—'}</td>
+                      <td className="px-6 py-4 hidden lg:table-cell text-on-surface-variant font-body-md text-body-md">{p.wilayah_nama ?? '-'}</td>
                       <td className="px-6 py-4 hidden sm:table-cell text-on-surface-variant font-body-md text-body-md">{periode(p.mulai_pada, p.selesai_pada)}</td>
                       <td className="px-6 py-4 text-right space-x-2">
                         <a className="text-outline hover:text-primary transition-colors" title="Preview" aria-label={`Lihat program ${p.judul} di portal publik`} href={`${dasarUrlPublik}/program#program-${p.slug}`} target="_blank" rel="noopener noreferrer"><Ikon nama="visibility" className="text-xl" /></a>

@@ -12,7 +12,7 @@ export default function HalamanFaq() {
     <HalamanTeks
       kunci="teks_faq"
       judul="Pertanyaan yang Sering Diajukan"
-      pembuka="Prosedur pengaduan, pelacakan nomor kasus, dan perlindungan identitas pelapor — dijawab singkat."
+      pembuka="Prosedur pengaduan, pelacakan nomor kasus, dan perlindungan identitas pelapor, dijawab singkat."
       modeFaq
     />
   );

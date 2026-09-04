@@ -21,7 +21,7 @@ import { formatTanggalID } from '@/lib/utils';
 
 export const metadata = {
   title: 'Program & Kegiatan',
-  description: 'Inisiatif pengawasan dana, observasi kebijakan, dan bantuan hukum WARKOP NUSANTARA — yang sedang berjalan maupun yang telah selesai demi kepentingan publik.',
+  description: 'Inisiatif pengawasan dana, observasi kebijakan, dan bantuan hukum WARKOP NUSANTARA, yang sedang berjalan maupun yang telah selesai demi kepentingan publik.',
 };
 
 // 3 kolom (lg:grid-cols-3) × 3 baris; sama dengan bawaan ambilProgram().
@@ -111,7 +111,7 @@ export default async function HalamanProgram({ searchParams }) {
           <div className="w-full md:w-1/3 flex justify-end">
             {/* Minimalist illustrative placeholder for theme context — KEPUTUSAN BARU: ilustrasi Stitch tidak ada berkasnya -> segel logo besar lokal */}
             <div className="w-full max-w-sm aspect-video rounded-lg overflow-hidden border border-tertiary relative pressed-paper-shadow">
-              <div className="bg-cover bg-center w-full h-full absolute inset-0" role="img" aria-label="Segel WARKOP NUSANTARA — pengawasan dan transparansi" style={{ backgroundImage: "url('/penampung/program-hero.jpg')" }}></div>
+              <div className="bg-cover bg-center w-full h-full absolute inset-0" role="img" aria-label="Segel WARKOP NUSANTARA, pengawasan dan transparansi" style={{ backgroundImage: "url('/penampung/program-hero.jpg')" }}></div>
             </div>
           </div>
         </div>
@@ -124,9 +124,9 @@ export default async function HalamanProgram({ searchParams }) {
           <nav className="flex flex-wrap gap-2" aria-label="Filter kategori program">
             {[{ slug: '', label: 'Semua Kategori' }, ...KATEGORI_PROGRAM].map((k) =>
               k.slug === kategori ? (
-                <Link key={k.slug || 'semua'} className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full pressed-paper-shadow transition-transform hover:scale-105" href={buatHref({ ...filterAktif, kategori: k.slug })} aria-current="true">{k.label}</Link>
+                <Link scroll={false} key={k.slug || 'semua'} className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full pressed-paper-shadow transition-transform hover:scale-105" href={buatHref({ ...filterAktif, kategori: k.slug })} aria-current="true">{k.label}</Link>
               ) : (
-                <Link key={k.slug || 'semua'} className="bg-surface text-on-surface border border-tertiary font-label-md text-label-md px-4 py-2 rounded-full hover:bg-surface-container transition-colors" href={buatHref({ ...filterAktif, kategori: k.slug })}>{k.label}</Link>
+                <Link scroll={false} key={k.slug || 'semua'} className="bg-surface text-on-surface border border-tertiary font-label-md text-label-md px-4 py-2 rounded-full hover:bg-surface-container transition-colors" href={buatHref({ ...filterAktif, kategori: k.slug })}>{k.label}</Link>
               ),
             )}
           </nav>
@@ -209,7 +209,7 @@ export default async function HalamanProgram({ searchParams }) {
         {totalHalaman > 1 ? (
           <nav className="flex justify-center items-center gap-2 mt-12" aria-label="Paginasi program">
             {halaman > 1 ? (
-              <Link className="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors text-on-surface-variant disabled:opacity-50" href={buatHref({ ...filterAktif, halaman: halaman - 1 })} aria-label="Halaman sebelumnya"><Ikon nama="chevron_left" /></Link>
+              <Link scroll={false} className="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors text-on-surface-variant disabled:opacity-50" href={buatHref({ ...filterAktif, halaman: halaman - 1 })} aria-label="Halaman sebelumnya"><Ikon nama="chevron_left" /></Link>
             ) : (
               <span className="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors text-on-surface-variant disabled:opacity-50 opacity-50" aria-disabled="true"><Ikon nama="chevron_left" /></span>
             )}
@@ -219,11 +219,11 @@ export default async function HalamanProgram({ searchParams }) {
               ) : n === halaman ? (
                 <span key={n} className="w-10 h-10 border border-primary bg-primary text-on-primary rounded font-label-md text-label-md flex items-center justify-center" aria-current="page">{n}</span>
               ) : (
-                <Link key={n} className="w-10 h-10 border border-outline-variant rounded font-label-md text-label-md flex items-center justify-center hover:bg-surface-container text-on-surface-variant" href={buatHref({ ...filterAktif, halaman: n })} aria-label={`Halaman ${n}`}>{n}</Link>
+                <Link scroll={false} key={n} className="w-10 h-10 border border-outline-variant rounded font-label-md text-label-md flex items-center justify-center hover:bg-surface-container text-on-surface-variant" href={buatHref({ ...filterAktif, halaman: n })} aria-label={`Halaman ${n}`}>{n}</Link>
               ),
             )}
             {halaman < totalHalaman ? (
-              <Link className="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors text-on-surface-variant" href={buatHref({ ...filterAktif, halaman: halaman + 1 })} aria-label="Halaman berikutnya"><Ikon nama="chevron_right" /></Link>
+              <Link scroll={false} className="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors text-on-surface-variant" href={buatHref({ ...filterAktif, halaman: halaman + 1 })} aria-label="Halaman berikutnya"><Ikon nama="chevron_right" /></Link>
             ) : (
               <span className="p-2 border border-outline-variant rounded hover:bg-surface-container transition-colors text-on-surface-variant opacity-50" aria-disabled="true"><Ikon nama="chevron_right" /></span>
             )}

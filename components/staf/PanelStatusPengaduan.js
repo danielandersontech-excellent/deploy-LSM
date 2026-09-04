@@ -146,7 +146,7 @@ export default function PanelStatusPengaduan({ id, statusSaatIni, petugasSaatIni
           <div className="form-input-focus border-b border-outline-variant transition-colors">
             <label htmlFor="petugas-id" className={KELAS_LABEL}>Petugas penanggung jawab</label>
             <select id="petugas-id" name="petugas_id" value={petugas} onChange={(e) => setPetugas(e.target.value)} disabled={sibukPetugas} className={KELAS_INPUT}>
-              <option value="">— Belum ditugaskan —</option>
+              <option value="">(Belum ditugaskan)</option>
               {kandidat.map((k) => (
                 <option key={k.id} value={String(k.id)}>{k.nama} ({k.peran})</option>
               ))}

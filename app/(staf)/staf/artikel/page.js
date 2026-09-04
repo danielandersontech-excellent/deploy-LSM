@@ -173,7 +173,7 @@ export default async function HalamanKelolaArtikel({ searchParams }) {
               <span>Menampilkan {awal}-{akhir} dari {total} artikel</span>
               <nav className="space-x-1" aria-label="Paginasi">
                 {halaman > 1 ? (
-                  <Link className={KELAS_HAL} href={buatHref(halaman - 1)} aria-label="Halaman sebelumnya">«</Link>
+                  <Link scroll={false} className={KELAS_HAL} href={buatHref(halaman - 1)} aria-label="Halaman sebelumnya">«</Link>
                 ) : (
                   <span className={`${KELAS_HAL} opacity-50`} aria-disabled="true">«</span>
                 )}
@@ -181,11 +181,11 @@ export default async function HalamanKelolaArtikel({ searchParams }) {
                   n === halaman ? (
                     <span key={n} className={KELAS_HAL_AKTIF} aria-current="page">{n}</span>
                   ) : (
-                    <Link key={n} className={KELAS_HAL} href={buatHref(n)} aria-label={`Halaman ${n}`}>{n}</Link>
+                    <Link scroll={false} key={n} className={KELAS_HAL} href={buatHref(n)} aria-label={`Halaman ${n}`}>{n}</Link>
                   ),
                 )}
                 {halaman < totalHalaman ? (
-                  <Link className={KELAS_HAL} href={buatHref(halaman + 1)} aria-label="Halaman berikutnya">»</Link>
+                  <Link scroll={false} className={KELAS_HAL} href={buatHref(halaman + 1)} aria-label="Halaman berikutnya">»</Link>
                 ) : (
                   <span className={`${KELAS_HAL} opacity-50`} aria-disabled="true">»</span>
                 )}

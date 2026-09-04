@@ -13,8 +13,8 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Ikon from '@/components/ui/Ikon';
 
-const KELAS_TAUTAN = 'font-label-md text-label-md text-on-primary opacity-80 hover:opacity-100 transition-opacity hover:text-secondary-container transition-colors duration-200';
-const KELAS_TAUTAN_AKTIF = 'font-label-md text-label-md text-secondary-fixed-dim font-bold border-b-2 border-secondary-fixed-dim pb-1 opacity-90 transition-all duration-150';
+const KELAS_TAUTAN = 'font-label-md text-label-md text-on-primary opacity-80 hover:opacity-100 transition-opacity hover:text-secondary-container transition-colors duration-200 lg:whitespace-nowrap';
+const KELAS_TAUTAN_AKTIF = 'font-label-md text-label-md text-secondary-fixed-dim font-bold border-b-2 border-secondary-fixed-dim pb-1 opacity-90 transition-all duration-150 lg:whitespace-nowrap';
 
 function tautanAktif(pathname, href) {
   if (href === '/') return pathname === '/';
@@ -47,28 +47,30 @@ export default function NavPublik({ menu, hrefStaf }) {
 
   return (
     <header className="bg-primary dark:bg-primary-container docked full-width top-0 border-b border-outline-variant dark:border-outline shadow-sm z-50 sticky">
-      <div className="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto md:gap-4">
         {/* Merek: kelas verbatim + shrink-0 whitespace-nowrap (KEPUTUSAN BARU Tahap 4, TEMUAN navbar): tanpa itu
             Chrome menyusutkan merek sehingga teks "WARKOP NUSANTARA" membungkus dua baris dan ditimpa tautan menu
             pada 768–1280 px — di seluruh screen.png desain merek selalu satu baris. nowrap hanya md+ (Tahap 6:
             di 375 px nowrap membuat halaman melebar melewati viewport). Dijadikan tautan ke beranda
             seperti varian beranda_warkop_nusantara. */}
-        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 max-w-full" href="/">
+        <Link className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight flex items-center gap-2 max-w-full lg:whitespace-nowrap lg:shrink-0" href="/">
           {/* QA-1: ukuran logo mengikuti desain (h-8 w-8); h-16 sebelumnya membuat merek melebar dan menu turun ke baris kedua di 1280 px */}
           <Image alt="WARKOP NUSANTARA Logo" className="h-8 w-8 object-cover rounded-full" src="/logo-warkop.png" width={32} height={32} priority />
-          <span className="font-headline-md text-headline-md font-bold text-on-primary uppercase tracking-tight">WARKOP NUSANTARA</span>
+          <span className="font-headline-md text-headline-md lg:text-xl font-bold text-on-primary uppercase tracking-tight">WARKOP NUSANTARA</span>
         </Link>
         {/* flex-wrap justify-center (kelas nav di layar tentang/struktur/program ZIP) — Tahap 6: tanpa itu navbar
             meluap mendatar pada 768–1024 px (merek + 7 tautan + tombol > lebar); nowrap merek hanya lg+. */}
         {/* QA-1: kelas nav desain (tanpa flex-wrap) — item menyusut & membungkus teksnya sendiri seperti desain ("Tentang Kami", "Kontak & Pengaduan" dua baris) sehingga menu tetap satu baris */}
-        <nav className="hidden md:flex items-center gap-6 mt-4 md:mt-0" aria-label="Navigasi utama">
+        {/* QA-2 B1 (KEPUTUSAN PEMILIK): desain membuat "Berita" menyentuh kotak cari di 1280 px. Jarak item gap-4 (xl: gap-6),
+            teks item satu baris mulai lg, merek satu baris mulai lg, kotak cari w-40 (xl: w-48) -> 7 menu + cari + Masuk Staff rapi 1280-1920. */}
+        <nav className="hidden md:flex items-center gap-4 2xl:gap-6 mt-4 md:mt-0" aria-label="Navigasi utama">
           {daftarTautan()}
         </nav>
         <div className="flex items-center gap-4">
           <form className="relative hidden lg:block" action="/berita" method="get" role="search">
             <Ikon nama="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" />
             <label className="sr-only" htmlFor={`${idLaci}-cari`}>Cari berita</label>
-            <input id={`${idLaci}-cari`} name="q" className="pl-9 pr-3 py-1.5 rounded-full bg-surface text-on-surface text-sm border border-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary w-48 transition-all" placeholder="Cari..." type="text" />
+            <input id={`${idLaci}-cari`} name="q" className="pl-9 pr-3 py-1.5 rounded-full bg-surface text-on-surface text-sm border border-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary w-40 2xl:w-48 transition-all" placeholder="Cari..." type="text" />
           </form>
           <a className="hidden md:flex items-center gap-2 bg-secondary text-on-secondary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors" href={hrefStaf}>
             Masuk Staff

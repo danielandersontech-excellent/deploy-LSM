@@ -100,9 +100,9 @@ INSERT IGNORE INTO pengaturan (kunci, nilai, deskripsi, diperbarui_pada) VALUES
   ('statistik_tahun_mengawasi',   '15',    'Angka "15 Tahun Mengawasi" di beranda',        '2026-06-01 09:00:00'),
   ('kontak_email',         'pengaduan@warkopnusantara.id',     'Email pengaduan di footer dan halaman kontak', '2026-06-01 09:00:00'),
   ('kontak_hotline',       '0800-1-WARKOP (927567)',           'Hotline 24/7 di halaman kontak dan footer',   '2026-06-01 09:00:00'),
-  ('kontak_alamat_gedung', 'Gedung Aspirasi Rakyat',           'Baris pertama alamat kantor pusat',           '2026-06-01 09:00:00'),
-  ('kontak_alamat_jalan',  'Jl. Kebenaran No. 1, Jakarta Pusat', 'Baris kedua alamat kantor pusat',           '2026-06-01 09:00:00'),
-  ('kontak_alamat_kota',   'DKI Jakarta, 10110',               'Baris ketiga alamat kantor pusat',            '2026-06-01 09:00:00'),
+  ('kontak_alamat_gedung', 'Komplek Perkantoran CNN',           'Baris pertama alamat kantor pusat',           '2026-06-01 09:00:00'),
+  ('kontak_alamat_jalan',  'Jl. Tuanku Tambusai No. B 15, Labuh Baru Tim., Payung Sekaki', 'Baris kedua alamat kantor pusat',           '2026-06-01 09:00:00'),
+  ('kontak_alamat_kota',   'Kota Pekanbaru, Riau 28123',               'Baris ketiga alamat kantor pusat',            '2026-06-01 09:00:00'),
   ('visi', 'Terwujudnya tata kelola pemerintahan dan pelayanan publik yang transparan, adil, dan akuntabel melalui pengawasan sipil yang independen di seluruh Nusantara.', 'Visi lembaga di halaman Tentang Kami', '2026-06-01 09:00:00'),
   ('misi', '1. Menjadi wadah aspirasi rakyat yang aman dan terpercaya.\n2. Melakukan kontrol sosial dan observasi kebijakan publik berbasis fakta dan hukum.\n3. Mengawasi penggunaan anggaran dan pelayanan publik di pusat maupun daerah.\n4. Mendampingi masyarakat menempuh jalur hukum yang resmi.\n5. Menerbitkan laporan investigasi yang objektif dan dapat dipertanggungjawabkan.', 'Misi lembaga di halaman Tentang Kami (satu butir per baris)', '2026-06-01 09:00:00'),
   ('teks_kebijakan_privasi', 'WARKOP NUSANTARA menghormati privasi setiap pelapor dan pengunjung. Identitas pelapor (nama, NIK, telepon, email) hanya dapat diakses oleh petugas yang berwenang, tidak pernah dipublikasikan, dan setiap pembukaannya tercatat dalam jejak audit.\n\nData pengaduan disimpan di server yang dikelola lembaga dan tidak dibagikan kepada pihak ketiga tanpa dasar hukum yang sah. Pelapor dapat memilih untuk sepenuhnya anonim.\n\nHalaman ini adalah teks penampung dan akan disempurnakan oleh pengurus lembaga.', 'Isi halaman /kebijakan-privasi', '2026-06-01 09:00:00'),
@@ -298,12 +298,55 @@ WHERE p.nomor_kasus IN ('WRP-009021', 'WRP-009018', 'WRP-008994')
 -- KEPUTUSAN BARU: nama pengurus regional Papua & Maluku pada export desain
 -- adalah nama pejabat nyata; diganti nama fiktif.
 -- ---------------------------------------------------------------------
-INSERT IGNORE INTO pengurus (id, nama, jabatan, tingkat, wilayah_id, foto, deskripsi, aktif_sejak, urutan, aktif) VALUES
-  (1, 'Bpk. H. Soedirman',   'Ketua Umum',         'pusat',   NULL, '/penampung/pengurus-1.jpg', 'Memimpin dan mengarahkan seluruh visi serta misi pengawasan nasional.', 2011, 1, 1),
-  (2, 'Ibu Hj. Ratna Sari',  'Sekretaris Jenderal', 'pusat',   NULL, '/penampung/pengurus-2.jpg', 'Mengoordinasikan dewan eksekutif dan administrasi lembaga.',         2015, 2, 1),
-  (3, 'Ir. Rahmat Siregar',  'Kepala Regional',    'wilayah', (SELECT id FROM wilayah WHERE kode = '12'), '/penampung/pengurus-3.jpg', 'Kepala Regional Sumatera Utara.', 2021, 1, 1),
-  (4, 'Dr. Budi Santoso',    'Kepala Regional',    'wilayah', (SELECT id FROM wilayah WHERE kode = '35'), '/penampung/pengurus-4.jpg', 'Kepala Regional Jawa & Bali.',     2019, 2, 1),
-  (5, 'Yohanes Rumbiak, S.H.', 'Kepala Regional',  'wilayah', (SELECT id FROM wilayah WHERE kode = '91'), '/penampung/pengurus-5.jpg', 'Kepala Regional Papua & Maluku.',  2022, 3, 1);
+-- QA-2 A2: susunan DPP asli pemilik (lihat database/migrations/20260904-1510-pengurus-dpp-data.sql)
+INSERT IGNORE INTO pengurus (id, nama, jabatan, tingkat, kelompok, wilayah_id, foto, deskripsi, aktif_sejak, urutan, aktif) VALUES
+  -- DEWAN PEMBINA
+  (1,  'Jonni Tan',                    'Ketua',   'pusat', 'dewan_pembina',   NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 1, 1),
+  (2,  'Florida Herawati',             'Wakil',   'pusat', 'dewan_pembina',   NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 2, 1),
+  (3,  'Sukri Tambusai',               'Anggota', 'pusat', 'dewan_pembina',   NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 3, 1),
+  -- DEWAN PENASEHAT
+  (4,  '(Belum terisi)',               'Ketua',   'pusat', 'dewan_penasehat', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 1, 1),
+  (5,  '(Belum terisi)',               'Wakil',   'pusat', 'dewan_penasehat', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 2, 1),
+  (6,  '(Belum terisi)',               'Anggota', 'pusat', 'dewan_penasehat', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 3, 1),
+  -- DEWAN PENGAWAS
+  (7,  '(Belum terisi)',               'Ketua',   'pusat', 'dewan_pengawas',  NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 1, 1),
+  (8,  '(Belum terisi)',               'Wakil',   'pusat', 'dewan_pengawas',  NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 2, 1),
+  (9,  '(Belum terisi)',               'Anggota', 'pusat', 'dewan_pengawas',  NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 3, 1),
+  -- PENGURUS DPP
+  (10, 'Boy Juan',                     'Ketua Umum',          'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 1, 1),
+  (11, '(Belum terisi)',               'Wakil Ketua Umum',    'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 2, 1),
+  (12, 'Johan Elvianus Hondro',        'Sekretaris Jenderal', 'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 3, 1),
+  (13, 'Sonia',                        'Bendahara Umum',      'pusat', 'pengurus_dpp', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 4, 1),
+  -- DIREKTORAT EKSEKUTIF
+  (14, 'Andreas Reynaldho, S.H., M.H.', 'Direktur',       'pusat', 'direktorat_eksekutif', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 1, 1),
+  (15, '(Belum terisi)',               'Wakil Direktur', 'pusat', 'direktorat_eksekutif', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 2, 1),
+  -- DIREKTORAT (bidang)
+  (16, 'Dian',                         'Direktorat Hukum dan Advokasi',                       'pusat', 'direktorat', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 1, 1),
+  (17, 'Sopan Pangabean, S.H.',        'Direktorat Investigasi',                              'pusat', 'direktorat', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 2, 1),
+  (18, 'Arsyad',                       'Direktorat Pengawasan Kebijakan Publik',              'pusat', 'direktorat', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 3, 1),
+  (19, 'Jasrivai Manulang, S.H.',      'Direktorat Organisasi dan Kaderisasi',                'pusat', 'direktorat', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 4, 1),
+  (20, 'Kak Utet',                     'Direktorat Sosial dan Kemanusiaan',                   'pusat', 'direktorat', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 5, 1),
+  (21, 'Ronald Eldiner, S.H.',         'Direktorat Lingkungan Hidup',                         'pusat', 'direktorat', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 6, 1),
+  (22, 'Roy Jensen Sidabutar, S.Kom.', 'Direktorat Media',                                    'pusat', 'direktorat', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 7, 1),
+  (23, 'Yefrizal, S.E.',               'Direktorat Humas dan Kerja Sama Antar Lembaga',       'pusat', 'direktorat', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 8, 1),
+  (24, 'Dedek',                        'Direktorat Pemberdayaan Masyarakat dan UMKM',         'pusat', 'direktorat', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 9, 1),
+  -- SATGAS
+  (25, 'Kanisius',                     'Kepala Satgas (Kasatgas)', 'pusat', 'satgas', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 1, 1),
+  (26, '(Belum terisi)',               'Wakil Kasatgas',           'pusat', 'satgas', NULL, '/penampung/pengurus-1.jpg', NULL, NULL, 2, 1),
+  (27, '(Belum terisi)',               'Komandan Wilayah',         'pusat', 'satgas', NULL, '/penampung/pengurus-2.jpg', NULL, NULL, 3, 1),
+  (28, '(Belum terisi)',               'Komandan Daerah',          'pusat', 'satgas', NULL, '/penampung/pengurus-3.jpg', NULL, NULL, 4, 1),
+  (29, '(Belum terisi)',               'Komandan Rayon',           'pusat', 'satgas', NULL, '/penampung/pengurus-4.jpg', NULL, NULL, 5, 1),
+  (30, '(Belum terisi)',               'Anggota',                  'pusat', 'satgas', NULL, '/penampung/pengurus-5.jpg', NULL, NULL, 6, 1),
+  -- KERANGKA DPW / DPD / DPC (template posisi tanpa nama, tanpa wilayah)
+  (31, '(Belum terisi)', 'Ketua DPW',      'wilayah', 'dpw', NULL, NULL, NULL, NULL, 1, 1),
+  (32, '(Belum terisi)', 'Sekretaris DPW', 'wilayah', 'dpw', NULL, NULL, NULL, NULL, 2, 1),
+  (33, '(Belum terisi)', 'Bendahara DPW',  'wilayah', 'dpw', NULL, NULL, NULL, NULL, 3, 1),
+  (34, '(Belum terisi)', 'Ketua DPD',      'wilayah', 'dpd', NULL, NULL, NULL, NULL, 1, 1),
+  (35, '(Belum terisi)', 'Sekretaris DPD', 'wilayah', 'dpd', NULL, NULL, NULL, NULL, 2, 1),
+  (36, '(Belum terisi)', 'Bendahara DPD',  'wilayah', 'dpd', NULL, NULL, NULL, NULL, 3, 1),
+  (37, '(Belum terisi)', 'Ketua DPC',      'wilayah', 'dpc', NULL, NULL, NULL, NULL, 1, 1),
+  (38, '(Belum terisi)', 'Sekretaris DPC', 'wilayah', 'dpc', NULL, NULL, NULL, NULL, 2, 1),
+  (39, '(Belum terisi)', 'Bendahara DPC',  'wilayah', 'dpc', NULL, NULL, NULL, NULL, 3, 1);
 
 -- ---------------------------------------------------------------------
 -- PROGRAM — 3 (satu per kategori), dari program_kegiatan/code.html
@@ -332,7 +375,7 @@ INSERT IGNORE INTO galeri (id, judul, deskripsi, jenis, berkas, thumbnail, kateg
   (2, 'Pengecekan Proyek Irigasi', 'Relawan memeriksa saluran irigasi yang dilaporkan tidak berfungsi.',
       'foto', '/penampung/galeri-2.jpg', NULL, 'investigasi-lapangan', (SELECT id FROM wilayah WHERE kode = '33'), 'Kab. Klaten', '2023-10-05', '2026-06-01 09:00:00'),
   (3, 'Kampanye Hak Lapor Warga', 'Sosialisasi kanal pengaduan dan hak atas informasi publik di pasar rakyat.',
-      'video', '/penampung/galeri-3.mp4', '/penampung/galeri-3.jpg', 'sosialisasi', (SELECT id FROM wilayah WHERE kode = '31'), 'Jakarta Timur', '2023-10-01', '2026-06-01 09:00:00'),
+      'foto', '/penampung/galeri-3.jpg', NULL, 'sosialisasi', (SELECT id FROM wilayah WHERE kode = '31'), 'Jakarta Timur', '2023-10-01', '2026-06-01 09:00:00'),
   (4, 'Kajian Dokumen AMDAL', 'Tim advokasi menelaah dokumen lingkungan bersama warga pesisir.',
       'foto', '/penampung/galeri-4.jpg', NULL, 'investigasi-lapangan', (SELECT id FROM wilayah WHERE kode = '36'), 'Kab. Serang', '2023-09-28', '2026-06-01 09:00:00'),
   (5, 'Pelatihan Relawan Pengawas', 'Pelatihan membaca dokumen anggaran bagi relawan pengawas desa.',

@@ -23,7 +23,7 @@ export default async function HalamanTanpaAkses() {
         <div className="p-8">
           <div className="text-center mb-8">
             <Ikon nama="security" className="text-4xl text-primary mb-2" />
-            <h2 className="font-headline-md text-headline-md text-primary">403 — Tidak Berhak</h2>
+            <h2 className="font-headline-md text-headline-md text-primary">403: Tidak Berhak</h2>
             <p className="font-body-md text-body-md text-on-surface-variant mt-2">
               {pengguna
                 ? `Peran ${pengguna.peran} tidak memiliki hak untuk membuka halaman ini.`

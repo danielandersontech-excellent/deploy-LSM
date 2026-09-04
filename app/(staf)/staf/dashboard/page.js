@@ -389,7 +389,7 @@ export default async function HalamanDashboard() {
                   {barisTabel.map((p) => (
                     <tr key={p.id} className={KELAS_BARIS} data-nomor={p.nomor_kasus}>
                       <td className="py-4 px-6 font-mono text-sm">{`#${p.nomor_kasus}`}</td>
-                      <td className="py-4 px-6">{p.wilayah_nama ?? '—'}</td>
+                      <td className="py-4 px-6">{p.wilayah_nama ?? '-'}</td>
                       <td className="py-4 px-6 text-outline">{formatTanggalID(p.dibuat_pada)}</td>
                       <td className="py-4 px-6">
                         {/* Verification Chip Rule — lencana kanonik REFERENSI 10 (components/ui/Lencana) */}

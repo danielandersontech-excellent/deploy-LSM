@@ -202,7 +202,7 @@ export default async function HalamanLacak({ searchParams }) {
                     </div>
                     <div>
                       <p className="font-label-md text-label-md text-primary mb-1">Wilayah Kejadian</p>
-                      <p className="font-body-md text-body-md text-on-surface-variant">{pengaduan.wilayah_nama || '—'}</p>
+                      <p className="font-body-md text-body-md text-on-surface-variant">{pengaduan.wilayah_nama || '-'}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">

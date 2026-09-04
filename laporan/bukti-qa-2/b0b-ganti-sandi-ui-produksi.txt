@@ -1,0 +1,37 @@
+# QA-2 B0b — alur ganti sandi lewat UI — https://staf.warkopnusantara.id — 2026-09-04T07:14:25.313Z
+  OK    login superadmin (API) — HTTP 200
+  OK    buat pengguna uji — id 9
+
+## Alur lewat UI — desktop 1280
+  OK    superadmin reset sandi akun uji (API) — HTTP 200
+  OK    ketik email & sandi sementara di /login: nilai utuh, fokus bertahan — email 40/40; sandi 23/23
+  OK    setelah masuk → dialihkan ke /staf/ganti-sandi (wajib) — /staf/ganti-sandi
+  OK    ketik 3 kolom sandi (≥ 20 karakter): nilai utuh, fokus bertahan — lama 23, baru 27, ulang 27
+  OK    ganti sandi sukses → mulus ke /staf/dashboard (sesi baru) — /staf/dashboard "Dashboard · WARKOP NUSANTARA" 
+  OK    sesi baru: /api/auth/saya wajib_ganti_sandi=0 — {"wajib":0,"peran":"penulis"}
+  OK    klik Keluar → /login — /login
+  OK    login sandi BARU lewat UI → /staf/dashboard — /staf/dashboard
+  OK    API: sandi lama 401, sandi baru 200 — lama 401, baru 200
+
+## Alur lewat UI — ponsel 375
+  OK    superadmin reset sandi akun uji (API) — HTTP 200
+  OK    ketik email & sandi sementara di /login: nilai utuh, fokus bertahan — email 40/40; sandi 23/23
+  OK    setelah masuk → dialihkan ke /staf/ganti-sandi (wajib) — /staf/ganti-sandi
+  OK    ketik 3 kolom sandi (≥ 20 karakter): nilai utuh, fokus bertahan — lama 23, baru 27, ulang 27
+  OK    ganti sandi sukses → mulus ke /staf/dashboard (sesi baru) — /staf/dashboard "Dashboard · WARKOP NUSANTARA" 
+  OK    sesi baru: /api/auth/saya wajib_ganti_sandi=0 — {"wajib":0,"peran":"penulis"}
+  OK    klik Keluar → /login — /login
+  OK    login sandi BARU lewat UI → /staf/dashboard — /staf/dashboard
+  OK    API: sandi lama 401, sandi baru 200 — lama 401, baru 200
+
+konsol error: 0
+  pengguna uji uji.b0b.1788506066195@warkopnusantara.id dinonaktifkan (200); PRODUKSI: hapus lewat SQL (SELECT dulu)
+
+RINGKASAN B0b: LULUS
+## Pembersihan pengguna uji B0 di DB produksi
+id	email	peran	aktif
+7	uji.b0a.1788506040144@warkopnusantara.id	penulis	0
+8	uji.b0a.b.1788506042827@warkopnusantara.id	penulis	0
+9	uji.b0b.1788506066195@warkopnusantara.id	penulis	0
+dihapus
+3

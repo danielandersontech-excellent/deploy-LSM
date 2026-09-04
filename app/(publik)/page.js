@@ -17,7 +17,7 @@ import { labelKategoriPengaduan } from '@/lib/kategoriPengaduan';
 import { formatAngkaID, formatTanggalID } from '@/lib/utils';
 
 export const metadata = {
-  title: { absolute: 'WARKOP NUSANTARA — Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara' },
+  title: { absolute: 'WARKOP NUSANTARA - Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara' },
   description: 'Lembaga pengawasan sipil independen: kanal pengaduan masyarakat yang melindungi identitas pelapor dan portal berita investigasi. Berani Karena Benar.',
   alternates: { canonical: '/' },
   openGraph: { title: 'WARKOP NUSANTARA', description: 'Wadah Aspirasi Rakyat, Kontrol, Observasi dan Pengawasan Nusantara. Berani Karena Benar.', url: '/' },
@@ -56,7 +56,7 @@ export default async function HalamanBeranda() {
         <div className="absolute inset-0 opacity-5 pointer-events-none flex items-center justify-center" aria-hidden="true">
           <Image className="w-full h-full object-cover" src="/logo-warkop-cap-air.png" alt="" width={1024} height={1024} priority />
         </div>
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10 flex items-center justify-between gap-gutter">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/20 border border-secondary-fixed/50 mb-6">
               <Ikon nama="verified_user" terisi className="text-secondary text-sm" />
@@ -82,6 +82,10 @@ export default async function HalamanBeranda() {
                 Pelajari Prosedur
               </Link>
             </div>
+          </div>
+          {/* QA-2 B2 (KEPUTUSAN PEMILIK): visual hero kanan = logo segel besar WARKOP; hanya lg+ agar teks hero tetap utuh di ponsel/tablet */}
+          <div className="hidden lg:flex shrink-0 items-center justify-center w-80 xl:w-96" aria-hidden="true">
+            <Image className="w-full h-auto object-contain drop-shadow-[0_12px_28px_rgba(39,19,16,0.25)]" src="/logo-warkop-besar.png" alt="" width={1024} height={1024} priority />
           </div>
         </div>
       </section>

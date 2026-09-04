@@ -366,7 +366,7 @@ export default function KelolaGaleri({ item = [], total = 0, wilayah = [], kateg
                   nama="thumbnail"
                   label="Thumbnail (Opsional)"
                   keterangan={jenisVideo
-                    ? `Format JPG, PNG, atau WEBP. Maks ${batasMb}MB. Thumbnail video tidak dibangkitkan otomatis — unggah gambar sampul sendiri; tanpa thumbnail kartu memakai penampung logo.`
+                    ? `Format JPG, PNG, atau WEBP. Maks ${batasMb}MB. Thumbnail video tidak dibangkitkan otomatis, unggah gambar sampul sendiri; tanpa thumbnail kartu memakai penampung logo.`
                     : `Format JPG, PNG, atau WEBP. Maks ${batasMb}MB. Bila kosong, kartu memakai berkas foto.`}
                   accept={TERIMA_GAMBAR}
                   berkas={thumbnail}
@@ -403,7 +403,7 @@ export default function KelolaGaleri({ item = [], total = 0, wilayah = [], kateg
                 const lokasi = g.lokasi || g.wilayah_nama || null;
                 return (
                   <article key={g.id} className={`md:col-span-4 md:row-span-1 relative group overflow-hidden rounded-lg border border-tertiary-fixed-dim bg-surface${video ? ' flex items-center justify-center' : ''}`}>
-                    <div className={`absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105${video ? ' opacity-60' : ''}`} role="img" aria-label={`${g.judul} — ${kat.label}`} style={{ backgroundImage: `url('${gambarKartu(g)}')` }}></div>
+                    <div className={`absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105${video ? ' opacity-60' : ''}`} role="img" aria-label={`${g.judul}, ${kat.label}`} style={{ backgroundImage: `url('${gambarKartu(g)}')` }}></div>
                     {video
                       ? <div className="absolute inset-0 bg-primary/70 group-hover:bg-primary/60 transition-colors"></div>
                       : <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>}

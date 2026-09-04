@@ -49,7 +49,7 @@ export default function FormulirPengaduan({ tokenFormulir, provinsi = [], katego
   const [kategoriMasalah, setKategoriMasalah] = useState('');
   const [wilayahId, setWilayahId] = useState('');
   const [deskripsi, setDeskripsi] = useState('');
-  const [situsWeb, setSitusWeb] = useState(''); // honeypot — harus tetap kosong
+  const [situsWeb, setSitusWeb] = useState(''); // honeypot, harus tetap kosong
   const [berkas, setBerkas] = useState([]);
   const [langkah, setLangkah] = useState(1);
   const [memuat, setMemuat] = useState(false);
@@ -183,7 +183,7 @@ export default function FormulirPengaduan({ tokenFormulir, provinsi = [], katego
       setTimeout(() => setTersalin(false), 3000);
     } catch {
       setTersalin(false);
-      setPesan({ jenis: 'info', teks: 'Papan klip tidak tersedia — catat nomor kasus di atas secara manual.' });
+      setPesan({ jenis: 'info', teks: 'Papan klip tidak tersedia, catat nomor kasus di atas secara manual.' });
     }
   }
 
@@ -241,7 +241,7 @@ export default function FormulirPengaduan({ tokenFormulir, provinsi = [], katego
                   <Ikon nama="security" className="text-[28px]" terisi />
                 </div>
                 <div>
-                  <h4 className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">Laporan Anonim — Simpan Nomor Ini</h4>
+                  <h4 className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">Laporan Anonim, Simpan Nomor Ini</h4>
                   <p className="font-body-md text-body-md text-on-surface-variant text-sm">
                     Nomor kasus adalah SATU-SATUNYA cara memantau laporan ini. Bila hilang, nomor tidak dapat dipulihkan dengan cara apa pun, karena identitas Anda memang tidak disimpan.
                   </p>

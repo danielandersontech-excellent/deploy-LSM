@@ -22,7 +22,7 @@ export const POST = denganPeran(HAK.pengaduan_ubah_status, async (request, { par
   const status = String(body?.status ?? '').trim();
   const catatan = String(body?.catatan ?? '').replace(/\s+/g, ' ').trim().slice(0, 2000);
   if (!SLUG_STATUS_PENGADUAN.includes(status)) throw new GalatHttp(422, 'Status tidak dikenal', 'STATUS_TIDAK_SAH');
-  if (catatan.length < CATATAN_MIN) throw new GalatHttp(422, `Catatan internal wajib diisi (minimal ${CATATAN_MIN} karakter) — setiap perubahan status harus bisa ditelusuri alasannya`, 'CATATAN_WAJIB');
+  if (catatan.length < CATATAN_MIN) throw new GalatHttp(422, `Catatan internal wajib diisi (minimal ${CATATAN_MIN} karakter), setiap perubahan status harus bisa ditelusuri alasannya`, 'CATATAN_WAJIB');
 
   // Pengaduan harus ada (tanpa identitas di sini — hanya memeriksa keberadaan & status).
   const ada = await ambilPengaduan(n, { bolehLihatIdentitas: false });

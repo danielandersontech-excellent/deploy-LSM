@@ -346,7 +346,7 @@ export default function KelolaPengguna({ baris, daftarPeran, daftarWilayah, idSa
                         </td>
                         <td className={`${KELAS_TD_VARIAN} hidden md:table-cell`}>{u.email}</td>
                         <td className={KELAS_TD_VARIAN}>{labelPeran(u.peran)}</td>
-                        <td className={`${KELAS_TD_VARIAN} hidden lg:table-cell`}>{u.wilayah_nama ?? '—'}</td>
+                        <td className={`${KELAS_TD_VARIAN} hidden lg:table-cell`}>{u.wilayah_nama ?? '-'}</td>
                         <td className="px-6 py-4">
                           <span className={u.aktif ? KELAS_LENCANA_EMAS : KELAS_LENCANA_ABU}>
                             {u.aktif ? 'Aktif' : 'Nonaktif'}
@@ -390,7 +390,7 @@ export default function KelolaPengguna({ baris, daftarPeran, daftarWilayah, idSa
             {dialog.jenis === 'paksa-keluar' ? (
               <p className="font-body-md text-body-md text-on-surface">
                 Seluruh sesi <strong>{dialog.pengguna.nama}</strong> di semua peramban akan dikeluarkan seketika (token lama dibatalkan). Gunakan bila akun diduga dibobol.
-                {dialog.pengguna.id === idSaya ? ' Ini akun Anda sendiri — Anda juga akan keluar dan harus masuk kembali.' : ''}
+                {dialog.pengguna.id === idSaya ? ' Ini akun Anda sendiri, Anda juga akan keluar dan harus masuk kembali.' : ''}
               </p>
             ) : null}
             {dialog.jenis === 'reset-sandi' ? (
@@ -407,7 +407,7 @@ export default function KelolaPengguna({ baris, daftarPeran, daftarWilayah, idSa
             ) : null}
             {dialog.jenis === 'hapus' ? (
               <p className="font-body-md text-body-md text-on-surface">
-                Pengguna <strong>{dialog.pengguna.nama}</strong> akan dihapus permanen. Tindakan ini tidak dapat dibatalkan. Bila akun memiliki artikel atau riwayat, penghapusan ditolak — nonaktifkan saja.
+                Pengguna <strong>{dialog.pengguna.nama}</strong> akan dihapus permanen. Tindakan ini tidak dapat dibatalkan. Bila akun memiliki artikel atau riwayat, penghapusan ditolak, nonaktifkan saja.
               </p>
             ) : null}
             {galatDialog ? <div role="alert" className={`${KELAS_PESAN_GALAT} mt-4`}>{galatDialog}</div> : null}

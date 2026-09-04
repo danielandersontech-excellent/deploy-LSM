@@ -34,6 +34,7 @@ import Ikon from '@/components/ui/Ikon';
 import Dialog from '@/components/ui/Dialog';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
 import { KELAS_TOMBOL } from '@/components/ui/Tombol';
+import { KELOMPOK_PENGURUS } from '@/lib/kelompokPengurus';
 
 const KELAS_PESAN_GALAT = 'bg-error-container text-on-error-container border border-error/20 rounded px-3 py-2 font-body-md text-body-md text-sm';
 const KELAS_PESAN_SUKSES = 'bg-secondary-fixed text-on-secondary-fixed border border-secondary/20 rounded px-3 py-2 font-body-md text-body-md text-sm';
@@ -55,7 +56,7 @@ const LABEL_TINGKAT = Object.freeze({ pusat: 'Pusat', wilayah: 'Wilayah' });
 
 function formulirKosong(daftar, tingkat = 'pusat') {
   const terbesar = daftar.filter((p) => p.tingkat === tingkat).reduce((m, p) => Math.max(m, p.urutan), 0);
-  return { nama: '', jabatan: '', tingkat, wilayah_id: '', foto: null, deskripsi: '', aktif_sejak: '', urutan: String(terbesar + 1), aktif: true };
+  return { nama: '', jabatan: '', tingkat, kelompok: '', wilayah_id: '', foto: null, deskripsi: '', aktif_sejak: '', urutan: String(terbesar + 1), aktif: true };
 }
 
 function formulirDari(p) {
@@ -63,6 +64,7 @@ function formulirDari(p) {
     nama: p.nama,
     jabatan: p.jabatan,
     tingkat: p.tingkat,
+    kelompok: p.kelompok || '',
     wilayah_id: p.wilayah_id == null ? '' : String(p.wilayah_id),
     foto: p.foto,
     deskripsi: p.deskripsi ?? '',
@@ -147,7 +149,7 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
     e.preventDefault();
     if (!formulir || sibuk) return;
     setGalatFormulir(null);
-    if (nilai.tingkat === 'wilayah' && !nilai.wilayah_id) {
+    if (nilai.tingkat === 'wilayah' && !nilai.wilayah_id && !/^dp[wdc]$/.test(nilai.kelompok || '')) {
       setGalatFormulir('Pengurus tingkat wilayah wajib memilih wilayah.');
       return;
     }
@@ -155,6 +157,7 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
       nama: nilai.nama.trim(),
       jabatan: nilai.jabatan.trim(),
       tingkat: nilai.tingkat,
+      kelompok: nilai.kelompok || null,
       wilayah_id: nilai.tingkat === 'wilayah' && nilai.wilayah_id ? Number(nilai.wilayah_id) : null,
       foto: nilai.foto || null,
       deskripsi: nilai.deskripsi.trim() || null,
@@ -301,6 +304,17 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
                   <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
                 </div>
                 <div className="flex-1 relative">
+                  {/* QA-2 A2: kelompok bagan struktur (Dewan/DPP/Direktorat/Satgas/DPW-DPD-DPC) */}
+                  <label className={KELAS_LABEL} htmlFor="pengurus-kelompok">Kelompok Bagan</label>
+                  <select className={KELAS_SELECT} id="pengurus-kelompok" name="kelompok" value={nilai.kelompok} onChange={(e) => ubahNilai('kelompok', e.target.value)} disabled={memuat}>
+                    <option value="">Tanpa kelompok (Pimpinan Regional)</option>
+                    {KELOMPOK_PENGURUS.map((k) => (
+                      <option key={k.slug} value={k.slug}>{k.label}</option>
+                    ))}
+                  </select>
+                  <Ikon nama="expand_more" className="absolute right-3 top-3 text-outline pointer-events-none" />
+                </div>
+                <div className="flex-1 relative">
                   <label className={KELAS_LABEL} htmlFor="pengurus-wilayah">Wilayah{nilai.tingkat === 'wilayah' ? ' (wajib)' : ' (opsional)'}</label>
                   <select className={KELAS_SELECT} id="pengurus-wilayah" name="wilayah_id" value={nilai.wilayah_id} onChange={(e) => ubahNilai('wilayah_id', e.target.value)} required={nilai.tingkat === 'wilayah'} disabled={sibuk}>
                     <option value="">Pilih Wilayah</option>
@@ -387,8 +401,8 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
                     </td>
                     <td className={KELAS_TD_TEKS}>{p.jabatan}</td>
                     <td className={KELAS_TD_TEKS}>{LABEL_TINGKAT[p.tingkat] ?? p.tingkat}</td>
-                    <td className="px-6 py-4 hidden lg:table-cell text-on-surface-variant font-body-md text-body-md">{p.wilayah_nama ?? '—'}</td>
-                    <td className="px-6 py-4 hidden sm:table-cell text-on-surface-variant font-body-md text-body-md">{p.aktif_sejak ?? '—'}</td>
+                    <td className="px-6 py-4 hidden lg:table-cell text-on-surface-variant font-body-md text-body-md">{p.wilayah_nama ?? '-'}</td>
+                    <td className="px-6 py-4 hidden sm:table-cell text-on-surface-variant font-body-md text-body-md">{p.aktif_sejak ?? '-'}</td>
                     <td className="px-6 py-4 hidden sm:table-cell text-on-surface-variant font-body-md text-body-md">{p.urutan}</td>
                     <td className="px-6 py-4">
                       <span className={p.aktif ? KELAS_LENCANA_AKTIF : KELAS_LENCANA_NONAKTIF}>{p.aktif ? 'Aktif' : 'Nonaktif'}</span>

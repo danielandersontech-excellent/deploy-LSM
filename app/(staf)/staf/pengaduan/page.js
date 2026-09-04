@@ -181,7 +181,7 @@ export default async function HalamanKelolaPengaduan({ searchParams }) {
                           {anonim ? 'Anonim' : 'Dirahasiakan'}
                         </td>
                       )}
-                      <td className="py-4 px-6 font-body-md text-on-surface">{p.wilayah_nama ?? '—'}</td>
+                      <td className="py-4 px-6 font-body-md text-on-surface">{p.wilayah_nama ?? '-'}</td>
                       <td className="py-4 px-6 font-body-md text-on-surface-variant">{formatTanggalID(p.dibuat_pada)}</td>
                       <td className="py-4 px-6 text-center">
                         <Lencana status={p.status} />
@@ -202,7 +202,7 @@ export default async function HalamanKelolaPengaduan({ searchParams }) {
             <span className="font-body-md text-on-surface-variant text-sm">Menampilkan {awal}-{akhir} dari {total} laporan</span>
             <nav className="flex gap-1" aria-label="Paginasi">
               {halaman > 1 ? (
-                <Link className={KELAS_PANAH} href={hrefHalaman(halaman - 1)} aria-label="Halaman sebelumnya"><Ikon nama="chevron_left" /></Link>
+                <Link scroll={false} className={KELAS_PANAH} href={hrefHalaman(halaman - 1)} aria-label="Halaman sebelumnya"><Ikon nama="chevron_left" /></Link>
               ) : (
                 <button type="button" className={KELAS_PANAH_MATI} disabled aria-label="Halaman sebelumnya"><Ikon nama="chevron_left" /></button>
               )}
@@ -210,11 +210,11 @@ export default async function HalamanKelolaPengaduan({ searchParams }) {
                 n === halaman ? (
                   <span key={n} className={KELAS_HAL_AKTIF} aria-current="page">{n}</span>
                 ) : (
-                  <Link key={n} className={KELAS_HAL} href={hrefHalaman(n)} aria-label={`Halaman ${n}`}>{n}</Link>
+                  <Link scroll={false} key={n} className={KELAS_HAL} href={hrefHalaman(n)} aria-label={`Halaman ${n}`}>{n}</Link>
                 ),
               )}
               {halaman < totalHalaman ? (
-                <Link className={KELAS_PANAH} href={hrefHalaman(halaman + 1)} aria-label="Halaman berikutnya"><Ikon nama="chevron_right" /></Link>
+                <Link scroll={false} className={KELAS_PANAH} href={hrefHalaman(halaman + 1)} aria-label="Halaman berikutnya"><Ikon nama="chevron_right" /></Link>
               ) : (
                 <button type="button" className={KELAS_PANAH_MATI} disabled aria-label="Halaman berikutnya"><Ikon nama="chevron_right" /></button>
               )}

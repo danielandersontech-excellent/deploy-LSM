@@ -8,6 +8,7 @@
 // Filter = <form method="get"> (bekerja tanpa JavaScript): ?kategori= ?dari= ?sampai= ?halaman=.
 import Link from 'next/link';
 import Ikon from '@/components/ui/Ikon';
+import KirimOtomatis from '@/components/publik/KirimOtomatis';
 import Lencana, { varianLencanaGaleri } from '@/components/ui/Lencana';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
 import { ambilGaleri } from '@/lib/db/galeri';
@@ -76,6 +77,8 @@ export default async function HalamanGaleri({ searchParams }) {
       {/* Filters — KEPUTUSAN BARU: div pembungkus menjadi <form method="get"> dengan kelas yang sama */}
       <section className="bg-surface-container-low border border-outline-variant rounded-lg p-6 mb-12 pressed-paper-shadow">
         <form method="get" action="/galeri" className="flex flex-col md:flex-row gap-6 items-end">
+          {/* QA-2 B6: filter diterapkan lewat navigasi klien (posisi gulir tetap); tombol Terapkan Filter tetap (desain) */}
+          <KirimOtomatis />
           <div className="w-full md:w-1/3">
             <label className="block font-label-md text-label-md text-on-surface mb-2" htmlFor="category">Kategori Kegiatan</label>
             <div className="relative">
@@ -121,7 +124,7 @@ export default async function HalamanGaleri({ searchParams }) {
           }
         >
           {halamanDiminta > 1
-            ? <Link href={buatHref()} className="font-label-md text-label-md text-secondary hover:underline">Kembali ke halaman pertama</Link>
+            ? <Link scroll={false} href={buatHref()} className="font-label-md text-label-md text-secondary hover:underline">Kembali ke halaman pertama</Link>
             : adaFilter
               ? <Link href="/galeri" className="font-label-md text-label-md text-secondary hover:underline">Tampilkan semua dokumentasi</Link>
               : null}
@@ -133,7 +136,7 @@ export default async function HalamanGaleri({ searchParams }) {
             const video = item.jenis === 'video';
             const lokasi = item.lokasi || item.wilayah_nama || null;
             const tanggal = formatTanggalID(item.tanggal_kegiatan);
-            const labelGambar = `${item.judul} — ${kat.label}`;
+            const labelGambar = `${item.judul} (${kat.label})`;
             // Overlay & tombol putar mengikuti kartu video desain (Item 3); kartu foto memakai gradien.
             const kelasVideo = video ? ' flex items-center justify-center' : '';
             const tombolPutar = video ? (
@@ -190,7 +193,7 @@ export default async function HalamanGaleri({ searchParams }) {
       {/* Load More — tautan ?halaman=N+1 yang mempertahankan filter; disembunyikan di halaman terakhir */}
       {halaman < totalHalaman ? (
         <div className="mt-12 flex justify-center">
-          <Link href={buatHref({ halaman: halaman + 1 })} className="bg-surface border-2 border-outline hover:border-primary text-on-surface font-label-md text-label-md px-8 py-3 rounded-lg transition-colors flex items-center gap-2">
+          <Link scroll={false} href={buatHref({ halaman: halaman + 1 })} className="bg-surface border-2 border-outline hover:border-primary text-on-surface font-label-md text-label-md px-8 py-3 rounded-lg transition-colors flex items-center gap-2">
             Muat Lebih Banyak
             <Ikon nama="expand_more" className="text-sm" />
           </Link>

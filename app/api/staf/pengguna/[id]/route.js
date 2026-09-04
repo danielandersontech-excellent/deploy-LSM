@@ -65,13 +65,13 @@ export const DELETE = denganPeran(HAK.pengguna_kelola, async (request, { params 
   // FK SET NULL akan menghilangkan pelaku dari jejak. Nonaktifkan saja (PATCH {aktif:false}).
   const jejak = await hitungJejakUser(id);
   if (jejak.audit + jejak.riwayat + jejak.petugas + jejak.artikel > 0) {
-    throw new GalatHttp(409, `Pengguna memiliki jejak (audit ${jejak.audit}, riwayat pengaduan ${jejak.riwayat}, penugasan ${jejak.petugas}, artikel ${jejak.artikel}) sehingga tidak dapat dihapus — nonaktifkan akunnya saja`, 'PUNYA_DATA');
+    throw new GalatHttp(409, `Pengguna memiliki jejak (audit ${jejak.audit}, riwayat pengaduan ${jejak.riwayat}, penugasan ${jejak.petugas}, artikel ${jejak.artikel}) sehingga tidak dapat dihapus, nonaktifkan akunnya saja`, 'PUNYA_DATA');
   }
   try {
     await hapusUser(id);
   } catch (g) {
     if (g?.code === 'ER_ROW_IS_REFERENCED_2' || g?.errno === 1451) {
-      throw new GalatHttp(409, 'Pengguna memiliki data terkait sehingga tidak dapat dihapus — nonaktifkan akunnya saja', 'PUNYA_DATA');
+      throw new GalatHttp(409, 'Pengguna memiliki data terkait sehingga tidak dapat dihapus, nonaktifkan akunnya saja', 'PUNYA_DATA');
     }
     throw g;
   }

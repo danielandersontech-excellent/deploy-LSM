@@ -18,7 +18,7 @@ import { KATEGORI_PENGADUAN } from '@/lib/kategoriPengaduan';
 export const metadata = {
   title: 'Kontak & Pengaduan',
   description:
-    'Pusat Layanan Pengaduan Masyarakat WARKOP NUSANTARA: sampaikan laporan dugaan korupsi, pelayanan publik, agraria, infrastruktur, dan lingkungan — bisa anonim, identitas pelapor dilindungi.',
+    'Pusat Layanan Pengaduan Masyarakat WARKOP NUSANTARA: sampaikan laporan dugaan korupsi, pelayanan publik, agraria, infrastruktur, dan lingkungan, bisa anonim, identitas pelapor dilindungi.',
   alternates: { canonical: '/kontak' },
 };
 

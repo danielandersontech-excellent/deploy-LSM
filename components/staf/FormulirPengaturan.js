@@ -165,7 +165,7 @@ export default function FormulirPengaturan({ nilaiAwal = {}, definisi = [] }) {
               <div>
                 <p className="font-label-md text-label-md text-on-secondary-fixed-variant mb-1">Catatan</p>
                 <p className="font-body-md text-[13px] text-on-secondary-fixed-variant/80">
-                  Seluruh kunci di halaman ini berasal dari <code>lib/pengaturanDefinisi.js</code> — daftar putih tunggal yang juga dipakai validasi tipe dan API. Menambah setelan cukup menambah satu entri di berkas itu; kunci di luar daftar ditolak API dengan pesan jelas.
+                  Seluruh kunci di halaman ini berasal dari <code>lib/pengaturanDefinisi.js</code>, daftar putih tunggal yang juga dipakai validasi tipe dan API. Menambah setelan cukup menambah satu entri di berkas itu; kunci di luar daftar ditolak API dengan pesan jelas.
                 </p>
               </div>
             </div>

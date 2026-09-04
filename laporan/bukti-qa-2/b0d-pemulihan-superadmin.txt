@@ -1,0 +1,6 @@
+# B0d — pemulihan akun superadmin produksi (sandi TIDAK dicetak) 2026-09-04T07:13:21Z
+keadaan sebelum: wajib_ganti_sandi=1, token_version=1, hash diubah pemilik 13:37 WIB (pengguna_reset_sandi), login_berhasil 13:45, tidak ada ganti_sandi_sendiri -> ganti sandi pemilik separuh jalan; sandi sementara pemilik tidak diketahui -> bangkitkan sandi sementara acak baru
+SELECT sebelum: [{"id":1,"email":"<disembunyikan>","peran":"superadmin","aktif":1,"wajib_ganti_sandi":1,"token_version":1}]
+UPDATE affected: 1
+sesudah: [{"wajib_ganti_sandi":1,"token_version":2}]
+login produksi dengan sandi sementara baru: HTTP 200

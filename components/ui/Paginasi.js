@@ -30,7 +30,7 @@ export default function Paginasi({ halaman, totalHalaman, buatHref, className = 
   return (
     <nav className={`mt-16 flex justify-center items-center gap-2${className ? ` ${className}` : ''}`} aria-label="Paginasi">
       {hal > 1 ? (
-        <Link className={KELAS_PANAH} href={buatHref(hal - 1)} aria-label="Halaman sebelumnya"><Ikon nama="chevron_left" /></Link>
+        <Link scroll={false} className={KELAS_PANAH} href={buatHref(hal - 1)} aria-label="Halaman sebelumnya"><Ikon nama="chevron_left" /></Link>
       ) : (
         <span className={KELAS_PANAH_MATI} aria-disabled="true"><Ikon nama="chevron_left" /></span>
       )}
@@ -40,11 +40,11 @@ export default function Paginasi({ halaman, totalHalaman, buatHref, className = 
         ) : n === hal ? (
           <span key={n} className={KELAS_AKTIF} aria-current="page">{n}</span>
         ) : (
-          <Link key={n} className={KELAS_NOMOR} href={buatHref(n)} aria-label={`Halaman ${n}`}>{n}</Link>
+          <Link scroll={false} key={n} className={KELAS_NOMOR} href={buatHref(n)} aria-label={`Halaman ${n}`}>{n}</Link>
         ),
       )}
       {hal < totalHalaman ? (
-        <Link className={KELAS_PANAH} href={buatHref(hal + 1)} aria-label="Halaman berikutnya"><Ikon nama="chevron_right" /></Link>
+        <Link scroll={false} className={KELAS_PANAH} href={buatHref(hal + 1)} aria-label="Halaman berikutnya"><Ikon nama="chevron_right" /></Link>
       ) : (
         <span className={KELAS_PANAH_MATI} aria-disabled="true"><Ikon nama="chevron_right" /></span>
       )}
