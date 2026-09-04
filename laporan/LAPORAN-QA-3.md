@@ -8,7 +8,7 @@
 ## 1. Ringkasan
 
 Seluruh butir A sampai G SELESAI dan sudah tayang di produksi
-(image `4f95751`, HEALTHY). Verifikasi akhir di domain produksi LULUS 10 langkah, 0 gagal.
+(image `359b023`, HEALTHY). Verifikasi akhir di domain produksi LULUS 10 langkah, 0 gagal.
 
 Satu **bug lama ditemukan dan diperbaiki** dalam perjalanan, dan bug itulah akar masalah yang
 pemilik lihat sebagai kartu "Sekjen DPP" nyasar di bagian Pimpinan Regional:

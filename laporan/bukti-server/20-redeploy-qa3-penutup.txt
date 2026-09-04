@@ -1,0 +1,9 @@
+# Redeploy produksi QA-3 penutup (commit 359b023) — 2026-09-04T12:37:33Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"yhj3l7t2r67en1w6xll9jv3f"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[12:39:37Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:359b0233d77c2588d1f5f97eca9182af1ce5bbcc Up 4 seconds (health: starting) re8snqu8jwyxdqg2wmzrbm3w:4f95751c3bfa20d3ff8ffc222d1aabb60e9ba461 Up 12 minutes (healthy) 
+HASIL: image 359b023 HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T19:39:40+07:00","basisData":"terhubung","versi":"0.1.0"}
