@@ -7,6 +7,12 @@ import 'dotenv/config';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import sharp from 'sharp';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join as gabungJalur } from 'node:path';
+// Profil Chrome sementara per run + dihapus saat keluar (QA-1: 162 profil HeadlessChrome* yatim memenuhi disk C: ±100 MB/run)
+const PROFIL_CDP = mkdtempSync(gabungJalur(tmpdir(), 'warkop-cdp-'));
+process.on('exit', () => { try { rmSync(PROFIL_CDP, { recursive: true, force: true }); } catch {} });
 const argv = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const U = argv[0] || 'http://localhost:3000'; const US = argv[1] || U; const LABEL = argv[2] || 'sesudah'; const PROD = process.argv.includes('--produksi');
 const env = Object.fromEntries(readFileSync(PROD ? '.env.produksi' : '.env', 'utf8').split('\n').filter((b) => /^[A-Z_]+=/.test(b)).map((b) => [b.slice(0, b.indexOf('=')), b.slice(b.indexOf('=') + 1).trim().replace(/^["']|["']$/g, '')]));
@@ -24,7 +30,7 @@ const LAYAR = [
   ['editor_artikel_admin', `/staf/artikel/${idArtikel}`, 1600, true], ['kelola_pengaduan_admin', '/staf/pengaduan', 1600, true],
 ];
 const port = 9830 + Math.floor(Math.random() * 20);
-const chrome = spawn(process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe', ['--headless=new', '--disable-gpu', '--no-sandbox', `--remote-debugging-port=${port}`, '--window-size=1280,900', '--allow-file-access-from-files', 'about:blank'], { stdio: 'ignore' });
+const chrome = spawn(process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe', ['--headless=new', `--user-data-dir=${PROFIL_CDP}`, '--disable-gpu', '--no-sandbox', `--remote-debugging-port=${port}`, '--window-size=1280,900', '--allow-file-access-from-files', 'about:blank'], { stdio: 'ignore' });
 let v = null; for (let i = 0; i < 40 && !v; i++) { try { v = await (await fetch(`http://127.0.0.1:${port}/json/version`)).json(); } catch { await tidur(250); } }
 const wsB = new WebSocket(v.webSocketDebuggerUrl); await new Promise((r) => { wsB.onopen = r; }); let idB = 0; const tB = new Map(); wsB.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && tB.has(m.id)) { tB.get(m.id)(m); tB.delete(m.id); } };
 const kirimB = (method, params = {}) => new Promise((r) => { const n = ++idB; tB.set(n, r); wsB.send(JSON.stringify({ id: n, method, params })); });

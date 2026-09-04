@@ -68,6 +68,7 @@ export async function proxy(request) {
   const h = new Headers(request.headers);
   h.delete('x-user-id');   // cegah klien menyuntikkan header identitas
   h.delete('x-user-role');
+  h.set('x-jalur', pathname); // QA-1: jalur permintaan untuk layout server (pengalihan wajib ganti sandi di sisi server)
   if (muatan) {
     h.set('x-user-id', muatan.id);
     h.set('x-user-role', muatan.peran);

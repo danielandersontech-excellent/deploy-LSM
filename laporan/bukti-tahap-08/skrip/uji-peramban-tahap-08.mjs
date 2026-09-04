@@ -11,6 +11,12 @@ import 'dotenv/config';
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { buatTokenFormulir } from '../../../lib/tokenFormulir.js';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join as gabungJalur } from 'node:path';
+// Profil Chrome sementara per run + dihapus saat keluar (QA-1: 162 profil HeadlessChrome* yatim memenuhi disk C: ±100 MB/run)
+const PROFIL_CDP = mkdtempSync(gabungJalur(tmpdir(), 'warkop-cdp-'));
+process.on('exit', () => { try { rmSync(PROFIL_CDP, { recursive: true, force: true }); } catch {} });
 
 // KEPUTUSAN BARU (temuan): di Next 16 dev, membuka lewat 127.0.0.1 memicu "Blocked cross-origin request to Next.js dev resource" dan
 // hidrasi klien tidak berjalan (tanpa galat di konsol) -> socket tak pernah dibuat. Uji peramban memakai localhost (hostname dev bawaan).
@@ -31,7 +37,7 @@ async function kirimPengaduan(label, wilayah = 13) {
 
 // --- CDP mini
 const port = 9400 + Math.floor(Math.random() * 400);
-const chrome = spawn(CHROME, ['--headless=new', '--disable-gpu', '--no-sandbox', `--remote-debugging-port=${port}`, '--window-size=1280,900', 'about:blank'], { stdio: 'ignore' });
+const chrome = spawn(CHROME, ['--headless=new', `--user-data-dir=${PROFIL_CDP}`, '--disable-gpu', '--no-sandbox', `--remote-debugging-port=${port}`, '--window-size=1280,900', 'about:blank'], { stdio: 'ignore' });
 // Satu KONTEKS PERAMBAN (cookie jar terpisah) per tab — Target.createBrowserContext — agar dua akun (superadmin & verifikator)
 // benar-benar terpisah. Tanpa ini semua tab berbagi cookie dan cookie tab kedua menimpa tab pertama (ditemukan pada run awal:
 // tangkapan "superadmin" ternyata menampilkan verifikator).

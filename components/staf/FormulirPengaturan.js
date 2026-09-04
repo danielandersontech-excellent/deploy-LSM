@@ -106,7 +106,7 @@ export default function FormulirPengaturan({ nilaiAwal = {}, definisi = [] }) {
           </div>
         </header>
         {/* Editor Workspace — editor_artikel_admin (dua kolom) */}
-        <div className="flex flex-col md:flex-row gap-gutter w-full">
+        <div className="flex flex-col lg:flex-row gap-gutter w-full">
           {/* Left Column: kartu per kelompok */}
           <div className="flex-1 flex flex-col gap-6">
             {daftarKelompok.map((grup) => {
@@ -159,7 +159,7 @@ export default function FormulirPengaturan({ nilaiAwal = {}, definisi = [] }) {
             })}
           </div>
           {/* Right Column: Catatan */}
-          <div className="w-[320px] flex flex-col gap-6 flex-shrink-0">
+          <div className="w-full lg:w-[320px] flex flex-col gap-6 flex-shrink-0">
             <div className="bg-secondary-fixed/20 border border-secondary-fixed rounded-xl p-5 flex items-start gap-3">
               <Ikon nama="verified" terisi className="text-secondary" />
               <div>

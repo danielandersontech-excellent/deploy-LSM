@@ -1,0 +1,21 @@
+# QA-1 butir 4a — rayapan & konsol — http://localhost:3000 / http://localhost:3000 — 2026-09-04T04:45:52.376Z
+
+## Rayapan publik (tanpa login) dari http://localhost:3000/: 30 URL, bukan-200: 0
+login superadmin: ok
+
+## Rayapan staf superadmin dari http://localhost:3000/staf/dashboard: 55 URL, bukan-200: 0
+login redaktur: ok
+
+## Rayapan staf redaktur dari http://localhost:3000/staf/dashboard: 44 URL, bukan-200: 0
+login penulis: ok
+
+## Rayapan staf penulis dari http://localhost:3000/staf/dashboard: 29 URL, bukan-200: 0
+login verifikator: ok
+
+## Rayapan staf verifikator dari http://localhost:3000/staf/dashboard: 10 URL, bukan-200: 0
+login pimpinan_wilayah: ok
+
+## Rayapan staf pimpinan_wilayah dari http://localhost:3000/staf/dashboard: 33 URL, bukan-200: 0
+
+## Konsol peramban per halaman (error/exception; warning dicatat terpisah)
+  [publik (tanpa login)] membuka 30 halaman…

@@ -244,7 +244,7 @@ export default function KelolaProgram({ program = [], total = 0, provinsi = [], 
           </div>
         </header>
         {/* Editor Workspace */}
-        <div className="flex-1 p-margin-desktop flex gap-gutter max-w-[1600px] mx-auto w-full">
+        <div className="flex-1 p-margin-desktop flex flex-col lg:flex-row gap-gutter max-w-[1600px] mx-auto w-full">
           {/* Left Column */}
           <div className="flex-1 flex flex-col gap-6">
             {/* Title & Meta Inputs */}
@@ -327,7 +327,7 @@ export default function KelolaProgram({ program = [], total = 0, provinsi = [], 
             </div>
           </div>
           {/* Right Column: Settings Sidebar */}
-          <div className="w-[320px] flex flex-col gap-6 flex-shrink-0">
+          <div className="w-full lg:w-[320px] flex flex-col gap-6 flex-shrink-0">
             <div className={KELAS_KARTU}>
               <h3 className={KELAS_JUDUL_KARTU}>
                 <Ikon nama="settings_applications" />
@@ -404,7 +404,8 @@ export default function KelolaProgram({ program = [], total = 0, provinsi = [], 
           <KeadaanKosong ikon="explore" judul="Belum ada program" keterangan={bolehKelola ? 'Tekan "Tambah Program" untuk membuat program atau kegiatan pertama.' : 'Program dan kegiatan yang dipublikasikan akan tampil di sini.'} />
         ) : (
           <div className="bg-surface-container-lowest border border-tertiary rounded-lg overflow-hidden shadow-sm">
-            <table className="w-full text-left border-collapse">
+            {/* QA-1 butir 5: pembungkus overflow-x-auto (pola desain dashboard/kelola_pengaduan) agar tabel dapat digulir di layar sempit */}
+            <div className="overflow-x-auto"><table className="w-full text-left border-collapse">
               <thead className="bg-primary text-on-primary">
                 <tr>
                   <th scope="col" className="px-6 py-4 font-label-md text-label-md border-b border-outline-variant">Judul Program</th>
@@ -447,7 +448,7 @@ export default function KelolaProgram({ program = [], total = 0, provinsi = [], 
                   );
                 })}
               </tbody>
-            </table>
+            </table></div>
             <div className="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-between items-center text-sm text-on-surface-variant">
               <span>Menampilkan {program.length} dari {total} program</span>
             </div>

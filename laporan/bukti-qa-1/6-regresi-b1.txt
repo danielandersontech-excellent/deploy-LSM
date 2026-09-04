@@ -1,0 +1,57 @@
+# B1 — 46 route × 5 peran + tanpa login — 2026-09-04T04:46:02.040Z
+login superadmin: ok
+login redaktur: ok
+login penulis: ok
+login verifikator: ok
+login pimpinan_wilayah: ok
+
+| Metode | Route | Berhak | tanpa login | superadmin / redaktur / penulis / verifikator / pimpinan_wilayah | Hasil |
+|---|---|---|---|---|---|
+| GET | /api/health | PUBLIK | 200 | 200 / 200 / 200 / 200 / 200 | OK |
+| POST | /api/auth/logout | PUBLIK | 200 | 200 / 200 / 200 / 200 / 200 | OK |
+| GET | /api/auth/saya | superadmin, redaktur, penulis, verifikator, pimpinan_wilayah | 401 | 200 / 200 / 200 / 200 / 200 | OK |
+| GET | /api/artikel | PUBLIK | 200 | 200 / 200 / 200 / 200 / 200 | OK |
+| GET | /api/artikel/slug-tidak-ada | PUBLIK | 404 | 404 / 404 / 404 / 404 / 404 | OK |
+| POST | /api/pengaduan | PUBLIK | 400 | 400 / 400 / 400 / 400 / 400 | OK |
+| GET | /api/pengaduan/lacak/WRP-000000 | PUBLIK | 404 | 404 / 404 / 404 / 404 / 404 | OK |
+| GET | /api/staf/artikel | superadmin, redaktur, penulis, pimpinan_wilayah | 401 | 200 / 200 / 200 / 403 / 200 | OK |
+| POST | /api/staf/artikel | superadmin, redaktur, penulis | 401 | 422 / 422 / 422 / 403 / 403 | OK |
+| GET | /api/staf/artikel/999999 | superadmin, redaktur, penulis, pimpinan_wilayah | 401 | 404 / 404 / 404 / 403 / 404 | OK |
+| PATCH | /api/staf/artikel/999999 | superadmin, redaktur, penulis | 401 | 404 / 404 / 404 / 403 / 403 | OK |
+| DELETE | /api/staf/artikel/999999 | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| POST | /api/staf/artikel/999999/terbitkan | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| GET | /api/staf/pengaduan | superadmin, verifikator, pimpinan_wilayah | 401 | 200 / 403 / 403 / 200 / 200 | OK |
+| GET | /api/staf/pengaduan/999999 | superadmin, verifikator, pimpinan_wilayah | 401 | 404 / 403 / 403 / 404 / 404 | OK |
+| PATCH | /api/staf/pengaduan/999999 | superadmin, verifikator | 401 | 422 / 403 / 403 / 422 / 403 | OK |
+| POST | /api/staf/pengaduan/999999/status | superadmin, verifikator | 401 | 422 / 403 / 403 / 422 / 403 | OK |
+| GET | /api/staf/pengaduan/999999/lampiran/999999 | superadmin, verifikator, pimpinan_wilayah | 401 | 404 / 403 / 403 / 404 / 404 | OK |
+| GET | /api/staf/pengurus | superadmin, redaktur, pimpinan_wilayah | 401 | 200 / 200 / 403 / 403 / 200 | OK |
+| POST | /api/staf/pengurus | superadmin, redaktur | 401 | 422 / 422 / 403 / 403 / 403 | OK |
+| GET | /api/staf/pengurus/999999 | superadmin, redaktur, pimpinan_wilayah | 401 | 404 / 404 / 403 / 403 / 404 | OK |
+| PATCH | /api/staf/pengurus/999999 | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| DELETE | /api/staf/pengurus/999999 | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| PATCH | /api/staf/pengurus/urutan | superadmin, redaktur | 401 | 422 / 422 / 403 / 403 / 403 | OK |
+| GET | /api/staf/program | superadmin, redaktur, pimpinan_wilayah | 401 | 200 / 200 / 403 / 403 / 200 | OK |
+| POST | /api/staf/program | superadmin, redaktur | 401 | 422 / 422 / 403 / 403 / 403 | OK |
+| GET | /api/staf/program/999999 | superadmin, redaktur, pimpinan_wilayah | 401 | 404 / 404 / 403 / 403 / 404 | OK |
+| PATCH | /api/staf/program/999999 | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| DELETE | /api/staf/program/999999 | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| GET | /api/staf/galeri | superadmin, redaktur, pimpinan_wilayah | 401 | 200 / 200 / 403 / 403 / 200 | OK |
+| POST | /api/staf/galeri | superadmin, redaktur | 401 | 422 / 422 / 403 / 403 / 403 | OK |
+| GET | /api/staf/galeri/999999 | superadmin, redaktur, pimpinan_wilayah | 401 | 404 / 404 / 403 / 403 / 404 | OK |
+| PATCH | /api/staf/galeri/999999 | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| DELETE | /api/staf/galeri/999999 | superadmin, redaktur | 401 | 404 / 404 / 403 / 403 / 403 | OK |
+| GET | /api/staf/pengguna | superadmin | 401 | 200 / 403 / 403 / 403 / 403 | OK |
+| POST | /api/staf/pengguna | superadmin | 401 | 422 / 403 / 403 / 403 / 403 | OK |
+| GET | /api/staf/pengguna/999999 | superadmin | 401 | 404 / 403 / 403 / 403 / 403 | OK |
+| PATCH | /api/staf/pengguna/999999 | superadmin | 401 | 404 / 403 / 403 / 403 / 403 | OK |
+| DELETE | /api/staf/pengguna/999999 | superadmin | 401 | 404 / 403 / 403 / 403 / 403 | OK |
+| POST | /api/staf/pengguna/999999/reset-sandi | superadmin | 401 | 404 / 403 / 403 / 403 / 403 | OK |
+| POST | /api/staf/pengguna/999999/paksa-keluar | superadmin | 401 | 404 / 403 / 403 / 403 / 403 | OK |
+| GET | /api/staf/pengaturan | superadmin | 401 | 200 / 403 / 403 / 403 / 403 | OK |
+| PATCH | /api/staf/pengaturan | superadmin | 401 | 422 / 403 / 403 / 403 / 403 | OK |
+| POST | /api/staf/ganti-sandi | superadmin, redaktur, penulis, verifikator, pimpinan_wilayah | 401 | 422 / 422 / 422 / 422 / 422 | OK |
+| POST | /api/staf/unggah | superadmin, redaktur, penulis, verifikator | 401 | 400 / 400 / 400 / 400 / 403 | OK |
+| GET | /api/staf/statistik | superadmin, redaktur, penulis, verifikator, pimpinan_wilayah | 401 | 200 / 200 / 200 / 200 / 200 | OK |
+
+RINGKASAN: 246 pemeriksaan, 0 gagal -> LULUS

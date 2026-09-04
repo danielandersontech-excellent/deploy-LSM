@@ -281,7 +281,7 @@ export default function EditorArtikel({
           </div>
           <h1 className="font-headline-lg text-headline-lg text-primary tracking-tight">{judulHalaman}</h1>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {pesan ? (
             <div role="alert" aria-live="polite" className={pesan.jenis === 'galat' ? KELAS_PESAN_GALAT : KELAS_PESAN_SUKSES}>
               {pesan.teks}
@@ -318,7 +318,8 @@ export default function EditorArtikel({
         </div>
       </header>
       {/* Editor Workspace */}
-      <div className="flex-1 p-margin-desktop flex gap-gutter max-w-[1600px] mx-auto w-full">
+      {/* QA-1 butir 5: dua kolom baru berdampingan mulai lg (sidebar 320 px + kolom utama tidak muat di 375/768) */}
+      <div className="flex-1 p-margin-desktop flex flex-col lg:flex-row gap-gutter max-w-[1600px] mx-auto w-full">
         {/* Left Column: Main Editor */}
         <div className="flex-1 flex flex-col gap-6">
           {/* Title & Meta Inputs */}
@@ -436,7 +437,7 @@ export default function EditorArtikel({
           </div>
         </div>
         {/* Right Column: Settings Sidebar */}
-        <div className="w-[320px] flex flex-col gap-6 flex-shrink-0">
+        <div className="w-full lg:w-[320px] flex flex-col gap-6 flex-shrink-0">
           {/* Publication Settings */}
           <div className="bg-surface-container-lowest rounded-xl border border-tertiary p-6 shadow-sm">
             <h3 className="font-headline-md text-[20px] text-primary mb-4 border-b border-outline-variant pb-2 flex items-center gap-2">

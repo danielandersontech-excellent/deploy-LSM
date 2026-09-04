@@ -75,15 +75,20 @@ Perintah pemilik (dokumen/PERINTAH-PEMILIK-SERVER.md tetap berlaku). Ritme per b
 | # | Butir | Status | Catatan |
 |---|---|---|---|
 | 1 | Berita tidak bisa diklik (beranda, /berita, terkait, dashboard) — reproduksi produksi+lokal, akar masalah, perbaikan semua kartu, bukti klik CDP berpindah | SELESAI (12d850f) | Akar: kartu bergaya klik tetapi hanya teks judul ber-`<a>`; gambar/ringkasan/badan tanpa tautan (produksi: 25 klik tidak berpindah, `bukti-qa-1/1-klik-kartu-sebelum-produksi.txt`). Perbaikan: `components/publik/TautanKartu.js` (tautan peregang, aria-hidden/tabIndex -1) di beranda 2 kartu, /berita unggulan+daftar+sidebar; artikel terkait sudah `<Link>` penuh; butir panel dashboard ber-tautan. Sesudah: lokal & produksi LULUS (`1-klik-kartu-sesudah-*.txt`). Redeploy 12d850f healthy |
-| 2 | Kesetiaan visual menurut mata — 14 layar: tangkapan pada lebar code.html vs screen.png, tabel selisih per layar, perbaiki yang dari kode, sisanya MENUNGGU PEMILIK | BELUM | |
-| 3 | Gambar jelek & posisi buruk — penampung dibangkitkan ulang, object-cover + posisi seragam, dimensi next/image benar; daftar foto sungguhan → MENUNGGU PEMILIK | BELUM | |
+| 2 | Kesetiaan visual menurut mata — 14 layar | SELESAI (6831eff) | code.html desain dirender Chrome vs halaman kita pada 1280/1600 px, disandingkan (`bukti-qa-1/tangkapan/visual/NN-*-{sebelum,sesudah,sesudah-produksi}.png`). Diperbaiki dari kode: navbar (logo h-8, tanpa flex-wrap → satu baris seperti desain), /berita grid 2 kolom di kolom utama (judul tak terpotong), filter select langsung berlaku tanpa tombol Terapkan (berita/program/kelola artikel; tombol hanya tanpa JS), program tanpa select status, tanggal galeri sejajar, panah kartu program 24 px, cap air hero/login lembut. 3 screen.png desain rusak (portal_berita_beranda, program_kegiatan, tentang_kami_warkop_nusantara) → rujukan = code.html. Sisanya di MENUNGGU PEMILIK |
+| 3 | Gambar jelek & posisi buruk | SELESAI (6831eff) | `scripts/buat-penampung.mjs --paksa`: 28 penampung halus tanpa teks (gradasi krem token + lambang samar; rasio per slot 16:9/4:3/1:1; siluet pengurus; peta untuk kontak/struktur/hero program); rujukan logo besar sebagai gambar konten diganti (kontak, struktur, program hero, detail/terkait). Audit pemakaian gambar: semua object-cover + width/height/sizes (bukti `2-build.txt`, komposit visual). Daftar foto sungguhan → MENUNGGU PEMILIK |
 | 4 | Fungsional total (build produksi lokal + spot-check produksi): rayapan semua tautan internal, semua aksi utama end-to-end, konsol CDP bersih | BELUM | |
 | 5 | HP & laptop 375/768/1280: tanpa gulir mendatar, hamburger & laci, formulir 375, sentuh tak tumpang tindih (emulasi Chrome; Safari/Android asli tidak tersedia) | BELUM | |
 | 6 | Regresi: uji-b1 route×peran + kesetiaan 14 layar + build + lint | BELUM | |
 | 7 | LAPORAN-QA-1.md + STATUS, BERHENTI | BELUM | |
 
 ### MENUNGGU PEMILIK (RUN QA-1)
-(diisi selama run)
+- **Foto sungguhan** (penampung saat ini netral, tanpa teks): gambar utama 12 artikel seed, 6 galeri (+ video `galeri-3.mp4`), 5 foto pengurus, 3 gambar program, hero Program & Kegiatan (desain: ilustrasi peta Indonesia + kaca pembesar), peta kantor regional (kontak & struktur), foto latar hero beranda/tentang/login (desain: foto samar), foto stempel "Filosofi Lambang" (tentang), foto penulis artikel.
+- **Navbar 1280 px**: kini persis desain (logo h-8, item membungkus teks) — desain sendiri membuat "Berita" menyentuh kotak cari di 1280 px; bila ingin rapi: kotak cari hanya di laci/hilangkan, atau kurangi jarak. Keputusan pemilik.
+- **Tentang Kami**: filosofi lambang 9 butir (REFERENSI 1) vs 4 di desain; seksi Visi–Misi dan Motto tambahan (konten Tahap 4) tidak ada di desain — pertahankan atau buang?
+- **/berita**: halaman menggabungkan dua desain (portal_berita_beranda: sorotan + sidebar; daftar_berita_investigasi: kepala + filter + kartu). Kini kartu 2 kolom dalam kolom utama (seperti "Berita Terkini" desain). Bila pemilik ingin persis daftar_berita_investigasi (3 kolom selebar penuh tanpa sidebar), beri tahu.
+- **Detail artikel**: desain punya keterangan foto ("Foto: …") — tabel artikel belum punya kolom keterangan gambar; tambah bila diinginkan.
+- **Kelola pengaduan**: overlay detail desain tidak dibangun (halaman detail terpisah, keputusan Tahap 6).
 
 ### Posisi terakhir RUN QA-1
-Butir 1 SELESAI & ter-deploy (12d850f). Butir 2 dimulai: tangkapan 14 layar vs desain (code.html dirender + screen.png; 3 screen.png rusak: portal_berita_beranda, program_kegiatan, tentang_kami_warkop_nusantara).
+Butir 1–3 SELESAI & ter-deploy (6831eff, healthy). Butir 4 dimulai: rayapan tautan + aksi end-to-end + konsol bersih (build produksi lokal, spot-check produksi).

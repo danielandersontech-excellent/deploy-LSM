@@ -1,0 +1,128 @@
+# QA-1 butir 5 — responsif 375/768/1280 — http://localhost:3000 — 2026-09-04T04:41:54.252Z
+login staf: ok
+
+## Lebar 375 px (emulasi mobile, dpr 2)
+  OK    / @375 — scrollWidth 375/375; kontrol < 24px: 6 (a:Lewati ke konten 32x16, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20, a:FAQ 343x20)
+  OK    /tentang @375 — scrollWidth 375/375; kontrol < 24px: 6 (a:Lewati ke konten 32x16, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20, a:FAQ 343x20)
+  OK    /struktur @375 — scrollWidth 375/375; kontrol < 24px: 12 (a:Lewati ke konten 32x16, a:Tampilkan pimpinan region 120x22, a:Profil Ir. Rahmat Siregar 59x20, a:Tampilkan pimpinan region 96x22, a:Profil Dr. Budi Santoso 59x20)
+  OK    /program @375 — scrollWidth 375/375; kontrol < 24px: 6 (a:Lewati ke konten 32x16, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20, a:FAQ 343x20)
+  OK    /galeri @375 — scrollWidth 375/375; kontrol < 24px: 6 (a:Lewati ke konten 32x16, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20, a:FAQ 343x20)
+  OK    /kontak @375 — scrollWidth 375/375; kontrol < 24px: 8 (a:Lewati ke konten 32x16, input:anonim 16x16, input:lampiran 1x1, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20)
+  OK    /berita @375 — scrollWidth 375/375; kontrol < 24px: 7 (a:Lewati ke konten 32x16, a:Baca Laporan Lengkap: Ind 193x20, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20)
+  OK    /berita/indikasi-penyelewengan-dana-desa-mekarsari @375 — scrollWidth 376/376; kontrol < 24px: 7 (a:Lewati ke konten 32x16, a:Berita 48x20, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20)
+  OK    /lacak @375 — scrollWidth 375/375; kontrol < 24px: 6 (a:Lewati ke konten 32x16, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20, a:FAQ 343x20)
+  OK    /faq @375 — scrollWidth 375/375; kontrol < 24px: 7 (a:Lewati ke konten 32x16, a:Beranda 64x20, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20)
+  OK    /kebijakan-privasi @375 — scrollWidth 375/375; kontrol < 24px: 7 (a:Lewati ke konten 32x16, a:Beranda 64x20, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20)
+  OK    /pedoman-komunitas @375 — scrollWidth 375/375; kontrol < 24px: 7 (a:Lewati ke konten 32x16, a:Beranda 64x20, a:Kantor Regional 343x20, a:Kebijakan Privasi 343x20, a:Pedoman Komunitas 343x20)
+  OK    /login @375 — scrollWidth 375/375
+  OK    /halaman-tidak-ada @375 — scrollWidth 375/375
+  OK    /staf/dashboard @375 — scrollWidth 375/375
+  OK    /staf/artikel @375 — scrollWidth 375/375; kontrol < 24px: 30 (a:Lihat artikel Laporan Inf 20x19, a:Sunting artikel Laporan I 20x19, button:Hapus artikel Laporan Inf 20x25, a:Lihat artikel Indikasi Pe 20x19, a:Sunting artikel Indikasi  20x19)
+  OK    /staf/artikel/baru @375 — scrollWidth 375/375; kontrol < 24px: 2 (input:gambar_utama 1x1, input:Berkas gambar untuk disis 1x1)
+  OK    /staf/artikel/77 @375 — scrollWidth 375/375; kontrol < 24px: 2 (input:gambar_utama 1x1, input:Berkas gambar untuk disis 1x1)
+  OK    /staf/pengaduan @375 — scrollWidth 375/375
+  OK    /staf/pengaduan/1041 @375 — scrollWidth 375/375
+  OK    /staf/pengurus @375 — scrollWidth 375/375; kontrol < 24px: 10 (button:Ubah pengurus Bpk. H. Soe 20x25, button:Hapus pengurus Bpk. H. So 20x25, button:Ubah pengurus Ibu Hj. Rat 20x25, button:Hapus pengurus Ibu Hj. Ra 20x25, button:Ubah pengurus Ir. Rahmat  20x25)
+  OK    /staf/program @375 — scrollWidth 375/375; kontrol < 24px: 9 (a:Lihat program Advokasi Se 20x19, button:Ubah program Advokasi Sen 20x25, button:Hapus program Advokasi Se 20x25, a:Lihat program Pengawasan  20x19, button:Ubah program Pengawasan A 20x25)
+  OK    /staf/galeri @375 — scrollWidth 375/375
+  OK    /staf/pengguna @375 — scrollWidth 375/375; kontrol < 24px: 27 (button:Ubah pengguna Superadmin 20x25, button:Paksa keluar Superadmin 20x25, button:Reset kata sandi Superadm 20x25, button:Ubah pengguna Redaksi War 20x25, button:Paksa keluar Redaksi Wark 20x25)
+  OK    /staf/pengaturan @375 — scrollWidth 375/375
+  OK    /staf/ganti-sandi @375 — scrollWidth 375/375
+
+## Lebar 768 px (emulasi mobile, dpr 2)
+  OK    / @768 — scrollWidth 836/836; kontrol < 24px: 10 (a:Lewati ke konten 32x16, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20, a:Berita 43x20)
+  OK    /tentang @768 — scrollWidth 836/836; kontrol < 24px: 10 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /struktur @768 — scrollWidth 836/836; kontrol < 24px: 15 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Program 58x20, a:Galeri 42x20, a:Berita 43x20)
+  OK    /program @768 — scrollWidth 836/836; kontrol < 24px: 9 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Galeri 42x20, a:Berita 43x20)
+  OK    /galeri @768 — scrollWidth 836/836; kontrol < 24px: 9 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Berita 43x20)
+  OK    /kontak @768 — scrollWidth 836/836; kontrol < 24px: 12 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /berita @768 — scrollWidth 836/836; kontrol < 24px: 10 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /berita/indikasi-penyelewengan-dana-desa-mekarsari @768 — scrollWidth 836/836; kontrol < 24px: 10 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /lacak @768 — scrollWidth 836/836; kontrol < 24px: 10 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /faq @768 — scrollWidth 836/836; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /kebijakan-privasi @768 — scrollWidth 836/836; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /pedoman-komunitas @768 — scrollWidth 836/836; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /login @768 — scrollWidth 768/768; kontrol < 24px: 1 (a:Lihat Semua 104x20)
+  OK    /halaman-tidak-ada @768 — scrollWidth 768/768
+  OK    /staf/dashboard @768 — scrollWidth 768/768; kontrol < 24px: 1 (a:Lihat Semua 104x20)
+  OK    /staf/artikel @768 — scrollWidth 768/768; kontrol < 24px: 30 (a:Lihat artikel Laporan Inf 20x19, a:Sunting artikel Laporan I 20x19, button:Hapus artikel Laporan Inf 20x25, a:Lihat artikel Indikasi Pe 20x19, a:Sunting artikel Indikasi  20x19)
+  OK    /staf/artikel/baru @768 — scrollWidth 768/768; kontrol < 24px: 2 (input:gambar_utama 1x1, input:Berkas gambar untuk disis 1x1)
+  OK    /staf/artikel/77 @768 — scrollWidth 768/768; kontrol < 24px: 3 (a:Kelola Artikel 96x20, input:gambar_utama 1x1, input:Berkas gambar untuk disis 1x1)
+  OK    /staf/pengaduan @768 — scrollWidth 768/768
+  OK    /staf/pengaduan/1041 @768 — scrollWidth 768/768
+  OK    /staf/pengurus @768 — scrollWidth 768/768; kontrol < 24px: 10 (button:Ubah pengurus Bpk. H. Soe 20x25, button:Hapus pengurus Bpk. H. So 20x25, button:Ubah pengurus Ibu Hj. Rat 20x25, button:Hapus pengurus Ibu Hj. Ra 20x25, button:Ubah pengurus Ir. Rahmat  20x25)
+  OK    /staf/program @768 — scrollWidth 768/768; kontrol < 24px: 9 (a:Lihat program Advokasi Se 20x19, button:Ubah program Advokasi Sen 20x25, button:Hapus program Advokasi Se 20x25, a:Lihat program Pengawasan  20x19, button:Ubah program Pengawasan A 20x25)
+  OK    /staf/galeri @768 — scrollWidth 768/768
+  OK    /staf/pengguna @768 — scrollWidth 768/768; kontrol < 24px: 27 (button:Ubah pengguna Superadmin 20x25, button:Paksa keluar Superadmin 20x25, button:Reset kata sandi Superadm 20x25, button:Ubah pengguna Redaksi War 20x25, button:Paksa keluar Redaksi Wark 20x25)
+  OK    /staf/pengaturan @768 — scrollWidth 768/768
+  OK    /staf/ganti-sandi @768 — scrollWidth 768/768
+
+## Lebar 1280 px
+  OK    / @1280 — scrollWidth 1265/1280; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20, a:Berita 43x20)
+  OK    /tentang @1280 — scrollWidth 1265/1280; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /struktur @1280 — scrollWidth 1265/1280; kontrol < 24px: 16 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Program 58x20, a:Galeri 42x20, a:Berita 43x20)
+  OK    /program @1280 — scrollWidth 1265/1280; kontrol < 24px: 10 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Galeri 42x20, a:Berita 43x20)
+  OK    /galeri @1280 — scrollWidth 1265/1280; kontrol < 24px: 10 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Berita 43x20)
+  OK    /kontak @1280 — scrollWidth 1265/1280; kontrol < 24px: 13 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /berita @1280 — scrollWidth 1265/1280; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /berita/indikasi-penyelewengan-dana-desa-mekarsari @1280 — scrollWidth 1265/1280; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /lacak @1280 — scrollWidth 1265/1280; kontrol < 24px: 11 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /faq @1280 — scrollWidth 1265/1280; kontrol < 24px: 12 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /kebijakan-privasi @1280 — scrollWidth 1265/1280; kontrol < 24px: 12 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /pedoman-komunitas @1280 — scrollWidth 1280/1280; kontrol < 24px: 12 (a:Lewati ke konten 32x16, a:Beranda 58x20, a:Struktur 59x20, a:Program 58x20, a:Galeri 42x20)
+  OK    /login @1280 — scrollWidth 1280/1280; kontrol < 24px: 1 (a:Lihat Semua 104x20)
+  OK    /halaman-tidak-ada @1280 — scrollWidth 1280/1280
+  OK    /staf/dashboard @1280 — scrollWidth 1280/1280; kontrol < 24px: 1 (a:Lihat Semua 104x20)
+  OK    /staf/artikel @1280 — scrollWidth 1280/1280; kontrol < 24px: 30 (a:Lihat artikel Laporan Inf 20x19, a:Sunting artikel Laporan I 20x19, button:Hapus artikel Laporan Inf 20x25, a:Lihat artikel Indikasi Pe 20x19, a:Sunting artikel Indikasi  20x19)
+  OK    /staf/artikel/baru @1280 — scrollWidth 1280/1280; kontrol < 24px: 3 (a:Kelola Artikel 96x20, input:gambar_utama 1x1, input:Berkas gambar untuk disis 1x1)
+  OK    /staf/artikel/77 @1280 — scrollWidth 1280/1280; kontrol < 24px: 3 (a:Kelola Artikel 96x20, input:gambar_utama 1x1, input:Berkas gambar untuk disis 1x1)
+  OK    /staf/pengaduan @1280 — scrollWidth 1280/1280
+  OK    /staf/pengaduan/1041 @1280 — scrollWidth 1280/1280
+  OK    /staf/pengurus @1280 — scrollWidth 1280/1280; kontrol < 24px: 10 (button:Ubah pengurus Bpk. H. Soe 20x25, button:Hapus pengurus Bpk. H. So 20x25, button:Ubah pengurus Ibu Hj. Rat 20x25, button:Hapus pengurus Ibu Hj. Ra 20x25, button:Ubah pengurus Ir. Rahmat  20x25)
+  OK    /staf/program @1280 — scrollWidth 1280/1280; kontrol < 24px: 9 (a:Lihat program Advokasi Se 20x19, button:Ubah program Advokasi Sen 20x25, button:Hapus program Advokasi Se 20x25, a:Lihat program Pengawasan  20x19, button:Ubah program Pengawasan A 20x25)
+  OK    /staf/galeri @1280 — scrollWidth 1280/1280
+  OK    /staf/pengguna @1280 — scrollWidth 1280/1280; kontrol < 24px: 27 (button:Ubah pengguna Superadmin 20x25, button:Paksa keluar Superadmin 20x25, button:Reset kata sandi Superadm 20x25, button:Ubah pengguna Redaksi War 20x25, button:Paksa keluar Redaksi Wark 20x25)
+  OK    /staf/pengaturan @1280 — scrollWidth 1280/1280
+  OK    /staf/ganti-sandi @1280 — scrollWidth 1280/1280
+
+## Hamburger publik & laci staf pada 375 px
+  OK    tombol hamburger ada di header (375) — {"x":187.5,"y":55,"label":"Buka menu","expanded":"false"}
+  OK    laci publik terbuka: tautan tampak & aria-expanded=true — {"tautanTampak":9,"kontak":{"x":187.5,"y":274},"expanded":"true"}
+  OK    klik "Kontak & Pengaduan" di laci → /kontak — /kontak
+  OK    tombol laci staf ada (375) — {"x":344,"y":24,"label":"Buka menu"}
+  OK    laci staf terbuka: sidebar tampak & tautan menu tersedia — {"navTampak":true,"tautan":9}
+
+## Formulir pengaduan di 375 px diisi penuh & dikirim (anonim)
+  {"tombol":"Kirim Laporan Resmi","x":251.7421875,"y":406,"lebarForm":341,"adaOverflow":false}
+  OK    formulir 375 dikirim → nomor kasus tampil, tanpa gulir mendatar — nomor WRP-016053, lebar form 341
+  pengaduan uji WRP-016053 dihapus lunak
+
+## Ringkasan per halaman (375 / 768 / 1280)
+  /                            OK / OK / OK
+  /tentang                     OK / OK / OK
+  /struktur                    OK / OK / OK
+  /program                     OK / OK / OK
+  /galeri                      OK / OK / OK
+  /kontak                      OK / OK / OK
+  /berita                      OK / OK / OK
+  /berita/indikasi-penyelewengan-dana-desa-mekarsari OK / OK / OK
+  /lacak                       OK / OK / OK
+  /faq                         OK / OK / OK
+  /kebijakan-privasi           OK / OK / OK
+  /pedoman-komunitas           OK / OK / OK
+  /login                       OK / OK / OK
+  /halaman-tidak-ada           OK / OK / OK
+  /staf/dashboard              OK / OK / OK
+  /staf/artikel                OK / OK / OK
+  /staf/artikel/baru           OK / OK / OK
+  /staf/artikel/77             OK / OK / OK
+  /staf/pengaduan              OK / OK / OK
+  /staf/pengaduan/1041         OK / OK / OK
+  /staf/pengurus               OK / OK / OK
+  /staf/program                OK / OK / OK
+  /staf/galeri                 OK / OK / OK
+  /staf/pengguna               OK / OK / OK
+  /staf/pengaturan             OK / OK / OK
+  /staf/ganti-sandi            OK / OK / OK
+
+RINGKASAN 5: LULUS (emulasi Chrome; Safari iOS/Android asli TIDAK tersedia)

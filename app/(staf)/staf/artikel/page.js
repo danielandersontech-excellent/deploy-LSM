@@ -128,7 +128,8 @@ export default async function HalamanKelolaArtikel({ searchParams }) {
           <KeadaanKosong ikon="article" judul="Belum ada artikel" keterangan={q || status ? 'Tidak ada artikel yang cocok dengan pencarian atau filter status.' : 'Belum ada artikel yang dapat Anda kelola.'} />
         ) : (
           <div className="bg-surface-container-lowest border border-tertiary rounded-lg overflow-hidden shadow-sm">
-            <table className="w-full text-left border-collapse">
+            {/* QA-1 butir 5: pembungkus overflow-x-auto (pola desain dashboard/kelola_pengaduan) agar tabel dapat digulir di layar sempit */}
+            <div className="overflow-x-auto"><table className="w-full text-left border-collapse">
               <thead className="bg-primary text-on-primary">
                 <tr>
                   <th scope="col" className="px-6 py-4 font-label-md text-label-md border-b border-outline-variant">Judul Artikel</th>
@@ -167,7 +168,7 @@ export default async function HalamanKelolaArtikel({ searchParams }) {
                   );
                 })}
               </tbody>
-            </table>
+            </table></div>
             <div className="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-between items-center text-sm text-on-surface-variant">
               <span>Menampilkan {awal}-{akhir} dari {total} artikel</span>
               <nav className="space-x-1" aria-label="Paginasi">

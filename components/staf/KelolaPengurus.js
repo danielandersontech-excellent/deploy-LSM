@@ -359,7 +359,8 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
           <KeadaanKosong ikon="person" judul="Belum ada pengurus" keterangan={bolehKelola ? 'Tambahkan pengurus agar tampil di halaman Struktur Organisasi.' : 'Belum ada data pengurus yang dapat ditampilkan.'} />
         ) : (
           <div className="bg-surface-container-lowest border border-tertiary rounded-lg overflow-hidden shadow-sm">
-            <table className="w-full text-left border-collapse">
+            {/* QA-1 butir 5: pembungkus overflow-x-auto (pola desain dashboard/kelola_pengaduan) agar tabel dapat digulir di layar sempit */}
+            <div className="overflow-x-auto"><table className="w-full text-left border-collapse">
               <caption className="sr-only">Daftar pengurus berurutan sesuai tampilan Struktur Organisasi</caption>
               <thead className="bg-primary text-on-primary">
                 <tr>
@@ -403,7 +404,7 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
             <div className="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-between items-center text-sm text-on-surface-variant">
               <span>Menampilkan {daftar.length} pengurus ({daftar.filter((p) => p.tingkat === 'pusat').length} pusat, {daftar.filter((p) => p.tingkat === 'wilayah').length} wilayah)</span>
               {bolehKelola ? <span>Urutan tampil mengikuti tombol ▲▼ per tingkat</span> : null}
