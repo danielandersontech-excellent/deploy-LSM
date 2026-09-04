@@ -1,0 +1,47 @@
+
+## beranda-sorotan — http://localhost:3000/
+  OK    beranda-sorotan kartu #1 klik gambar (197,450) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); / → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    beranda-sorotan kartu #1 klik judul (587,322) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); / → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    beranda-sorotan kartu #1 klik ringkasan (587,402) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); / → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    beranda-sorotan kartu #1 klik kartu (52,659) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); / → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    beranda-sorotan kartu #2 klik gambar (1036,325) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); / → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    beranda-sorotan kartu #2 klik judul (1036,498) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); / → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    beranda-sorotan kartu #2 klik ringkasan (1036,564) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); / → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    beranda-sorotan kartu #2 klik kartu (858,659) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); / → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+
+## berita-unggulan — http://localhost:3000/berita
+  OK    berita-unggulan kartu #1 klik gambar (461,282) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); /berita → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    berita-unggulan kartu #1 klik judul (461,646) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); /berita → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    berita-unggulan kartu #1 klik ringkasan (461,746) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); /berita → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    berita-unggulan kartu #1 klik kartu (52,843) — elemen: a (dalam <a href=/berita/indikasi-penyelewengan-dana-desa-mekarsari>); /berita → /berita/indikasi-penyelewengan-dana-desa-mekarsari
+
+## berita-daftar — http://localhost:3000/berita
+  OK    berita-daftar kartu #1 klik gambar (172,304) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    berita-daftar kartu #1 klik judul (172,501) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    berita-daftar kartu #1 klik ringkasan (172,579) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    berita-daftar kartu #1 klik kartu (52,681) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    berita-daftar kartu #2 klik gambar (460,304) — elemen: a (dalam <a href=/berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan>); /berita → /berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan
+  OK    berita-daftar kartu #2 klik judul (460,501) — elemen: a (dalam <a href=/berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan>); /berita → /berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan
+  OK    berita-daftar kartu #2 klik ringkasan (460,579) — elemen: a (dalam <a href=/berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan>); /berita → /berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan
+  OK    berita-daftar kartu #2 klik kartu (340,681) — elemen: a (dalam <a href=/berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan>); /berita → /berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan
+
+## berita-sidebar — http://localhost:3000/berita
+  OK    berita-sidebar kartu #1 klik judul (1080,435) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    berita-sidebar kartu #1 klik kartu (942,485) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+
+## detail-artikel-terkait — http://localhost:3000/berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    detail-artikel-terkait kartu #1 klik gambar (230,326) — elemen: img (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    detail-artikel-terkait kartu #1 klik judul (230,518) — elemen: h4 (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    detail-artikel-terkait kartu #1 klik ringkasan (230,614) — elemen: p (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    detail-artikel-terkait kartu #1 klik kartu (52,659) — elemen: div (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  OK    detail-artikel-terkait kartu #2 klik gambar (633,326) — elemen: img (dalam <a href=/berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap
+  OK    detail-artikel-terkait kartu #2 klik judul (633,518) — elemen: h4 (dalam <a href=/berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap
+  OK    detail-artikel-terkait kartu #2 klik ringkasan (633,614) — elemen: p (dalam <a href=/berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap
+  OK    detail-artikel-terkait kartu #2 klik kartu (455,659) — elemen: div (dalam <a href=/berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap>); /berita/indikasi-penyelewengan-dana-desa-mekarsari → /berita/dugaan-penyelewengan-dana-desa-di-sektor-infrastruktur-terungkap
+
+## dashboard staf — artikel terbaru
+  tautan artikel di dashboard: {"tautan":["/staf/artikel/baru | Tulis Artikel Baru"],"judulTanpaTautan":[]}
+
+konsol error: 0
+
+RINGKASAN klik kartu (sesudah-lokal): LULUS

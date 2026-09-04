@@ -16,6 +16,7 @@
 // Sorotan utama = baris pertama hasil pada tampilan bawaan (tanpa filter, halaman 1) — sama
 // dengan ambilArtikelSorotan(1) tanpa kueri tambahan dan tanpa duplikasi kartu.
 import Link from 'next/link';
+import TautanKartu from '@/components/publik/TautanKartu';
 import Image from 'next/image';
 import { cache } from 'react';
 import Ikon from '@/components/ui/Ikon';
@@ -159,6 +160,8 @@ export default async function HalamanBerita({ searchParams }) {
           {sorotan ? (
             <section aria-label="Sorotan utama">
               <div className="group cursor-pointer relative overflow-hidden rounded-xl border border-tertiary/10 bg-surface-lowest shadow-sm hover:shadow-md transition-shadow">
+                {/* QA-1: seluruh kartu unggulan bisa diklik */}
+                <TautanKartu href={`/berita/${sorotan.slug}`} />
                 <div className="aspect-video w-full overflow-hidden relative">
                   <Image className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={sorotan.gambar_utama || '/penampung/artikel-1.jpg'} alt={`Gambar utama: ${sorotan.judul}`} fill sizes="(min-width: 1280px) 880px, (min-width: 768px) calc(100vw - 424px), 100vw" priority />
                   <div className="absolute top-4 left-4">
@@ -206,6 +209,7 @@ export default async function HalamanBerita({ searchParams }) {
               <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" aria-label="Daftar artikel">
                 {kartu.map((a) => (
                   <article key={a.id} className="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden group hover:border-secondary-fixed-dim transition-all duration-300 relative shadow-sm hover:shadow-md cursor-pointer">
+                    <TautanKartu href={`/berita/${a.slug}`} />
                     <div className="h-48 w-full relative overflow-hidden bg-surface-container-high border-b border-outline-variant">
                       <Image className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={a.gambar_utama || '/penampung/artikel-1.jpg'} alt={`Gambar utama: ${a.judul}`} fill sizes="(min-width: 1280px) 280px, (min-width: 768px) 50vw, 100vw" />
                     </div>
@@ -253,7 +257,8 @@ export default async function HalamanBerita({ searchParams }) {
               <ul className="flex flex-col gap-4">
                 {palingDibaca.map((a, i) => (
                   // Item pertama tanpa garis atas; item berikutnya "pt-4 border-t border-tertiary/5" persis seperti desain
-                  <li key={a.id} className={i === 0 ? 'group cursor-pointer flex gap-4 items-start' : 'group cursor-pointer flex gap-4 items-start pt-4 border-t border-tertiary/5'}>
+                  <li key={a.id} className={i === 0 ? 'group cursor-pointer flex gap-4 items-start relative' : 'group cursor-pointer flex gap-4 items-start pt-4 border-t border-tertiary/5 relative'}>
+                    <TautanKartu href={`/berita/${a.slug}`} />
                     <span className="font-headline-lg text-secondary-container/50 group-hover:text-secondary-container transition-colors font-bold text-4xl leading-none">{i + 1}</span>
                     <div>
                       <h4 className="font-headline-md text-[16px] leading-snug text-primary group-hover:text-secondary-container transition-colors mb-1">

@@ -1,0 +1,43 @@
+
+## beranda-sorotan — https://warkopnusantara.id/
+  GAGAL beranda-sorotan kartu #1 klik gambar (197,450) — elemen: div (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #1 klik judul (587,322) — elemen: h3 (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #1 klik ringkasan (587,402) — elemen: p (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #1 klik kartu (52,659) — elemen: div (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #2 klik gambar (1036,325) — elemen: div (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #2 klik judul (1036,498) — elemen: h3 (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #2 klik ringkasan (1036,564) — elemen: p (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #2 klik kartu (858,659) — elemen: div (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #3 klik judul (977,374) — elemen: h4 (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #3 klik ringkasan (1045,417) — elemen: p (TANPA <a>); / → /
+  GAGAL beranda-sorotan kartu #3 klik kartu (858,554) — elemen: div (TANPA <a>); / → /
+
+## berita-unggulan — https://warkopnusantara.id/berita
+  GAGAL berita-unggulan kartu #1 klik gambar (461,282) — elemen: img (TANPA <a>); /berita → /berita
+  GAGAL berita-unggulan kartu #1 klik judul (461,646) — elemen: h2 (TANPA <a>); /berita → /berita
+  GAGAL berita-unggulan kartu #1 klik ringkasan (461,746) — elemen: p (TANPA <a>); /berita → /berita
+  GAGAL berita-unggulan kartu #1 klik kartu (52,843) — elemen: div (TANPA <a>); /berita → /berita
+
+## berita-daftar — https://warkopnusantara.id/berita
+  GAGAL berita-daftar kartu #1 klik gambar (172,304) — elemen: img (TANPA <a>); /berita → /berita
+  GAGAL berita-daftar kartu #1 klik judul (172,501) — elemen: h2 (TANPA <a>); /berita → /berita
+  GAGAL berita-daftar kartu #1 klik ringkasan (172,579) — elemen: p (TANPA <a>); /berita → /berita
+  GAGAL berita-daftar kartu #1 klik kartu (52,681) — elemen: div (TANPA <a>); /berita → /berita
+  GAGAL berita-daftar kartu #2 klik gambar (460,304) — elemen: img (TANPA <a>); /berita → /berita
+  GAGAL berita-daftar kartu #2 klik judul (460,501) — elemen: a (dalam <a href=/berita/evaluasi-proyek-jalan-trans-sumatera-sektor-selatan>); /berita → /berita
+  GAGAL berita-daftar kartu #2 klik ringkasan (460,579) — elemen: p (TANPA <a>); /berita → /berita
+  GAGAL berita-daftar kartu #2 klik kartu (340,681) — elemen: div (TANPA <a>); /berita → /berita
+
+## berita-sidebar — https://warkopnusantara.id/berita
+  OK    berita-sidebar kartu #1 klik judul (1080,435) — elemen: a (dalam <a href=/berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan>); /berita → /berita/membongkar-tabir-ketidakadilan-laporan-khusus-dari-garis-depan
+  GAGAL berita-sidebar kartu #1 klik kartu (942,485) — elemen: li (TANPA <a>); /berita → /berita
+
+## detail-artikel-terkait — https://warkopnusantara.id/berita/indikasi-penyelewengan-dana-desa-mekarsari
+  GAGAL detail-artikel-terkait: kartu artikel ditemukan (aside article, section article, [data-terkait] article, article article) — tidak ada
+
+## dashboard staf — artikel terbaru
+  tautan artikel di dashboard: {"tautan":["/staf/artikel/baru | Tulis Artikel Baru"],"judulTanpaTautan":[]}
+
+konsol error: 0
+
+RINGKASAN klik kartu (sebelum-produksi): 25 klik TIDAK berpindah

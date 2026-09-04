@@ -66,3 +66,24 @@ Yang TIDAK tercapai / TIDAK diuji (jujur): Lighthouse Performance 70–77 (< 90;
 8. **Cadangan berkala**: cron harian `scripts/cadangkan-db.sh` (PENERAPAN G.3) + salinan luar server + uji pulih berkala (prosedur sudah teruji: `d5-e-pemulihan-cadangan.txt`).
 9. Keputusan desain yang menunggu (tidak menghalangi): subset font Fira Sans (Performance ≥ 90), navbar kanonik meluap di 1280 px, `galeri-3.mp4` seed hilang, overlay detail pengaduan, tautan "Ganti kata sandi" & tombol "Arsipkan" di antarmuka staf; 13 GET route staf tanpa pemanggil (kontrak API) — hapus atau pertahankan.
 10. Baca `PANDUAN-STAF.md` bersama pengurus; `PENERAPAN.md` bagian 3 = daftar periksa produksi dengan status per butir.
+
+
+## RUN QA-1 — perbaikan & QA menyeluruh atas temuan pemilik (mulai 4 Sep 2026 ±09:40 WIB)
+
+Perintah pemilik (dokumen/PERINTAH-PEMILIK-SERVER.md tetap berlaku). Ritme per butir: perbaiki → bukti sebelum/sesudah di `laporan/bukti-qa-1/` → build hijau → commit kecil → push → redeploy webhook → verifikasi produksi (health 200 + halaman yang diperbaiki di domain) → butir berikutnya. Akhir: `laporan/LAPORAN-QA-1.md` + STATUS ini, lalu BERHENTI.
+
+| # | Butir | Status | Catatan |
+|---|---|---|---|
+| 1 | Berita tidak bisa diklik (beranda, /berita, terkait, dashboard) — reproduksi produksi+lokal, akar masalah, perbaikan semua kartu, bukti klik CDP berpindah | SEDANG | |
+| 2 | Kesetiaan visual menurut mata — 14 layar: tangkapan pada lebar code.html vs screen.png, tabel selisih per layar, perbaiki yang dari kode, sisanya MENUNGGU PEMILIK | BELUM | |
+| 3 | Gambar jelek & posisi buruk — penampung dibangkitkan ulang, object-cover + posisi seragam, dimensi next/image benar; daftar foto sungguhan → MENUNGGU PEMILIK | BELUM | |
+| 4 | Fungsional total (build produksi lokal + spot-check produksi): rayapan semua tautan internal, semua aksi utama end-to-end, konsol CDP bersih | BELUM | |
+| 5 | HP & laptop 375/768/1280: tanpa gulir mendatar, hamburger & laci, formulir 375, sentuh tak tumpang tindih (emulasi Chrome; Safari/Android asli tidak tersedia) | BELUM | |
+| 6 | Regresi: uji-b1 route×peran + kesetiaan 14 layar + build + lint | BELUM | |
+| 7 | LAPORAN-QA-1.md + STATUS, BERHENTI | BELUM | |
+
+### MENUNGGU PEMILIK (RUN QA-1)
+(diisi selama run)
+
+### Posisi terakhir RUN QA-1
+Butir 1 dimulai (reproduksi di produksi).

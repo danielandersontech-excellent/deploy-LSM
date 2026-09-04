@@ -130,7 +130,7 @@ const KALIMAT_AUDIT = Object.freeze({
   galeri_hapus: { kalimat: 'menghapus dokumentasi galeri', ikon: 'image' },
 });
 
-/** Bentuk butir panel: { kunci, ikon, emas, awalan, tebal, waktu }. */
+/** Bentuk butir panel: { kunci, ikon, emas, awalan, tebal, waktu, href? } — href (QA-1): teks tebal menjadi tautan ke halaman kelola. */
 function butirAudit(a) {
   const peta = KALIMAT_AUDIT[a.aksi] ?? { kalimat: String(a.aksi ?? '').replace(/_/g, ' '), ikon: 'update' };
   const pelaku = peta.sistem ? '' : `${a.nama_user ?? 'Sistem'} `;
@@ -151,6 +151,7 @@ function butirPengaduan(p) {
     emas: true,
     awalan: `${labelKategoriPengaduan(p.kategori_masalah)}${p.wilayah_nama ? ` · ${p.wilayah_nama}` : ''}`,
     tebal: `#${p.nomor_kasus}`,
+    href: `/staf/pengaduan/${p.id}`,
     waktu: p.dibuat_pada,
   };
 }
@@ -162,6 +163,7 @@ function butirArtikel(a) {
     emas: false,
     awalan: `${a.penulis_nama} ·`,
     tebal: a.judul,
+    href: `/staf/artikel/${a.id}`,
     waktu: a.diperbarui_pada ?? a.dibuat_pada,
   };
 }
@@ -349,7 +351,7 @@ export default async function HalamanDashboard() {
                     <div>
                       <p className="font-body-md text-body-md text-on-surface">
                         {b.awalan}
-                        {b.tebal ? <> <span className="font-semibold">{b.tebal}</span></> : null}
+                        {b.tebal ? <> {b.href ? <Link href={b.href} className="font-semibold hover:underline focus:outline-none focus:underline">{b.tebal}</Link> : <span className="font-semibold">{b.tebal}</span>}</> : null}
                       </p>
                       <p className="font-label-md text-label-md text-outline mt-1">{waktuRelatif(b.waktu)}</p>
                     </div>

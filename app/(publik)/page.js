@@ -6,6 +6,7 @@
 // Aturan 13: Status Advokasi HANYA nomor kasus, kategori, wilayah, status (SQL tanpa identitas).
 import Image from 'next/image';
 import Link from 'next/link';
+import TautanKartu from '@/components/publik/TautanKartu';
 import Ikon from '@/components/ui/Ikon';
 import Lencana from '@/components/ui/Lencana';
 import KeadaanKosong from '@/components/ui/KeadaanKosong';
@@ -115,6 +116,8 @@ export default async function HalamanBeranda() {
             {/* Featured Article (Takes up 2 columns on large screens) */}
             {utama ? (
               <article className="lg:col-span-2 group cursor-pointer bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row relative">
+                {/* QA-1: seluruh kartu bisa diklik (tautan peregang); judul tetap <Link> untuk keyboard */}
+                <TautanKartu href={`/berita/${utama.slug}`} />
                 <div className="absolute top-4 left-4 z-20">
                   <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-error text-on-error font-label-md text-xs shadow-sm">
                     <Ikon nama="warning" terisi className="text-[14px]" />
@@ -154,7 +157,8 @@ export default async function HalamanBeranda() {
             )}
             {/* Article 2 */}
             {kedua ? (
-              <article className="group cursor-pointer bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col">
+              <article className="group cursor-pointer bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col relative">
+                <TautanKartu href={`/berita/${kedua.slug}`} />
                 <div className="h-48 relative overflow-hidden border-b border-outline-variant">
                   <div className="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-700" role="img" aria-label={`Gambar utama: ${kedua.judul}`} style={{ backgroundImage: `url('${kedua.gambar_utama || '/penampung/artikel-2.jpg'}')` }}></div>
                   <div className="absolute top-3 left-3">
