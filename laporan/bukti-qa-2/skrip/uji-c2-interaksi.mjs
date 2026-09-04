@@ -72,7 +72,9 @@ async function ujiHalaman(nama, url) {
   for (const k of kolom) {
     // Kolom biasa: seluruh isi dipilih agar ketikan menggantinya. Area contentEditable (isi artikel): karet
     // dipindah ke AKHIR isi yang sudah ada, supaya ketikan menyambung dan isi lama tidak boleh hilang.
-    const isiSebelum = await ev(`(() => { const el = document.querySelector('[data-c2k="${k.i}"]'); return el && el.isContentEditable ? el.textContent : null; })()`);
+    // Editor artikel memakai paragraf penampung ber-atribut data-penampung yang memang DIGANTI saat kolom
+    // difokuskan (EditorArtikel.saatFokusIsi) — untuk uji ini isinya dihitung kosong, bukan isi yang harus bertahan.
+    const isiSebelum = await ev(`(() => { const el = document.querySelector('[data-c2k="${k.i}"]'); if (!el || !el.isContentEditable) return null; return el.querySelector('[data-penampung]') ? '' : el.textContent; })()`);
     await ev(`(() => { const el = document.querySelector('[data-c2k="${k.i}"]'); el.scrollIntoView({ block: 'center' }); el.focus();
       if (!el.isContentEditable) { el.select && el.select(); return; }
       const r = document.createRange(); r.selectNodeContents(el); r.collapse(false);

@@ -1,0 +1,53 @@
+# QA-2 C5 — verifikasi akhir di domain produksi — 2026-09-04T10:00:18.285Z
+   1. akun staf sementara (peran redaktur) disiapkan lewat API superadmin → id 10 (akun uji lama dipakai ulang: reset sandi + alur ganti sandi diselesaikan); sandi acak hanya di memori
+
+## 1. Kesehatan, pemisahan host, header keamanan
+   2. /api/health 200 + zona waktu WIB; pemisahan host dua arah; Location tanpa 0.0.0.0 → health 2026-09-04T17:00:22+07:00; https://staf.warkopnusantara.id/staf/dashboard ; https://staf.warkopnusantara.id/staf/dashboard
+   3. header keamanan lengkap di halaman publik dan staf → CSP tanpa unsafe-eval, HSTS preload, X-Frame DENY, nosniff
+
+## 2. BUG 1 — formulir Kelola Pengurus terbuka tanpa galat (Chrome di produksi)
+   4. /staf/pengurus: klik "Tambah Pengurus" → formulir muncul, 0 galat konsol → formulir terbuka dengan kolom nama + select Kelompok Bagan; 0 galat konsol
+
+## 3. BUG 2 — lampiran besar diterima di produksi
+   5. pengaduan anonim + lampiran JPG 16 MB dan MP4 15 MB → 201; staf dapat membuka keduanya → 201 WRP-102185 (id 8); lampiran: image/jpeg 0.92 MB, video/mp4 15.00 MB; tanpa sesi 401; anonim=1, empat kolom identitas NULL
+
+## 4. BUG 3 — pengurus tanpa kelompok tampil di /struktur produksi
+   6. buat pengurus pusat tanpa kelompok → tampil di /struktur → dihapus lagi → id 42 tampil di bagian Pimpinan Regional lalu dihapus bersih
+
+## 5. BUG 4 — situs tetap hidup setelah permintaan bermasalah
+   7. badan 50 MB, unggahan diputus di tengah, dan permintaan HTTP cacat → /api/health tetap 200 → 50 MB→499 (413 route / 504 Traefik, keduanya diterima asal situs hidup); unggahan diputus→putus; soket mentah→soket ditutup; health sehat; /login staf 200
+
+## 6. Aturan K2 pada halaman produksi terender
+   8. 11 halaman publik: 0 em dash / en dash → 11 halaman bersih
+
+## Pembersihan data uji di produksi
+   9. pengaduan uji dihapus lunak lewat API staf; akun staf sementara dihapus → SQL hapus lunak: WRP-102185	1; lacak WRP-102185 → 404; akun uji 10 → nonaktif 200, paksa keluar 200; login akun uji sesudah dinonaktifkan → 401; sesi lama → 401
+
+RINGKASAN C5-produksi: 9 langkah, 0 gagal -> LULUS
+
+## Bukti tambahan: penjaga proses server.js bekerja di PRODUKSI
+$ docker logs --tail 40 <container warkop> (setelah uji C5 langkah 7)
+[warkop] Socket.io terpasang di path /socket.io (autentikasi cookie + room per peran)
+[warkop] siap di http://0.0.0.0:3000  mode=produksi  STAF_HOST=staf.warkopnusantara.id
+[warkop] clientError kode=ECONNRESET
+[warkop] clientError kode=HPE_INVALID_EOF_STATE
+Error: aborted
+  code: 'ECONNRESET'
+[warkop] clientError kode=HPE_INVALID_EOF_STATE
+Error: aborted
+  code: 'ECONNRESET'
+[warkop] clientError kode=HPE_INVALID_EOF_STATE
+Error: aborted
+  code: 'ECONNRESET'
+
+$ docker ps --filter name=re8snqu
+re8snqu8jwyxdqg2wmzrbm3w:3c34e9d1306261a75783c44935425b60a4f83d37 | Up 13 minutes (healthy)
+Peladen TETAP HIDUP dan HEALTHY sesudah unggahan diputus + soket HTTP cacat: clientError ditangani,
+proses tidak berhenti. Sebelum perbaikan, kelas galat inilah yang mematikan peladen lokal saat uji C2.
+
+## Catatan perilaku (bukan cacat): kiriman jauh di atas batas berakhir 499/504 di produksi
+Badan 50 MB (di atas proxyClientMaxBodySize 44 MB dan batas aplikasi 40 MB) dibalas 504 oleh Traefik
+atau berakhir 499 (klien berhenti) alih-alih 413 seperti di lokal: route sudah menolak sementara klien
+masih mengirim badan. Formulir pengaduan sudah memvalidasi ukuran di sisi klien (20 MB/berkas, 40 MB total),
+sehingga pelapor lewat antarmuka tidak akan pernah sampai ke keadaan ini. Bila pemilik ingin balasan cepat
+yang jelas juga untuk kiriman langsung ke API, itu diatur di Traefik (buffering/maxRequestBodyBytes).

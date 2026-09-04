@@ -1,0 +1,10 @@
+PENJAGA DASH: bersih (tidak ada em/en dash di teks tampil app/components/lib, seed, migrasi, DB lokal)
+
+# Catatan perbaikan penjaga (QA-2 C5)
+Sebelum diperbaiki, penjaga melaporkan 18 pelanggaran PALSU: seluruhnya baris KOMENTAR SQL
+(database/seed.sql & sql/02-seed.sql) yang memang boleh memuat em dash. Sebabnya kedua berkas itu
+berakhir baris CRLF, dan dalam regex JavaScript titik (.) tidak pernah cocok dengan carriage return,
+sehingga /--.*$/ gagal membuang komentar. Penjaga kini membuang \r lebih dulu.
+Dibuktikan masih menangkap pelanggaran sungguhan pada berkas CRLF yang sama:
+  sql/02-seed.sql:101: ('kontak_email_uji—dash', ...   -> exit 1
+Setelah berkas dipulihkan: bersih, exit 0.

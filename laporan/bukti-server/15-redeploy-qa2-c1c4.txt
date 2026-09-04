@@ -1,0 +1,20 @@
+# Redeploy produksi QA-2 C1-C4 perbaikan bug (commit 3c34e9d) — 2026-09-04T09:38:45Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"w11jdbkedcf28hkzuszwpuz5"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[09:40:50Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:41:22Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:41:55Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:42:27Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:42:59Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:43:32Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:44:04Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:44:35Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:45:08Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:45:40Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:46:12Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+[09:46:44Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:c024580251b0dfcc2bf94643be9fb15994c800b1 Up 2 hours (healthy) 
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-04T16:47:15+07:00","basisData":"terhubung","versi":"0.1.0"}
+HASIL: image belum 3c34e9d setelah pemantauan — perlu Redeploy manual

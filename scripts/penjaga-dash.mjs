@@ -29,7 +29,10 @@ for (const akar of AKAR) for (const f of jalan(akar)) {
   baris.forEach((b, n) => { const r = tanpaKomentar(b, blok); blok = r.blok; if (DASH.test(r.teks)) pelanggaran.push(`${f}:${n + 1}: ${r.teks.trim().slice(0, 110)}`); });
 }
 for (const f of SEED.concat(readdirSync('database/migrations').map((n) => `database/migrations/${n}`))) {
-  try { readFileSync(f, 'utf8').split('\n').forEach((b, n) => { const t = b.replace(/--.*$/, ''); if (DASH.test(t)) pelanggaran.push(`${f}:${n + 1}: ${t.trim().slice(0, 110)}`); }); } catch {}
+  // QA-2 C5: `\r` di akhir baris (berkas CRLF di Windows) membuat /--.*$/ TIDAK cocok — titik dalam regex
+  // JavaScript tidak pernah cocok dengan carriage return — sehingga komentar SQL yang memang boleh memuat
+  // em dash dilaporkan sebagai pelanggaran palsu. Akhir baris dibuang lebih dulu.
+  try { readFileSync(f, 'utf8').split('\n').forEach((b, n) => { const t = b.replace(/\r$/, '').replace(/--.*$/, ''); if (DASH.test(t)) pelanggaran.push(`${f}:${n + 1}: ${t.trim().slice(0, 110)}`); }); } catch {}
 }
 if (process.argv.includes('--db')) {
   const { kueri, tutupPool } = await import('../lib/db/index.js');

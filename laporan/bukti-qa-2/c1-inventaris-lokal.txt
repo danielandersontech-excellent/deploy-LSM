@@ -1,4 +1,4 @@
-# QA-2 C1 — inventaris halaman × identitas × lebar — http://localhost:3000 — 2026-09-04T08:35:13.750Z
+# QA-2 C1 — inventaris halaman × identitas × lebar — http://localhost:3000 — 2026-09-04T09:49:27.212Z
 
 ## tamu
   375px: 32 halaman diperiksa
@@ -26,19 +26,15 @@
   1280px: 32 halaman diperiksa
 
 ## pimpinan_wilayah
-  GAGAL pimpinan_wilayah 375 /staf/artikel/77: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/artikel/77; 
-  GAGAL pimpinan_wilayah 375 /staf/artikel/77/pratinjau: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/artikel/77/pratinjau; 
-  GAGAL pimpinan_wilayah 375 /staf/pengaduan/1041: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/pengaduan/1041; 
   375px: 32 halaman diperiksa
-  GAGAL pimpinan_wilayah 768 /staf/artikel/77: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/artikel/77; 
-  GAGAL pimpinan_wilayah 768 /staf/artikel/77/pratinjau: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/artikel/77/pratinjau; 
-  GAGAL pimpinan_wilayah 768 /staf/pengaduan/1041: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/pengaduan/1041; 
   768px: 32 halaman diperiksa
-  GAGAL pimpinan_wilayah 1280 /staf/artikel/77: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/artikel/77; 
-  GAGAL pimpinan_wilayah 1280 /staf/artikel/77/pratinjau: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/artikel/77/pratinjau; 
-  GAGAL pimpinan_wilayah 1280 /staf/pengaduan/1041: konsol: log Failed to load resource: the server responded with a status of 404 (Not Found); jaringan: 404 Document /staf/pengaduan/1041; 
   1280px: 32 halaman diperiksa
 
 ## Pengalihan tercatat (1280): tamu /staf/dashboard → /login; tamu /staf/artikel → /login; tamu /staf/artikel/baru → /login; tamu /staf/artikel/77 → /login; tamu /staf/artikel/77/pratinjau → /login; tamu /staf/pengaduan → /login; tamu /staf/pengaduan/1041 → /login; tamu /staf/pengurus → /login; tamu /staf/program → /login; tamu /staf/galeri → /login; tamu /staf/pengguna → /login; tamu /staf/pengaturan → /login; tamu /staf/ganti-sandi → /login; superadmin /login → /staf/dashboard; redaktur /login → /staf/dashboard; redaktur /staf/pengaduan → /tanpa-akses; redaktur /staf/pengaduan/1041 → /tanpa-akses; redaktur /staf/pengguna → /tanpa-akses; redaktur /staf/pengaturan → /tanpa-akses; penulis /login → /staf/dashboard; penulis /staf/artikel/77 → /tanpa-akses; penulis /staf/artikel/77/pratinjau → /tanpa-akses; penulis /staf/pengaduan → /tanpa-akses; penulis /staf/pengaduan/1041 → /tanpa-akses; penulis /staf/pengurus → /tanpa-akses; penulis /staf/program → /tanpa-akses; penulis /staf/galeri → /tanpa-akses; penulis /staf/pengguna → /tanpa-akses; penulis /staf/pengaturan → /tanpa-akses; verifikator /login → /staf/dashboard; verifikator /staf/artikel → /tanpa-akses; verifikator /staf/artikel/baru → /tanpa-akses; verifikator /staf/artikel/77 → /tanpa-akses; verifikator /staf/artikel/77/pratinjau → /tanpa-akses; verifikator /staf/pengurus → /tanpa-akses; verifikator /staf/program → /tanpa-akses; verifikator /staf/galeri → /tanpa-akses; verifikator /staf/pengguna → /tanpa-akses; verifikator /staf/pengaturan → /tanpa-akses; pimpinan_wilayah /login → /staf/dashboard; pimpinan_wilayah /staf/artikel/baru → /tanpa-akses; pimpinan_wilayah /staf/pengguna → /tanpa-akses; pimpinan_wilayah /staf/pengaturan → /tanpa-akses
 
-RINGKASAN C1: 576 sel, 9 gagal -> GAGAL
+## Isolasi wilayah (pimpinan_wilayah dari wilayah lain)
+  OK    /staf/artikel/77 → 404 netral (berkas milik wilayah lain)
+  OK    /staf/artikel/77/pratinjau → 404 netral (berkas milik wilayah lain)
+  OK    /staf/pengaduan/1041 → 404 netral (berkas milik wilayah lain)
+
+RINGKASAN C1: 579 sel, 0 gagal -> LULUS

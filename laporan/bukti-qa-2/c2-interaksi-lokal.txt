@@ -1,4 +1,4 @@
-# QA-2 C2 — interaksi & ketik penuh — http://localhost:3000 — 2026-09-04T09:22:04.028Z
+# QA-2 C2 — interaksi & ketik penuh — http://localhost:3000 — 2026-09-04T09:43:59.293Z
 
 ## publik / — http://localhost:3000/
   OK    publik /: 3 klik (0 destruktif dilewati, 6 tautan berulang), 1/1 kolom utuh
@@ -28,50 +28,47 @@
   OK    publik /lacak: 1 klik (0 destruktif dilewati, 15 tautan berulang), 2/2 kolom utuh
 
 ## publik /faq — http://localhost:3000/faq
-  OK    publik /faq: 2 klik (0 destruktif dilewati, 0 tautan berulang), 0/0 kolom utuh
+  OK    publik /faq: 0 klik (0 destruktif dilewati, 16 tautan berulang), 1/1 kolom utuh
 
 ## staf /staf/dashboard — http://localhost:3000/staf/dashboard
-  OK    staf /staf/dashboard: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/dashboard: 2 klik (1 destruktif dilewati, 4 tautan berulang), 0/0 kolom utuh
 
 ## staf /staf/artikel — http://localhost:3000/staf/artikel
-  OK    staf /staf/artikel: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/artikel: 1 klik (11 destruktif dilewati, 20 tautan berulang), 1/1 kolom utuh
 
 ## staf /staf/artikel/baru — http://localhost:3000/staf/artikel/baru
-  OK    staf /staf/artikel/baru: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/artikel/baru: 12 klik (3 destruktif dilewati, 10 tautan berulang), 3/3 kolom utuh
 
 ## staf /staf/artikel/77 — http://localhost:3000/staf/artikel/77
-  OK    staf /staf/artikel/77: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/artikel/77: 12 klik (3 destruktif dilewati, 10 tautan berulang), 3/3 kolom utuh
 
 ## staf /staf/pengaduan — http://localhost:3000/staf/pengaduan
-  OK    staf /staf/pengaduan: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/pengaduan: 1 klik (1 destruktif dilewati, 13 tautan berulang), 1/1 kolom utuh
 
 ## staf /staf/pengaduan/1041 — http://localhost:3000/staf/pengaduan/1041
-  OK    staf /staf/pengaduan/1041: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/pengaduan/1041: 0 klik (3 destruktif dilewati, 10 tautan berulang), 1/1 kolom utuh
 
 ## staf /staf/pengurus — http://localhost:3000/staf/pengurus
-  OK    staf /staf/pengurus: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/pengurus: 118 klik (40 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
 
 ## staf /staf/program — http://localhost:3000/staf/program
-  OK    staf /staf/program: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/program: 1 klik (4 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
 
 ## staf /staf/galeri — http://localhost:3000/staf/galeri
-  OK    staf /staf/galeri: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/galeri: 7 klik (7 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
 
 ## staf /staf/pengguna — http://localhost:3000/staf/pengguna
-  OK    staf /staf/pengguna: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/pengguna: 8 klik (21 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
 
 ## staf /staf/pengaturan — http://localhost:3000/staf/pengaturan
-  OK    staf /staf/pengaturan: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/pengaturan: 0 klik (5 destruktif dilewati, 9 tautan berulang), 10/10 kolom utuh
 
 ## staf /staf/ganti-sandi — http://localhost:3000/staf/ganti-sandi
-  OK    staf /staf/ganti-sandi: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+  OK    staf /staf/ganti-sandi: 0 klik (2 destruktif dilewati, 9 tautan berulang), 3/3 kolom utuh
 
 ## Kirim: dinonaktifkan saat proses & klik ganda
-file:///D:/Deploy/LSM/laporan/bukti-qa-2/skrip/uji-c2-interaksi.mjs:102
-await klikXY(posKirim.x, posKirim.y, true); await tidur(50);
-                      ^
+  OK    login: tombol kirim disabled saat proses; klik ganda → 1 permintaan; pesan galat tampil — disabled=true, permintaan=1, pesan="Email atau kata sandi tidak sesuai"
+  OK    pengaduan: tombol kirim disabled saat proses; klik ganda → 1 kiriman; nomor kasus tampil — disabled=true, POST=1, nomor=WRP-596396
+  pengaduan uji WRP-596396 dihapus lunak
 
-TypeError: Cannot read properties of undefined (reading 'x')
-    at file:///D:/Deploy/LSM/laporan/bukti-qa-2/skrip/uji-c2-interaksi.mjs:102:23
-
-Node.js v24.12.0
+RINGKASAN C2: 24 pemeriksaan, 0 gagal -> LULUS
