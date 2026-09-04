@@ -306,7 +306,7 @@ export default function KelolaPengurus({ pengurus, wilayah, bolehKelola }) {
                 <div className="flex-1 relative">
                   {/* QA-2 A2: kelompok bagan struktur (Dewan/DPP/Direktorat/Satgas/DPW-DPD-DPC) */}
                   <label className={KELAS_LABEL} htmlFor="pengurus-kelompok">Kelompok Bagan</label>
-                  <select className={KELAS_SELECT} id="pengurus-kelompok" name="kelompok" value={nilai.kelompok} onChange={(e) => ubahNilai('kelompok', e.target.value)} disabled={memuat}>
+                  <select className={KELAS_SELECT} id="pengurus-kelompok" name="kelompok" value={nilai.kelompok} onChange={(e) => ubahNilai('kelompok', e.target.value)} disabled={sibuk}>
                     <option value="">Tanpa kelompok (Pimpinan Regional)</option>
                     {KELOMPOK_PENGURUS.map((k) => (
                       <option key={k.slug} value={k.slug}>{k.label}</option>

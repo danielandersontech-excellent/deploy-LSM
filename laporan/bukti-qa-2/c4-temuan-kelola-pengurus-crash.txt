@@ -1,0 +1,34 @@
+# QA-2 C4 — TEMUAN (BUG KRITIS): formulir Kelola Pengurus crash saat dibuka
+
+## Gejala
+Ditemukan uji C2 (klik setiap elemen di setiap halaman), halaman /staf/pengurus:
+  ! setelah klik button "Tambah Pengurus": console.error ReferenceError: memuat is not defined
+  GAGAL staf /staf/pengurus: konsol: ReferenceError: memuat is not defined
+      at .../_next/static/chunks/0ommggi4gqa5y.js  |  [warkop] galat halaman: memuat is not defined
+
+## Akar masalah
+components/staf/KelolaPengurus.js baris 309 (ditambahkan pada batch QA-2 A2, kolom "Kelompok Bagan"):
+  <select ... disabled={memuat}>
+Seluruh komponen memakai state `sibuk`; nama `memuat` tidak pernah ada di berkas itu. Salah nama ini
+hanya meledak SAAT formulir dirender, yaitu ketika tombol "Tambah Pengurus" atau "Ubah" ditekan.
+
+## Dampak
+Pemilik TIDAK BISA menambah atau mengubah pengurus sama sekali sejak batch A2 dipasang: menekan
+"Tambah Pengurus" melempar ReferenceError dan halaman jatuh ke batas galat. Ini mematikan aturan K3
+(semua data bisa diubah lewat ruang staf) tepat pada modul yang baru saja diisi struktur DPP.
+
+## Perbaikan
+1. components/staf/KelolaPengurus.js: `disabled={memuat}` -> `disabled={sibuk}`.
+2. PENYEBAB SISTEMIK: `npm run lint` TIDAK menangkapnya. Konfigurasi bawaan eslint-config-next tidak
+   menyalakan `no-undef` untuk berkas JavaScript, sehingga salah ketik nama variabel di JSX lolos lint
+   DAN lolos build (Turbopack tidak memeriksa nama yang belum dideklarasikan pada jalur ini).
+   eslint.config.mjs kini menyalakan `no-undef` untuk app/, components/, lib/, scripts/, server.js,
+   proxy.js dengan daftar global ditulis tangan (tanpa menambah paket `globals`, aturan npm cetak biru 4).
+   Dibuktikan: dengan bug sengaja dikembalikan, `npm run lint` -> 
+     components/staf/KelolaPengurus.js  309:180  error  'memuat' is not defined  no-undef
+     1 problem (1 error, 0 warnings)
+   Setelah dipulihkan: lint bersih (exit 0).
+
+## Regresi
+Uji C2 dijalankan ulang pada build yang diperbaiki (laporan/bukti-qa-2/c2-interaksi-lokal.txt):
+formulir Tambah/Ubah Pengurus terbuka tanpa galat konsol.

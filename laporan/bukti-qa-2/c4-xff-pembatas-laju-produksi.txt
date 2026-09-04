@@ -1,0 +1,45 @@
+# QA-2 C4 — dugaan celah: pembatas laju memakai X-Forwarded-For dari klien?
+# Tanggal: 2026-09-04 (WIB sore). Semua permintaan READ-ONLY (GET /api/pengaduan/lacak/WRP-000000,
+# nomor palsu, tidak menulis satu baris pun). Namespace 'lacak' = 60 permintaan / 15 menit per IP.
+
+## Dugaan
+lib/auth/sesi.js alamatIpPermintaan(): cf-connecting-ip -> x-forwarded-for[0] -> x-real-ip.
+Bila peladen di produksi meneruskan X-Forwarded-For kiriman klien, penyerang dapat mengganti
+nilainya tiap permintaan dan MELEWATI pembatas laju pengaduan (10/jam) dan lacak (60/15 menit).
+
+## Percobaan 1 — 61 permintaan, tiap permintaan X-Forwarded-For berbeda (203.0.113.2 .. .62)
+  permintaan 1  -> 404
+  permintaan 2  -> 404
+  permintaan 3  -> 404
+  permintaan 58 -> 404
+  permintaan 59 -> 404
+  permintaan 60 -> 404
+  permintaan 61 -> 404
+(catatan: 404 = nomor tidak ditemukan, artinya permintaan DILAYANI, tidak dibatasi)
+
+## Percobaan 2 (kontrol) — permintaan yang sama TANPA header X-Forwarded-For
+  permintaan 1  -> 429   <-- kuota sudah habis sebelum permintaan ini
+  permintaan 2  -> 429
+  ... permintaan 62 -> 429
+
+## Percobaan 3 (penentu) — sesudah kuota habis, ulangi dengan XFF palsu yang BARU
+  tanpa XFF          -> 429
+  XFF 203.0.113.150  -> 429
+  XFF 203.0.113.151  -> 429
+  badan: {"galat":"Terlalu banyak permintaan dari jaringan Anda ... sekitar 13 menit ...",
+          "kode":"TERLALU_BANYAK","sisaDetik":746}
+
+## KESIMPULAN — BUKAN CACAT DI PRODUKSI
+XFF palsu yang baru TETAP kena 429: aplikasi tidak melihat nilai kiriman klien. Traefik
+(coolify-proxy, traefik:v3.6, tanpa forwardedHeaders.trustedIPs -> bawaan = header terusan dari
+klien tak tepercaya DITIMPA) menulis ulang X-Forwarded-For dengan IP klien sesungguhnya, sehingga
+seluruh 61 permintaan percobaan 1 masuk ke ember IP asli laptop dan menghabiskan kuota 60/15 menit
+(percobaan 1 permintaan ke-61 masih 404 karena satu permintaan gagal/putus di jalan; kontrol
+berikutnya langsung 429). Pembatas laju di produksi BEKERJA dan tidak bisa dilewati dari internet.
+
+## SYARAT yang harus dijaga (dicatat untuk pemilik)
+Perlindungan ini bergantung pada Traefik selalu berada di depan aplikasi. Bila port aplikasi
+(3000) pernah terbuka langsung ke internet, X-Forwarded-For bisa dipalsukan dan pembatas laju
+lumpuh. Menutup port 3000 sudah ada di DAFTAR TINDAKAN PEMILIK butir 5 (firewall 22/80/443 saja).
+Bila kelak Cloudflare proxy dinyalakan (tindakan pemilik butir 6), cf-connecting-ip yang dipakai
+lebih dulu juga hanya boleh dipercaya bila hanya Cloudflare yang bisa menjangkau peladen.

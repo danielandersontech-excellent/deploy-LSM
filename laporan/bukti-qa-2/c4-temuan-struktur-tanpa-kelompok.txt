@@ -1,0 +1,28 @@
+# QA-2 C4 — TEMUAN (BUG): pengurus "Tanpa kelompok" hilang dari halaman publik
+
+## Gejala (reproduksi lewat API yang dipakai Kelola Pengurus)
+POST /api/staf/pengurus { nama:'Uji Tanpa Kelompok QA2', jabatan:'Staf Ahli', tingkat:'pusat', kelompok:'' }
+  -> 201 (tersimpan, tampil di daftar Kelola Pengurus)
+GET /struktur -> nama TIDAK ADA di halaman  (pembanding: tingkat 'wilayah' tanpa kelompok -> TAMPIL)
+
+## Akar masalah
+app/(publik)/struktur/page.js menyaring bagian "Pimpinan Regional" dengan
+  semua.filter((p) => p.tingkat === 'wilayah' && !/^dp[wdc]$/.test(p.kelompok || ''))
+padahal komentar di baris itu sendiri berbunyi "+ pengurus tanpa kelompok" dan pilihan di Kelola Pengurus
+diberi label "Tanpa kelompok (Pimpinan Regional)". Pengurus tingkat 'pusat' tanpa kelompok karena itu tidak
+masuk blok kelompok mana pun DAN tidak masuk Pimpinan Regional: hilang dari seluruh halaman publik.
+
+## Dampak
+Data yang dimasukkan pemilik lewat ruang staf tidak pernah tampil, tanpa peringatan apa pun (melanggar K3
+dan menyalahi janji label pilihannya sendiri). Bug ini laten pada data seed saat ini (39 posisi DPP semuanya
+punya kelompok) dan baru muncul saat pemilik menambah pengurus baru.
+
+## Perbaikan
+app/(publik)/struktur/page.js:
+  const regional = semua.filter((p) => !/^dp[wdc]$/.test(p.kelompok || '') && (p.tingkat === 'wilayah' || !p.kelompok));
+
+## Regresi (laporan/bukti-qa-2/c4-regresi-bug-lokal.txt langkah 6-10)
+- pengurus 'pusat' tanpa kelompok  -> tampil di bagian Pimpinan Regional
+- pengurus 'wilayah' tanpa kelompok -> tetap tampil (perilaku lama tidak berubah)
+- kerangka DPW/DPD/DPC tidak bocor ke Pimpinan Regional (tetap di bloknya, sebelum bagian regional)
+- filter ?wilayah= dan ?tampilan=peta tetap bekerja; keadaan kosong benar saat tidak ada pengurus berwilayah

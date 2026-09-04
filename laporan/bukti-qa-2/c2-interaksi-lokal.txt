@@ -1,0 +1,77 @@
+# QA-2 C2 — interaksi & ketik penuh — http://localhost:3000 — 2026-09-04T09:22:04.028Z
+
+## publik / — http://localhost:3000/
+  OK    publik /: 3 klik (0 destruktif dilewati, 6 tautan berulang), 1/1 kolom utuh
+
+## publik /tentang — http://localhost:3000/tentang
+  OK    publik /tentang: 0 klik (0 destruktif dilewati, 15 tautan berulang), 1/1 kolom utuh
+
+## publik /struktur — http://localhost:3000/struktur
+  OK    publik /struktur: 1 klik (0 destruktif dilewati, 16 tautan berulang), 1/1 kolom utuh
+
+## publik /program — http://localhost:3000/program
+  OK    publik /program: 1 klik (0 destruktif dilewati, 19 tautan berulang), 1/1 kolom utuh
+
+## publik /galeri — http://localhost:3000/galeri
+  OK    publik /galeri: 1 klik (0 destruktif dilewati, 15 tautan berulang), 1/1 kolom utuh
+
+## publik /kontak — http://localhost:3000/kontak
+  OK    publik /kontak: 0 klik (2 destruktif dilewati, 16 tautan berulang), 7/7 kolom utuh
+
+## publik /berita — http://localhost:3000/berita
+  OK    publik /berita: 1 klik (0 destruktif dilewati, 23 tautan berulang), 2/2 kolom utuh
+
+## publik /berita/indikasi-penyelewengan-dana-desa-mekarsari — http://localhost:3000/berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    publik /berita/indikasi-penyelewengan-dana-desa-mekarsari: 3 klik (0 destruktif dilewati, 18 tautan berulang), 1/1 kolom utuh
+
+## publik /lacak — http://localhost:3000/lacak
+  OK    publik /lacak: 1 klik (0 destruktif dilewati, 15 tautan berulang), 2/2 kolom utuh
+
+## publik /faq — http://localhost:3000/faq
+  OK    publik /faq: 2 klik (0 destruktif dilewati, 0 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/dashboard — http://localhost:3000/staf/dashboard
+  OK    staf /staf/dashboard: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/artikel — http://localhost:3000/staf/artikel
+  OK    staf /staf/artikel: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/artikel/baru — http://localhost:3000/staf/artikel/baru
+  OK    staf /staf/artikel/baru: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/artikel/77 — http://localhost:3000/staf/artikel/77
+  OK    staf /staf/artikel/77: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/pengaduan — http://localhost:3000/staf/pengaduan
+  OK    staf /staf/pengaduan: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/pengaduan/1041 — http://localhost:3000/staf/pengaduan/1041
+  OK    staf /staf/pengaduan/1041: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/pengurus — http://localhost:3000/staf/pengurus
+  OK    staf /staf/pengurus: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/program — http://localhost:3000/staf/program
+  OK    staf /staf/program: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/galeri — http://localhost:3000/staf/galeri
+  OK    staf /staf/galeri: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/pengguna — http://localhost:3000/staf/pengguna
+  OK    staf /staf/pengguna: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/pengaturan — http://localhost:3000/staf/pengaturan
+  OK    staf /staf/pengaturan: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/ganti-sandi — http://localhost:3000/staf/ganti-sandi
+  OK    staf /staf/ganti-sandi: 1 klik (0 destruktif dilewati, 1 tautan berulang), 0/0 kolom utuh
+
+## Kirim: dinonaktifkan saat proses & klik ganda
+file:///D:/Deploy/LSM/laporan/bukti-qa-2/skrip/uji-c2-interaksi.mjs:102
+await klikXY(posKirim.x, posKirim.y, true); await tidur(50);
+                      ^
+
+TypeError: Cannot read properties of undefined (reading 'x')
+    at file:///D:/Deploy/LSM/laporan/bukti-qa-2/skrip/uji-c2-interaksi.mjs:102:23
+
+Node.js v24.12.0

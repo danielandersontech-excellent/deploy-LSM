@@ -1,0 +1,41 @@
+# QA-2 C3 — TEMUAN (BUG): lampiran/unggahan di atas 10 MB ditolak "Muatan tidak sah"
+
+## Gejala
+Log peladen (build produksi lokal, Next.js 16.3.4):
+  Request body exceeded 10MB for /api/pengaduan. Only the first 10MB will be available unless
+  configured. See .../middlewareClientMaxBodySize
+
+Reproduksi (berkas JPEG SAH berukuran 16,04 MB, di bawah batas 20 MB/berkas yang dijanjikan):
+  POST /api/pengaduan (multipart, 1 lampiran 16,04 MB)
+  -> HTTP 400 {"galat":"Muatan tidak sah","kode":"MUATAN_TIDAK_SAH"}
+
+## Akar masalah
+Next.js 16 memotong badan permintaan yang melewati `proxy.js` pada 10 MB (bawaan
+`experimental.proxyClientMaxBodySize`, dulu `middlewareClientMaxBodySize`). Karena proxy.js
+berjalan untuk seluruh jalur /api/*, badan multipart terpotong sebelum route membacanya, sehingga
+`request.formData()` gagal dan route membalas 400 generik.
+
+## Dampak (serius untuk sistem ini)
+Pelapor yang melampirkan foto/rekaman bukti > 10 MB ditolak dengan pesan yang tidak menjelaskan
+apa pun, padahal antarmuka menjanjikan 20 MB per berkas dan 40 MB total (TAHAP-06 §4). Bukti
+pengaduan bisa hilang begitu saja. Jalur staf yang menerima berkas besar (unggah gambar artikel,
+galeri MP4) terkena masalah yang sama.
+
+## Perbaikan
+next.config.mjs: `experimental: { proxyClientMaxBodySize: '44mb' }` — sedikit di atas batas
+aplikasi sendiri (40 MB total + 2 MB kelonggaran yang sudah diperiksa route lewat Content-Length),
+sehingga penolakan berkas terlalu besar tetap datang dari route dengan 413 dan pesan jelas,
+bukan dari pemotongan diam-diam.
+
+Alternatif yang DITOLAK: mengeluarkan /api/pengaduan dari matcher proxy. proxy.js menghapus header
+x-user-id/x-user-role kiriman klien (lapisan pertahanan berlapis) dan menyetel x-jalur; melubangi
+matcher untuk jalur yang menerima unggahan publik menghilangkan lapisan itu.
+
+## Verifikasi sesudah perbaikan (build produksi lokal, 4 Sep 2026)
+- lampiran JPG 16,04 MB  -> 201, tersimpan, gambar sah 1920x1440 (dikompres ulang sharp sesuai rancangan Tahap 5)
+- lampiran MP4 15 MB + PDF 14 MB dalam satu kiriman -> 201, tersimpan BYTE-PER-BYTE identik
+- galeri video MP4 15 MB lewat /api/staf/galeri -> 201 (jalur ini juga terdampak sebelum perbaikan)
+- batas atas tetap dijaga route: 21 MB -> 413 LAMPIRAN_TERLALU_BESAR; total 45 MB -> 413 LAMPIRAN_TOTAL_TERLALU_BESAR
+- unggahan gambar artikel: 2,51 MB -> 201; 16 MB -> 413 "Ukuran berkas melebihi batas 5 MB"
+  (batas 5 MB untuk gambar artikel memang disengaja, tertulis di desain; BUKAN akibat pemotongan)
+Bukti lengkap: laporan/bukti-qa-2/c4-regresi-bug-lokal.txt langkah 1-5.

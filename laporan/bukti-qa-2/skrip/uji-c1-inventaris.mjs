@@ -16,6 +16,9 @@ const env = Object.fromEntries(readFileSync(PROD ? '.env.produksi' : '.env', 'ut
 const PROFIL = mkdtempSync(join(tmpdir(), 'warkop-cdp-')); process.on('exit', () => { try { rmSync(PROFIL, { recursive: true, force: true }); } catch {} });
 const tidur = (ms) => new Promise((r) => setTimeout(r, ms));
 const AKUN = { tamu: null, superadmin: [env.SEED_ADMIN_EMAIL, env.SEED_ADMIN_PASSWORD], redaktur: ['siti.rahma@warkopnusantara.id', env.SEED_STAF_PASSWORD], penulis: ['budi.santoso@warkopnusantara.id', env.SEED_STAF_PASSWORD], verifikator: ['siti.aminah@warkopnusantara.id', env.SEED_STAF_PASSWORD], pimpinan_wilayah: ['pimpinan.jabar@warkopnusantara.id', env.SEED_STAF_PASSWORD] };
+// Akun pimpinan_wilayah kedua (wilayah lain, tanpa artikel/pengaduan) — dipakai membuktikan ISOLASI WILAYAH:
+// halaman rinci milik wilayah lain harus 404 (netral, tidak membocorkan keberadaan berkas), bukan tampil.
+const AKUN_WILAYAH_LAIN = ['rahmat.siregar@warkopnusantara.id', env.SEED_STAF_PASSWORD];
 const login = async (k) => { if (!k) return null; const r = await fetch(`${US}/api/auth/login`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: k[0], kataSandi: k[1] }) }); return ((r.headers.get('set-cookie') || '').match(/warkop_token=([^;]+)/) || [])[1] || null; };
 const TKa = await login(AKUN.superadmin);
 const j = async (p) => { try { return await (await fetch(`${US}${p}`, { headers: { cookie: `warkop_token=${TKa}` } })).json(); } catch { return {}; } };
@@ -60,8 +63,10 @@ for (const [peran, kred] of Object.entries(AKUN)) {
       const dialihkan = r && r.jalur !== jalurAsal ? r.jalur : '';
       // 404 yang memang diharapkan: halaman-tidak-ada (dokumen 404), /lacak?nomor=WRP-000001 (API 404 netral)
       const jaringanNyata = jaringan.filter((x) => !(/^404 Document/.test(x) && /halaman-tidak-ada/.test(url)) && !(/404 (Fetch|XHR)/.test(x) && /lacak/.test(url)) && !(/404 Document/.test(x) && /\/berita\/undefined|\/artikel\/undefined|\/pengaduan\/undefined/.test(x)));
-      const ok = r && !r.teksGalat && konsol.length === 0 && jaringanNyata.length === 0 && r.scrollWidth <= r.iw + 1 && r.melebar.length === 0 && r.tumpang.length === 0;
-      if (!ok) { gagal++; console.log(`  GAGAL ${peran} ${w} ${jalurAsal}${dialihkan ? ' → ' + dialihkan : ''}: ${!r ? 'tidak terbaca' : ''}${r?.teksGalat ? 'TEKS GALAT; ' : ''}${konsol.length ? 'konsol: ' + konsol.slice(0, 2).join(' | ') + '; ' : ''}${jaringanNyata.length ? 'jaringan: ' + jaringanNyata.slice(0, 3).join(' | ') + '; ' : ''}${r && r.scrollWidth > r.iw + 1 ? 'scrollWidth ' + r.scrollWidth + '/' + r.iw + '; ' : ''}${r?.melebar?.length ? 'melebar: ' + r.melebar.join(',') + '; ' : ''}${r?.tumpang?.length ? 'tumpang: ' + r.tumpang.join(' | ') : ''}`); }
+      // 404 yang memang diharapkan juga muncul sebagai galat konsol peramban ("Failed to load resource ... 404") — bukan cacat
+      const konsolNyata = konsol.filter((x) => !(/status of 404/.test(x) && /halaman-tidak-ada|\/lacak/.test(url)));
+      const ok = r && !r.teksGalat && konsolNyata.length === 0 && jaringanNyata.length === 0 && r.scrollWidth <= r.iw + 1 && r.melebar.length === 0 && r.tumpang.length === 0;
+      if (!ok) { gagal++; console.log(`  GAGAL ${peran} ${w} ${jalurAsal}${dialihkan ? ' → ' + dialihkan : ''}: ${!r ? 'tidak terbaca' : ''}${r?.teksGalat ? 'TEKS GALAT; ' : ''}${konsolNyata.length ? 'konsol: ' + konsolNyata.slice(0, 2).join(' | ') + '; ' : ''}${jaringanNyata.length ? 'jaringan: ' + jaringanNyata.slice(0, 3).join(' | ') + '; ' : ''}${r && r.scrollWidth > r.iw + 1 ? 'scrollWidth ' + r.scrollWidth + '/' + r.iw + '; ' : ''}${r?.melebar?.length ? 'melebar: ' + r.melebar.join(',') + '; ' : ''}${r?.tumpang?.length ? 'tumpang: ' + r.tumpang.join(' | ') : ''}`); }
       ringkas.push({ peran, w, jalur: jalurAsal, dialihkan, ok });
     }
     console.log(`  ${w}px: ${daftar.length} halaman diperiksa`);
@@ -71,5 +76,19 @@ for (const [peran, kred] of Object.entries(AKUN)) {
 wsB.close(); chrome.kill();
 const dialihkanCatatan = ringkas.filter((r) => r.dialihkan && r.w === 1280).map((r) => `${r.peran} ${r.jalur} → ${r.dialihkan}`);
 console.log(`\n## Pengalihan tercatat (1280): ${[...new Set(dialihkanCatatan)].join('; ')}`);
+
+// --- isolasi wilayah: pimpinan wilayah LAIN tidak boleh melihat berkas wilayah ini (404 netral) ---
+console.log('\n## Isolasi wilayah (pimpinan_wilayah dari wilayah lain)');
+{
+  const tkLain = await login(AKUN_WILAYAH_LAIN);
+  for (const jalur of [`/staf/artikel/${idA}`, `/staf/artikel/${idA}/pratinjau`, `/staf/pengaduan/${idP}`]) {
+    const r = await fetch(`${US}${jalur}`, { headers: { cookie: `warkop_token=${tkLain}` }, redirect: 'manual' });
+    const teks = r.status === 200 ? await r.text() : '';
+    const bocor = /Laporan Infrastruktur|nomor_kasus|nik_pelapor/.test(teks);
+    const ok = r.status === 404 && !bocor;
+    sel++; if (!ok) { gagal++; console.log(`  GAGAL ${jalur}: HTTP ${r.status}${bocor ? ' + ISI BOCOR' : ''} (harus 404 tanpa isi)`); }
+    else console.log(`  OK    ${jalur} → 404 netral (berkas milik wilayah lain)`);
+  }
+}
 console.log(`\nRINGKASAN C1: ${sel} sel, ${gagal} gagal -> ${gagal === 0 ? 'LULUS' : 'GAGAL'}`);
 process.exit(0);

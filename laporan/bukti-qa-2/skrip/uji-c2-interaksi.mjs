@@ -41,15 +41,19 @@ const klikXY = async (x, y, ganda = false) => { for (let i = 0; i < (ganda ? 2 :
 const tekan = async (key, code, vk, text) => { await kirim('Input.dispatchKeyEvent', { type: 'keyDown', key, code, windowsVirtualKeyCode: vk, text, unmodifiedText: text }); await kirim('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: vk }); };
 const DESTRUKTIF = /hapus|keluar|paksa|reset|terbitkan|kirim|simpan|arsip|ubah status|tugaskan|logout|masuk sistem/i;
 const TEKS = 'Uji C2 <b>&"tanda"</b> 100% \'aman\' 12345';
+// href tautan yang sudah pernah diklik (navbar/footer/sidebar berulang di semua halaman)
+const tautanTerpakai = new Set();
 async function ujiHalaman(nama, url) {
   console.log(`\n## ${nama} — ${url}`);
   await buka(url); konsol = []; gagalMuat = [];
   const asal = await ev('location.href');
   // --- elemen interaktif
   const elemen = await ev(`(() => { const out = []; const semua = [...document.querySelectorAll('a[href], button, [role=button], [role=tab], summary')]; semua.forEach((el, i) => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); if (r.width < 4 || r.height < 4 || cs.visibility === 'hidden' || el.closest('[aria-hidden="true"]') || el.hasAttribute('aria-hidden')) return; const href = el.getAttribute('href') || ''; if (/^(mailto|tel|http)/.test(href) && !href.startsWith(location.origin)) return; if (el.getAttribute('target') === '_blank') return; el.setAttribute('data-c2', String(i)); out.push({ i, tag: el.tagName.toLowerCase(), teks: (el.getAttribute('aria-label') || el.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 40), href, tipe: el.getAttribute('type') || '' }); }); return out; })()`);
-  let diklik = 0, dilewati = 0;
+  let diklik = 0, dilewati = 0, diulang = 0;
   for (const el of elemen) {
     if (DESTRUKTIF.test(el.teks) && (el.tag === 'button' || el.tipe === 'submit')) { dilewati++; continue; }
+    // Tautan navbar/footer/sidebar sama persis di setiap halaman: cukup diklik sekali di halaman pertama.
+    if (el.tag === 'a' && el.href) { if (tautanTerpakai.has(el.href)) { diulang++; continue; } tautanTerpakai.add(el.href); }
     const pos = await ev(`(() => { const el = document.querySelector('[data-c2="${el.i}"]'); if (!el) return null; el.scrollIntoView({ block: 'center' }); const r = el.getBoundingClientRect(); if (r.width < 4) return null; return { x: r.left + Math.min(r.width / 2, 40), y: r.top + r.height / 2 }; })()`);
     if (!pos) continue;
     const sebelum = konsol.length + gagalMuat.length;
@@ -66,14 +70,24 @@ async function ujiHalaman(nama, url) {
   const kolom = await ev(`(() => { const out = []; [...document.querySelectorAll('input:not([type=hidden]):not([type=checkbox]):not([type=radio]):not([type=file]):not([type=date]):not([type=number]):not([readonly]):not([disabled]), textarea:not([disabled]), [contenteditable="true"]')].forEach((el, i) => { const r = el.getBoundingClientRect(); if (r.width > 0 && r.height > 0) { el.setAttribute('data-c2k', String(i)); out.push({ i, nama: el.name || el.id || el.getAttribute('aria-label') || 'kolom', maks: el.maxLength > 0 ? el.maxLength : 0, div: el.tagName === 'DIV' }); } }); return out; })()`);
   let ketikOk = 0, ketikGagal = 0;
   for (const k of kolom) {
-    await ev(`(() => { const el = document.querySelector('[data-c2k="${k.i}"]'); el.scrollIntoView({ block: 'center' }); el.focus(); if (!el.isContentEditable) { el.select && el.select(); } })()`); await tidur(60);
+    // Kolom biasa: seluruh isi dipilih agar ketikan menggantinya. Area contentEditable (isi artikel): karet
+    // dipindah ke AKHIR isi yang sudah ada, supaya ketikan menyambung dan isi lama tidak boleh hilang.
+    const isiSebelum = await ev(`(() => { const el = document.querySelector('[data-c2k="${k.i}"]'); return el && el.isContentEditable ? el.textContent : null; })()`);
+    await ev(`(() => { const el = document.querySelector('[data-c2k="${k.i}"]'); el.scrollIntoView({ block: 'center' }); el.focus();
+      if (!el.isContentEditable) { el.select && el.select(); return; }
+      const r = document.createRange(); r.selectNodeContents(el); r.collapse(false);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); })()`); await tidur(60);
     let hilang = false;
     for (let c = 0; c < TEKS.length; c++) { const ch = TEKS[c]; await kirim('Input.dispatchKeyEvent', { type: 'keyDown', key: ch, text: ch, unmodifiedText: ch }); await kirim('Input.dispatchKeyEvent', { type: 'keyUp', key: ch }); if (c % 8 === 7 && !(await ev(`document.activeElement === document.querySelector('[data-c2k="${k.i}"]')`))) { hilang = true; break; } }
     const nilai = await ev(`(() => { const el = document.querySelector('[data-c2k="${k.i}"]'); return el ? (el.isContentEditable ? el.textContent : el.value) : null; })()`);
     const harap = k.maks ? TEKS.slice(0, k.maks) : TEKS;
-    if (!hilang && nilai !== null && String(nilai).endsWith(harap)) ketikOk++; else { ketikGagal++; console.log(`    ! kolom ${k.nama}: ${hilang ? 'fokus hilang' : 'nilai "' + String(nilai).slice(-30) + '"'}`); }
+    // Area contentEditable: isi lama harus MASIH ADA dan ketikan tersambung di belakangnya.
+    const utuh = isiSebelum === null
+      ? String(nilai).endsWith(harap)
+      : String(nilai).endsWith(harap) && (isiSebelum.length === 0 || String(nilai).startsWith(isiSebelum.slice(0, Math.min(40, isiSebelum.length))));
+    if (!hilang && nilai !== null && utuh) ketikOk++; else { ketikGagal++; console.log(`    ! kolom ${k.nama}: ${hilang ? 'fokus hilang' : 'nilai "…' + String(nilai).slice(-40) + '"' + (isiSebelum !== null ? ` (isi lama diawali "${isiSebelum.slice(0, 30)}")` : '')}`); }
   }
-  cek(`${nama}: ${diklik} klik (${dilewati} destruktif dilewati), ${ketikOk}/${kolom.length} kolom utuh`, ketikGagal === 0 && konsol.length === 0 && gagalMuat.length === 0, `${konsol.length ? 'konsol: ' + konsol.slice(0, 2).join(' | ') : ''}${gagalMuat.length ? ' 5xx: ' + gagalMuat.slice(0, 2).join(' | ') : ''}`);
+  cek(`${nama}: ${diklik} klik (${dilewati} destruktif dilewati, ${diulang} tautan berulang), ${ketikOk}/${kolom.length} kolom utuh`, ketikGagal === 0 && konsol.length === 0 && gagalMuat.length === 0, `${konsol.length ? 'konsol: ' + konsol.slice(0, 2).join(' | ') : ''}${gagalMuat.length ? ' 5xx: ' + gagalMuat.slice(0, 2).join(' | ') : ''}`);
 }
 console.log(`# QA-2 C2 — interaksi & ketik penuh — ${U} — ${new Date().toISOString()}`);
 for (const p of ['/', '/tentang', '/struktur', '/program', '/galeri', '/kontak', '/berita', `/berita/${slug}`, '/lacak', '/faq']) await ujiHalaman(`publik ${p}`, `${U}${p}`);

@@ -1,0 +1,42 @@
+# QA-1 butir 4b — aksi end-to-end — http://127.0.0.1:3000 — 2026-09-04T09:06:59.278Z
+
+## A. Login lima peran + logout
+   1. login superadmin → 200; GET /staf/dashboard 200; /api/auth/saya peran benar → ok
+   2. login redaktur → 200; GET /staf/dashboard 200; /api/auth/saya peran benar → ok
+   3. login penulis → 200; GET /staf/dashboard 200; /api/auth/saya peran benar → ok
+   4. login verifikator → 200; GET /staf/dashboard 200; /api/auth/saya peran benar → ok
+   5. login pimpinan_wilayah → 200; GET /staf/dashboard 200; /api/auth/saya peran benar → ok
+   6. POST /api/auth/logout (verifikator) → 200, cookie dihapus, /staf/dashboard → 307 ke /login → ok (masuk kembali untuk uji berikutnya)
+
+## B. Pengaduan: anonim, bernama, dengan lampiran, lacak
+   7. POST /api/pengaduan anonim (JSON) → 201 → 201 WRP-735661
+   8. POST /api/pengaduan bernama (JSON) → 201; detail verifikator memuat identitas → 201 WRP-391338 (id 1141); verifikator melihat nama pelapor
+   9. POST /api/pengaduan multipart + lampiran PNG → 201 lampiran=1; lampiran terbuka oleh verifikator (200 image/png, nosniff), ditolak tanpa login (401) → 201 WRP-969262; lampiran /api/staf/pengaduan/1142/lampiran/45 → 200 png nosniff; tanpa login 401
+  10. GET /api/pengaduan/lacak/<nomor> untuk ketiganya → 200 tanpa identitas; nomor palsu → 404 → 3× 200 bersih; palsu 404
+  11. Verifikator: status bernama → diverifikasi (catatan) → 200; tugaskan petugas (PATCH) → 200 → ok
+
+## C. Artikel: draf (penulis) → sunting → terbit (redaktur) → arsip → hapus; gambar unggah
+  12. POST /api/staf/unggah PNG (penulis) → 200/201 jalur /unggahan/... → /unggahan/artikel/a118408ea5457f6471f080152a719064.png (publik 200)
+  13. POST /api/staf/artikel draf + gambar → 201 → id 86 slug qa-1-4b-artikel-uji-ujung-ke-ujung
+  14. POST terbitkan (redaktur) → 200; GET /berita/<slug> 200; GET /api/artikel/<slug> gambar_utama benar → ok
+  15. PATCH status arsip (redaktur) → 200; publik → 404; PATCH status draf → 200 → ok
+  16. DELETE artikel (penulis → 403, redaktur → 200) → ok
+
+## D. Pengurus, program, galeri (redaktur): buat → ubah → hapus
+  17. pengurus: POST 201 → PATCH 200 → PATCH urutan 200 → tampil di /struktur → DELETE 200 → id 45 ok
+  18. program: POST 201 → PATCH 200 → tampil di /program → DELETE 200 → id 23 ok
+  19. galeri: POST multipart foto 201 → PATCH 200 → tampil di /galeri → DELETE 200 → id 10 ok
+
+## E. Pengguna (superadmin): buat → reset sandi → login sandi sementara → wajib ganti → ganti sandi → paksa keluar → nonaktif
+  20. POST /api/staf/pengguna → 201 → id 55
+  21. POST reset-sandi {kata_sandi_baru} → 200 wajibGantiSandi; login sandi lama 401; login sandi sementara 200 dengan wajib_ganti_sandi; /staf/artikel → 307 ke /staf/ganti-sandi → ok
+  22. POST /api/staf/ganti-sandi (sandi lama salah → 401; benar → 200) → login sandi baru 200, wajib_ganti_sandi 0 → ok
+  23. POST paksa-keluar → 200; sesi pengguna uji → 401; PATCH aktif:false → 200; login → 401 → ok
+
+## F. Pengaturan (superadmin): simpan → tampil di publik → pulihkan
+  24. PATCH kontak_email → GET 200 nilai baru → footer publik memuat → pulihkan → dipulihkan ke pengaduan@warkopnusantara.id
+
+## Pembersihan
+  25. pengaduan uji dihapus lunak, pengguna uji dihapus, berkas unggahan uji dihapus (SQL/FS) → pengaduan 3, pengguna 1, berkas 1
+
+RINGKASAN 4b: 25 langkah, 0 gagal -> LULUS

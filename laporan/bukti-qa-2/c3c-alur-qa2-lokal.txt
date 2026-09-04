@@ -1,0 +1,26 @@
+# QA-2 C3c — alur ujung ke ujung untuk perubahan RUN QA-2 — http://127.0.0.1:3000 — 2026-09-04T09:06:49.660Z
+
+## A. Pengurus berkelompok (A2) — bisa diubah sepenuhnya dari ruang staf (K3)
+   1. POST pengurus kelompok "satgas" → 201; tampil di /struktur di bawah judul Satuan Tugas → id 44; kartu berada di dalam blok Satuan Tugas
+   2. PATCH kelompok → "dewan_pembina" → 200; posisi di /struktur ikut pindah → kartu pindah dari blok Satuan Tugas ke blok Dewan Pembina
+   3. PATCH kelompok tidak sah ("bukan-kelompok") → 422, data tidak berubah → 422; kelompok tetap dewan_pembina
+   4. penulis (tanpa hak) PATCH pengurus → 403; DELETE oleh redaktur → 200; hilang dari /struktur → 403 untuk penulis; dihapus dan hilang dari bagan
+
+## B. Pratinjau artikel (B8)
+   5. penulis membuat draf → pratinjau 200 memuat isi; /berita/<slug> publik → 404 → id 85; pratinjau 200, publik 404
+   6. pratinjau: redaktur 200; penulis LAIN → /tanpa-akses; tanpa sesi → 307 ke /login → redaktur 200; penulis lain → /tanpa-akses; tanpa sesi → http://127.0.0.1:3000/login?lanjut=%2Fstaf%2Fartikel%2F85%2Fpratinjau
+   7. artikel diterbitkan → pratinjau tetap 200 & tombol "Buka halaman publik" muncul; lalu dihapus → pratinjau 200 + tombol publik; publik 200; artikel dihapus
+
+## C. Alamat resmi lewat Pengaturan (A1)
+   8. PATCH kontak_alamat_kota → tampil di footer beranda dan halaman /kontak → dipulihkan → diubah & dipulihkan ke "Kota Pekanbaru, Riau 28123"
+
+## D. Galeri butir 3: foto, bukan video (B7)
+   9. /galeri: butir "Kampanye Hak Lapor Warga" dirender sebagai gambar; tidak ada rujukan galeri-3.mp4 → gambar dirujuk dan berkasnya ada (200)
+
+## E. Aturan K2 pada halaman terender
+  10. 16 halaman publik + 6 halaman staf: 0 em dash / en dash pada HTML terender → 17 halaman bersih
+
+## Pembersihan
+  11. pengguna uji dihapus → 1 pengguna
+
+RINGKASAN C3c: 11 langkah, 0 gagal -> LULUS

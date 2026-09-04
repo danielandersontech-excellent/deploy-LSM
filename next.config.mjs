@@ -7,6 +7,15 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
+  // QA-2 C3 (BUG DIPERBAIKI): Next.js 16 memotong badan permintaan yang melewati proxy.js pada 10 MB (bawaan),
+  // sehingga lampiran pengaduan 10-20 MB — masih di dalam batas 20 MB/berkas yang dijanjikan antarmuka dan
+  // TAHAP-06 §4 — gagal diurai dan dibalas 400 "Muatan tidak sah". Batas dinaikkan sedikit DI ATAS batas
+  // aplikasi sendiri (40 MB total + 2 MB kelonggaran yang sudah diperiksa route lewat Content-Length), agar
+  // penolakan berkas terlalu besar tetap datang dari route dengan 413 dan pesan jelas, bukan pemotongan diam-diam.
+  experimental: {
+    proxyClientMaxBodySize: '44mb',
+  },
+
   images: {
     // Seluruh gambar dilayani dari berkas lokal (public/, termasuk public/unggahan).
     // Tidak ada domain jarak jauh — cacat export 5 (googleusercontent) tidak boleh kembali.

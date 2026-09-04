@@ -1,0 +1,22 @@
+# QA-2 C3b — tombol kembali & muat ulang — http://localhost:3000 — 2026-09-04T09:11:48.027Z
+
+## A. Filter, paginasi, dan tautan: tombol kembali
+   1. /berita: filter kategori berlaku tanpa lompat gulir; buka artikel dari daftar tersaring → kembali → filter masih terpasang → gulir 300 → 300; /berita?kategori=investigasi → detail → kembali /berita?kategori=investigasi (filter "investigasi" tetap)
+   2. /program: ubah urutan tampil → berlaku tanpa lompat gulir; konsol bersih → /program?urut=terlama; gulir 400 → 400
+   3. /berita: klik kartu artikel → detail 200 → kembali → daftar utuh (jumlah kartu sama) → detail "Indikasi Penyelewengan Dana Desa Mekarsari" → kembali /berita (5 kartu)
+
+## B. Formulir pengaduan: pindah halaman lalu kembali, dan muat ulang di tengah pengisian
+   4. /kontak: isi separuh formulir → pindah ke /faq → tombol kembali → halaman utuh, formulir bisa dipakai lagi → kembali ke /kontak, formulir utuh dan bisa diisi ulang
+   5. /kontak: isi formulir → MUAT ULANG → halaman utuh, token formulir baru, kolom kosong (tanpa data basi) → token formulir diperbarui, kolom bersih, konsol bersih
+   6. /kontak: kirim setelah muat ulang → nomor kasus tampil; tombol kembali TIDAK mengirim ulang → WRP-982799; jumlah 3 → 4, setelah kembali tetap 4
+   7. /lacak: cari nomor kasus → hasil tampil tanpa identitas → kembali → formulir lacak utuh → hasil bersih dari identitas; formulir utuh setelah kembali
+
+## C. Ruang staf: filter, tombol kembali, dan muat ulang di tengah editor
+   8. /staf/artikel: filter status berlaku; buka editor dari daftar tersaring → kembali → daftar tersaring utuh → /staf/artikel?status=terbit → editor → kembali /staf/artikel?status=terbit (filter "terbit" tetap)
+   9. /staf/artikel/baru: isi judul & isi → MUAT ULANG → halaman utuh tanpa galat, editor siap dipakai lagi → editor pulih utuh setelah muat ulang, tanpa galat konsol
+  10. /staf/pengaduan: pil status (tautan) tanpa lompat gulir → buka detail → kembali → daftar tersaring; detail dimuat ulang tanpa galat → /staf/pengaduan?status=baru; gulir 0 → 0; detail dimuat ulang tanpa galat, kembali ke daftar tersaring
+
+## D. Pembersihan
+  11. pengaduan uji dihapus lunak → 1 pengaduan (WRP-982799)
+
+RINGKASAN C3b: 11 langkah, 0 gagal -> LULUS

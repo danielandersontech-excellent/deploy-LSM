@@ -114,8 +114,11 @@ export default async function HalamanStruktur({ searchParams }) {
   const direktorat = perKelompok('direktorat');
   const satgas = perKelompok('satgas');
   const kerangka = KELOMPOK_PENGURUS.filter((k) => k.tahap === 'kerangka');
-  // Pimpinan Regional = tingkat wilayah yang punya wilayah (bukan template DPW/DPD/DPC) + pengurus tanpa kelompok
-  const regional = semua.filter((p) => p.tingkat === 'wilayah' && !/^dp[wdc]$/.test(p.kelompok || ''));
+  // Pimpinan Regional = tingkat wilayah (bukan template DPW/DPD/DPC) DAN pengurus mana pun tanpa kelompok.
+  // QA-2 C4 (BUG DIPERBAIKI): sebelumnya hanya tingkat 'wilayah', sehingga pengurus tingkat 'pusat' yang ditambahkan
+  // lewat Kelola Pengurus dengan pilihan "Tanpa kelompok (Pimpinan Regional)" tersimpan tetapi TIDAK PERNAH tampil
+  // di halaman publik mana pun (melanggar K3 dan menyalahi label pilihannya sendiri).
+  const regional = semua.filter((p) => !/^dp[wdc]$/.test(p.kelompok || '') && (p.tingkat === 'wilayah' || !p.kelompok));
   const regionalTersaring = wilayahDipilih === null ? regional : regional.filter((p) => Number(p.wilayah_id) === wilayahDipilih);
   const namaWilayahDipilih = wilayahDipilih === null ? null : (regional.find((p) => Number(p.wilayah_id) === wilayahDipilih)?.wilayah_nama ?? null);
   const adaBagan = semua.some((p) => p.kelompok);
