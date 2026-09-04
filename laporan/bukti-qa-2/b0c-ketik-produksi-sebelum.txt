@@ -1,0 +1,62 @@
+# QA-2 B0c — audit ketik ≥ 20 karakter — https://warkopnusantara.id — 2026-09-04T06:56:08.151Z
+
+## login — https://staf.warkopnusantara.id/login
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## kontak (formulir pengaduan + cari navbar) — https://warkopnusantara.id/kontak
+  OK    input[text] q — nilai utuh (48 karakter)
+  OK    input[text] situs_web — nilai utuh (48 karakter)
+  OK    input[text] nama_pelapor — nilai utuh (48 karakter)
+  OK    input[text] nik_pelapor — nilai utuh (48 karakter)
+  OK    input[tel] telepon_pelapor — nilai utuh (48 karakter)
+  OK    input[email] email_pelapor — nilai utuh (48 karakter)
+  OK    textarea[textarea] deskripsi — nilai utuh (48 karakter, maxLength 10000)
+
+## berita (cari + navbar) — https://warkopnusantara.id/berita
+  OK    input[text] q — nilai utuh (48 karakter)
+  OK    input[text] q — nilai utuh (48 karakter, maxLength 100)
+
+## lacak — https://warkopnusantara.id/lacak
+  OK    input[text] q — nilai utuh (48 karakter)
+  OK    input[text] nomor — nilai utuh (20 karakter, maxLength 20)
+
+## ganti-sandi — https://staf.warkopnusantara.id/staf/ganti-sandi
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## editor artikel baru — https://staf.warkopnusantara.id/staf/artikel/baru
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## kelola artikel (cari) — https://staf.warkopnusantara.id/staf/artikel
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## kelola pengaduan (cari) — https://staf.warkopnusantara.id/staf/pengaduan
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## pengurus (formulir tambah) — https://staf.warkopnusantara.id/staf/pengurus
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## program (formulir tambah) — https://staf.warkopnusantara.id/staf/program
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## galeri (formulir tambah) — https://staf.warkopnusantara.id/staf/galeri
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## pengguna (formulir tambah) — https://staf.warkopnusantara.id/staf/pengguna
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## pengaturan — https://staf.warkopnusantara.id/staf/pengaturan
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+konsol error selama audit: 0
+
+RINGKASAN B0c: 31 kolom, 0 gagal -> LULUS

@@ -1,0 +1,44 @@
+# QA-2 B0a — matriks sesi × jalur — http://localhost:3000 — 2026-09-04T06:51:24.025Z
+  OK    login superadmin — HTTP 200
+  OK    buat pengguna uji — id 49
+  OK    login pengguna uji (cookie SAH)
+  OK    cookie BASI (token_version naik) → /api/auth/saya 401 — HTTP 401
+  OK    sesi SAH akun A
+  OK    login akun B dengan sandi sementara (wajib_ganti_sandi=1)
+
+## Rantai redirect (maks 8 lompatan); loop = jalur berulang
+| keadaan | jalur awal | rantai | akhir | hasil |
+|---|---|---|---|---|
+| tanpa cookie | /login | /login | HTTP 200 form main | OK |
+| tanpa cookie | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard | HTTP 200 form main | OK |
+| tanpa cookie | /staf/dashboard | /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| tanpa cookie | /staf/ganti-sandi | /staf/ganti-sandi → /login?lanjut=%2Fstaf%2Fganti-sandi [cookie dihapus] | HTTP 200 form main | OK |
+| tanpa cookie | /staf/artikel | /staf/artikel → /login?lanjut=%2Fstaf%2Fartikel [cookie dihapus] | HTTP 200 form main | OK |
+| sah | /login | /login → /staf/dashboard | HTTP 200 main | OK |
+| sah | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard | HTTP 200 main | OK |
+| sah | /staf/dashboard | /staf/dashboard | HTTP 200 main | OK |
+| sah | /staf/ganti-sandi | /staf/ganti-sandi | HTTP 200 form main | OK |
+| sah | /staf/artikel | /staf/artikel | HTTP 200 form main | OK |
+| basi | /login | /login → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| basi | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| basi | /staf/dashboard | /staf/dashboard → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| basi | /staf/ganti-sandi | /staf/ganti-sandi → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| basi | /staf/artikel | /staf/artikel → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| kadaluarsa | /login | /login → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| kadaluarsa | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| kadaluarsa | /staf/dashboard | /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fdashboard → /login?lanjut=%2Fstaf%2Fdashboard [cookie dihapus] | HTTP 200 form main | OK |
+| kadaluarsa | /staf/ganti-sandi | /staf/ganti-sandi → /login?lanjut=%2Fstaf%2Fganti-sandi → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fganti-sandi → /login?lanjut=%2Fstaf%2Fganti-sandi [cookie dihapus] | HTTP 200 form main | OK |
+| kadaluarsa | /staf/artikel | /staf/artikel → /login?lanjut=%2Fstaf%2Fartikel → /api/auth/bersihkan-sesi?lanjut=%2Fstaf%2Fartikel → /login?lanjut=%2Fstaf%2Fartikel [cookie dihapus] | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /login | /login → /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard → /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /staf/dashboard | /staf/dashboard → /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /staf/ganti-sandi | /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /staf/artikel | /staf/artikel → /staf/ganti-sandi | HTTP 200 form main | OK |
+
+## Chrome: /login?lanjut=/staf/dashboard dengan cookie BASI → harus tampil formulir login
+  OK    Chrome cookie basi —  → /login "Masuk Staf · WARKOP NUSANTARA" form=true
+  OK    Chrome cookie wajib_ganti_sandi=1 —  → /staf/ganti-sandi "Ganti Kata Sandi · WARKOP NUSANTARA" form=true
+  OK    Chrome cookie sah —  → /staf/dashboard "Dashboard · WARKOP NUSANTARA" form=false
+  pengguna uji dihapus (SQL)
+
+RINGKASAN B0a: LULUS — nol loop, nol layar kosong

@@ -78,9 +78,9 @@ export async function proxy(request) {
   if (jalurStaf && !muatan) {
     return NextResponse.redirect(urlDariHeader(request, `/login?lanjut=${encodeURIComponent(pathname)}`));
   }
-  if (jalurLogin && muatan) {
-    return NextResponse.redirect(urlDariHeader(request, '/staf/dashboard'));
-  }
+  // QA-2 B0a: /login TIDAK dialihkan di sini. Tanda tangan JWT sah bukan berarti sesi sah (token_version naik setelah
+  // ganti sandi/paksa keluar). Halaman /login memverifikasi sesi PENUH ke DB: sah -> dashboard; cookie ada tapi tak sah ->
+  // /api/auth/bersihkan-sesi (hapus cookie) -> formulir. Pengalihan di sini menyebabkan loop ERR_TOO_MANY_REDIRECTS.
 
   return NextResponse.next({ request: { headers: h } });
 }

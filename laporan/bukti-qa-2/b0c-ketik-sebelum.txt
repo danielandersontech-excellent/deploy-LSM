@@ -1,0 +1,77 @@
+# QA-2 B0c — audit ketik ≥ 20 karakter — http://localhost:3000 — 2026-09-04T06:52:57.785Z
+
+## login — http://localhost:3000/login
+  OK    input[text] staff-id — nilai utuh (48 karakter)
+  OK    input[password] password — nilai utuh (48 karakter)
+
+## kontak (formulir pengaduan + cari navbar) — http://localhost:3000/kontak
+  OK    input[text] q — nilai utuh (48 karakter)
+  OK    input[text] situs_web — nilai utuh (48 karakter)
+  OK    input[text] nama_pelapor — nilai utuh (48 karakter)
+  OK    input[text] nik_pelapor — nilai utuh (48 karakter)
+  OK    input[tel] telepon_pelapor — nilai utuh (48 karakter)
+  OK    input[email] email_pelapor — nilai utuh (48 karakter)
+  OK    textarea[textarea] deskripsi — nilai utuh (48 karakter)
+
+## berita (cari + navbar) — http://localhost:3000/berita
+  OK    input[text] q — nilai utuh (48 karakter)
+  OK    input[text] q — nilai utuh (48 karakter)
+
+## lacak — http://localhost:3000/lacak
+  OK    input[text] q — nilai utuh (48 karakter)
+  GAGAL input[text] nomor — nilai utuh (20 karakter)
+
+## ganti-sandi — http://localhost:3000/staf/ganti-sandi
+  OK    input[password] sandi-lama — nilai utuh (48 karakter)
+  OK    input[password] sandi-baru — nilai utuh (48 karakter)
+  OK    input[password] sandi-ulang — nilai utuh (48 karakter)
+
+## editor artikel baru — http://localhost:3000/staf/artikel/baru
+  OK    input[text] judul — nilai utuh (48 karakter)
+  OK    div Isi artikel — nilai utuh (48 karakter)
+  GAGAL input[text] tag — nilai utuh (40 karakter)
+
+## kelola artikel (cari) — http://localhost:3000/staf/artikel
+  OK    input[text] q — nilai utuh (48 karakter)
+
+## kelola pengaduan (cari) — http://localhost:3000/staf/pengaduan
+  OK    input[text] q — nilai utuh (48 karakter)
+
+## detail pengaduan (catatan status) — http://localhost:3000/staf/pengaduan/1041
+  OK    textarea[textarea] catatan — nilai utuh (48 karakter)
+
+## pengurus (formulir tambah) — http://localhost:3000/staf/pengurus
+  OK    input[text] nama — nilai utuh (48 karakter)
+  OK    input[text] jabatan — nilai utuh (48 karakter)
+  OK    textarea[textarea] deskripsi — nilai utuh (48 karakter)
+
+## program (formulir tambah) — http://localhost:3000/staf/program
+  OK    input[text] judul — nilai utuh (48 karakter)
+  OK    textarea[textarea] ringkasan — nilai utuh (48 karakter)
+  OK    textarea[textarea] isi — nilai utuh (48 karakter)
+
+## galeri (formulir tambah) — http://localhost:3000/staf/galeri
+  OK    input[text] judul — nilai utuh (48 karakter)
+  OK    textarea[textarea] deskripsi — nilai utuh (48 karakter)
+  OK    input[text] lokasi — nilai utuh (48 karakter)
+
+## pengguna (formulir tambah) — http://localhost:3000/staf/pengguna
+  OK    input[text] nama — nilai utuh (48 karakter)
+  OK    input[email] email — nilai utuh (48 karakter)
+  OK    input[password] kata_sandi — nilai utuh (48 karakter)
+
+## pengaturan — http://localhost:3000/staf/pengaturan
+  OK    input[email] kontak_email — nilai utuh (48 karakter)
+  OK    input[text] kontak_hotline — nilai utuh (48 karakter)
+  OK    input[text] kontak_alamat_gedung — nilai utuh (48 karakter)
+  OK    input[text] kontak_alamat_jalan — nilai utuh (48 karakter)
+  OK    input[text] kontak_alamat_kota — nilai utuh (48 karakter)
+  OK    textarea[textarea] visi — nilai utuh (48 karakter)
+  OK    textarea[textarea] misi — nilai utuh (48 karakter)
+  OK    textarea[textarea] teks_kebijakan_privasi — nilai utuh (48 karakter)
+  OK    textarea[textarea] teks_pedoman_komunitas — nilai utuh (48 karakter)
+  OK    textarea[textarea] teks_faq — nilai utuh (48 karakter)
+
+konsol error selama audit: 0
+
+RINGKASAN B0c: 44 kolom, 2 gagal -> GAGAL

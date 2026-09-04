@@ -92,3 +92,37 @@ Perintah pemilik (dokumen/PERINTAH-PEMILIK-SERVER.md tetap berlaku). Ritme per b
 
 ### Posisi terakhir RUN QA-1
 RUN QA-1 SELESAI (4 Sep 2026 ±12:15 WIB). Produksi image 3069d7d HEALTHY; semua butir 1–7 SELESAI; laporan `laporan/LAPORAN-QA-1.md`. Run BERHENTI. Bila prompt dikirim ulang: tidak ada butir tersisa — hanya MENUNGGU PEMILIK di atas dan DAFTAR TINDAKAN PEMILIK Tahap 9.
+
+
+## RUN QA-2 (FINAL) — bug kritis auth, perburuan bug total, data asli pemilik, perbaikan UI (mulai 4 Sep 2026 ±13:45 WIB)
+
+Aturan konten: K1 tanpa foto internet & tanpa berita nyata; K2 tanpa em/en dash di teks tampil + DB (penjaga regresi); K3 semua data bisa diubah lewat ruang staf. Ritme per butir: perbaiki → bukti `laporan/bukti-qa-2/` → build → commit → push → redeploy → verifikasi produksi. Profil Chrome sementara dihapus tiap uji.
+
+| # | Butir | Status | Catatan |
+|---|---|---|---|
+| B0a | Loop redirect /login (cookie basi) | SELESAI (lokal) | Reproduksi: ERR_TOO_MANY_REDIRECTS (`bukti-qa-2/b0a-sesi-sebelum.txt`). Akar: proxy mengalihkan /login → dashboard hanya karena tanda tangan JWT sah (token_version naik = sesi basi), lalu layout menendang balik ke /login. Perbaikan: proxy tidak mengalihkan /login; halaman /login memverifikasi sesi PENUH (DB) → dashboard / ganti-sandi; cookie ada tapi tak sah → `GET /api/auth/bersihkan-sesi` (hapus cookie, 307 ke /login); `requireUser` juga lewat pembersih. Uji 5 keadaan × 5 jalur (25 sel) + Chrome: nol loop, nol layar kosong (`b0a-sesi-sesudah-lokal.txt`) |
+| B0b | Alur ganti sandi utuh end-to-end | SELESAI (lokal) | Lewat UI (ketik sungguhan) desktop 1280 & ponsel 375: reset → login sandi sementara → dipaksa ke /staf/ganti-sandi → ganti (3 kolom ≥ 20 karakter, fokus bertahan) → dashboard sesi baru → Keluar → login sandi baru 200, lama 401 (`b0b-ganti-sandi-ui-lokal.txt`, tangkapan) |
+| B0c | Bug input satu huruf + audit semua formulir | SELESAI (tidak tereproduksi) | Audit ketik CDP 44 kolom di 14 halaman/formulir (login, kontak, cari, lacak, ganti-sandi, editor, pengurus/program/galeri/pengguna, pengaturan, catatan status): nilai utuh, fokus bertahan, 0 error konsol (`b0c-ketik-sebelum.txt`); juga di produksi (halaman publik). Tidak ada pola komponen-dalam-render/key berubah. Dugaan gejala pemilik: efek loop B0a (halaman /login dimuat ulang berulang) — diverifikasi ulang di produksi setelah deploy |
+| B0d | Pemulihan akun superadmin produksi | BELUM | |
+| K2 | Sapu em/en dash kode + DB lokal & produksi + penjaga regresi | BELUM | |
+| A1 | Alamat resmi lewat pengaturan (footer + kontak) | BELUM | |
+| A2 | Struktur DPP asli pemilik (migrasi pengelompokan, seed, produksi) | BELUM | |
+| B1 | Navbar rapi 1280/1366/1440/1920 (keputusan pemilik) | BELUM | |
+| B2 | Hero beranda: logo segel besar di kanan | BELUM | |
+| B3 | Footer verbatim desain + alamat A1 | BELUM | |
+| B4 | Tentang: logo segel utuh semua lebar | BELUM | |
+| B5 | Struktur: bagan bertingkat A2, responsif | BELUM | |
+| B6 | Filter/paginasi tidak melompat ke atas (publik + staf) | BELUM | |
+| B7 | galeri-3.mp4 → butir foto (produksi + seed) | BELUM | |
+| B8 | Pratinjau artikel ala WordPress di editor (komponen detail publik, ber-sesi, draf tidak bocor) | BELUM | |
+| C1 | Inventaris halaman × 6 identitas × 3 lebar: konsol & jaringan bersih, tanpa gulir mendatar/tumpang tindih | BELUM | |
+| C2 | Interaksi: klik semua elemen, ketik penuh semua kolom, klik ganda, tombol kirim dinonaktifkan | BELUM | |
+| C3 | Alur end-to-end lengkap (lampiran jpg/png/pdf/mp4 + batas, tombol kembali, muat ulang di tengah formulir) | BELUM | |
+| C4 | Daftar bug ditemukan-diperbaiki + uji regresi | BELUM | |
+| C5 | Regresi (b1, kesetiaan 14 layar, penjaga dash, build, lint) + verifikasi akhir produksi + LAPORAN-QA-2.md + STATUS, BERHENTI | BELUM | |
+
+### MENUNGGU PEMILIK (RUN QA-2)
+(diisi selama run)
+
+### Posisi terakhir RUN QA-2
+B0a dimulai.

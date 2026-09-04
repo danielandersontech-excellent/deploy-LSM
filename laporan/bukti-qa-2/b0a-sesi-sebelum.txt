@@ -1,0 +1,44 @@
+# QA-2 B0a — matriks sesi × jalur — http://localhost:3000 — 2026-09-04T06:46:19.438Z
+  OK    login superadmin — HTTP 200
+  OK    buat pengguna uji — id 44
+  OK    login pengguna uji (cookie SAH)
+  OK    cookie BASI (token_version naik) → /api/auth/saya 401 — HTTP 401
+  OK    login dengan sandi sementara (wajib_ganti_sandi=1)
+  OK    ganti sandi via API → 200 + cookie baru — HTTP 200
+
+## Rantai redirect (maks 8 lompatan); loop = jalur berulang
+| keadaan | jalur awal | rantai | akhir | hasil |
+|---|---|---|---|---|
+| tanpa cookie | /login | /login | HTTP 200 form main | OK |
+| tanpa cookie | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard | HTTP 200 form main | OK |
+| tanpa cookie | /staf/dashboard | /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard | HTTP 200 form main | OK |
+| tanpa cookie | /staf/ganti-sandi | /staf/ganti-sandi → /login?lanjut=%2Fstaf%2Fganti-sandi | HTTP 200 form main | OK |
+| tanpa cookie | /staf/artikel | /staf/artikel → /login?lanjut=%2Fstaf%2Fartikel | HTTP 200 form main | OK |
+| sah | /login | /login → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard (ULANG) | HTTP 307 | LOOP |
+| sah | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard (ULANG) | HTTP 307 | LOOP |
+| sah | /staf/dashboard | /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard (ULANG) | HTTP 307 | LOOP |
+| sah | /staf/ganti-sandi | /staf/ganti-sandi → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard (ULANG) | HTTP 307 | LOOP |
+| sah | /staf/artikel | /staf/artikel → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard (ULANG) | HTTP 307 | LOOP |
+| basi | /login | /login → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard (ULANG) | HTTP 307 | LOOP |
+| basi | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard (ULANG) | HTTP 307 | LOOP |
+| basi | /staf/dashboard | /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard (ULANG) | HTTP 307 | LOOP |
+| basi | /staf/ganti-sandi | /staf/ganti-sandi → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard (ULANG) | HTTP 307 | LOOP |
+| basi | /staf/artikel | /staf/artikel → /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard (ULANG) | HTTP 307 | LOOP |
+| kadaluarsa | /login | /login | HTTP 200 form main | OK |
+| kadaluarsa | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard | HTTP 200 form main | OK |
+| kadaluarsa | /staf/dashboard | /staf/dashboard → /login?lanjut=%2Fstaf%2Fdashboard | HTTP 200 form main | OK |
+| kadaluarsa | /staf/ganti-sandi | /staf/ganti-sandi → /login?lanjut=%2Fstaf%2Fganti-sandi | HTTP 200 form main | OK |
+| kadaluarsa | /staf/artikel | /staf/artikel → /login?lanjut=%2Fstaf%2Fartikel | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /login | /login → /staf/dashboard → /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /login?lanjut=%2Fstaf%2Fdashboard | /login?lanjut=%2Fstaf%2Fdashboard → /staf/dashboard → /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /staf/dashboard | /staf/dashboard → /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /staf/ganti-sandi | /staf/ganti-sandi | HTTP 200 form main | OK |
+| wajib_ganti_sandi=1 | /staf/artikel | /staf/artikel → /staf/ganti-sandi | HTTP 200 form main | OK |
+
+## Chrome: /login?lanjut=/staf/dashboard dengan cookie BASI → harus tampil formulir login
+  GAGAL Chrome cookie basi — net::ERR_TOO_MANY_REDIRECTS → / "localhost" form=false
+  OK    Chrome cookie wajib_ganti_sandi=1 —  → /staf/ganti-sandi "Ganti Kata Sandi · WARKOP NUSANTARA" form=true
+  GAGAL Chrome cookie sah — net::ERR_TOO_MANY_REDIRECTS → / "localhost" form=false
+  pengguna uji dihapus (SQL)
+
+RINGKASAN B0a: 12 GAGAL

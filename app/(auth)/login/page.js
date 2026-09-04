@@ -7,12 +7,21 @@
 import Image from 'next/image';
 import Ikon from '@/components/ui/Ikon';
 import FormulirLogin from '@/components/staf/FormulirLogin';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { ambilPenggunaSesi, NAMA_COOKIE } from '@/lib/auth/sesi';
 
 export const metadata = { title: 'Masuk Staf' };
 
 export default async function HalamanLogin({ searchParams }) {
   const sp = await searchParams;
   const lanjut = typeof sp?.lanjut === 'string' && sp.lanjut.startsWith('/staf') ? sp.lanjut : '/staf/dashboard';
+  // QA-2 B0a: keputusan "sudah masuk" dibuat DI SINI dengan verifikasi sesi PENUH (DB: aktif + token_version), bukan di
+  // proxy (tanda tangan saja). Sesi sah -> dashboard (atau /staf/ganti-sandi bila wajib). Cookie ada tetapi tidak sah
+  // (basi setelah ganti sandi/paksa keluar, kadaluarsa) -> hapus lewat /api/auth/bersihkan-sesi -> kembali ke sini tanpa cookie.
+  const pengguna = await ambilPenggunaSesi();
+  if (pengguna) redirect(Number(pengguna.wajib_ganti_sandi) === 1 ? '/staf/ganti-sandi' : lanjut);
+  if ((await cookies()).get(NAMA_COOKIE)?.value) redirect(`/api/auth/bersihkan-sesi?lanjut=${encodeURIComponent(lanjut)}`);
   return (
     // <body> desain: bg-background text-on-background min-h-screen flex items-center justify-center p-4
     // (body akar dipakai bersama; kelas tata letaknya dipindahkan ke pembungkus ini)
