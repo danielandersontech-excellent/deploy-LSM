@@ -133,3 +133,47 @@ RUN QA-2 SELESAI (4 Sep 2026 sekitar 17:30 WIB). Seluruh butir B0, K2, A1, A2, B
 Produksi menjalankan image `7d6a46e` HEALTHY (commit terakhir hanya menambah bukti & laporan, tidak mengubah kode aplikasi). Verifikasi akhir di domain LULUS: 9 langkah 0 gagal pada image 3c34e9d, pemeriksaan penutup baca-saja diulang pada f3e2833, dan penutupan rapi SIGTERM terbukti di log container saat redeploy 7d6a46e (`[warkop] SIGTERM diterima ... peladen ditutup rapi`).
 Laporan: `laporan/LAPORAN-QA-2.md`. Run BERHENTI sesuai perintah.
 Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di atas.
+
+## RUN QA-3 (mulai 4 Sep 2026 sekitar 18:50 WIB) — RESTRUKTURISASI ORGANISASI + PERMINTAAN PEMILIK
+
+Aturan lama berlaku penuh (PERINTAH-PEMILIK-SERVER, K1/K2/K3). Data produksi = sumber kebenaran:
+pemilik menyunting pengurus tepat sebelum run, jadi seluruh migrasi ditulis agar TIDAK PERNAH
+menimpa nama/jabatan/urutan/foto/deskripsi baris mana pun.
+
+| # | Butir | Status | Catatan |
+|---|---|---|---|
+| 0 | Diagnosa CLI (baca-saja) | SELESAI | `claude --version` 2.1.260; `claude doctor` "No installation issues found" TETAPI **Auto-update terakhir GAGAL (install_failed) 4 Sep 2026**. Tidak ada instalasi/pembaruan dilakukan (`bukti-qa-3/0-diagnosa-cli.txt`) |
+| A1 | Susunan kelompok final | SELESAI (5e3e90f) | 8 kelompok: dewan_pembina, dewan_penasehat, dewan_pengawas, pengurus_dpp, direktorat, satgas, dpw (provinsi), korda (kabupaten/kota). DIHAPUS: dpc, direktorat_eksekutif; dpd dipetakan ke korda. Ketiganya ditolak API 422 |
+| A2 | Direktorat 12 bagian | SELESAI (5e3e90f) | Kolom baru `pengurus.bagian`; bagian wajib untuk Direktorat (422 BAGIAN_WAJIB); satu bagian boleh berisi beberapa jabatan; bagan menampilkan 12 kartu, yang kosong "(Belum terisi)" |
+| A3 | Wilayah dua tingkat | SELESAI (5e3e90f) | Tabel wilayah TERNYATA sudah punya `jenis`+`induk_id` sejak Tahap 01 -> tanpa perubahan skema. Migrasi hanya MENAMBAH 514 kabupaten/kota (id 1-39 utuh, induk lewat JOIN kode). DPW wajib provinsi, Korda wajib kabupaten/kota (422 WILAYAH_JENIS_TIDAK_COCOK). Formulir: dropdown bertingkat + kotak cari |
+| BUG | Kelompok pengurus hilang tiap disunting | SELESAI (5e3e90f) | AKAR MASALAH kartu "Sekjen DPP" nyasar: halaman staf tidak mengirim kolom `kelompok` ke formulir sehingga setiap PATCH mengirim null. Kini kelompok+bagian dikirim dan kelompok WAJIB di server |
+| B | Kelola Pengurus berkepala kelompok | SELESAI (5e3e90f) | Baris kepala bg-primary/on-primary colspan penuh "<Kelompok> - <tingkat>", sub-kepala per bagian Direktorat, urutan mengikuti bagan; tombol naik/turun hanya bertukar dalam kelompok yang sama |
+| C | Navbar tanpa "Masuk Staff" | SELESAI (4f95751) | Dihapus dari navbar + laci seluler + seluruh situs publik (11 halaman diperiksa: 0 teks, 0 tautan /login). Halaman masuk tetap hidup lewat URL langsung host staf. Menu dilegakan (gap-5/2xl gap-8, cari w-48/2xl w-64); diukur 1280-1920 tanpa tumpang tindih |
+| D1 | Footer membentang penuh | SELESAI (4f95751) | Latar/garis ke <footer> w-full, kelas kontainer ke <div> di dalamnya; diukur 375/768/1280/1366/1440/1920: lebar footer = lebar layar, isi tetap berpadding dan maksimal 1280 |
+| D2 | Tautan "Kantor Pusat" | SELESAI (4f95751) | Menggantikan "Kantor Regional"; tab baru + rel noopener ke petunjuk arah Google Maps 0.504192,101.427052; alamat disimpan di pengaturan `kontak_peta_url` (K3, dikosongkan = tautan hilang) |
+| E | Media sosial | SELESAI (4f95751) | Kunci sosial_tiktok/instagram/youtube/facebook, tipe pengaturan baru `url` (wajib https, boleh kosong). Footer hanya menampilkan yang terisi. Ikon SVG inline buatan sendiri (bukan unduhan, bukan logo resmi). Isi sekarang: TikTok saja |
+| F | Kategori program dinamis | SELESAI (4f95751) | Tabel `kategori_program`; `program.kategori` TETAP VARCHAR slug sehingga relasi lama aman. "Kategori Lainnya..." di formulir membuat kategori baru lewat server (3-60 karakter, tanpa HTML, harus ada huruf, slug otomatis, tanpa duplikat) dan langsung muncul di filter publik + ruang staf |
+| G | Regresi + verifikasi akhir + laporan | SELESAI | b1 246/0; kesetiaan 14 layar cacat export 0 dengan dasar diperbarui + alasan tercatat; sapu konsol lokal 28/0 dan produksi 22/0; penjaga dash bersih (termasuk DB produksi, 7 tabel); lint + build hijau; verifikasi akhir produksi 10 langkah 0 gagal. `laporan/LAPORAN-QA-3.md` |
+
+### Baris pengurus yang dipindah / dinonaktifkan (RUN QA-3)
+Dipetakan ke bagian direktorat (nama/jabatan/urutan TIDAK diubah): 12, 17, 19, 21, 22, 23, 24.
+DINONAKTIFKAN (aktif 1 -> 0, TIDAK dihapus): **14 Andreas Reynaldho** (kelompok NULL, kartu
+"Sekjen DPP" yang nyasar di Pimpinan Regional). Tidak disentuh: 10, 3, 43, 1, 16, 25, 2.
+**Sudah diselesaikan pemilik sendiri sesudah butir A tayang**: Andreas Reynaldho aktif kembali
+sebagai Sekretaris Jenderal DPP di kelompok Pengurus DPP; Dian Lestari Gultom dipindah ke
+Direktorat/Hukum dan Advokasi; Jasrivai Manulang ke Penyuluhan dan Sosialisasi; Yefrizal menjadi
+Wakil Direktur Humas; dua orang baru (Dewan Penasehat, Dewan Pengawas). Keadaan akhir produksi:
+17 pengurus aktif, semuanya berkelompok sah, seluruh Direktorat punya bagian, 0 tanpa kelompok.
+
+### MENUNGGU PEMILIK (RUN QA-3)
+1. **Tinjau daftar 514 kabupaten/kota**: disusun dari pengetahuan umum, BUKAN salinan basis data resmi, jadi bisa tidak mutakhir. Kode sengaja internal (awalan "K") agar tidak dikira kode resmi BPS/Kemendagri.
+2. **Putuskan kerangka Koordinator Daerah**: sekarang hanya menampilkan provinsi yang SUDAH punya koordinator (menghindari ratusan kartu kosong); kerangka penuh hanya untuk DPW (38 provinsi). Bila ingin kerangka kabupaten/kota penuh, beri tahu.
+3. **Isi kanal media sosial lain** (Instagram, YouTube, Facebook) lewat Pengaturan; ikon otomatis muncul saat diisi.
+4. **Pembaruan otomatis Claude Code CLI GAGAL** (`install_failed`, 4 Sep 2026). Tidak menghambat apa pun; perbarui sendiri bila diinginkan.
+5. Butir MENUNGGU PEMILIK RUN QA-1, QA-2, dan DAFTAR TINDAKAN PEMILIK Tahap 9 tetap berlaku.
+
+### Posisi terakhir RUN QA-3
+RUN QA-3 SELESAI (4 Sep 2026 sekitar 19:35 WIB). Seluruh butir A sampai G SELESAI dan tayang di
+produksi (image `4f95751` HEALTHY). Verifikasi akhir di domain produksi LULUS 10 langkah 0 gagal.
+Laporan: `laporan/LAPORAN-QA-3.md`. Run BERHENTI sesuai perintah.
+Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di atas.

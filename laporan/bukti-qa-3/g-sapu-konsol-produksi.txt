@@ -1,0 +1,6 @@
+# QA-3 G — sapu konsol & tata letak halaman tersentuh — https://warkopnusantara.id — 2026-09-04T12:29:37.393Z
+# sesi staf: TIDAK ADA (halaman staf dilewati)
+  375px: 11 halaman diperiksa
+  1280px: 11 halaman diperiksa
+
+RINGKASAN G (produksi): 22 sel, 0 gagal -> LULUS

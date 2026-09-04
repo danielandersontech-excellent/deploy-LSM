@@ -1,0 +1,19 @@
+# QA-3 — keadaan pengurus produksi SESUDAH seluruh butir (baca-saja) — 2026-09-04T12:33:36Z
+id	nama	jabatan	kelompok	bagian	wil	urutan	aktif
+1	Jonni Tan	Ketua Dewan Pembina DPP Warkop Nusantara	dewan_pembina	-	0	1	1
+2	Florida Herawati	Wakil Ketua Dewan Pembina DPP Warkop Nusantara	dewan_pembina	-	0	2	1
+45	Azwir Irvananda, S.Kom.	Ketua Dewan Penasehat DPP Warkop Nusantara	dewan_penasehat	-	0	1	1
+44	Jhon Arifin	Ketua Dewan Pengawas DPP Warkop Nusantara	dewan_pengawas	-	0	1	1
+10	Boy Joean	Ketua Umum DPP Warkop Nusantara	pengurus_dpp	-	0	1	1
+3	Sukri Tambusai, S.H.	Wakil Ketua Umum DPP Warkop Nusantara	pengurus_dpp	-	0	2	1
+14	Andreas Reynaldho, S.H., M.H.	Sekretaris Jenderal DPP Warkop Nusantara	pengurus_dpp	-	0	3	1
+43	Soni	Bendahara DPP Warkop Nusantara	pengurus_dpp	-	0	4	1
+12	Johan Elvianus Hondro	Direktur Humas dan Kerjasama Antar Lembaga	direktorat	humas-kerja-sama	0	1	1
+16	Dian Lestari Gultom, S.H.	Direktur Hukum dan Advokasi	direktorat	hukum-advokasi	0	1	1
+17	Sopan Pangabean, S.H.	Direktur Investigasi	direktorat	investigasi	0	1	1
+19	Jasrivai Manulang, S.H.	Direktur Penyuluhan dan Sosialisasi	direktorat	penyuluhan-sosialisasi	0	1	1
+21	Ronald Eldiner, S.H.	Direktur Lingkungan Hidup	direktorat	lingkungan-hidup	0	1	1
+22	Roy Jensen Sidabutar, S.Kom.	Direktur Media	direktorat	media	0	1	1
+23	Yefrizal, S.E.	Wakil Direktur Humas dan Kerja Sama Antar Lembaga	direktorat	humas-kerja-sama	0	2	1
+24	Dedek	Direktorat Pemberdayaan Masyarakat dan UMKM	direktorat	pemberdayaan-masyarakat-umkm	0	29	1
+25	Kanisius	Kepala Satgas (Kasatgas)	satgas	-	0	6	1

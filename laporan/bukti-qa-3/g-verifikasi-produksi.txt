@@ -1,0 +1,23 @@
+# QA-3 G — verifikasi akhir di domain produksi — 2026-09-04T12:33:02.385Z
+   1. akun staf sementara disiapkan (diaktifkan + sandi acak baru lewat container app) → id 10 aktif sementara (sandi acak hanya di memori)
+
+## A — restrukturisasi organisasi di produksi
+   2. /struktur: 12 bagian direktorat, blok DPW lalu Koordinator Daerah, tanpa DPC/Direktorat Eksekutif → 12 bagian tampil; DPW lalu Koordinator Daerah; DPC & Direktorat Eksekutif hilang
+   3. pengurus produksi: 14 aktif dengan kelompok sah, 1 nonaktif menunggu penempatan ulang → aktif	n ; 1	17 ; tanpa_kelompok ; 0 ; direktorat_tanpa_bagian ; 0 ; 
+   4. wilayah dua tingkat di produksi: 38 provinsi + 514 kabupaten/kota, id 1-39 utuh → jenis	n ; pusat	1 ; provinsi	38 ; kabupaten_kota	514 ; yatim ; 0 ; lama ; 39 ; 
+
+## B — Kelola Pengurus berkepala kelompok (produksi)
+   5. /staf/pengurus memuat baris kepala kelompok + sub-kepala bagian direktorat → 4 kepala kelompok + sub-kepala bagian
+
+## C + D + E — navbar, footer, media sosial (produksi)
+   6. 11 halaman publik: 0 "Masuk Staff", 0 tautan /login; halaman masuk tetap hidup lewat URL langsung → 11 halaman bersih; host publik /login -> 307 ke host staf; host staf /login 200 dengan formulir
+   7. footer produksi: latar penuh, "Kantor Pusat" ke Google Maps (tab baru + noopener), TikTok saja → footer penuh; Kantor Pusat -> maps (tab baru, noopener); hanya TikTok tampil, ikon SVG inline
+
+## F — kategori program dinamis (produksi)
+   8. tabel kategori_program terisi 3 kategori dan setiap program punya kategori terdaftar → id	nama	slug ; 1	Pengawasan Dana	pengawasan-dana ; 2	Observasi Kebijakan	observasi-kebijakan ; 3	Bantuan Hukum	bantuan-hukum ; program_yatim ; 0 ; 
+   9. filter kategori publik tetap bekerja untuk ketiga kategori bawaan → pengawasan-dana:200, observasi-kebijakan:200, bantuan-hukum:200
+
+## Pembersihan
+  10. akun staf sementara dinonaktifkan + sesi dipaksa keluar → login sesudah dinonaktifkan 401; sesi lama 401
+
+RINGKASAN QA-3 G produksi: 10 langkah, 0 gagal -> LULUS

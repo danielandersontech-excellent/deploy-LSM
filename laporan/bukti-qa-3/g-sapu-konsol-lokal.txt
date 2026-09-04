@@ -1,0 +1,6 @@
+# QA-3 G — sapu konsol & tata letak halaman tersentuh — http://localhost:3000 — 2026-09-04T12:28:08.674Z
+# sesi staf: ada
+  375px: 14 halaman diperiksa
+  1280px: 14 halaman diperiksa
+
+RINGKASAN G (lokal): 28 sel, 0 gagal -> LULUS

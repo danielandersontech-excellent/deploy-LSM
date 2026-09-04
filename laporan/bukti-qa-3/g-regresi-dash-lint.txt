@@ -1,0 +1,20 @@
+# QA-3 G — regresi penutup — 2026-09-04T12:33:53Z
+## penjaga dash (kode, seed, migrasi, DB lokal)
+PENJAGA DASH: bersih (tidak ada em/en dash di teks tampil app/components/lib, seed, migrasi, DB lokal)
+kode keluar: 0
+
+## npm run lint
+> warkop-nusantara@0.1.0 lint
+> eslint .
+
+kode keluar: 0
+
+## penjaga dash pada DB PRODUKSI (baca-saja)
+t	n
+artikel	0
+pengaturan	0
+pengurus	0
+program	0
+galeri	0
+kategori_program	0
+wilayah	0
