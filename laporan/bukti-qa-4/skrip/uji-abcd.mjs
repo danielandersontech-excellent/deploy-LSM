@@ -139,6 +139,24 @@ await langkah('geser 375: mengeser bilah (scrollLeft) menampakkan item terakhir 
   wajib(r.scrollY === 0, `gulir halaman ikut berubah ${r.scrollY}`);
   return `item terakhir "${r.teks}" terlihat; gulir halaman tetap`;
 });
+// REGRESI BUG QA-4 (ditemukan C3b): mengganti kategori saat halaman sudah digulir tidak boleh memindah gulir vertikal
+// (scrollIntoView pada item aktif dulu menarik halaman ke atas). Diuji lewat klik bilah DAN lewat select filter.
+await langkah('regresi: /berita digulir 300 px -> ganti kategori lewat bilah lalu lewat select filter -> gulir vertikal tidak melompat, item aktif berganti', async () => {
+  await lebar(1280, 900, false); await buka(`${U}/berita?kategori=nasional`);
+  await ev('window.scrollTo(0, 300)'); await tidur(300);
+  const y0 = await ev('window.scrollY'); wajib(y0 >= 200, `halaman tidak bisa digulir 300 (scrollY ${y0})`);
+  await ev(`[...document.querySelectorAll('nav[aria-label="Kategori berita"] a')].find(a => /kategori=hukum/.test(a.getAttribute('href'))).click()`); await tidur(2600);
+  const y1 = await ev('window.scrollY'); const a1 = await ev(`document.querySelector('nav[aria-label="Kategori berita"] a[aria-current="page"]')?.textContent.trim()`);
+  wajib(Math.abs(y1 - y0) < 20, `klik bilah: gulir melompat ${y0} -> ${y1}`); wajib(a1 === 'Hukum', `aktif setelah klik bilah = ${a1}`);
+  const nilai = await ev(`(() => { const s = document.querySelector('select[name="kategori"]'); if (!s) return null; const set = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set; set.call(s, 'umkm'); s.dispatchEvent(new Event('change', { bubbles: true })); return s.value; })()`);
+  wajib(nilai === 'umkm', `select filter tidak bisa diubah (${nilai})`); await tidur(2600);
+  const y2 = await ev('window.scrollY'); const a2 = await ev(`document.querySelector('nav[aria-label="Kategori berita"] a[aria-current="page"]')?.textContent.trim()`);
+  wajib(Math.abs(y2 - y0) < 20, `select filter: gulir melompat ${y0} -> ${y2}`); wajib(a2 === 'UMKM', `aktif setelah select = ${a2}`);
+  await lebar(375, 812, true); await buka(`${U}/berita?kategori=podcash`);
+  const r = await ev(`(() => { const ul = document.querySelector('nav[aria-label="Kategori berita"] ul'); const a = ul.querySelector('a[aria-current="page"]'); const ra = a.getBoundingClientRect(); const ru = ul.getBoundingClientRect(); return { terlihat: ra.left >= ru.left - 1 && ra.right <= ru.right + 1, scrollLeft: Math.round(ul.scrollLeft) }; })()`);
+  wajib(r.terlihat && r.scrollLeft > 0, `375: item aktif Podcash tidak digulir ke pandangan ${JSON.stringify(r)}`);
+  return `bilah: ${y0} -> ${y1}; select: ${y0} -> ${y2}; 375 item aktif terlihat (scrollLeft ${r.scrollLeft})`;
+});
 await langkah('halaman staf TIDAK memuat bilah kategori', async () => {
   wajib(tkStaf, 'tidak ada sesi staf');
   const h = await halaman('/staf/dashboard', tkStaf);

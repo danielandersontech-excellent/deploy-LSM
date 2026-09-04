@@ -1,0 +1,30 @@
+# QA-4 F4 — TEMUAN (diperbaiki): setiap redeploy meninggalkan "Aborted connection" di log MariaDB
+
+## Gejala (log container DB produksi, 24 jam terakhir, lihat f4-server-sehat.txt)
+Pada setiap jam redeploy (09:50, 10:51, 11:07, 12:13, 12:27, 12:40 UTC = enam redeploy RUN QA-2/QA-3)
+muncul 4-14 baris:
+  [Warning] Aborted connection NNNNN to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.1x'
+            (Got an error reading communication packets)
+Tidak ada dampak ke pengguna (koneksi yang putus adalah koneksi idle pool container LAMA yang sedang
+dimatikan), tetapi log DB kotor dan menyulitkan menemukan masalah sungguhan.
+
+## Akar masalah (dua lapis)
+1. server.js menutup peladen HTTP dengan rapi saat SIGTERM (QA-2 C4) tetapi TIDAK menutup pool koneksi
+   basis data, sehingga koneksi idle diputus paksa saat proses berhenti.
+2. Lebih dalam: lib/db/index.js menyimpan pool di variabel MODUL (`let pool`). Di bawah custom server,
+   modul ini dimuat oleh beberapa bundel (server.js, route API, halaman), jadi tiap bundel diam-diam
+   punya pool sendiri (masing-masing sampai DB_POOL_LIMIT=10 koneksi) dan tutupPool() dari server.js
+   tidak akan pernah menyentuh pool yang dipakai route.
+
+## Perbaikan
+- lib/db/index.js: pool disimpan di globalThis (Symbol.for('warkop.pool')), pola yang sama dengan
+  instance Socket.io, sehingga SATU pool dipakai seluruh proses dan bisa ditutup dari mana pun.
+  Dibuktikan lokal: db()===db(), tersimpan di globalThis, tutupPool() mengosongkannya, kueri berikutnya
+  membuat pool baru (skrip sekali jalan, keluaran di sesi QA-4).
+- server.js: setelah server.close() selesai (permintaan berjalan tuntas), tutupPool() dipanggil lalu
+  proses keluar; kegagalan menutup pool dicatat dan tidak menahan penutupan (batas 20 s tetap).
+
+## Verifikasi
+Efeknya hanya terlihat pada redeploy SETELAH kode ini tayang (container lama yang dimatikan harus sudah
+memuat kode baru). Diverifikasi pada redeploy penutup RUN QA-4: log container lama harus memuat
+"[warkop] pool basis data ditutup" dan log MariaDB pada menit itu tidak boleh memuat "Aborted connection".

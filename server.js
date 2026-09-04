@@ -9,6 +9,7 @@
 import { createServer } from 'node:http';
 import next from 'next';
 import { initSocket } from './lib/socket/server.js';
+import { tutupPool } from './lib/db/index.js';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = process.env.HOSTNAME || '0.0.0.0';
@@ -68,7 +69,13 @@ server.listen(port, hostname, () => {
 for (const sinyal of ['SIGTERM', 'SIGINT']) {
   process.on(sinyal, () => {
     console.log(`[warkop] ${sinyal} diterima: menutup peladen, menunggu permintaan berjalan selesai (maks 20 s)`);
-    server.close(() => { console.log('[warkop] peladen ditutup rapi'); process.exit(0); });
+    // QA-4 F4 (TEMUAN log MariaDB): setiap redeploy meninggalkan "Aborted connection ... Got an error reading
+    // communication packets" karena koneksi pool tidak ditutup sebelum proses berhenti. Pool ditutup rapi
+    // setelah permintaan berjalan selesai; kegagalan menutup pool tidak boleh menahan penutupan.
+    server.close(async () => {
+      try { await tutupPool(); console.log('[warkop] pool basis data ditutup'); } catch (g) { console.error(`[warkop] pool basis data gagal ditutup: ${g?.code || g?.message || g}`); }
+      console.log('[warkop] peladen ditutup rapi'); process.exit(0);
+    });
     setTimeout(() => { console.log('[warkop] batas 20 s tercapai, keluar paksa'); process.exit(0); }, 20_000).unref();
   });
 }

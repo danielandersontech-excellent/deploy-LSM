@@ -177,3 +177,23 @@ RUN QA-3 SELESAI (4 Sep 2026 sekitar 19:35 WIB). Seluruh butir A sampai G SELESA
 produksi (image `4f95751` HEALTHY). Verifikasi akhir di domain produksi LULUS 10 langkah 0 gagal.
 Laporan: `laporan/LAPORAN-QA-3.md`. Run BERHENTI sesuai perintah.
 Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di atas.
+
+## RUN QA-4 (mulai 5 Sep 2026 sekitar 04:35 WIB) — BERITA-DULU + BILAH KATEGORI + HEADER SELULER + PERBURUAN BUG TOTAL
+
+| # | Butir | Status | Catatan |
+|---|---|---|---|
+| P1 | Sinkron produksi | SELESAI | health 200; DB dari container OK; token webhook SAH (uuid palsu -> 404, bukan 401); seluruh kredensial .env.produksi = env container kecuali SEED_ADMIN_PASSWORD (wajar, sudah diganti pemilik); akun staf uji dipakai lalu dinonaktifkan (`bukti-qa-4/p1-sinkron-produksi.txt`) |
+| P2 | Volume lampiran | MENUNGGU PEMILIK (tidak blokir) | `docker inspect`: hanya volume `warkop-unggahan` -> /app/public/unggahan; **TIDAK ADA mount /app/unggahan-terjaga** -> lampiran pengaduan tersimpan di layer container dan HILANG tiap redeploy (`p2-dampak-volume-lampiran.txt`: 6 baris lampiran uji di DB, 0 berkas di disk) |
+| A | 11 kategori berita final | SELESAI (46ca511) | migrasi idempoten lokal+produksi; Investigasi tetap id 1; 4 kategori lama dinonaktifkan (bukan dihapus) setelah 8 artikelnya dipetakan; ikon Material dari 77 ikon resmi; route artikel menolak kategori nonaktif/tidak ada 422 (`a-migrasi-produksi.txt`) |
+| B | Bilah kategori semua halaman publik | SELESAI (46ca511) | bg-primary/on-primary, 11 item urut, geser di 375/768, aktif emas, keyboard, tanpa lompat gulir; staf tidak diberi; diuji 6 halaman x 3 lebar lokal+produksi |
+| C | Beranda = berita | SELESAI (46ca511) | KEPUTUSAN PEMILIK; statistik + Status Advokasi dipindah ke sisi beranda berita (KEPUTUSAN BARU); komponen bersama components/publik/berita/*; alur beranda->kategori->artikel->kembali LULUS |
+| D | Header seluler sejajar | SELESAI (46ca511) | 320/375/414/767 merek kiri + hamburger kanan sebaris, laci berfungsi |
+| F1 | Inventaris halaman x 6 identitas x 3 lebar | SEDANG | skrip `uji-f1-inventaris.mjs` (metode QA-2 C1 + halaman baru) berjalan lokal |
+| F2 | Interaksi semua elemen & kolom | BELUM | `uji-f2-interaksi.mjs` (metode QA-2 C2) dijalankan setelah F1 |
+| F3 | Alur end-to-end diulang semua | SELESAI (lokal) | 8 suite LULUS: c3a lampiran+batas 12, c3c 11, c3d 25 aksi, c4 regresi 11, QA-3 A+B 11, QA-3 C/D/E/F 15, realtime+lampiran terjaga+sosial 6 (`f3-ringkasan.txt`); C3b (kembali/muat ulang) menyusul setelah F1 |
+| F4 | Server sehat | SELESAI (temuan diperbaiki, belum tayang) | restart 0, OOM tidak, disk 25%, log app bersih 24 jam, rotasi log 10m x3; TEMUAN: "Aborted connection" MariaDB tiap redeploy -> pool per-bundel + tidak ditutup saat SIGTERM; diperbaiki (lib/db globalThis + server.js tutupPool) (`f4-temuan-pool-redeploy.txt`) |
+| F5 | Bug ditemukan-diperbaiki + regresi | SEDANG | daftar di LAPORAN-QA-4.md |
+| G | Regresi + verifikasi akhir + laporan | BELUM | |
+
+### Posisi terakhir RUN QA-4
+A-D tayang di produksi (image 46ca511, verifikasi produksi 17 langkah LULUS). Perbaikan F4 (pool DB) sudah ditulis di lokal, BELUM di-commit/deploy. Sedang: F1 lokal; berikutnya F2, C3b, rebuild, regresi G, verifikasi produksi, LAPORAN-QA-4.md.

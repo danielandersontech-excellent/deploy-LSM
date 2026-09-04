@@ -1,4 +1,4 @@
-# D4b — kesetiaan 14 layar pada http://localhost:3000 — 2026-09-04T21:55:03.389Z
+# D4b — kesetiaan 14 layar pada http://localhost:3000 — 2026-09-04T22:29:58.540Z
 login staf: ok; slug artikel: indikasi-penyelewengan-dana-desa-mekarsari; id artikel editor: 77
 
 | # | Layar desain | Halaman | HTTP | Cakupan kelas | Kelas hilang | Token hilang | Teks hilang | Sisa cacat export |

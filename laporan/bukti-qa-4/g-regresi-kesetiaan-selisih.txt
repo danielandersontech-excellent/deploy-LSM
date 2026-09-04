@@ -1,0 +1,42 @@
+# QA-4 G — selisih kesetiaan 14 layar: dasar QA-3 (laporan/bukti-qa-3/g-regresi-kesetiaan-14-layar.md) vs QA-4 — 2026-09-04T22:30:46Z
+# hanya layar yang berubah; alasan per perubahan ada di LAPORAN-QA-4.md bagian G
+beranda_warkop_nusantara
+  kelas hilang BARU: -translate-x-2, bg-center, bg-cover, bg-error, bg-gradient-to-t, border-y, duration-700, font-semibold, from-primary/80, h-64, hover:shadow-lg, leading-relaxed, lg:col-span-2, lg:col-start-3, lg:grid-cols-3, max-w-2xl, mb-10, mb-12, mb-8, md:divide-x, md:divide-y-0, md:grid-cols-3, md:pl-8, md:pr-8, md:pt-0, md:px-8, md:text-left, opacity-0, opacity-5, pb-32, pointer-events-none, pt-20, pt-6, px-2, py-16, py-24, sm:h-auto, sm:hidden, sm:w-2/5, sm:w-3/5, text-[10px], text-on-error, text-xl, to-transparent, top-3, z-20
+  kelas kini ADA: -
+  teks hilang BARU: Sorotan Investigasi
+  teks kini ADA: Dugaan Penyelewengan Dana Desa di Sektor Infrastruktur Terungkap | Fasilitas Kesehatan Mangkrak di Daerah Pelosok
+struktur_organisasi
+  kelas hilang BARU: mt-4
+  kelas kini ADA: inline-flex, text-[16px]
+  teks hilang BARU: -
+  teks kini ADA: -
+program_kegiatan
+  kelas hilang BARU: -
+  kelas kini ADA: hide-scrollbar, overflow-x-auto, whitespace-nowrap
+  teks hilang BARU: -
+  teks kini ADA: -
+kontak_pengaduan_warkop_nusantara_updated_logo
+  kelas hilang BARU: mt-4
+  kelas kini ADA: -
+  teks hilang BARU: -
+  teks kini ADA: -
+portal_berita_beranda
+  kelas hilang BARU: mt-4
+  kelas kini ADA: overflow-x-auto
+  teks hilang BARU: Kegiatan Daerah
+  teks kini ADA: Opini: Saatnya Kembalikan Marwah Aparatur Sipil Negara
+daftar_berita_investigasi
+  kelas hilang BARU: mt-4
+  kelas kini ADA: -
+  teks hilang BARU: -
+  teks kini ADA: Lingkungan
+detail_artikel_investigasi
+  kelas hilang BARU: mt-4
+  kelas kini ADA: -
+  teks hilang BARU: -
+  teks kini ADA: -
+editor_artikel_admin
+  kelas hilang BARU: -
+  kelas kini ADA: -
+  teks hilang BARU: Opini Publik | Siaran Pers
+  teks kini ADA: format_h1 | format_h2

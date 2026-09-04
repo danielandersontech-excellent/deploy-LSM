@@ -23,11 +23,17 @@ export default function BilahKategori({ kategori = [] }) {
   const aktif = pathname === '/berita' ? (sp?.get('kategori') || '') : '';
   const refAktif = useRef(null);
 
-  // Item aktif digulir ke tengah bilah (hanya bilahnya, bukan halaman) saat halaman dimuat / kategori berganti.
+  // Item aktif digulir ke tengah bilah (HANYA bilahnya, bukan halaman) saat halaman dimuat / kategori berganti.
+  // BUG QA-4 (ditemukan C3b): scrollIntoView({ block: 'nearest' }) tetap menggulir HALAMAN secara vertikal bila
+  // bilah sedang di luar layar (misal pembaca sudah menggulir 300 px lalu mengganti kategori lewat filter), jadi
+  // posisi gulir melompat. Kini hanya scrollLeft <ul> yang diubah; sumbu vertikal tidak pernah disentuh.
   useEffect(() => {
-    const el = refAktif.current;
-    if (!el || typeof el.scrollIntoView !== 'function') return;
-    try { el.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' }); } catch { /* peramban lama */ }
+    const el = refAktif.current; const ul = el?.parentElement;
+    if (!el || !ul) return;
+    try {
+      const d = el.getBoundingClientRect(); const u = ul.getBoundingClientRect();
+      ul.scrollLeft += (d.left + d.width / 2) - (u.left + u.width / 2);
+    } catch { /* peramban lama */ }
   }, [aktif]);
 
   if (!kategori.length) return null;

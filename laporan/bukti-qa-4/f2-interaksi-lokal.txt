@@ -1,0 +1,77 @@
+# QA-4 F2 — interaksi & ketik penuh — http://localhost:3000 — 2026-09-04T22:24:45.996Z
+
+## publik / — http://localhost:3000/
+  OK    publik /: 3 klik (0 destruktif dilewati, 10 tautan berulang), 1/1 kolom utuh
+
+## publik /tentang — http://localhost:3000/tentang
+  OK    publik /tentang: 0 klik (0 destruktif dilewati, 24 tautan berulang), 1/1 kolom utuh
+
+## publik /struktur — http://localhost:3000/struktur
+  OK    publik /struktur: 1 klik (0 destruktif dilewati, 24 tautan berulang), 1/1 kolom utuh
+
+## publik /program — http://localhost:3000/program
+  OK    publik /program: 1 klik (0 destruktif dilewati, 28 tautan berulang), 1/1 kolom utuh
+
+## publik /galeri — http://localhost:3000/galeri
+  OK    publik /galeri: 1 klik (0 destruktif dilewati, 24 tautan berulang), 1/1 kolom utuh
+
+## publik /kontak — http://localhost:3000/kontak
+  OK    publik /kontak: 0 klik (2 destruktif dilewati, 25 tautan berulang), 7/7 kolom utuh
+
+## publik /berita — http://localhost:3000/berita
+  OK    publik /berita: 1 klik (0 destruktif dilewati, 38 tautan berulang), 2/2 kolom utuh
+
+## publik /berita?kategori=hukum — http://localhost:3000/berita?kategori=hukum
+  OK    publik /berita?kategori=hukum: 0 klik (0 destruktif dilewati, 31 tautan berulang), 2/2 kolom utuh
+
+## publik /berita/indikasi-penyelewengan-dana-desa-mekarsari — http://localhost:3000/berita/indikasi-penyelewengan-dana-desa-mekarsari
+  OK    publik /berita/indikasi-penyelewengan-dana-desa-mekarsari: 3 klik (0 destruktif dilewati, 27 tautan berulang), 1/1 kolom utuh
+
+## publik /lacak — http://localhost:3000/lacak
+  OK    publik /lacak: 1 klik (0 destruktif dilewati, 24 tautan berulang), 2/2 kolom utuh
+
+## publik /faq — http://localhost:3000/faq
+  OK    publik /faq: 0 klik (0 destruktif dilewati, 25 tautan berulang), 1/1 kolom utuh
+
+## staf /staf/dashboard — http://localhost:3000/staf/dashboard
+  OK    staf /staf/dashboard: 2 klik (1 destruktif dilewati, 5 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/artikel — http://localhost:3000/staf/artikel
+  OK    staf /staf/artikel: 1 klik (11 destruktif dilewati, 21 tautan berulang), 1/1 kolom utuh
+
+## staf /staf/artikel/baru — http://localhost:3000/staf/artikel/baru
+  OK    staf /staf/artikel/baru: 12 klik (3 destruktif dilewati, 10 tautan berulang), 3/3 kolom utuh
+
+## staf /staf/artikel/77 — http://localhost:3000/staf/artikel/77
+  OK    staf /staf/artikel/77: 12 klik (3 destruktif dilewati, 10 tautan berulang), 3/3 kolom utuh
+
+## staf /staf/pengaduan — http://localhost:3000/staf/pengaduan
+  OK    staf /staf/pengaduan: 1 klik (1 destruktif dilewati, 13 tautan berulang), 1/1 kolom utuh
+
+## staf /staf/pengaduan/1041 — http://localhost:3000/staf/pengaduan/1041
+  OK    staf /staf/pengaduan/1041: 0 klik (3 destruktif dilewati, 10 tautan berulang), 1/1 kolom utuh
+
+## staf /staf/pengurus — http://localhost:3000/staf/pengurus
+  OK    staf /staf/pengurus: 46 klik (16 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/program — http://localhost:3000/staf/program
+  OK    staf /staf/program: 1 klik (4 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/galeri — http://localhost:3000/staf/galeri
+  OK    staf /staf/galeri: 7 klik (7 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/pengguna — http://localhost:3000/staf/pengguna
+  OK    staf /staf/pengguna: 8 klik (21 destruktif dilewati, 9 tautan berulang), 0/0 kolom utuh
+
+## staf /staf/pengaturan — http://localhost:3000/staf/pengaturan
+  OK    staf /staf/pengaturan: 0 klik (6 destruktif dilewati, 9 tautan berulang), 15/15 kolom utuh
+
+## staf /staf/ganti-sandi — http://localhost:3000/staf/ganti-sandi
+  OK    staf /staf/ganti-sandi: 0 klik (2 destruktif dilewati, 9 tautan berulang), 3/3 kolom utuh
+
+## Kirim: dinonaktifkan saat proses & klik ganda
+  OK    login: tombol kirim disabled saat proses; klik ganda → 1 permintaan; pesan galat tampil — disabled=true, permintaan=1, pesan="Email atau kata sandi tidak sesuai"
+  OK    pengaduan: tombol kirim disabled saat proses; klik ganda → 1 kiriman; nomor kasus tampil — disabled=true, POST=1, nomor=WRP-968674
+  pengaduan uji WRP-968674 dihapus lunak
+
+RINGKASAN F2: 25 pemeriksaan, 0 gagal -> LULUS

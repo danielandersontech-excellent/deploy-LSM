@@ -1,0 +1,68 @@
+# QA-4 F4 — kesehatan server (baca-saja) — 2026-09-04T21:57:00Z
+## container warkop: status, restart count, waktu mulai
+/re8snqu8jwyxdqg2wmzrbm3w-123737506440 image=re8snqu8jwyxdqg2wmzrbm3w:359b0233d77c2588d1f5f97eca9182af1ce5bbcc status=running restart=0 mulai=2026-09-04T12:39:35.461598121Z oom=false
+/kwoz3jwjb037hw3oh669g9c4 image=mariadb:11 status=running restart=0 mulai=2026-09-03T08:20:19.530594518Z oom=false
+## disk server
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       193G   47G  146G  25% /
+/dev/sda1       193G   47G  146G  25% /
+
+(du containers butuh izin)
+## ukuran log container warkop
+/re8snqu8jwyxdqg2wmzrbm3w-123737506440  byte
+/kwoz3jwjb037hw3oh669g9c4  byte
+log-driver: json-file ; opsi: {"Type":"json-file","Config":{"max-file":"3","max-size":"10m"}}
+## memori & beban
+               total        used        free      shared  buff/cache   available
+Mem:           15992        3321         310         309       12972       12670
+ 04:57:11 up 15 days,  1:56,  7 users,  load average: 0.45, 0.32, 0.26
+re8snqu8jwyxdqg2wmzrbm3w-123737506440 cpu=0.02% mem=145.6MiB / 15.62GiB
+kwoz3jwjb037hw3oh669g9c4 cpu=3.90% mem=134.5MiB / 15.62GiB
+## log app warkop: baris error/warn/exception/uncaught (24 jam terakhir, maks 60 baris)
+## ringkasan clientError (dijaga server.js) 24 jam
+0
+## log DB mariadb: error/warning (24 jam, maks 40 baris)
+2026-09-04  9:50:08 33642 [Warning] Aborted connection 33642 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04  9:50:08 34083 [Warning] Aborted connection 34083 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04  9:50:08 34084 [Warning] Aborted connection 34084 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04  9:50:08 34081 [Warning] Aborted connection 34081 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 10:51:40 37369 [Warning] Aborted connection 37369 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 37357 [Warning] Aborted connection 37357 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36331 [Warning] Aborted connection 36331 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36332 [Warning] Aborted connection 36332 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36302 [Warning] Aborted connection 36302 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36330 [Warning] Aborted connection 36330 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36329 [Warning] Aborted connection 36329 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36328 [Warning] Aborted connection 36328 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36303 [Warning] Aborted connection 36303 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36301 [Warning] Aborted connection 36301 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 37360 [Warning] Aborted connection 37360 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36281 [Warning] Aborted connection 36281 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 10:51:40 36300 [Warning] Aborted connection 36300 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 11:07:58 37818 [Warning] Aborted connection 37818 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 11:07:58 37817 [Warning] Aborted connection 37817 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 11:07:58 37769 [Warning] Aborted connection 37769 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 11:07:58 37770 [Warning] Aborted connection 37770 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 11:07:58 37766 [Warning] Aborted connection 37766 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 12:13:41 38282 [Warning] Aborted connection 38282 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:13:41 38280 [Warning] Aborted connection 38280 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:13:41 38159 [Warning] Aborted connection 38159 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:13:41 38281 [Warning] Aborted connection 38281 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:13:41 38170 [Warning] Aborted connection 38170 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:13:41 38171 [Warning] Aborted connection 38171 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:13:41 38283 [Warning] Aborted connection 38283 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:27:54 39796 [Warning] Aborted connection 39796 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 12:27:54 39795 [Warning] Aborted connection 39795 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 12:27:54 39729 [Warning] Aborted connection 39729 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 12:27:54 39794 [Warning] Aborted connection 39794 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 12:27:54 40049 [Warning] Aborted connection 40049 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.14' (Got an error reading communication packets)
+2026-09-04 12:40:16 40105 [Warning] Aborted connection 40105 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:40:16 40101 [Warning] Aborted connection 40101 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:40:16 40074 [Warning] Aborted connection 40074 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:40:16 40104 [Warning] Aborted connection 40104 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:40:16 40103 [Warning] Aborted connection 40103 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+2026-09-04 12:40:16 40102 [Warning] Aborted connection 40102 to db: 'warkop_nusantara' user: 'warkop' host: '172.16.1.13' (Got an error reading communication packets)
+## healthcheck terakhir app
+2026-09-05 04:56:42.372056664 +0700 WIB exit=0
+2026-09-05 04:57:12.423975952 +0700 WIB exit=0
+

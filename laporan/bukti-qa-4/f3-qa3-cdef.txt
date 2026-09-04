@@ -1,0 +1,28 @@
+# QA-3 C/D/E/F — permintaan pemilik — http://127.0.0.1:3000 — 2026-09-04T22:03:10.210Z
+
+## C — "Masuk Staff" hilang dari situs publik
+   1. 11 halaman publik: 0 penyebutan "Masuk Staff" dan 0 tautan ke /login → 11 halaman bersih
+   2. halaman masuk TETAP berfungsi lewat URL langsung (/login 200 dengan formulir) → 200, formulir email + kata sandi ada
+
+## D — footer
+   3. D1: <footer> selebar layar (tanpa max-w di elemen luar), isi tetap di kontainer max-w-container-max → luar: bg-primary dark:bg-primary-container text-on-primary dark:text-on-prim...; kontainer isi ada di dalamnya
+   4. D2: tautan "Kantor Pusat" ke Google Maps, target _blank + rel noopener; "Kantor Regional" hilang → https://www.google.com/maps/dir/?api=1&amp;destination=0.504192,101.427052
+   5. D2: alamat peta tersimpan sebagai pengaturan (K3) dan dapat diubah lewat API → diubah lalu dipulihkan ke https://www.google.com/maps/dir/?api=1&destination=0.504192,...
+
+## E — media sosial
+   6. hanya kanal TERISI yang tampil: TikTok ada, Instagram/YouTube/Facebook tidak → TikTok tampil; tiga kanal kosong tidak dirender
+   7. ikon sosial = SVG inline buatan sendiri (bukan berkas unduhan, bukan <img>) → SVG inline 24x24 currentColor
+   8. mengisi Instagram lewat Pengaturan memunculkan ikonnya; dikosongkan lagi -> hilang → muncul saat diisi, hilang saat dikosongkan
+   9. URL sosial tidak sah ditolak (http biasa, javascript:, teks bebas) → http://www.instagr→422, javascript:alert(1→422, instagram saya→422
+
+## F — kategori program dinamis
+  10. "Kategori Lainnya..." membuat kategori baru dan program tersimpan memakainya → kategori "Uji QA3 Kategori mtni2yq5" -> slug uji-qa3-kategori-mtni2yq5; program id 27
+  11. kategori baru langsung muncul di filter publik /program dan menyaring dengan benar → filter ?kategori=uji-qa3-kategori-mtni2yq5 menampilkan program uji, kategori lain tidak
+  12. ruang staf: formulir Tambah Program memuat kategori baru + pilihan "Kategori Lainnya..." yang memunculkan kolom isian (diklik sungguhan di Chrome) → 6 pilihan (termasuk kategori baru + Kategori Lainnya...); kolom isian muncul; 0 galat konsol
+  13. tanpa duplikat: nama sama (beda huruf besar/spasi) memakai kategori yang sudah ada → dipetakan ke slug yang sama (uji-qa3-kategori-mtni2yq5), tanpa baris kategori baru
+  14. nama kategori tidak wajar ditolak (terlalu pendek, tag HTML, tanpa huruf); slug ngawur ditolak → ab→KATEGORI_BARU_PENDEK, <b>Hukum</b>→KATEGORI_BARU_HTML, 12345→KATEGORI_BARU_TIDAK_WAJAR, slug-ngawur→KATEGORI_TIDAK_SAH
+
+## Pembersihan
+  15. program uji dan kategori uji dihapus → program DELETE 200; kategori uji dihapus 1; sisa program uji 0
+
+RINGKASAN QA-3 C/D/E/F: 15 langkah, 0 gagal -> LULUS

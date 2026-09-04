@@ -53,8 +53,11 @@ const DESKRIPSI = 'Uji QA-2 C3a lampiran pengaduan; data uji ini dihapus lunak p
 // 10 kiriman/jam per IP tidak habis di tengah kelompok; kelompok C sengaja menghabiskan kuota satu IP.
 // Alamat diacak tiap kali skrip dijalankan: pembatas laju hidup di memori proses peladen selama 60 menit,
 // jadi alamat tetap akan membuat pengulangan uji dalam satu jam gagal karena sisa kuota lari sebelumnya.
+// QA-4: ruang alamat diperluas ke 10.x.y.z (16 juta kombinasi). Dengan 250 nilai saja, suite yang dijalankan
+// berurutan dalam satu jam (QA-4 F3 menjalankan 7 suite) bisa bertabrakan dan memicu 429 palsu.
 const oktet = () => 1 + Math.floor(Math.random() * 250);
-const [IP_A, IP_B, IP_C, IP_D] = [`203.0.113.${oktet()}`, `203.0.113.${oktet()}`, `203.0.113.${oktet()}`, `203.0.113.${oktet()}`];
+const ipAcak = () => `10.${oktet()}.${oktet()}.${oktet()}`;
+const [IP_A, IP_B, IP_C, IP_D] = [ipAcak(), ipAcak(), ipAcak(), ipAcak()];
 
 console.log(`# QA-2 C3a — lampiran pengaduan: jenis & batas — ${U} — ${new Date().toISOString()}`);
 const tkVerifikator = await login('siti.aminah@warkopnusantara.id', env.SEED_STAF_PASSWORD);

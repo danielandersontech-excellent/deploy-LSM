@@ -33,6 +33,7 @@ const api = async (metode, jalur, tk, badan, ip = null) => {
 };
 const login = async (email, sandi) => { const { s, h } = await api('POST', '/api/auth/login', null, { email, kataSandi: sandi }); wajib(s === 200, `login ${email} HTTP ${s}`); return ((h.get('set-cookie') || '').match(/warkop_token=([^;]+)/) || [])[1]; };
 const oktet = () => 1 + Math.floor(Math.random() * 250);
+const ipAcak = () => `10.${oktet()}.${oktet()}.${oktet()}`; // QA-4: ruang alamat luas, hindari 429 palsu antarsuite
 
 console.log(`# QA-2 C4 — regresi bug yang diperbaiki — ${U} — ${new Date().toISOString()}`);
 const tkVerifikator = await login('siti.aminah@warkopnusantara.id', env.SEED_STAF_PASSWORD);
@@ -54,7 +55,7 @@ const formulir = (deskripsi, berkasList) => {
   return f;
 };
 await langkah(`lampiran JPG ${(JPG16.length / 1048576).toFixed(1)} MB (di bawah batas 20 MB) → 201, tersimpan, gambar terbaca utuh`, async () => {
-  const { s, j } = await api('POST', '/api/pengaduan', null, formulir('Uji QA-2 C4 regresi: lampiran gambar 16 MB. Dihapus lunak.', [[JPG16, 'bukti-besar.jpg', 'image/jpeg']]), `203.0.113.${oktet()}`);
+  const { s, j } = await api('POST', '/api/pengaduan', null, formulir('Uji QA-2 C4 regresi: lampiran gambar 16 MB. Dihapus lunak.', [[JPG16, 'bukti-besar.jpg', 'image/jpeg']]), ipAcak());
   wajib(s === 201 && j.lampiran === 1, `HTTP ${s} ${JSON.stringify(j).slice(0, 140)}`);
   nomorUji.push(j.nomorKasus);
   const d = await api('GET', `/api/staf/pengaduan?q=${j.nomorKasus}`, tkVerifikator);
@@ -68,7 +69,7 @@ await langkah(`lampiran JPG ${(JPG16.length / 1048576).toFixed(1)} MB (di bawah 
   return `201 ${j.nomorKasus}; tersimpan ${(isi.length / 1048576).toFixed(2)} MB, gambar sah ${meta.width}x${meta.height} (dikompres ulang sharp, sesuai rancangan)`;
 });
 await langkah('lampiran MP4 15 MB + PDF 14 MB dalam satu kiriman → 201, keduanya tersimpan BYTE-PER-BYTE utuh', async () => {
-  const { s, j } = await api('POST', '/api/pengaduan', null, formulir('Uji QA-2 C4 regresi: rekaman MP4 15 MB dan dokumen PDF 14 MB. Dihapus lunak.', [[MP4_15, 'rekaman.mp4', 'video/mp4'], [PDF14, 'dokumen.pdf', 'application/pdf']]), `203.0.113.${oktet()}`);
+  const { s, j } = await api('POST', '/api/pengaduan', null, formulir('Uji QA-2 C4 regresi: rekaman MP4 15 MB dan dokumen PDF 14 MB. Dihapus lunak.', [[MP4_15, 'rekaman.mp4', 'video/mp4'], [PDF14, 'dokumen.pdf', 'application/pdf']]), ipAcak());
   wajib(s === 201 && j.lampiran === 2, `HTTP ${s} ${JSON.stringify(j).slice(0, 140)}`);
   nomorUji.push(j.nomorKasus);
   const d = await api('GET', `/api/staf/pengaduan?q=${j.nomorKasus}`, tkVerifikator);
@@ -85,7 +86,7 @@ await langkah('lampiran MP4 15 MB + PDF 14 MB dalam satu kiriman → 201, keduan
   return `201 ${j.nomorKasus}; MP4 ${ukuran['video/mp4']} byte & PDF ${ukuran['application/pdf']} byte identik dengan yang dikirim`;
 });
 await langkah('batas ATAS tetap dijaga route (bukan pemotongan diam-diam): 21 MB → 413, total 45 MB → 413', async () => {
-  const ip = `203.0.113.${oktet()}`;
+  const ip = ipAcak();
   const b21 = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff]), Buffer.alloc(21 * 1024 * 1024)]);
   const a = await api('POST', '/api/pengaduan', null, formulir('Uji QA-2 C4 regresi batas atas.', [[b21, 'x.jpg', 'image/jpeg']]), ip);
   wajib(a.s === 413, `21 MB HTTP ${a.s} ${JSON.stringify(a.j).slice(0, 120)}`);
@@ -135,55 +136,41 @@ function posisiJudul(html, slug) {
   const m = label && html.match(new RegExp(`>\\s*${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*<`));
   return m ? m.index : -1;
 }
-await langkah('pengurus tingkat "pusat" TANPA kelompok (pilihan "Tanpa kelompok (Pimpinan Regional)") → tampil di /struktur', async () => {
+// RUN QA-3 menggantikan perilaku ini: pengurus TANPA kelompok tidak lagi boleh ada (kelompok wajib) sehingga
+// tidak mungkin lagi "tersimpan tetapi tidak tampil". Regresinya kini: kelompok kosong DITOLAK 422.
+await langkah('QA-3: pengurus TANPA kelompok ditolak 422 KELOMPOK_WAJIB (dulu tersimpan tetapi tidak tampil di mana pun)', async () => {
   const a = await api('POST', '/api/staf/pengurus', tkRedaktur, { nama: 'Regresi C4 Pusat Tanpa Kelompok', jabatan: 'Staf Ahli', tingkat: 'pusat', kelompok: '', wilayah_id: null, foto: null, deskripsi: null, aktif: true });
+  wajib(a.s === 422 && a.j.kode === 'KELOMPOK_WAJIB', `HTTP ${a.s} ${JSON.stringify(a.j).slice(0, 120)}`);
+  return `422 ${a.j.kode}`;
+});
+await langkah('QA-3: pengurus DPW berwilayah (provinsi 13) tampil di blok Dewan Pimpinan Wilayah', async () => {
+  const a = await api('POST', '/api/staf/pengurus', tkRedaktur, { nama: 'Regresi C4 DPW Jawa Barat', jabatan: 'Ketua DPW', tingkat: 'wilayah', kelompok: 'dpw', wilayah_id: 13, foto: null, deskripsi: null, aktif: true });
   wajib(a.s === 201, `POST ${a.s} ${JSON.stringify(a.j).slice(0, 140)}`);
   const id = a.j.pengurus?.id ?? a.j.id;
   const html = await halamanStruktur();
-  const tampil = html.includes('Regresi C4 Pusat Tanpa Kelompok');
-  const iRegional = html.indexOf('id="regional"');
-  const iNama = html.indexOf('Regresi C4 Pusat Tanpa Kelompok');
+  const iDpw = html.search(/>\s*Dewan Pimpinan Wilayah \(DPW\)\s*</); const iNama = html.indexOf('Regresi C4 DPW Jawa Barat');
   const d = await api('DELETE', `/api/staf/pengurus/${id}`, tkRedaktur);
-  wajib(tampil, 'tidak tampil di /struktur (bug kembali)');
-  wajib(iRegional > 0 && iNama > iRegional, `tampil tetapi di luar bagian Pimpinan Regional (regional ${iRegional}, nama ${iNama})`);
+  wajib(iDpw > 0 && iNama > iDpw, `tidak tampil di blok DPW (dpw ${iDpw}, nama ${iNama})`);
   wajib(d.s === 200, `pembersihan DELETE ${d.s}`);
-  return `id ${id} tampil di bagian Pimpinan Regional, lalu dihapus`;
+  return `id ${id} tampil di blok DPW, lalu dihapus`;
 });
-await langkah('pengurus tingkat "wilayah" tanpa kelompok tetap tampil (tidak ada regresi pada perilaku lama)', async () => {
-  const a = await api('POST', '/api/staf/pengurus', tkRedaktur, { nama: 'Regresi C4 Wilayah Tanpa Kelompok', jabatan: 'Kepala Regional', tingkat: 'wilayah', kelompok: '', wilayah_id: 13, foto: null, deskripsi: null, aktif: true });
-  wajib(a.s === 201, `POST ${a.s} ${JSON.stringify(a.j).slice(0, 140)}`);
-  const id = a.j.pengurus?.id ?? a.j.id;
+await langkah('QA-3: blok Dewan Pimpinan Wilayah mendahului blok Koordinator Daerah; DPC/Direktorat Eksekutif tidak ada', async () => {
   const html = await halamanStruktur();
-  const tampil = html.includes('Regresi C4 Wilayah Tanpa Kelompok');
-  const d = await api('DELETE', `/api/staf/pengurus/${id}`, tkRedaktur);
-  wajib(tampil, 'pengurus wilayah tanpa kelompok tidak tampil');
-  wajib(d.s === 200, `pembersihan DELETE ${d.s}`);
-  return `id ${id} tampil, lalu dihapus`;
-});
-await langkah('kerangka DPW/DPD/DPC TIDAK bocor ke bagian Pimpinan Regional (tetap di blok kerangka)', async () => {
-  const html = await halamanStruktur();
-  const iRegional = html.indexOf('id="regional"');
-  wajib(iRegional > 0, 'penanda bagian regional tidak ditemukan');
-  for (const slug of ['dpw', 'dpd', 'dpc']) {
-    const i = posisiJudul(html, slug);
-    wajib(i > 0, `judul kelompok ${slug} tidak dirender`);
-    wajib(i < iRegional, `blok ${slug} berada di dalam/di bawah bagian Pimpinan Regional (${i} > ${iRegional})`);
-  }
-  const sesudahRegional = html.slice(iRegional);
-  for (const teks of ['Ketua DPW', 'Ketua DPD', 'Ketua DPC']) wajib(!sesudahRegional.includes(teks), `template "${teks}" bocor ke bagian Pimpinan Regional`);
-  return 'tiga blok kerangka berada sebelum bagian Pimpinan Regional; tidak ada template yang bocor';
+  const iDpw = html.search(/>\s*Dewan Pimpinan Wilayah \(DPW\)\s*</); const iKorda = html.search(/>\s*Koordinator Daerah\s*</);
+  wajib(iDpw > 0 && iKorda > iDpw, `urutan blok salah (dpw ${iDpw}, korda ${iKorda})`);
+  wajib(!/Dewan Pimpinan Cabang|Direktorat Eksekutif/.test(html), 'DPC/Direktorat Eksekutif masih dirender');
+  const provinsi = (html.match(/Ketua DPW /g) || []).length;
+  return `DPW lalu Koordinator Daerah; kerangka DPW ${provinsi} provinsi tanpa pejabat tampil "(Belum terisi)"`;
 });
 
 console.log('\n## Bagian Pimpinan Regional: filter wilayah & tampilan peta (kini kosong karena data DPP belum punya pengurus berwilayah)');
-await langkah('bagian Pimpinan Regional kosong menampilkan keadaan kosong yang benar (bukan halaman rusak)', async () => {
+await langkah('QA-3: blok Koordinator Daerah dirender (keadaan kosong bila belum ada koordinator)', async () => {
   const html = await halamanStruktur();
-  const i = html.indexOf('id="regional"');
-  const bagian = html.slice(i, i + 3000);
-  wajib(/Belum ada pimpinan regional/.test(bagian), 'keadaan kosong Pimpinan Regional tidak tampil');
-  return 'keadaan kosong tampil dengan arahan ke Kelola Pengurus';
+  wajib(/>\s*Koordinator Daerah\s*</.test(html), 'blok Koordinator Daerah tidak dirender');
+  return /Belum ada koordinator daerah/.test(html) ? 'keadaan kosong Koordinator Daerah tampil' : 'daftar koordinator daerah tampil';
 });
 await langkah('dengan satu pengurus berwilayah: filter ?wilayah= dan ?tampilan=peta bekerja, lalu data uji dihapus', async () => {
-  const a = await api('POST', '/api/staf/pengurus', tkRedaktur, { nama: 'Regresi C4 Pimpinan Riau', jabatan: 'Kepala Regional', tingkat: 'wilayah', kelompok: '', wilayah_id: 13, foto: null, deskripsi: null, aktif: true });
+  const a = await api('POST', '/api/staf/pengurus', tkRedaktur, { nama: 'Regresi C4 Pimpinan Riau', jabatan: 'Ketua DPW', tingkat: 'wilayah', kelompok: 'dpw', wilayah_id: 13, foto: null, deskripsi: null, aktif: true });
   wajib(a.s === 201, `POST ${a.s} ${JSON.stringify(a.j).slice(0, 140)}`);
   const id = a.j.pengurus?.id ?? a.j.id;
   try {

@@ -1,0 +1,17 @@
+# QA-4 F3 — realtime + lampiran terjaga + pengaturan sosial — http://127.0.0.1:3000 — 2026-09-04T22:03:18.650Z
+
+## 1. Realtime: pengaduan baru muncul di dashboard (event socket)
+   1. klien socket superadmin tersambung (cookie httpOnly), room memuat "staf" → tersambung; room global, user:1, staf
+   2. POST pengaduan BERNAMA -> event pengaduan:baru diterima <= 3 s, muatan tanpa nama/NIK/telepon/email → 201 WRP-904165; event dalam 20 ms; kunci muatan: nomorKasus,kategori,wilayahId,wilayah,status,waktu
+   3. verifikator mengubah status -> event pengaduan:status diterima → event status: {"nomorKasus":"WRP-904165","kategori":"pungli","wilayahId":13,"wilayah":"Jawa Barat","status":"diver
+
+## 2. Lampiran tersimpan di direktori TERJAGA (bukan public/) dan terbuka kembali oleh staf
+   4. pengaduan anonim JPG+PDF+MP4 -> 201; tiap berkas ada di D:\Deploy\LSM\unggahan-terjaga; tidak ada di public/ → 201 WRP-350640; undefined 332B, undefined 69B, undefined 1052B; semua di disk terjaga, 200+nosniff, tanpa sesi 401
+
+## 3. Pengaturan media sosial lewat ruang staf (K3)
+   5. isi sosial_youtube -> ikon muncul di footer; kosongkan -> hilang → ikon YouTube muncul lalu hilang
+
+## Pembersihan
+   6. pengaduan uji dihapus lunak; berkas lampiran uji dihapus dari disk → 2 pengaduan; 3 berkas
+
+RINGKASAN F3-baru: 6 langkah, 0 gagal -> LULUS

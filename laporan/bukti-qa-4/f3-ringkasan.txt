@@ -1,0 +1,12 @@
+# QA-4 F3 — ringkasan seluruh suite alur ujung ke ujung (build lokal) — 2026-09-04T22:07:24Z
+f3-c3a-lampiran-batas: RINGKASAN C3a: 12 langkah, 0 gagal -> LULUS
+f3-c3c-alur-qa2: RINGKASAN C3c: 11 langkah, 0 gagal -> LULUS
+f3-c3d-aksi-end-to-end: RINGKASAN 4b: 25 langkah, 0 gagal -> LULUS
+f3-c4-regresi-bug-qa2: RINGKASAN C4: 11 langkah, 0 gagal -> LULUS
+f3-qa3-cdef: RINGKASAN QA-3 C/D/E/F: 15 langkah, 0 gagal -> LULUS
+f3-qa3-struktur-pengurus: RINGKASAN QA-3 A+B: 11 langkah, 0 gagal -> LULUS
+f3-realtime-lampiran-lokal: RINGKASAN F3-baru: 6 langkah, 0 gagal -> LULUS
+f3-realtime-lampiran: RINGKASAN F3-baru: 6 langkah, 0 gagal -> LULUS
+
+Catatan: c3a, c3d(4b), c4 sempat GAGAL pada lari pertama karena (1) ruang IP acak 250 nilai bertabrakan antarsuite -> 429 palsu, (2) suite lama masih membuat pengurus TANPA kelompok/di luar susunan QA-3. Skrip regresinya diperbarui ke kontrak QA-3 (kelompok wajib, blok DPW/Koordinator Daerah) dan ruang IP diperluas; bukan cacat produk.
+f3-c3b-kembali-muatulang: RINGKASAN C3b: 11 langkah, 0 gagal -> LULUS (dijalankan setelah F1/F2 pada build akhir; lari pertama pada build 46ca511 GAGAL langkah 1 = BUG F5-4 lompat gulir bilah, diperbaiki)

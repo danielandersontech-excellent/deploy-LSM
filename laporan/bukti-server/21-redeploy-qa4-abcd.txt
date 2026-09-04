@@ -1,0 +1,10 @@
+# Redeploy produksi QA-4 A-D (commit 46ca511) — 2026-09-04T21:56:15Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"zxxcg7xmnigja60k11pd4rhs"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[21:58:18Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:359b0233d77c2588d1f5f97eca9182af1ce5bbcc Up 9 hours (healthy) 
+[21:58:50Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:46ca511fe7aeb8bb3ccb62f1bf922e75e0e06053 Up 8 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:359b0233d77c2588d1f5f97eca9182af1ce5bbcc Up 9 hours (healthy) 
+HASIL: image 46ca511 HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-05T04:58:54+07:00","basisData":"terhubung","versi":"0.1.0"}

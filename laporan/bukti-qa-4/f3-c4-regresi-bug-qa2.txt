@@ -1,0 +1,22 @@
+# QA-2 C4 — regresi bug yang diperbaiki — http://127.0.0.1:3000 — 2026-09-04T22:07:00.684Z
+
+## BUG 1 — lampiran besar (10-20 MB) harus diterima utuh, bukan 400 "Muatan tidak sah"
+   1. lampiran JPG 16.0 MB (di bawah batas 20 MB) → 201, tersimpan, gambar terbaca utuh → 201 WRP-014104; tersimpan 0.92 MB, gambar sah 1920x1440 (dikompres ulang sharp, sesuai rancangan)
+   2. lampiran MP4 15 MB + PDF 14 MB dalam satu kiriman → 201, keduanya tersimpan BYTE-PER-BYTE utuh → 201 WRP-111181; MP4 15728668 byte & PDF 14680080 byte identik dengan yang dikirim
+   3. batas ATAS tetap dijaga route (bukan pemotongan diam-diam): 21 MB → 413, total 45 MB → 413 → 413 LAMPIRAN_TERLALU_BESAR dan 413 LAMPIRAN_TOTAL_TERLALU_BESAR
+   4. unggahan gambar staf: 4 MB diterima; 16 MB ditolak 413 dengan pesan batas 5 MB (batas desain, bukan pemotongan diam-diam) → 2.51 MB → 201 /unggahan/artikel/de7437cc4b11f8a9898b83f360019058.jpg; 16 MB → 413 "Ukuran berkas melebihi batas 5 MB"
+   5. galeri video MP4 15 MB (batas galeri 20 MB) → 201 tersimpan; sebelum perbaikan gagal karena pemotongan 10 MB → 201 id 15 (15 MB), lalu dihapus
+
+## BUG 2 — pengurus tanpa kelompok harus tetap tampil di halaman publik /struktur
+   6. QA-3: pengurus TANPA kelompok ditolak 422 KELOMPOK_WAJIB (dulu tersimpan tetapi tidak tampil di mana pun) → 422 KELOMPOK_WAJIB
+   7. QA-3: pengurus DPW berwilayah (provinsi 13) tampil di blok Dewan Pimpinan Wilayah → id 73 tampil di blok DPW, lalu dihapus
+   8. QA-3: blok Dewan Pimpinan Wilayah mendahului blok Koordinator Daerah; DPC/Direktorat Eksekutif tidak ada → DPW lalu Koordinator Daerah; kerangka DPW 38 provinsi tanpa pejabat tampil "(Belum terisi)"
+
+## Bagian Pimpinan Regional: filter wilayah & tampilan peta (kini kosong karena data DPP belum punya pengurus berwilayah)
+   9. QA-3: blok Koordinator Daerah dirender (keadaan kosong bila belum ada koordinator) → keadaan kosong Koordinator Daerah tampil
+  10. dengan satu pengurus berwilayah: filter ?wilayah= dan ?tampilan=peta bekerja, lalu data uji dihapus → tanpa filter tampil; ?wilayah=13 tampil; ?wilayah=1 tidak; ?tampilan=peta 200
+
+## Pembersihan
+  11. pengaduan uji dihapus lunak → 2 pengaduan (WRP-014104, WRP-111181)
+
+RINGKASAN C4: 11 langkah, 0 gagal -> LULUS

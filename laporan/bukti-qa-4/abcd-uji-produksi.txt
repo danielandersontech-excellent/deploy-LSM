@@ -1,0 +1,28 @@
+# QA-4 A/B/C/D — produksi — https://warkopnusantara.id — 2026-09-04T22:00:35.414Z
+
+## A — kategori berita final
+   1. editor artikel (staf) menawarkan tepat 11 kategori urut final; kategori lama tidak muncul → 11 opsi urut: Nasional, Daerah, Hukum, Kebijakan Publik, Investigasi, Lingkungan, Pekerja, UMKM, Sosial, PPA, Podcash
+   2. filter /berita: 11 slug final diterima; slug lama (siaran-pers) dan ngawur diperlakukan kosong → 11 slug -> 200; dropdown filter = 11 slug final
+   3. API artikel menolak kategori NONAKTIF (id 2) dan tidak ada (id 999) dengan 422 → 422 KATEGORI_NONAKTIF; 422 KATEGORI_TIDAK_SAH
+
+## B — bilah kategori (5 halaman x 3 lebar)
+   4. 375px: bilah ada tepat di bawah header di 6 halaman, 11 item urut, bg-primary, tanpa item terpotong, tanpa gulir halaman → latar rgb(39, 19, 16); geser=true; aktif Hukum warna rgb(233, 195, 73) garis 2px
+   5. 768px: bilah ada tepat di bawah header di 6 halaman, 11 item urut, bg-primary, tanpa item terpotong, tanpa gulir halaman → latar rgb(39, 19, 16); geser=true; aktif Hukum warna rgb(233, 195, 73) garis 2px
+   6. 1280px: bilah ada tepat di bawah header di 6 halaman, 11 item urut, bg-primary, tanpa item terpotong, tanpa gulir halaman → latar rgb(39, 19, 16); geser=false; aktif Hukum warna rgb(233, 195, 73) garis 2px
+   7. keyboard 1280: Tab dari awal dokumen mencapai item bilah; Enter berpindah ke /berita?kategori=... → Tab -> /berita?kategori=nasional; Enter -> /berita?kategori=nasional
+   8. geser 375: mengeser bilah (scrollLeft) menampakkan item terakhir tanpa memindah gulir halaman → item terakhir "Podcash" terlihat; gulir halaman tetap
+   9. halaman staf TIDAK memuat bilah kategori → dashboard tanpa bilah
+
+## C — beranda berita
+  10. beranda: strip identitas + tombol Sampaikan Pengaduan & Lacak Kasus; sorotan h1; Berita Terkini; Paling Banyak Dibaca; Status Advokasi; Rekam Jejak → semua bagian ada; 6 kartu berita terkini
+  11. beranda: 0 tautan mati (semua href internal dibuka -> 200/307) → 31 tautan diperiksa, 0 mati
+  12. alur: beranda -> klik kategori di bilah -> klik artikel -> kembali -> daftar kategori utuh (Chrome 1280) → / -> /berita?kategori=investigasi -> /berita/indikasi-penyelewengan-dana-desa-mekarsari -> kembali /berita?kategori=investigasi; 0 galat konsol
+  13. sitemap memuat / dan /berita; robots mengizinkan /; metadata beranda menyebut berita → title "WARKOP NUSANTARA - Berita, Investigasi, dan Kanal Pengaduan Masyarakat"
+
+## D — header seluler
+  14. 320px: hamburger sejajar satu baris dengan merek (tengah vertikal), tidak tumpang tindih, laci berfungsi → merek kiri x=16, hamburger kanan x=304/320, sejajar; laci 7 tautan
+  15. 375px: hamburger sejajar satu baris dengan merek (tengah vertikal), tidak tumpang tindih, laci berfungsi → merek kiri x=16, hamburger kanan x=359/375, sejajar; laci 7 tautan
+  16. 414px: hamburger sejajar satu baris dengan merek (tengah vertikal), tidak tumpang tindih, laci berfungsi → merek kiri x=16, hamburger kanan x=398/414, sejajar; laci 7 tautan
+  17. 767px: hamburger sejajar satu baris dengan merek (tengah vertikal), tidak tumpang tindih, laci berfungsi → merek kiri x=16, hamburger kanan x=751/767, sejajar; laci 7 tautan
+
+RINGKASAN QA-4 A/B/C/D (produksi): 17 langkah, 0 gagal -> LULUS

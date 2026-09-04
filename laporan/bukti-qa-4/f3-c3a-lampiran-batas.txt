@@ -1,0 +1,23 @@
+# QA-2 C3a — lampiran pengaduan: jenis & batas — http://127.0.0.1:3000 — 2026-09-04T22:05:45.741Z
+
+## A. Lima jenis lampiran yang dijanjikan (kiriman 1-5)
+   1. lampiran JPG → 201 lampiran=1; verifikator membuka 200 image/jpeg + nosniff; tanpa sesi 401 → 201 WRP-840969; content-type image/jpeg
+   2. lampiran PNG → 201 lampiran=1; verifikator membuka 200 image/png + nosniff; tanpa sesi 401 → 201 WRP-015300; content-type image/png
+   3. lampiran WebP → 201 lampiran=1; verifikator membuka 200 image/webp + nosniff; tanpa sesi 401 → 201 WRP-570608; content-type image/webp
+   4. lampiran PDF → 201 lampiran=1; verifikator membuka 200 application/pdf + nosniff; tanpa sesi 401 → 201 WRP-294667; content-type application/pdf
+   5. lampiran MP4 → 201 lampiran=1; verifikator membuka 200 video/mp4 + nosniff; tanpa sesi 401 → 201 WRP-043241; content-type video/mp4
+
+## B. Batas jumlah, ukuran per berkas, ukuran total, dan jenis (kiriman 6-10)
+   6. 5 lampiran sekaligus (batas jumlah) → 201 lampiran=5; kelimanya bisa dibuka verifikator → 201 WRP-764723; 5 lampiran terbuka (image/jpeg,image/png,image/webp,application/pdf,video/mp4)
+   7. 6 lampiran (melewati batas jumlah) → 422 LAMPIRAN_TERLALU_BANYAK, tanpa pengaduan baru → 422 LAMPIRAN_TERLALU_BANYAK; total pengaduan tetap 9
+   8. lampiran 21 MB (melewati 20 MB per berkas) → 413 LAMPIRAN_TERLALU_BESAR → 413 LAMPIRAN_TERLALU_BESAR
+   9. 3 lampiran 15 MB (total 45 MB > 40 MB) → 413 LAMPIRAN_TOTAL_TERLALU_BESAR → 413 LAMPIRAN_TOTAL_TERLALU_BESAR
+  10. lampiran palsu (EXE bernama .jpg dan SVG bernama .png) → 415 LAMPIRAN_TIPE_TIDAK_SAH → 415 LAMPIRAN_TIPE_TIDAK_SAH untuk EXE dan SVG
+
+## C. Pembatas laju pengaduan (10 kiriman/jam per IP)
+  11. 10 kiriman sah dari satu IP → semua 201; ke-11 → 429 pesan netral + sisaDetik; IP lain tidak ikut terkunci → 10x 201; ke-11 429 "Terlalu banyak permintaan dari jaringan Anda dalam waktu sin..." sisaDetik 3600; IP lain tetap 201
+
+## D. Pembersihan data uji
+  12. pengaduan uji dihapus lunak → 17 pengaduan (WRP-840969, WRP-015300, WRP-570608, WRP-294667, WRP-043241, WRP-764723, WRP-418540, WRP-324496, WRP-194675, WRP-967831, WRP-680904, WRP-564652, WRP-024754, WRP-631822, WRP-567405, WRP-767549, WRP-812179)
+
+RINGKASAN C3a: 12 langkah, 0 gagal -> LULUS
