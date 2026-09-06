@@ -1,0 +1,10 @@
+# Redeploy produksi QA-5 piramida struktur (commit 967864e) — 2026-09-06T03:31:27Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"anxdqcax3dn3tfj5c6os1p61"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[03:33:31Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:010e3039df04eb61927227d439c05df757cddd50 Up 8 hours (healthy) 
+[03:34:05Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 30 seconds (healthy) re8snqu8jwyxdqg2wmzrbm3w:010e3039df04eb61927227d439c05df757cddd50 Up 8 hours (healthy) 
+HASIL: image 967864e HEALTHY, health 200
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-09-06T10:34:04+07:00","basisData":"terhubung","versi":"0.1.0"}

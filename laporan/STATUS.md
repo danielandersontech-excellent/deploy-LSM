@@ -216,11 +216,11 @@ KEPUTUSAN PEMILIK: setiap blok berkelompok pada /struktur disusun piramida berda
 | P | Tangkapan sebelum/sesudah 1280 + 375 per kelompok | SELESAI | `tangkapan/{sebelum,sesudah}-{dewan,dpp,direktorat,satgas}-{1280,375}.png` |
 | P | Sapu konsol /struktur 3 lebar; penjaga dash; build + lint | SELESAI | konsol/jaringan/gulir/tumpang/dash 0 pada 3 lebar; regresi sapu QA-4 69 sel 0 gagal; penjaga dash bersih; build EXIT 0; lint EXIT 0 |
 | P | Kesetiaan layar struktur dasar diperbarui + alasan | SELESAI | 14 layar HTTP 200, cacat export 0; struktur_organisasi identik dengan dasar QA-4 (84%, 27 kelas hilang); alasan perubahan susunan DOM di laporan bagian 5 |
-| P | Commit, push, redeploy, verifikasi https://warkopnusantara.id/struktur | SEDANG | lihat "Posisi terakhir RUN QA-5" |
+| P | Commit, push, redeploy, verifikasi https://warkopnusantara.id/struktur | SELESAI (967864e) | redeploy webhook `bukti-server/24-redeploy-qa5-piramida.txt`: image 967864e HEALTHY ±3 menit, health 200; uji produksi `8-uji-piramida-produksi.txt` 198 butir 0 gagal (Pembina 1-1, DPP 1-1-2, Humas 1-1, lainnya 1; konsol/jaringan/gulir/tumpang/dash 0 pada 3 lebar); tangkapan `tangkapan/produksi-*` |
 
 ### MENUNGGU PEMILIK (RUN QA-5)
 1. Tidak ada butir baru. Butir MENUNGGU PEMILIK RUN QA-1..QA-4 (terutama volume `/app/unggahan-terjaga`) dan DAFTAR TINDAKAN PEMILIK Tahap 9 tetap berlaku.
 2. Catatan: bila pemilik menekan ▲▼ di Kelola Pengurus, nomor urutan dinomori ulang global; piramida tetap benar (peringkat dalam blok), tetapi "posisi kosong" (celah nomor) hilang karena penomoran ulang membuat nomor berurutan.
 
 ### Posisi terakhir RUN QA-5
-(diperbarui saat penutup)
+RUN QA-5 SELESAI (6 Sep 2026 ±10:40 WIB). Produksi: image 967864e HEALTHY, health 200, https://warkopnusantara.id/struktur 200 dengan bagan piramida terverifikasi terprogram (198 butir 0 gagal) dan tangkapan 1280/768/375. Laporan `laporan/LAPORAN-QA-5.md`. Run BERHENTI. Bila prompt dikirim ulang: tidak ada butir tersisa; hanya MENUNGGU PEMILIK run sebelumnya.

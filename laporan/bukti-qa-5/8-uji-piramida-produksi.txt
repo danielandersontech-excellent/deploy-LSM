@@ -1,0 +1,216 @@
+# QA-5 — bagan piramida /struktur — https://warkopnusantara.id — awalan produksi — periksa geometri (harapan produksi) — 2026-09-06T03:34:34.637Z
+
+## 1280px  (tinggi halaman 8067px)
+LULUS  1280: tanpa teks galat
+LULUS  1280: galat konsol = 0
+LULUS  1280: permintaan >= 400 = 0
+LULUS  1280: gulir mendatar = tidak
+LULUS  1280: kontrol tumpang tindih = 0
+LULUS  1280: em/en dash tampil = tidak
+  tangkapan produksi-dewan-1280.png (1280x958)
+  tangkapan produksi-dpp-1280.png (1280x1190)
+  tangkapan produksi-direktorat-1280.png (1280x1582)
+  tangkapan produksi-satgas-1280.png (1280x214)
+LULUS  1280: blok piramida ditemukan = 17
+LULUS  1280 [Dewan Pembina]: urutan kartu dalam DOM menaik (1,2)
+LULUS  1280 [Dewan Pembina]: bentuk baris [1,1] = harapan [1,1]
+LULUS  1280 [Dewan Pembina]: geometri piramida md+
+LULUS  1280 [Dewan Pembina]: garis penghubung 1 buah (harus 1), tampak, tinggi 48, di tengah
+LULUS  1280 [Dewan Penasehat]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Dewan Penasehat]: bentuk baris [1] = harapan [1]
+LULUS  1280 [Dewan Penasehat]: geometri piramida md+
+LULUS  1280 [Dewan Penasehat]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Dewan Pengawas]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Dewan Pengawas]: bentuk baris [1] = harapan [1]
+LULUS  1280 [Dewan Pengawas]: geometri piramida md+
+LULUS  1280 [Dewan Pengawas]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Pengurus DPP]: urutan kartu dalam DOM menaik (1,2,3,4)
+LULUS  1280 [Pengurus DPP]: bentuk baris [1,1,2] = harapan [1,1,2]
+LULUS  1280 [Pengurus DPP]: geometri piramida md+
+LULUS  1280 [Pengurus DPP]: garis penghubung 2 buah (harus 2), tampak, tinggi 48, di tengah
+LULUS  1280 [Hukum dan Advokasi]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Hukum dan Advokasi]: bentuk baris [1] = harapan [1]
+LULUS  1280 [Hukum dan Advokasi]: geometri piramida md+
+LULUS  1280 [Hukum dan Advokasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Investigasi]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Investigasi]: geometri piramida md+
+LULUS  1280 [Investigasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Pengawasan Kebijakan Publik]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Pengawasan Kebijakan Publik]: geometri piramida md+
+LULUS  1280 [Pengawasan Kebijakan Publik]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Organisasi dan Kaderisasi]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Organisasi dan Kaderisasi]: geometri piramida md+
+LULUS  1280 [Organisasi dan Kaderisasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Sosial dan Kemanusiaan]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Sosial dan Kemanusiaan]: geometri piramida md+
+LULUS  1280 [Sosial dan Kemanusiaan]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Lingkungan Hidup]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Lingkungan Hidup]: geometri piramida md+
+LULUS  1280 [Lingkungan Hidup]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Media]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Media]: bentuk baris [1] = harapan [1]
+LULUS  1280 [Media]: geometri piramida md+
+LULUS  1280 [Media]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Humas dan Kerja Sama Antar Lembaga]: urutan kartu dalam DOM menaik (1,2)
+LULUS  1280 [Humas dan Kerja Sama Antar Lembaga]: bentuk baris [1,1] = harapan [1,1]
+LULUS  1280 [Humas dan Kerja Sama Antar Lembaga]: geometri piramida md+
+LULUS  1280 [Humas dan Kerja Sama Antar Lembaga]: garis penghubung 1 buah (harus 1), tampak, tinggi 48, di tengah
+LULUS  1280 [Pemberdayaan Masyarakat dan UMKM]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Pemberdayaan Masyarakat dan UMKM]: geometri piramida md+
+LULUS  1280 [Pemberdayaan Masyarakat dan UMKM]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Ketenagakerjaan, Buruh, dan Pekerja]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Ketenagakerjaan, Buruh, dan Pekerja]: geometri piramida md+
+LULUS  1280 [Ketenagakerjaan, Buruh, dan Pekerja]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Perlindungan Perempuan dan Anak (PPA)]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Perlindungan Perempuan dan Anak (PPA)]: geometri piramida md+
+LULUS  1280 [Perlindungan Perempuan dan Anak (PPA)]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Penyuluhan dan Sosialisasi]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Penyuluhan dan Sosialisasi]: geometri piramida md+
+LULUS  1280 [Penyuluhan dan Sosialisasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  1280 [Satuan Tugas (Satgas)]: urutan kartu dalam DOM menaik (1)
+LULUS  1280 [Satuan Tugas (Satgas)]: bentuk baris [1] = harapan [1]
+LULUS  1280 [Satuan Tugas (Satgas)]: geometri piramida md+
+LULUS  1280 [Satuan Tugas (Satgas)]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+
+## 768px  (tinggi halaman 10717px)
+LULUS  768: tanpa teks galat
+LULUS  768: galat konsol = 0
+LULUS  768: permintaan >= 400 = 0
+LULUS  768: gulir mendatar = tidak
+LULUS  768: kontrol tumpang tindih = 0
+LULUS  768: em/en dash tampil = tidak
+  tangkapan produksi-dpp-768.png (768x1238)
+LULUS  768: blok piramida ditemukan = 17
+LULUS  768 [Dewan Pembina]: urutan kartu dalam DOM menaik (1,2)
+LULUS  768 [Dewan Pembina]: bentuk baris [1,1] = harapan [1,1]
+LULUS  768 [Dewan Pembina]: geometri piramida md+
+LULUS  768 [Dewan Pembina]: garis penghubung 1 buah (harus 1), tampak, tinggi 48, di tengah
+LULUS  768 [Dewan Penasehat]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Dewan Penasehat]: bentuk baris [1] = harapan [1]
+LULUS  768 [Dewan Penasehat]: geometri piramida md+
+LULUS  768 [Dewan Penasehat]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Dewan Pengawas]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Dewan Pengawas]: bentuk baris [1] = harapan [1]
+LULUS  768 [Dewan Pengawas]: geometri piramida md+
+LULUS  768 [Dewan Pengawas]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Pengurus DPP]: urutan kartu dalam DOM menaik (1,2,3,4)
+LULUS  768 [Pengurus DPP]: bentuk baris [1,1,2] = harapan [1,1,2]
+LULUS  768 [Pengurus DPP]: geometri piramida md+
+LULUS  768 [Pengurus DPP]: garis penghubung 2 buah (harus 2), tampak, tinggi 48, di tengah
+LULUS  768 [Hukum dan Advokasi]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Hukum dan Advokasi]: bentuk baris [1] = harapan [1]
+LULUS  768 [Hukum dan Advokasi]: geometri piramida md+
+LULUS  768 [Hukum dan Advokasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Investigasi]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Investigasi]: geometri piramida md+
+LULUS  768 [Investigasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Pengawasan Kebijakan Publik]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Pengawasan Kebijakan Publik]: geometri piramida md+
+LULUS  768 [Pengawasan Kebijakan Publik]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Organisasi dan Kaderisasi]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Organisasi dan Kaderisasi]: geometri piramida md+
+LULUS  768 [Organisasi dan Kaderisasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Sosial dan Kemanusiaan]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Sosial dan Kemanusiaan]: geometri piramida md+
+LULUS  768 [Sosial dan Kemanusiaan]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Lingkungan Hidup]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Lingkungan Hidup]: geometri piramida md+
+LULUS  768 [Lingkungan Hidup]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Media]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Media]: bentuk baris [1] = harapan [1]
+LULUS  768 [Media]: geometri piramida md+
+LULUS  768 [Media]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Humas dan Kerja Sama Antar Lembaga]: urutan kartu dalam DOM menaik (1,2)
+LULUS  768 [Humas dan Kerja Sama Antar Lembaga]: bentuk baris [1,1] = harapan [1,1]
+LULUS  768 [Humas dan Kerja Sama Antar Lembaga]: geometri piramida md+
+LULUS  768 [Humas dan Kerja Sama Antar Lembaga]: garis penghubung 1 buah (harus 1), tampak, tinggi 48, di tengah
+LULUS  768 [Pemberdayaan Masyarakat dan UMKM]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Pemberdayaan Masyarakat dan UMKM]: geometri piramida md+
+LULUS  768 [Pemberdayaan Masyarakat dan UMKM]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Ketenagakerjaan, Buruh, dan Pekerja]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Ketenagakerjaan, Buruh, dan Pekerja]: geometri piramida md+
+LULUS  768 [Ketenagakerjaan, Buruh, dan Pekerja]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Perlindungan Perempuan dan Anak (PPA)]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Perlindungan Perempuan dan Anak (PPA)]: geometri piramida md+
+LULUS  768 [Perlindungan Perempuan dan Anak (PPA)]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Penyuluhan dan Sosialisasi]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Penyuluhan dan Sosialisasi]: geometri piramida md+
+LULUS  768 [Penyuluhan dan Sosialisasi]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+LULUS  768 [Satuan Tugas (Satgas)]: urutan kartu dalam DOM menaik (1)
+LULUS  768 [Satuan Tugas (Satgas)]: bentuk baris [1] = harapan [1]
+LULUS  768 [Satuan Tugas (Satgas)]: geometri piramida md+
+LULUS  768 [Satuan Tugas (Satgas)]: garis penghubung 0 buah (harus 0), tampak, tinggi 48, di tengah
+
+## 375px  (tinggi halaman 15069px)
+LULUS  375: tanpa teks galat
+LULUS  375: galat konsol = 0
+LULUS  375: permintaan >= 400 = 0
+LULUS  375: gulir mendatar = tidak
+LULUS  375: kontrol tumpang tindih = 0
+LULUS  375: em/en dash tampil = tidak
+  tangkapan produksi-dewan-375.png (375x866)
+  tangkapan produksi-dpp-375.png (375x1344)
+  tangkapan produksi-direktorat-375.png (375x2830)
+  tangkapan produksi-satgas-375.png (375x238)
+LULUS  375: blok piramida ditemukan = 17
+LULUS  375 [Dewan Pembina]: urutan kartu dalam DOM menaik (1,2)
+LULUS  375 [Dewan Pembina]: bentuk baris [1,1] = harapan [1,1]
+LULUS  375 [Dewan Pembina]: menumpuk satu kolom urut
+LULUS  375 [Dewan Pembina]: garis penghubung tersembunyi (1 buah)
+LULUS  375 [Dewan Penasehat]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Dewan Penasehat]: bentuk baris [1] = harapan [1]
+LULUS  375 [Dewan Penasehat]: menumpuk satu kolom urut
+LULUS  375 [Dewan Penasehat]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Dewan Pengawas]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Dewan Pengawas]: bentuk baris [1] = harapan [1]
+LULUS  375 [Dewan Pengawas]: menumpuk satu kolom urut
+LULUS  375 [Dewan Pengawas]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Pengurus DPP]: urutan kartu dalam DOM menaik (1,2,3,4)
+LULUS  375 [Pengurus DPP]: bentuk baris [1,1,2] = harapan [1,1,2]
+LULUS  375 [Pengurus DPP]: menumpuk satu kolom urut
+LULUS  375 [Pengurus DPP]: garis penghubung tersembunyi (2 buah)
+LULUS  375 [Hukum dan Advokasi]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Hukum dan Advokasi]: bentuk baris [1] = harapan [1]
+LULUS  375 [Hukum dan Advokasi]: menumpuk satu kolom urut
+LULUS  375 [Hukum dan Advokasi]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Investigasi]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Investigasi]: menumpuk satu kolom urut
+LULUS  375 [Investigasi]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Pengawasan Kebijakan Publik]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Pengawasan Kebijakan Publik]: menumpuk satu kolom urut
+LULUS  375 [Pengawasan Kebijakan Publik]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Organisasi dan Kaderisasi]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Organisasi dan Kaderisasi]: menumpuk satu kolom urut
+LULUS  375 [Organisasi dan Kaderisasi]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Sosial dan Kemanusiaan]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Sosial dan Kemanusiaan]: menumpuk satu kolom urut
+LULUS  375 [Sosial dan Kemanusiaan]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Lingkungan Hidup]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Lingkungan Hidup]: menumpuk satu kolom urut
+LULUS  375 [Lingkungan Hidup]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Media]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Media]: bentuk baris [1] = harapan [1]
+LULUS  375 [Media]: menumpuk satu kolom urut
+LULUS  375 [Media]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Humas dan Kerja Sama Antar Lembaga]: urutan kartu dalam DOM menaik (1,2)
+LULUS  375 [Humas dan Kerja Sama Antar Lembaga]: bentuk baris [1,1] = harapan [1,1]
+LULUS  375 [Humas dan Kerja Sama Antar Lembaga]: menumpuk satu kolom urut
+LULUS  375 [Humas dan Kerja Sama Antar Lembaga]: garis penghubung tersembunyi (1 buah)
+LULUS  375 [Pemberdayaan Masyarakat dan UMKM]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Pemberdayaan Masyarakat dan UMKM]: menumpuk satu kolom urut
+LULUS  375 [Pemberdayaan Masyarakat dan UMKM]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Ketenagakerjaan, Buruh, dan Pekerja]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Ketenagakerjaan, Buruh, dan Pekerja]: menumpuk satu kolom urut
+LULUS  375 [Ketenagakerjaan, Buruh, dan Pekerja]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Perlindungan Perempuan dan Anak (PPA)]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Perlindungan Perempuan dan Anak (PPA)]: menumpuk satu kolom urut
+LULUS  375 [Perlindungan Perempuan dan Anak (PPA)]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Penyuluhan dan Sosialisasi]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Penyuluhan dan Sosialisasi]: menumpuk satu kolom urut
+LULUS  375 [Penyuluhan dan Sosialisasi]: garis penghubung tersembunyi (0 buah)
+LULUS  375 [Satuan Tugas (Satgas)]: urutan kartu dalam DOM menaik (1)
+LULUS  375 [Satuan Tugas (Satgas)]: bentuk baris [1] = harapan [1]
+LULUS  375 [Satuan Tugas (Satgas)]: menumpuk satu kolom urut
+LULUS  375 [Satuan Tugas (Satgas)]: garis penghubung tersembunyi (0 buah)
+
+RINGKASAN QA-5 (produksi): LULUS; tangkapan di laporan/bukti-qa-5/tangkapan/produksi-*.png

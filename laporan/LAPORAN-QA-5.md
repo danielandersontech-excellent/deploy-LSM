@@ -2,7 +2,7 @@
 
 Mode: OTONOM. Perintah: "TATA LETAK PIRAMIDA BAGAN /struktur" (KEPUTUSAN PEMILIK, dasar kesetiaan diperbarui + alasan).
 Mulai 6 September 2026 sekitar 10:05 WIB, selesai 6 September 2026 (jam penutupan di STATUS.md).
-Produksi akhir: lihat bagian RUN QA-5 di `laporan/STATUS.md` (hash image + bukti redeploy `laporan/bukti-server/24-*`).
+Produksi akhir: image `967864e` (HEALTHY, redeploy 10:34 WIB, `laporan/bukti-server/24-redeploy-qa5-piramida.txt`) di https://warkopnusantara.id/struktur.
 Semua bukti ada di `laporan/bukti-qa-5/` (skrip di `skrip/`, tangkapan di `tangkapan/`).
 
 ## 1. Ringkasan
@@ -88,7 +88,8 @@ Tinggi halaman /struktur lokal (data uji, 37 kartu pusat) 1280: 7598 -> 10330 px
 ### 4.4 Produksi (`8-uji-piramida-produksi.txt`, `tangkapan/produksi-*`)
 
 Dijalankan setelah redeploy dengan `--harapan=produksi` (data pemilik: Pembina [1,1], Penasehat [1], Pengawas [1], DPP [1,1,2],
-Humas [1,1], Satgas [1]). Hasil di STATUS.md bagian RUN QA-5.
+Humas [1,1], Satgas [1]): 198 butir LULUS, 0 GAGAL; konsol/jaringan >= 400/gulir mendatar/tumpang tindih/dash = 0 pada 375/768/1280;
+tinggi halaman produksi 1280: 8067 px, 375: 15069 px. Tangkapan `tangkapan/produksi-{dewan,dpp,direktorat,satgas}-{1280,375}.png`.
 
 ## 5. Kesetiaan layar struktur_organisasi — dasar diperbarui, alasan
 
