@@ -1,0 +1,7 @@
+# QA-4 G — sapu konsol & tata letak menyeluruh — http://localhost:3000 — 2026-09-06T03:25:49.218Z
+# sesi staf: ada
+  375px: 23 halaman diperiksa; bilah ada di 14/14 halaman publik, dapat digeser di 14
+  768px: 23 halaman diperiksa; bilah ada di 14/14 halaman publik, dapat digeser di 14
+  1280px: 23 halaman diperiksa; bilah ada di 14/14 halaman publik, dapat digeser di 0
+
+RINGKASAN G konsol (lokal): 69 sel, 0 gagal -> LULUS

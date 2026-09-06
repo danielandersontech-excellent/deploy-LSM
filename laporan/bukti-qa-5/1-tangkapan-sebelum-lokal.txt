@@ -1,0 +1,36 @@
+# QA-5 — bagan piramida /struktur — http://localhost:3000 — awalan sebelum — tangkapan saja — 2026-09-06T03:18:48.886Z
+
+## 1280px  (tinggi halaman 7598px)
+LULUS  1280: tanpa teks galat
+LULUS  1280: galat konsol = 0
+LULUS  1280: permintaan >= 400 = 0
+LULUS  1280: gulir mendatar = tidak
+LULUS  1280: kontrol tumpang tindih = 0
+LULUS  1280: em/en dash tampil = tidak
+  tangkapan sebelum-dewan-1280.png (1280x764)
+  tangkapan sebelum-dpp-1280.png (1280x816)
+  tangkapan sebelum-direktorat-1280.png (1280x1554)
+  tangkapan sebelum-satgas-1280.png (1280x344)
+
+## 768px  (tinggi halaman 10254px)
+LULUS  768: tanpa teks galat
+LULUS  768: galat konsol = 0
+LULUS  768: permintaan >= 400 = 0
+LULUS  768: gulir mendatar = tidak
+LULUS  768: kontrol tumpang tindih = 0
+LULUS  768: em/en dash tampil = tidak
+  tangkapan sebelum-dpp-768.png (768x892)
+
+## 375px  (tinggi halaman 16920px)
+LULUS  375: tanpa teks galat
+LULUS  375: galat konsol = 0
+LULUS  375: permintaan >= 400 = 0
+LULUS  375: gulir mendatar = tidak
+LULUS  375: kontrol tumpang tindih = 0
+LULUS  375: em/en dash tampil = tidak
+  tangkapan sebelum-dewan-375.png (375x1574)
+  tangkapan sebelum-dpp-375.png (375x1320)
+  tangkapan sebelum-direktorat-375.png (375x3302)
+  tangkapan sebelum-satgas-375.png (375x888)
+
+RINGKASAN QA-5 (sebelum): LULUS; tangkapan di laporan/bukti-qa-5/tangkapan/sebelum-*.png

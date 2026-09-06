@@ -1,0 +1,37 @@
+id	kelompok	bagian	urutan	jabatan	nama
+1	dewan_pembina	NULL	1	Ketua Dewan Pembina DPP Warkop Nusantara	Jonni Tan
+2	dewan_pembina	NULL	2	Wakil Ketua Dewan Pembina DPP Warkop Nusantara	Florida Herawati, S.H.
+45	dewan_penasehat	NULL	1	Ketua Dewan Penasehat DPP Warkop Nusantara	Azwir Irvananda, S.Kom.
+901	dewan_penasehat	NULL	2	Wakil Ketua Dewan Penasehat	Uji Wakil Penasehat
+902	dewan_penasehat	NULL	3	Anggota Dewan Penasehat	Uji Anggota Penasehat A
+903	dewan_penasehat	NULL	4	Anggota Dewan Penasehat	Uji Anggota Penasehat B
+904	dewan_penasehat	NULL	5	Anggota Dewan Penasehat	Uji Anggota Penasehat C
+44	dewan_pengawas	NULL	1	Ketua Dewan Pengawas DPP Warkop Nusantara	Jhon Arifin
+905	dewan_pengawas	NULL	3	Anggota Dewan Pengawas	Uji Anggota Pengawas A
+906	dewan_pengawas	NULL	4	Anggota Dewan Pengawas	Uji Anggota Pengawas B
+10	pengurus_dpp	NULL	1	Ketua Umum DPP Warkop Nusantara	Boy Joean
+3	pengurus_dpp	NULL	2	Wakil Ketua Umum DPP Warkop Nusantara	Sukri Tambusai, S.H.
+14	pengurus_dpp	NULL	3	Sekretaris Jenderal DPP Warkop Nusantara	Andreas Reynaldho, S.H., M.H.
+43	pengurus_dpp	NULL	4	Bendahara Umum DPP Warkop Nusantara	Soni
+16	direktorat	hukum-advokasi	1	Direktur Hukum dan Advokasi DPP Warkop Nusantara	Dian Lestari Gultom, S.H.
+12	direktorat	humas-kerja-sama	1	Direktur Humas dan Kerjasama Antar Lembaga DPP Warkop Nusantara	Johan Elvianus Hondro
+23	direktorat	humas-kerja-sama	2	Wakil Direktur Humas dan Kerja Sama Antar Lembaga DPP Warkop Nusantara	Yefrizal, S.E.
+907	direktorat	investigasi	1	Direktur Investigasi	Uji Direktur Investigasi
+908	direktorat	investigasi	2	Wakil Direktur Investigasi	Uji Wakil Investigasi
+909	direktorat	investigasi	3	Anggota Direktorat Investigasi	Uji Anggota Investigasi A
+910	direktorat	investigasi	4	Anggota Direktorat Investigasi	Uji Anggota Investigasi B
+911	direktorat	investigasi	5	Anggota Direktorat Investigasi	Uji Anggota Investigasi C
+21	direktorat	lingkungan-hidup	1	Direktur Lingkungan Hidup DPP Warkop Nusantara	Ronald Eldiner, S.H.
+22	direktorat	media	1	Direktur Media DPP Warkop Nusantara	Roy Jensen Sidabutar, S.Kom.
+48	direktorat	organisasi-kaderisasi	1	Direktur Organisasi dan Kaderisasi DPP Warkop Nusantara	Arpan Damanik, S.H., M.H.
+24	direktorat	pemberdayaan-masyarakat-umkm	1	Direktur Pemberdayaan Masyarakat dan UMKM DPP Warkop Nusantara	Dedek Kurniati
+50	direktorat	pengawasan-kebijakan-publik	1	Direktur Pengawasan Kebijakan Publik DPP Warkop Nusantara	Arsyad
+19	direktorat	penyuluhan-sosialisasi	1	Direktur Penyuluhan dan Sosialisasi DPP Warkop Nusantara	Jasrivai Manulang, S.H.
+46	direktorat	perlindungan-perempuan-anak	1	Direktur Perlindungan Perempuan dan Anak (PPA) DPP Warkop Nusantara	Edy Susanto
+47	direktorat	sosial-kemanusiaan	1	Direktur Sosial dan Kemanusiaan DPP Warkop Nusantara	Rahmaida Br. Sihombing
+25	satgas	NULL	1	Kasatgas DPP Warkop Nusantara	Kanisius Emi Ujan
+912	satgas	NULL	2	Wakil Kepala Satgas	Uji Wakasatgas
+913	satgas	NULL	3	Komandan Wilayah	Uji Komandan Wilayah
+914	satgas	NULL	4	Komandan Daerah	Uji Komandan Daerah
+915	satgas	NULL	5	Komandan Rayon	Uji Komandan Rayon
+916	satgas	NULL	6	Anggota Satgas	Uji Anggota Satgas

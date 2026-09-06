@@ -203,3 +203,24 @@ Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di at
 
 ### Posisi terakhir RUN QA-4
 RUN QA-4 SELESAI (5 Sep 2026 ±05:55 WIB). Produksi: image 010e303 HEALTHY, health 200; bukti tutupPool saat SIGTERM: log container lama "pool basis data ditutup", MariaDB 0 "Aborted connection" (`bukti-server/23-*`). Semua butir P1, A-D, F1-F5, G SELESAI; P2 MENUNGGU PEMILIK. Laporan `laporan/LAPORAN-QA-4.md`. Run BERHENTI. Bila prompt dikirim ulang: tidak ada butir tersisa, hanya MENUNGGU PEMILIK di atas.
+
+## RUN QA-5 (mini, mulai 6 Sep 2026 sekitar 10:05 WIB) — TATA LETAK PIRAMIDA BAGAN /struktur
+
+KEPUTUSAN PEMILIK: setiap blok berkelompok pada /struktur disusun piramida berdasarkan kolom urutan (puncak tengah, kartu kedua tengah di bawahnya, sisanya berjajar kiri ke kanan 2-3 per baris, garis penghubung desain), termasuk tiap bagian Direktorat; di bawah md menumpuk urut. Aturan lama berlaku penuh. Laporan `laporan/LAPORAN-QA-5.md`, bukti `laporan/bukti-qa-5/`.
+
+| # | Butir | Status | Catatan |
+|---|---|---|---|
+| 1 | Piramida per blok berdasarkan urutan | SELESAI | komponen `Piramida` + `susunPiramida` di `app/(publik)/struktur/page.js`; peringkat dihitung dalam blok, baris kedua hanya bila urutan = puncak + 1 (celah = posisi kosong dilewati); DPP: Ketua Umum puncak (kartu Pimpinan Pusat), Wakil tengah, Sekjen kiri + Bendahara kanan (`4-uji-piramida-lokal.txt`, `tangkapan/sesudah-dpp-1280.png`) |
+| 2 | Semua blok + tiap bagian Direktorat; 1-2 kartu wajar; "(Belum terisi)" ikut aturan | SELESAI | 18 blok diperiksa terprogram pada 1280/768 (bentuk baris = harapan data, tengah, kiri->kanan, garis 48 px); data uji lokal: Penasehat 5 (1-1-3), Pengawas 1,3,4 (1-2), Investigasi 5 (1-1-2-1), Satgas 6 (1-1-3-1), bagian kosong (1); 201 butir 0 gagal |
+| 3 | Responsif 375/768/1280 tanpa gulir mendatar, kelas desain yang ada | SELESAI | 375 satu kolom urut + garis tersembunyi; gulir mendatar 0; tanpa warna/komponen baru; blok Dewan satu kolom, bagian Direktorat 2 kolom di lg (KEPUTUSAN BARU, alasan di laporan bagian 6) |
+| P | Tangkapan sebelum/sesudah 1280 + 375 per kelompok | SELESAI | `tangkapan/{sebelum,sesudah}-{dewan,dpp,direktorat,satgas}-{1280,375}.png` |
+| P | Sapu konsol /struktur 3 lebar; penjaga dash; build + lint | SELESAI | konsol/jaringan/gulir/tumpang/dash 0 pada 3 lebar; regresi sapu QA-4 69 sel 0 gagal; penjaga dash bersih; build EXIT 0; lint EXIT 0 |
+| P | Kesetiaan layar struktur dasar diperbarui + alasan | SELESAI | 14 layar HTTP 200, cacat export 0; struktur_organisasi identik dengan dasar QA-4 (84%, 27 kelas hilang); alasan perubahan susunan DOM di laporan bagian 5 |
+| P | Commit, push, redeploy, verifikasi https://warkopnusantara.id/struktur | SEDANG | lihat "Posisi terakhir RUN QA-5" |
+
+### MENUNGGU PEMILIK (RUN QA-5)
+1. Tidak ada butir baru. Butir MENUNGGU PEMILIK RUN QA-1..QA-4 (terutama volume `/app/unggahan-terjaga`) dan DAFTAR TINDAKAN PEMILIK Tahap 9 tetap berlaku.
+2. Catatan: bila pemilik menekan ▲▼ di Kelola Pengurus, nomor urutan dinomori ulang global; piramida tetap benar (peringkat dalam blok), tetapi "posisi kosong" (celah nomor) hilang karena penomoran ulang membuat nomor berurutan.
+
+### Posisi terakhir RUN QA-5
+(diperbarui saat penutup)

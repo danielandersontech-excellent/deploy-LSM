@@ -1,0 +1,3 @@
+# Selisih kesetiaan: laporan/bukti-qa-4/g-regresi-kesetiaan-14-layar.md -> laporan/bukti-qa-5/5-kesetiaan-14-layar.md
+
+0 layar berubah; 14 layar identik dengan dasar.

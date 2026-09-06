@@ -15,6 +15,14 @@
 // disimpan sebagai baris "(Belum terisi)" di basis data melainkan dirender dari definisi lib/kelompokPengurus.js
 // dan daftar provinsi, supaya Kelola Pengurus tidak penuh baris kosong (K3 tetap: pemilik cukup menambah orang).
 // Posisi kosong bernama '(Belum terisi)' ditampilkan redup. Responsif: kolom 1 (375) / 2 (768) / 3 (1280).
+//
+// RUN QA-5 (KEPUTUSAN PEMILIK): setiap blok berkelompok (Dewan Pembina/Penasehat/Pengawas, Pengurus DPP, Satgas, dan
+// tiap bagian Direktorat) disusun PIRAMIDA berdasarkan kolom urutan lewat komponen <Piramida> di bawah: kartu pertama
+// sendiri di tengah, kartu kedua sendiri di tengah tepat di bawahnya, sisanya berjajar kiri -> kanan (3 per baris pada
+// blok selebar kontainer, 2 per baris pada blok bagian Direktorat yang berdampingan di lg), garis penghubung vertikal
+// desain (w-px h-12) antar baris. Di bawah md semua kartu menumpuk satu kolom urut. Agar tiap baris berjajar punya
+// ruang, blok Dewan disusun satu kolom penuh dan blok bagian Direktorat dua kolom di lg (sebelumnya 3 kolom).
+import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Ikon from '@/components/ui/Ikon';
@@ -36,6 +44,55 @@ const KELAS_LENCANA_PUSAT = 'absolute -top-4 left-1/2 -translate-x-1/2 bg-second
 const KELAS_LENCANA_ABU = 'absolute -top-4 left-1/2 -translate-x-1/2 bg-surface-container-highest text-on-surface px-4 py-1 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap';
 const KELAS_KARTU_KECIL = 'bg-surface-container-lowest border border-outline-variant rounded-lg p-5 flex flex-col hover:shadow-md transition-shadow relative overflow-hidden group';
 const KELAS_GARIS = 'w-px h-12 bg-outline-variant hidden md:block';
+// Susunan piramida (RUN QA-5): kolom vertikal desain (flex-col items-center gap-12 = markup Pimpinan Pusat desain) dan
+// satu baris kartu (kolom di bawah md, berjajar di tengah pada md ke atas). Blok berkotak memakai gap-3 di bawah md
+// seperti daftar kartunya sebelumnya; bagian Pengurus DPP tetap gap-12 verbatim desain.
+const KELAS_SUSUN_BLOK = 'flex flex-col items-center gap-3 md:gap-12';
+const KELAS_SUSUN_DPP = 'flex flex-col items-center gap-12';
+const KELAS_BARIS_BLOK = 'flex flex-col items-center md:flex-row md:items-stretch md:justify-center gap-3 md:gap-gutter w-full';
+const KELAS_BARIS_DPP = 'flex flex-col items-center md:flex-row md:items-stretch md:justify-center gap-gutter w-full';
+const KELAS_KARTU_PIRAMIDA = 'w-full max-w-md';
+
+/**
+ * RUN QA-5: membagi anggota satu blok menjadi baris-baris piramida berdasarkan kolom urutan.
+ * Peringkat dihitung DALAM blok, karena Kelola Pengurus menomori kolom urutan secara global se-tingkat (1..n untuk
+ * seluruh daftar) sedangkan pemilik juga mengisi nomor per kelompok; keduanya didukung.
+ *   baris 1 = kartu berurutan terkecil (puncak);
+ *   baris 2 = kartu berikutnya HANYA bila urutannya persis puncak + 1; celah nomor (mis. 1, 3, 4) berarti posisi kedua
+ *             kosong -> baris kedua dilewati tanpa merusak susunan;
+ *   baris berikutnya = sisanya berjajar kiri -> kanan, maksimal perBaris kartu per baris.
+ * Blok 1 kartu = puncak saja; 2 kartu = puncak + tengah bawah.
+ */
+function susunPiramida(anggota, perBaris) {
+  const nomor = (p) => Number(p.urutan) || 0;
+  const urut = [...anggota].sort((a, b) => nomor(a) - nomor(b) || String(a.nama).localeCompare(String(b.nama), 'id'));
+  if (!urut.length) return [];
+  const [puncak, ...sisa] = urut;
+  const baris = [[puncak]];
+  if (sisa.length && nomor(sisa[0]) === nomor(puncak) + 1) baris.push([sisa.shift()]);
+  for (let i = 0; i < sisa.length; i += perBaris) baris.push(sisa.slice(i, i + perBaris));
+  return baris;
+}
+
+/**
+ * Kolom piramida: baris-baris dari susunPiramida dipisah garis penghubung desain (tersembunyi di bawah md, sehingga
+ * di ponsel semua kartu menumpuk urut). `kartu(p, indeksBaris)` merender kartu; atribut data-* dipakai uji QA-5.
+ */
+function Piramida({ anggota, perBaris, label, kartu, kelasSusun = KELAS_SUSUN_BLOK, kelasBaris = KELAS_BARIS_BLOK }) {
+  const baris = susunPiramida(anggota, perBaris);
+  return (
+    <div className={kelasSusun} data-piramida={label} data-per-baris={perBaris}>
+      {baris.map((b, i) => (
+        <Fragment key={b[0].id}>
+          {i > 0 ? <div className={KELAS_GARIS} data-garis=""></div> : null}
+          <div className={kelasBaris} data-baris={i + 1}>
+            {b.map((p) => kartu(p, i))}
+          </div>
+        </Fragment>
+      ))}
+    </div>
+  );
+}
 
 /** Foto bulat; posisi kosong tampil redup tanpa foto. */
 function Foto({ p, kelasKotak, ukuran }) {
@@ -48,10 +105,10 @@ function Foto({ p, kelasKotak, ukuran }) {
 }
 
 /** Kartu kecil (kelas kartu regional desain) untuk Dewan, Direktorat, Satgas, kerangka. */
-function KartuAnggota({ p }) {
+function KartuAnggota({ p, kelasTambahan = '' }) {
   const kosong = belumTerisi(p.nama);
   return (
-    <div id={`pengurus-${p.id}`} className={`${KELAS_KARTU_KECIL}${kosong ? ' opacity-70' : ''}`}>
+    <div id={`pengurus-${p.id}`} className={`${KELAS_KARTU_KECIL}${kosong ? ' opacity-70' : ''}${kelasTambahan ? ` ${kelasTambahan}` : ''}`} data-urutan={Number(p.urutan) || 0}>
       <div className="absolute top-0 right-0 w-16 h-16 bg-surface-variant -mr-8 -mt-8 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
       <div className="flex items-start gap-4 relative z-10">
         <Foto p={p} kelasKotak="w-16 h-16 rounded bg-surface-variant overflow-hidden shrink-0 border border-outline-variant" ukuran="64px" />
@@ -74,7 +131,7 @@ function KartuAnggota({ p }) {
 function KartuPengurus({ p, lencana, ikon }) {
   const kosong = belumTerisi(p.nama);
   return (
-    <div id={`pengurus-${p.id}`} className={`${KELAS_KARTU_PUSAT}${kosong ? ' opacity-70' : ''}`}>
+    <div id={`pengurus-${p.id}`} className={`${KELAS_KARTU_PUSAT}${kosong ? ' opacity-70' : ''}`} data-urutan={Number(p.urutan) || 0}>
       <div className={KELAS_LENCANA_ABU}>
         <Ikon nama={ikon} className="text-sm" />
         {lencana}
@@ -104,9 +161,8 @@ export default async function HalamanStruktur({ searchParams }) {
   const [semua, provinsi] = await Promise.all([ambilPengurusAktif(), ambilProvinsi()]);
   const perKelompok = (slug) => semua.filter((p) => p.kelompok === slug);
   const dewan = KELOMPOK_PENGURUS.filter((k) => k.tahap === 'dewan');
+  // RUN QA-5: puncak Pengurus DPP = kartu berurutan terkecil (kartu Pimpinan Pusat desain), bukan lagi tebakan dari jabatan.
   const dpp = perKelompok('pengurus_dpp');
-  const ketuaUmum = dpp.find((p) => /ketua umum/i.test(p.jabatan) && !/wakil/i.test(p.jabatan)) || dpp[0] || null;
-  const dppLain = dpp.filter((p) => p !== ketuaUmum);
   const direktorat = perKelompok('direktorat');
   const satgas = perKelompok('satgas');
   // RUN QA-3 A2: Direktorat ditampilkan per BAGIAN; bagian tanpa pejabat tetap muncul sebagai "(Belum terisi)".
@@ -156,16 +212,19 @@ export default async function HalamanStruktur({ searchParams }) {
             <JudulTahap keterangan="Dewan Pembina, Dewan Penasehat, dan Dewan Pengawas Dewan Pimpinan Pusat">
               <span id="judul-dewan">Dewan Pimpinan Pusat</span>
             </JudulTahap>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+            <div className="grid grid-cols-1 gap-gutter">
               {dewan.map((k) => (
-                <div key={k.slug} className="bg-surface-container-low rounded-xl border border-outline-variant p-4 md:p-5">
+                <div key={k.slug} className="bg-surface-container-low rounded-xl border border-outline-variant p-4 md:p-5" data-blok={k.slug}>
                   <h3 className="font-label-md text-label-md text-secondary uppercase tracking-wide mb-4 flex items-center gap-2">
                     <Ikon nama={k.ikon} className="text-sm" />
                     {k.label}
                   </h3>
-                  <div className="flex flex-col gap-3">
-                    {perKelompok(k.slug).map((p) => <KartuAnggota key={p.id} p={p} />)}
-                  </div>
+                  <Piramida
+                    anggota={perKelompok(k.slug).length ? perKelompok(k.slug) : [{ id: `kosong-${k.slug}`, nama: NAMA_BELUM_TERISI, jabatan: `Ketua ${k.label}`, urutan: 1 }]}
+                    perBaris={3}
+                    label={k.label}
+                    kartu={(p) => <KartuAnggota key={p.id} p={p} kelasTambahan={KELAS_KARTU_PIRAMIDA} />}
+                  />
                 </div>
               ))}
             </div>
@@ -176,29 +235,28 @@ export default async function HalamanStruktur({ searchParams }) {
             <JudulTahap keterangan="Ketua Umum, Wakil Ketua Umum, Sekretaris Jenderal, Bendahara Umum">
               <span id="judul-dpp">Pengurus DPP</span>
             </JudulTahap>
-            <div className="flex flex-col items-center gap-12">
-              {ketuaUmum ? (
-                <div id={`pengurus-${ketuaUmum.id}`} className={KELAS_KARTU_PUSAT}>
-                  <div className={KELAS_LENCANA_PUSAT}>
-                    <Ikon nama="verified_user" className="text-sm" />
-                    Pimpinan Pusat
+            {dpp.length ? (
+              <Piramida
+                anggota={dpp}
+                perBaris={3}
+                label="Pengurus DPP"
+                kelasSusun={KELAS_SUSUN_DPP}
+                kelasBaris={KELAS_BARIS_DPP}
+                kartu={(p, indeksBaris) => indeksBaris === 0 ? (
+                  <div key={p.id} id={`pengurus-${p.id}`} className={KELAS_KARTU_PUSAT} data-urutan={Number(p.urutan) || 0}>
+                    <div className={KELAS_LENCANA_PUSAT}>
+                      <Ikon nama="verified_user" className="text-sm" />
+                      Pimpinan Pusat
+                    </div>
+                    <Foto p={p} kelasKotak="w-32 h-32 mx-auto rounded-full bg-surface-variant mb-4 overflow-hidden border-2 border-secondary-fixed-dim mt-2" ukuran="128px" />
+                    <h2 className="font-headline-md text-headline-md text-primary mb-1">{p.nama}</h2>
+                    <p className="font-label-md text-label-md text-secondary mb-2 uppercase tracking-wide">{p.jabatan}</p>
+                    <div className="w-12 h-1 bg-outline-variant mx-auto my-3"></div>
+                    <p className="font-body-md text-body-md text-on-surface-variant">{p.deskripsi || 'Memimpin dan mengarahkan seluruh visi serta misi pengawasan nasional.'}</p>
                   </div>
-                  <Foto p={ketuaUmum} kelasKotak="w-32 h-32 mx-auto rounded-full bg-surface-variant mb-4 overflow-hidden border-2 border-secondary-fixed-dim mt-2" ukuran="128px" />
-                  <h2 className="font-headline-md text-headline-md text-primary mb-1">{ketuaUmum.nama}</h2>
-                  <p className="font-label-md text-label-md text-secondary mb-2 uppercase tracking-wide">{ketuaUmum.jabatan}</p>
-                  <div className="w-12 h-1 bg-outline-variant mx-auto my-3"></div>
-                  <p className="font-body-md text-body-md text-on-surface-variant">{ketuaUmum.deskripsi || 'Memimpin dan mengarahkan seluruh visi serta misi pengawasan nasional.'}</p>
-                </div>
-              ) : null}
-              {dppLain.length ? (
-                <>
-                  <div className={KELAS_GARIS}></div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter w-full justify-items-center">
-                    {dppLain.map((p) => <KartuPengurus key={p.id} p={p} lencana="Pengurus DPP" ikon="gavel" />)}
-                  </div>
-                </>
-              ) : null}
-            </div>
+                ) : <KartuPengurus key={p.id} p={p} lencana="Pengurus DPP" ikon="gavel" />}
+              />
+            ) : null}
           </section>
 
           {/* Tahap 3: Direktorat — 12 bagian (RUN QA-3 A2) */}
@@ -206,18 +264,19 @@ export default async function HalamanStruktur({ searchParams }) {
             <JudulTahap keterangan="Dua belas bagian direktorat; setiap bagian dapat berisi Direktur, Wakil Direktur, dan anggota">
               <span id="judul-direktorat">Direktorat</span>
             </JudulTahap>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
               {direktoratPerBagian.map((b) => (
-                <div key={b.slug} className="bg-surface-container-low rounded-xl border border-outline-variant p-4 md:p-5">
+                <div key={b.slug} className="bg-surface-container-low rounded-xl border border-outline-variant p-4 md:p-5" data-blok={b.slug}>
                   <h3 className="font-label-md text-label-md text-secondary uppercase tracking-wide mb-4 flex items-center gap-2">
                     <Ikon nama="account_circle" className="text-sm" />
                     {b.label}
                   </h3>
-                  <div className="flex flex-col gap-3">
-                    {b.anggota.length
-                      ? b.anggota.map((p) => <KartuAnggota key={p.id} p={p} />)
-                      : <KartuAnggota p={{ id: `bagian-${b.slug}`, nama: NAMA_BELUM_TERISI, jabatan: `Direktur ${b.label}` }} />}
-                  </div>
+                  <Piramida
+                    anggota={b.anggota.length ? b.anggota : [{ id: `bagian-${b.slug}`, nama: NAMA_BELUM_TERISI, jabatan: `Direktur ${b.label}`, urutan: 1 }]}
+                    perBaris={2}
+                    label={b.label}
+                    kartu={(p) => <KartuAnggota key={p.id} p={p} kelasTambahan={KELAS_KARTU_PIRAMIDA} />}
+                  />
                 </div>
               ))}
             </div>
@@ -236,9 +295,9 @@ export default async function HalamanStruktur({ searchParams }) {
             <JudulTahap keterangan="Kepala Satgas, Wakil, Komandan Wilayah/Daerah/Rayon, dan Anggota">
               <span id="judul-satgas">Satuan Tugas (Satgas)</span>
             </JudulTahap>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-              {satgas.map((p) => <KartuAnggota key={p.id} p={p} />)}
-            </div>
+            {satgas.length
+              ? <Piramida anggota={satgas} perBaris={3} label="Satuan Tugas (Satgas)" kartu={(p) => <KartuAnggota key={p.id} p={p} kelasTambahan={KELAS_KARTU_PIRAMIDA} />} />
+              : <KeadaanKosong ikon="campaign" judul="Satgas belum terisi" keterangan="Kepala Satgas dan anggotanya akan tampil setelah ditetapkan oleh pengelola lewat Kelola Pengurus." />}
           </section>
 
         </>
