@@ -1,0 +1,15 @@
+# RUN AI-1 E — uji end-to-end lokal (nyata) — http://localhost:3000 — 2026-10-06T17:57:18.167Z
+login: superadmin=ok redaktur=ok penulis=ok verifikator=ok pimpinan_wilayah=ok
+
+## E. SATU panggilan Anthropic sungguhan (topik netral "banjir") lewat route
+   1. POST /api/staf/ai/saran {topik:"banjir"} (penulis) -> 201; token & model dicatat -> 3 saran, ditolak 0, model claude-sonnet-5-5, token masuk 68673 keluar 8097 (cache baca 0), pencarian 3, 58.2 s (server 57 s), terpotong=false
+   2. tiap saran: judul, ringkasan <= 300, badan bersih (tanpa <a>/URL), kategori sah, catatan >= 1, sumber riset http >= 1, kueri gambar 1-3 -> [daerah] "Banjir Bandang Terjang Nagari Batang Barus, Solok: Warga Men" (330 kata, catatan 7, sumber 4, kueri: flash flood damaged village Indonesia | mud covered road after flood | flood evacuation rescue team)
+       [kebijakan-publik] "Pemerintah Pusat Siap Dukung Tanggap Darurat Banjir Bandang " (313 kata, catatan 6, sumber 4, kueri: emergency command post disaster Indonesia | heavy equipment clearing mud | disaster relief logistics)
+       [lingkungan] "Banjir Berulang di Sumatera Sepanjang 2026: Dari Padang hing" (300 kata, catatan 7, sumber 6, kueri: river overflow flooded houses Indonesia | flood water residential area | heavy rain)
+   3. kartu tampil: /staf/artikel/asisten (penulis) memuat judul saran, kotak catatan verifikasi, tombol "Gunakan draf ini", sumber riset -> judul + catatan + tombol + sumber tampil
+   4. pakai saran[0] -> artikel DRAF terisi penuh (judul, ringkasan, isi, kategori, tag, gambar) + ai_saran_id -> artikel 21 draf; kategori daerah; tag 5; isi 2593 karakter; gambar /unggahan/ai/037a1339c333dfad409976b5b1f30242.jpg dari pixabay
+   5. gambar >= 1200 px (sharp) + asal foto internal tersimpan -> 1280x853; pixabay | Pixabay Content License (bebas, tanpa atribusi) | kueri "flash flood damaged village Indonesia" | statistik {"pixabay":{"mentah":36,"lolos":31,"galat":0},"openverse":{"mentah":10,"lolos":0,"galat":0},"wikimedia":{"mentah":16,"lolos":15,"galat":0}}
+   6. pratinjau 200 tanpa kata bocor; editor berpita; publik 404 (draf tidak tampil); badan bersih terbukti di DB -> pratinjau 200 bocor=0; editor berpita; publik 404; artikel 21 dibiarkan DRAF untuk uji UI
+   7. audit_log: ai_saran_buat (token, model, pencarian) + ai_saran_pakai tercatat tanpa isi draf -> ai_saran_pakai: {"artikelId":21,"gambar":"pixabay","statistik":{"pixabay":{"mentah":36,"lolos":31,"galat":0},"openverse":{"mentah":10,"lolos":0,"galat":0},"wikimedia":{"mentah" || ai_saran_buat: {"topik":"banjir","jumlah":3,"ditolak":0,"model":"claude-sonnet-5-5","tokenMasuk":68673,"tokenKeluar":8097,"pencarian":3,"durasiMs":56743,"terpotong":false,"kel
+
+RINGKASAN e2e lokal (nyata): 7 langkah, 0 gagal -> LULUS

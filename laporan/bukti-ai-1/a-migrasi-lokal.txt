@@ -1,0 +1,24 @@
+# Migrasi lokal 20261007-0010-ai-saran.sql — 2026-10-06T17:16:25Z (dijalankan 2x untuk membuktikan idempoten)
+## jalan ke-1
+OK (tanpa galat)
+## jalan ke-2
+fk_artikel_ai_saran sudah ada
+fk_artikel_ai_saran sudah ada
+OK (tanpa galat)
+Create Table: CREATE TABLE `ai_saran` (
+  PRIMARY KEY (`id`),
+  KEY `idx_ai_saran_pemakai_waktu` (`pemakai_id`,`dibuat_pada`),
+  KEY `idx_ai_saran_status_waktu` (`status`,`dibuat_pada`),
+  KEY `idx_ai_saran_kelompok` (`kelompok`),
+  KEY `fk_ai_saran_artikel` (`artikel_id`),
+  CONSTRAINT `fk_ai_saran_artikel` FOREIGN KEY (`artikel_id`) REFERENCES `artikel` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `fk_ai_saran_pemakai` FOREIGN KEY (`pemakai_id`) REFERENCES `users` (`id`)
+Field	Type	Null	Key	Default	Extra
+ai_saran_id	int(10) unsigned	YES	MUL	NULL	
+CONSTRAINT_NAME	REFERENCED_TABLE_NAME	DELETE_RULE
+fk_ai_saran_artikel	artikel	SET NULL
+fk_ai_saran_pemakai	users	RESTRICT
+fk_artikel_ai_saran	ai_saran	SET NULL
+fk_artikel_kategori	kategori_artikel	RESTRICT
+fk_artikel_penulis	users	RESTRICT
+fk_artikel_wilayah	wilayah	SET NULL

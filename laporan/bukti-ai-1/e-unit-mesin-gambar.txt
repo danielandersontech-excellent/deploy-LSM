@@ -1,0 +1,105 @@
+# RUN AI-1 E — uji unit mesin gambar berlisensi — 2026-10-06T17:56:02.352Z
+penyedia aktif: pixabay, openverse, wikimedia (Pexels TANPA kunci -> nonaktif)
+
+## 1. filter lisensi Wikimedia (murni)
+   1. 8 kasus extmetadata -> CC0/Public domain diterima; CC BY, CC BY-SA, GFDL, kosong dibuang
+
+## 2. skor relevansi (murni)
+   2. skorRelevansi "flooded village street" vs tag [flood, village, road] -> 0.67 (flood~flooded, village cocok; street tidak)
+   3. Openverse/Wikimedia tanpa kecocokan -> skor -1 (tidak layak); Pixabay tanpa kecocokan tetap layak -> openverse=-1, pixabay=35.7
+   4. kueri pertama (spesifik) + landscape + resolusi lebih tinggi menang -> a=131.0 > b=70.0
+   5. kecocokan penuh pada kueri UMUM (indeks 2) kalah dari kecocokan 2/3 pada kueri SPESIFIK (indeks 0) -> spesifik=102.3 > umum=91.0
+   6. judul Wikimedia/Openverse bertema satelit/peta/diagram -> -1 (dilewati) -> satelit=-1, peta=-1, foto=131.0
+   7. saringKandidat membuang lebar < 1200 dan tanpa lisensi -> 1 dari 3 lolos
+
+## 3. adaptor nyata, kueri netral "flood river aerial"
+   8. adaptor pixabay -> mentah=12 lolos=12; lisensi=Pixabay Content License (bebas, tanpa atribusi); contoh: 1280x853 "waterfall, victoria falls, spray, zambezi"
+   9. adaptor openverse -> mentah=12 lolos=0; lisensi=Public Domain Mark (domain publik)
+  10. adaptor wikimedia -> mentah=1 lolos=0; lisensi=Public domain
+  11. adaptor pexels tanpa kunci -> [] (nonaktif, tidak melempar) -> []
+
+## 4. Wikimedia rinci: kandidat CC BY / CC BY-SA harus TERBUANG
+  12. cariWikimediaRinci "flood river aerial" -> diterima=1 (CC0/PD saja); dibuang=11, di antaranya CC BY/BY-SA=11; contoh dibuang: "Aerial photographs of 2019 Abu" [CC BY 4.0]; "Aerial photographs of 2019 Abu" [CC BY 4.0]; "Aerial photographs of 2019 Abu" [CC BY 4.0]
+  13. Wikimedia kueri kedua "Jakarta flood" (bukti tambahan lisensi beratribusi terbuang) -> diterima=3; dibuang=7 (CC BY/BY-SA 7)
+
+## 5. kumpulkanKandidat lintas penyedia
+  14. 3 kueri (spesifik -> umum): statistik per penyedia + pilihan terbaik -> total=40; pixabay: mentah 36, lolos 35; openverse: mentah 24, lolos 1; wikimedia: mentah 7, lolos 5; TERBAIK=pixabay 1280x853 skor 136 "flood, village, street, buildings"
+
+## statistik kandidat per penyedia (untuk laporan)
+{
+ "pixabay": {
+  "mentah": 12,
+  "lolos": 12,
+  "lisensi": [
+   "Pixabay Content License (bebas, tanpa atribusi)"
+  ]
+ },
+ "openverse": {
+  "mentah": 12,
+  "lolos": 0,
+  "lisensi": [
+   "Public Domain Mark (domain publik)"
+  ]
+ },
+ "wikimedia": {
+  "mentah": 1,
+  "lolos": 0,
+  "lisensi": [
+   "Public domain"
+  ]
+ },
+ "wikimedia_rinci": {
+  "diterima": 1,
+  "dibuang": 11,
+  "beratribusi": 11,
+  "contohDibuang": [
+   {
+    "judul": "Aerial photographs of 2019 Abukuma River flood by GSI 469",
+    "lisensi": "CC BY 4.0"
+   },
+   {
+    "judul": "Aerial photographs of 2019 Abukuma River flood by GSI 532",
+    "lisensi": "CC BY 4.0"
+   },
+   {
+    "judul": "Aerial photographs of 2019 Abukuma River flood by GSI   667",
+    "lisensi": "CC BY 4.0"
+   }
+  ]
+ },
+ "wikimedia_jakarta": {
+  "diterima": 3,
+  "dibuang": 7,
+  "beratribusi": 7
+ },
+ "gabungan": {
+  "total": 40,
+  "perPenyedia": {
+   "pixabay": {
+    "mentah": 36,
+    "lolos": 35,
+    "galat": []
+   },
+   "openverse": {
+    "mentah": 24,
+    "lolos": 1,
+    "galat": []
+   },
+   "wikimedia": {
+    "mentah": 7,
+    "lolos": 5,
+    "galat": []
+   }
+  },
+  "terbaik": {
+   "penyedia": "pixabay",
+   "skor": 136,
+   "ukuran": "1280x853",
+   "judul": "flood, village, street, buildings, houses",
+   "lisensi": "Pixabay Content License (bebas, tanpa atribusi)",
+   "kueri": "flooded village street indonesia"
+  }
+ }
+}
+
+RINGKASAN unit mesin gambar: 14 butir, 0 gagal -> LULUS

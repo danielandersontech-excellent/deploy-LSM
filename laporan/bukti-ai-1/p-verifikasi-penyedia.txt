@@ -1,0 +1,19 @@
+# RUN AI-1 P — verifikasi penyedia — 2026-10-06T17:04:25.038Z
+ANTHROPIC_API_KEY: ada (106 karakter) | PIXABAY_API_KEY: ada (34 karakter) | PEXELS_API_KEY: TIDAK ADA
+
+## Anthropic GET /v1/models
+HTTP 200; 13 model; sonnet: claude-sonnet-5-5, claude-sonnet-5, claude-sonnet-4-6, claude-sonnet-4-5-20250929
+  claude-sonnet-5-5 ADA; claude-sonnet-5 ADA
+
+## Pixabay
+HTTP 200; totalHits=500; hit pertama: imageWidth=4000 imageHeight=3000 largeImageURL=ada user=ada tags="flood, road, locked, damage, flood damage, destruction, danube, ulm, rainy weather, cloudy, rain, wet, precipitation, flooding, water, water level, peak, flow, riverside, catastrophe, flood disaster, storm, force of nature, civil protection, flood of the century, nature, climate change, bridge, traffic jam" pageURL=ada; x-ratelimit-remaining=99
+
+## Pexels
+dilewati: tidak ada kunci (penyedia nonaktif)
+
+## Openverse (tanpa kunci)
+HTTP 200; result_count=240; pertama: license=cc0 width=1024 height=683 url=ada creator=ada source=flickr tags=8
+  x-ratelimit-limit-anon-burst=null x-ratelimit-available-anon-burst=null x-ratelimit-limit-anon-sustained=null x-ratelimit-available-anon-sustained=null
+
+## Wikimedia Commons (tanpa kunci)
+HTTP 200; 5 berkas; lisensi: Public domain/pd 1153x1514 thumb=1920 | Public domain/pd 3863x2370 thumb=1920 | CC BY-SA 4.0/cc-by-sa-4.0 5811x3632 thumb=1920 | CC BY-SA 4.0/cc-by-sa-4.0 5272x3948 thumb=1920 | CC BY-SA 4.0/cc-by-sa-4.0 5946x3964 thumb=1920

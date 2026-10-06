@@ -1,0 +1,9 @@
+# diagnosis koneksi Anthropic — 2026-10-06T17:46:17.051Z
+dns.lookup api.anthropic.com: [{"address":"160.79.104.10","family":4}]
+ukuran badan: 4196 byte
+percobaan 1: HTTP 404 not_found_error "model: claude-model-tidak-ada" dalam 692 ms; request-id req_011CfmQF9WLT2edfk4CkcfCM
+percobaan 2: HTTP 404 not_found_error "model: claude-model-tidak-ada" dalam 427 ms; request-id req_011CfmQFByQy1yWnUVsczw5k
+percobaan 3: HTTP 404 not_found_error "model: claude-model-tidak-ada" dalam 400 ms; request-id req_011CfmQFDrGSia8QCPGGZSUc
+percobaan 1: HTTP 404 not_found_error "model: claude-model-tidak-ada" dalam 629 ms; request-id req_011CfmQJnLiPf18wssK5e4NK
+percobaan 2: HTTP 404 not_found_error "model: claude-model-tidak-ada" dalam 557 ms; request-id req_011CfmQJp1RgvpsvwFyR71Y6
+percobaan 3: HTTP 404 not_found_error "model: claude-model-tidak-ada" dalam 446 ms; request-id req_011CfmQJrSXB58mSk2KisS7d

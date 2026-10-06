@@ -1,0 +1,14 @@
+# RUN AI-1 P — pemeriksaan produksi (baca-saja) — 2026-10-06T17:34:54Z
+$ docker ps --filter name=re8snqu --format "{{.Names}} {{.Image}} {{.Status}}"
+re8snqu8jwyxdqg2wmzrbm3w-033127868542 re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy)
+$ docker exec <app> env | grep -cE "^(ANTHROPIC_API_KEY|PIXABAY_API_KEY|PEXELS_API_KEY)=" (hanya NAMA kunci yang ada, nilai tidak dibaca)
+NEXT_PUBLIC_APP_URL=<35 karakter>
+$ SHOW TABLES LIKE ai_saran; SHOW COLUMNS FROM artikel LIKE ai_saran_id (DB produksi, SELECT saja)
+artikel
+1
+id	email	peran	aktif
+10	qa2.verifikasi.1788515626317@warkopnusantara.id	redaktur	0
+$ df -h / ; free -m | head -2
+/dev/sda1       193G   11G  183G   6% /
+               total        used        free      shared  buff/cache   available
+Mem:           15992        2377       10830         263        3350       13614

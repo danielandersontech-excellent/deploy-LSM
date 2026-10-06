@@ -64,6 +64,7 @@ export default function EditorArtikel({
   penulisNama = '',
   dasarUrlPublik = '',
   pesanAwal = null,
+  asalAi = null,
 }) {
   const router = useRouter();
   const [judul, setJudul] = useState(artikel?.judul ?? '');
@@ -327,6 +328,58 @@ export default function EditorArtikel({
           ) : null}
         </div>
       </header>
+      {/* RUN AI-1 butir D: pita INTERNAL "Draf AI" + panel lipat (catatan verifikasi, sumber riset, asal foto) untuk artikel yang
+          lahir dari saran AI. Kelas pita = pita pratinjau (QA-2 B8). Tidak ada satu pun bagian ini di halaman publik:
+          BadanArtikel tidak membaca ai_saran, dan data ini hanya dikirim ke komponen editor (di bawah /staf). */}
+      {asalAi ? (
+        <div className="px-margin-desktop pt-6 max-w-[1600px] mx-auto w-full">
+          <div role="status" className="bg-secondary-fixed/20 border border-secondary-fixed rounded-lg p-4 flex flex-col gap-3">
+            <p className="font-label-md text-label-md text-primary uppercase tracking-wider flex items-center gap-2">
+              <Ikon nama="warning" className="text-secondary shrink-0" />
+              Draf AI: verifikasi redaksi sebelum terbit
+            </p>
+            <p className="font-body-md text-[14px] text-on-surface-variant">
+              Artikel ini disusun Asisten AI dari topik &quot;{asalAi.topik}&quot;{asalAi.model ? ` (model ${asalAi.model})` : ''}. Periksa setiap klaim, angka, nama, dan tanggal pada catatan di bawah; lengkapi konfirmasi pihak terkait; ganti foto bila perlu lewat unggah biasa. Catatan ini hanya untuk staf.
+            </p>
+            <details className="border border-outline-variant rounded-lg bg-surface-container-lowest">
+              <summary className="cursor-pointer px-4 py-2 font-label-md text-label-md text-primary hover:bg-surface-container-low rounded-lg">
+                Catatan verifikasi, sumber riset, dan asal foto (internal)
+              </summary>
+              <div className="px-4 pb-4 pt-2 flex flex-col gap-4">
+                <div>
+                  <p className="font-label-md text-label-md text-on-surface mb-1">Catatan verifikasi</p>
+                  {asalAi.catatanVerifikasi.length ? (
+                    <ul className="list-disc pl-5 font-body-md text-[14px] text-on-surface space-y-1">
+                      {asalAi.catatanVerifikasi.map((c, i) => <li key={i}>{c}</li>)}
+                    </ul>
+                  ) : <p className="font-body-md text-[14px] text-outline">Tidak ada catatan dari AI.</p>}
+                </div>
+                <div>
+                  <p className="font-label-md text-label-md text-on-surface mb-1">Sumber riset ({asalAi.sumberRiset.length})</p>
+                  {asalAi.sumberRiset.length ? (
+                    <ul className="font-body-md text-[14px] space-y-1">
+                      {asalAi.sumberRiset.map((s, i) => (
+                        <li key={i}><a href={s.url} target="_blank" rel="noopener noreferrer" className="text-secondary underline break-all">{s.judul || s.url}</a></li>
+                      ))}
+                    </ul>
+                  ) : <p className="font-body-md text-[14px] text-outline">AI tidak mencantumkan sumber; lakukan riset mandiri.</p>}
+                </div>
+                <div>
+                  <p className="font-label-md text-label-md text-on-surface mb-1">Asal foto utama</p>
+                  {asalAi.gambarSumber?.penyedia ? (
+                    <p className="font-body-md text-[14px] text-on-surface">
+                      Penyedia: {asalAi.gambarSumber.penyedia}{asalAi.gambarSumber.judul ? ` | Judul: ${asalAi.gambarSumber.judul}` : ''}{asalAi.gambarSumber.pembuat ? ` | Pembuat: ${asalAi.gambarSumber.pembuat}` : ''}{asalAi.gambarSumber.lisensi ? ` | Lisensi: ${asalAi.gambarSumber.lisensi}` : ''}
+                      {asalAi.gambarSumber.urlAsal ? <> | <a href={asalAi.gambarSumber.urlAsal} target="_blank" rel="noopener noreferrer" className="text-secondary underline break-all">halaman asal</a></> : null}
+                    </p>
+                  ) : (
+                    <p className="font-body-md text-[14px] text-outline">{asalAi.gambarSumber?.catatan || 'Tidak ada foto berlisensi yang cocok; gambar penampung dipakai sampai Anda mengunggah foto.'}</p>
+                  )}
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      ) : null}
       {/* Editor Workspace */}
       {/* QA-1 butir 5: dua kolom baru berdampingan mulai lg (sidebar 320 px + kolom utama tidak muat di 375/768) */}
       <div className="flex-1 p-margin-desktop flex flex-col lg:flex-row gap-gutter max-w-[1600px] mx-auto w-full">

@@ -1,0 +1,23 @@
+# RUN AI-1 E — uji unit parser/validasi/sanitasi — 2026-10-06T18:01:58.444Z
+   1. validasiTopik menolak 2 karakter -> TOPIK_PENDEK (422)
+   2. validasiTopik menolak 121 karakter -> TOPIK_PANJANG (422)
+   3. validasiTopik membuang tag HTML, karakter kontrol, spasi ganda -> "banjir Jakarta 2026"
+   4. ekstrakArrayJson: pagar markdown + teks pengantar dibuang -> 2 objek, terpotong=false
+   5. ekstrakArrayJson: JSON terpotong (max_tokens) -> objek utuh diselamatkan, yang terpotong dibuang -> 1 objek utuh, terpotong=true
+   6. ekstrakArrayJson: tanpa array -> kosong -> daftar kosong
+   7. sanitasi: <script>, <iframe>, onerror, style, <img>, <table> dibuang; p/h2/ul/li/strong/blockquote tetap -> <p>A <strong>B</strong></p><h2>H</h2><blockquote>Q</blockquote>T<ul><li>L</li></ul>
+   8. penjaga badan-bersih: <a href> -> ditolak -> badan artikel tidak bersih: memuat tag tautan <a>
+   9. penjaga badan-bersih: "https://" di teks -> ditolak -> badan artikel tidak bersih: memuat URL (http/https/www)
+  10. penjaga badan-bersih: "www.contoh.id" -> ditolak -> badan artikel tidak bersih: memuat URL (http/https/www)
+  11. penjaga badan-bersih: bagian "Sumber:" -> ditolak -> badan artikel tidak bersih: memuat bagian "Sumber/Referensi"
+  12. alasanBadanKotor pada badan bersih -> null -> null (bersih)
+  13. atribusi jurnalistik ("menurut Kepala BPBD") TIDAK ditolak -> diterima
+  14. validasiSaran: muatan bersih lengkap -> kategori=daerah tag=2 kueri=2 sumber=1 script dibuang
+  15. kategoriSlug ngawur -> nasional + catatan di depan -> nasional; catatan[0]="Kategori dari AI ("teknologi") tidak dikenal; sementara diis"
+  16. tag > 5 dipotong, kueriGambar kosong -> judul, sumber non-http dibuang, catatan kosong -> bawaan -> tag=5 kueri=["Judul berita uji yang valid"] sumber=1 (javascript:/ftp:/duplikat dibuang) catatan bawaan
+  17. isi terlalu pendek (< 300 karakter) -> ditolak -> isi terlalu pendek (< 300 karakter teks)
+  18. teksJawabanAkhir: hanya teks setelah web_search_tool_result terakhir -> teks="[{"judul":"X"}]"; hasil pencarian unik=2
+  19. K2: em/en dash dari AI dinormalkan (angka: "2020–2024" -> "2020-2024"; teks: " — " -> ", ") pada judul, isi, catatan -> judul="Banjir Solok, ratusan warga mengungsi"; isi ...ir dua</li></ul><p>Periode 2020-2024 tercatat, menurut BPBD, naik.</p>
+  20. mode tiruan: AI_TIRUAN=1 + NEXT_PUBLIC_APP_URL produksi -> TIDAK aktif -> produksi=false, lokal=true
+
+RINGKASAN unit parse: 20 butir, 0 gagal -> LULUS

@@ -95,10 +95,18 @@ export default async function HalamanKelolaArtikel({ searchParams }) {
             <p className="text-on-surface-variant mt-2">Daftar publikasi dan laporan hasil investigasi warga.</p>
           </div>
           {bolehBuat ? (
-            <Link href="/staf/artikel/baru" className="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg shadow-md hover:bg-primary-container transition-colors flex items-center gap-2" style={{ boxShadow: '0 4px 6px -1px rgba(233, 195, 73, 0.2)' }}>
-              <Ikon nama="post_add" />
-              Tulis Artikel Baru
-            </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              {/* RUN AI-1: tombol Asisten AI (KEPUTUSAN BARU: kelas tombol garis "Simpan Draf" editor_artikel_admin, padding
+                  disamakan py-3 dengan tombol utama di sebelahnya) */}
+              <Link href="/staf/artikel/asisten" className="px-6 py-3 rounded-lg border border-outline font-label-md text-label-md text-primary hover:bg-surface-container transition-colors flex items-center gap-2">
+                <Ikon nama="menu_book" />
+                Asisten AI
+              </Link>
+              <Link href="/staf/artikel/baru" className="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg shadow-md hover:bg-primary-container transition-colors flex items-center gap-2" style={{ boxShadow: '0 4px 6px -1px rgba(233, 195, 73, 0.2)' }}>
+                <Ikon nama="post_add" />
+                Tulis Artikel Baru
+              </Link>
+            </div>
           ) : null}
         </header>
         {/* Filters & Search — KEPUTUSAN BARU: div pembungkus menjadi <form method="get"> dengan kelas yang sama */}

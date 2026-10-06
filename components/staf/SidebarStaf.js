@@ -29,7 +29,12 @@ export default function SidebarStaf({ pengguna, menu, hrefAksiUtama = null, labe
   const pathname = usePathname() || '';
   const router = useRouter();
   const [keluar, setKeluar] = useState(false);
-  const aktif = (href) => pathname === href || pathname.startsWith(`${href}/`);
+  // RUN AI-1: /staf/artikel/asisten berada di bawah /staf/artikel -> item aktif = href TERPANJANG yang cocok
+  // (sebelumnya startsWith membuat "Kelola Artikel" dan "Asisten AI" aktif bersamaan).
+  const hrefAktif = menu
+    .filter((m) => pathname === m.href || pathname.startsWith(`${m.href}/`))
+    .sort((a, b) => b.href.length - a.href.length)[0]?.href ?? null;
+  const aktif = (href) => href === hrefAktif;
   // Menu utama = semua item kecuali Pengaturan (yang di desain ada di bagian bawah)
   const utama = menu.filter((m) => m.href !== '/staf/pengaturan');
   const pengaturan = menu.find((m) => m.href === '/staf/pengaturan');

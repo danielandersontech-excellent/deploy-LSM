@@ -1,0 +1,14 @@
+# RUN AI-1 E — uji end-to-end lokal (nyata) — http://localhost:3000 — 2026-10-06T17:47:50.295Z
+login: superadmin=ok redaktur=ok penulis=ok verifikator=ok pimpinan_wilayah=ok
+
+## E. SATU panggilan Anthropic sungguhan (topik netral "banjir") lewat route
+   1. POST /api/staf/ai/saran {topik:"banjir"} (penulis) -> 201; token & model dicatat -> 2 saran, ditolak 0, model claude-sonnet-5-5, token masuk 109436 keluar 12427 (cache baca 0), pencarian 6, 83.1 s (server 82 s), terpotong=true
+   2. tiap saran: judul, ringkasan <= 300, badan bersih (tanpa <a>/URL), kategori sah, catatan >= 1, sumber riset http >= 1, kueri gambar 1-3 -> [daerah] "Banjir Terjang Dua Desa di Nias Selatan, 75 Keluarga Terdamp" (400 kata, catatan 6, sumber 5, kueri: flooded village houses Indonesia | flood water residential houses | heavy rain flood)
+       [kebijakan-publik] "Pascabanjir Bandang Arosuka, Solok: Pencarian Ditutup, Pemer" (415 kata, catatan 7, sumber 6, kueri: flash flood mud damage Indonesia | mud covered road after flood | disaster relief evacuation shelter)
+   3. kartu tampil: /staf/artikel/asisten (penulis) memuat judul saran, kotak catatan verifikasi, tombol "Gunakan draf ini", sumber riset -> judul + catatan + tombol + sumber tampil
+   4. pakai saran[0] -> artikel DRAF terisi penuh (judul, ringkasan, isi, kategori, tag, gambar) + ai_saran_id -> artikel 20 draf; kategori daerah; tag 5; isi 3154 karakter; gambar /unggahan/ai/f2865573986d5db6b42fe80de2b1bc89.png dari wikimedia
+   5. gambar >= 1200 px (sharp) + asal foto internal tersimpan -> 1920x1080; wikimedia | Public domain | kueri "heavy rain flood" | statistik {"pixabay":{"mentah":36,"lolos":33,"galat":0},"openverse":{"mentah":14,"lolos":2,"galat":0},"wikimedia":{"mentah":19,"lolos":19,"galat":0}}
+   6. pratinjau 200 tanpa kata bocor; editor berpita; publik 404 (draf tidak tampil); badan bersih terbukti di DB -> pratinjau 200 bocor=0; editor berpita; publik 404; artikel 20 dibiarkan DRAF untuk uji UI
+   7. audit_log: ai_saran_buat (token, model, pencarian) + ai_saran_pakai tercatat tanpa isi draf -> ai_saran_pakai: {"artikelId":20,"gambar":"wikimedia","statistik":{"pixabay":{"mentah":36,"lolos":33,"galat":0},"openverse":{"mentah":14,"lolos":2,"galat":0},"wikimedia":{"menta || ai_saran_buat: {"topik":"banjir","jumlah":2,"ditolak":0,"model":"claude-sonnet-5-5","tokenMasuk":109436,"tokenKeluar":12427,"pencarian":6,"durasiMs":81658,"terpotong":true,"ke
+
+RINGKASAN e2e lokal (nyata): 7 langkah, 0 gagal -> LULUS

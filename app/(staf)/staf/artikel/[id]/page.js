@@ -12,6 +12,7 @@ import { ambilPenggunaSesi } from '@/lib/auth/sesi';
 import { HAK, wilayahTerbatas } from '@/lib/auth/hakAkses';
 import { ambilArtikelById, ambilKategoriArtikel, ambilTagArtikel } from '@/lib/db/artikel';
 import { ambilProvinsi } from '@/lib/db/wilayah';
+import { ambilAsalAiArtikel } from '@/lib/db/aiSaran';
 import { sanitasiIsiArtikel } from '@/lib/sanitasi';
 import EditorArtikel from '@/components/staf/EditorArtikel';
 
@@ -43,7 +44,8 @@ export default async function HalamanSuntingArtikel({ params, searchParams }) {
   const bolehSunting = HAK.artikel_sunting.includes(pengguna.peran); // pimpinan_wilayah -> baca-saja
   const bolehTerbitkan = HAK.artikel_terbitkan.includes(pengguna.peran);
 
-  const [kategori, provinsi, tag] = await Promise.all([ambilKategoriArtikel(), ambilProvinsi(), ambilTagArtikel(n)]);
+  // RUN AI-1: asal AI (catatan verifikasi, sumber riset, asal foto) untuk pita + panel INTERNAL staf; null bila bukan dari AI.
+  const [kategori, provinsi, tag, asalAi] = await Promise.all([ambilKategoriArtikel(), ambilProvinsi(), ambilTagArtikel(n), ambilAsalAiArtikel(n)]);
 
   // Pesan awal setelah router.replace dari halaman "baru" (state klien hilang saat rute berganti)
   const dasarUrlPublik = (process.env.NEXT_PUBLIC_APP_URL || '').replace(/\/$/, '');
@@ -52,6 +54,8 @@ export default async function HalamanSuntingArtikel({ params, searchParams }) {
     pesanAwal = { jenis: 'sukses', teks: 'Artikel berhasil diterbitkan.', tautan: `${dasarUrlPublik}/berita/${artikel.slug}` };
   } else if (sp?.tersimpan === '1') {
     pesanAwal = { jenis: 'sukses', teks: 'Draf tersimpan.' };
+  } else if (sp?.ai === '1' && asalAi) {
+    pesanAwal = { jenis: 'sukses', teks: 'Draf dari Asisten AI tersimpan. Periksa catatan verifikasi sebelum terbit.' };
   }
 
   // Hanya kolom yang dibutuhkan editor; isi disanitasi lagi (lapisan kedua, idempoten) sebelum ke klien.
@@ -79,6 +83,18 @@ export default async function HalamanSuntingArtikel({ params, searchParams }) {
       penulisNama={pengguna.nama}
       dasarUrlPublik={dasarUrlPublik}
       pesanAwal={pesanAwal}
+      asalAi={asalAi ? {
+        id: asalAi.id,
+        topik: asalAi.topik,
+        model: asalAi.model,
+        dibuat_pada: keIso(asalAi.dibuat_pada),
+        catatanVerifikasi: Array.isArray(asalAi.muatan?.catatanVerifikasi) ? asalAi.muatan.catatanVerifikasi : [],
+        sumberRiset: Array.isArray(asalAi.muatan?.sumberRiset) ? asalAi.muatan.sumberRiset : [],
+        gambarSumber: asalAi.gambar_sumber ? {
+          penyedia: asalAi.gambar_sumber.penyedia ?? null, judul: asalAi.gambar_sumber.judul ?? null, pembuat: asalAi.gambar_sumber.pembuat ?? null,
+          lisensi: asalAi.gambar_sumber.lisensi ?? null, urlAsal: asalAi.gambar_sumber.urlAsal ?? null, catatan: asalAi.gambar_sumber.catatan ?? null,
+        } : null,
+      } : null}
     />
   );
 }

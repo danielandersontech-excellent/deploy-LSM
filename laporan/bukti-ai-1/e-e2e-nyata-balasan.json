@@ -1,0 +1,181 @@
+{
+  "saran": [
+    {
+      "id": 57,
+      "status": "baru",
+      "topik": "banjir",
+      "dibuat_pada": "2026-10-06T17:58:18.125Z",
+      "muatan": {
+        "judul": "Banjir Bandang Terjang Nagari Batang Barus, Solok: Warga Mengungsi dan Pencarian Korban",
+        "ringkasan": "Banjir bandang menerjang Nagari Batang Barus, Kecamatan Gunung Talang, Kabupaten Solok, Sumbar, Senin malam 21 September 2026. Korban jiwa jatuh, ratusan warga mengungsi, dan sejumlah kantor pemerintah terdampak.",
+        "isiHtml": "<p>Banjir bandang menerjang Nagari Batang Barus, Kecamatan Gunung Talang, Kabupaten Solok, Sumatera Barat, pada Senin (21/9/2026) sekitar pukul 19.30 WIB. Peristiwa itu terjadi setelah hujan berintensitas tinggi dan menimbulkan korban jiwa, korban luka, serta pengungsian warga.</p><h2>Luapan sungai dan material longsor</h2><p>Berdasarkan laporan Badan Nasional Penanggulangan Bencana (BNPB), penanganan dilakukan oleh BPBD Kabupaten Solok bersama BPBD Provinsi Sumatera Barat dan unsur terkait. Tim gabungan melakukan evakuasi, pencarian korban, pendataan dampak, dan pembersihan lumpur yang menutup badan jalan. Pada Selasa (22/9) pagi, tim SAR gabungan menyisir sungai untuk memastikan keberadaan warga yang masih dicari.</p><p>Menurut pemberitaan organisasi kemasyarakatan keagamaan di tingkat daerah, luapan sungai di kawasan itu juga membawa material longsor dari bukit di sekitar permukiman dan perkantoran.</p><h2>Korban dan pengungsi</h2><p>Data awal menyebut satu warga meninggal dunia dan satu warga lainnya dalam pencarian. Pembaruan data BPBD kemudian menyebutkan dua korban yang sebelumnya dinyatakan hilang telah ditemukan. BPBD juga mencatat empat warga luka-luka. Tiga di antaranya dirawat di RSUD Arosuka dan satu dirujuk ke rumah sakit di Padang.</p><p>Jumlah pengungsi dilaporkan berbeda menurut waktu pendataan. Pada hari-hari awal, BPBD mencatat 32 jiwa dari sembilan kepala keluarga mengungsi, dan pemerintah daerah menyiapkan dua lokasi penampungan. Belakangan, menurut data yang disampaikan Bupati Solok Jon Firman Pandu, jumlah warga terdampak yang mengungsi mencapai 570 jiwa. Sebanyak 62 jiwa berada di empat lokasi pengungsian terpusat, sedangkan 508 jiwa mengungsi mandiri di sekitar kawasan perkantoran Arosuka.</p><h2>Kerusakan</h2><p>BPBD mencatat 11 kantor pemerintah terdampak, 21 mobil, dan tujuh sepeda motor rusak. Petugas masih mendata kerusakan bangunan dan kerugian material, sehingga angka masih dapat berubah.</p><h2>Logistik dan situasi terkini</h2><p>BNPB melalui Unit Pelaksana Teknis di Kota Padang mengirim dukungan logistik, antara lain beras, paket sembako, minyak goreng, selimut, dan air mineral. Hingga awal Oktober, menurut BPBD Kabupaten Solok, sebagian besar pengungsi telah kembali ke rumah. Empat kepala keluarga masih bertahan di pengungsian karena rumah mereka rusak berat.</p><p>Warga di kawasan terdampak diminta tetap waspada terhadap kemungkinan banjir susulan dan mengikuti arahan petugas. Pemerintah daerah menyatakan akan memperpanjang masa tanggap darurat tujuh hari ke depan untuk mempercepat pembersihan dan pemulihan.</p>",
+        "kategoriSlug": "daerah",
+        "tag": [
+          "banjir bandang",
+          "Solok",
+          "Sumatera Barat",
+          "BPBD",
+          "pengungsi"
+        ],
+        "kueriGambar": [
+          "flash flood damaged village Indonesia",
+          "mud covered road after flood",
+          "flood evacuation rescue team"
+        ],
+        "catatanVerifikasi": [
+          "Jumlah korban meninggal dan hilang berbeda antar sumber (awal: 1 meninggal, 1 hilang; pembaruan: dua korban ditemukan). Konfirmasi angka final ke BPBD Kabupaten Solok.",
+          "Jumlah pengungsi berbeda: 32 jiwa, lebih dari 100 jiwa, dan 570 jiwa. Pastikan angka terbaru beserta waktu pendataannya.",
+          "Nama sungai tercatat berbeda di sumber (Batang Laso); verifikasi ke BPBD atau pemda.",
+          "Satu sumber BNPB menulis lokasi sebagai Kecamatan Gunung Tanjung pada keterangan foto, sedangkan teks utama menyebut Gunung Talang. Pastikan nama kecamatan.",
+          "Identitas korban sengaja tidak dimuat; redaksi perlu memastikan persetujuan keluarga bila hendak menyebutkan.",
+          "Penyebab banjir (hujan, material longsor, pendangkalan sungai) belum diverifikasi oleh kajian resmi. Mintakan keterangan BMKG atau BPBD.",
+          "Konfirmasi status dan durasi tanggap darurat serta perpanjangan tujuh hari ke Pemkab Solok."
+        ],
+        "sumberRiset": [
+          {
+            "judul": "Banjir Bandang Terjang Kabupaten Solok, Satu Warga Meninggal dan Satu Masih dalam Pencarian (BNPB)",
+            "url": "https://www.bnpb.go.id/berita/banjir-bandang-terjang-kabupaten-solok-satu-warga-meninggal-dan-satu-masih-dalam-pencarian"
+          },
+          {
+            "judul": "Update dampak banjir bandang di Solok Sumbar (ANTARA)",
+            "url": "https://m.antaranews.com/amp/berita/5759413/update-dampak-banjir-bandang-di-solok-sumbar"
+          },
+          {
+            "judul": "Pascabanjir Bandang Solok (NU Online)",
+            "url": "https://www.nu.or.id/daerah/pascabanjir-bandang-solok-1-meninggal-dunia-1-orang-hilang-100-warga-mengungsi-UxqxB"
+          },
+          {
+            "judul": "Tinjau Banjir Bandang Solok, Wamendagri Pastikan Dukungan Darurat (detik)",
+            "url": "https://news.detik.com/berita/d-8690051/tinjau-banjir-bandang-solok-wamendagri-pastikan-dukungan-darurat"
+          }
+        ]
+      }
+    },
+    {
+      "id": 58,
+      "status": "baru",
+      "topik": "banjir",
+      "dibuat_pada": "2026-10-06T17:58:18.125Z",
+      "muatan": {
+        "judul": "Pemerintah Pusat Siap Dukung Tanggap Darurat Banjir Bandang Solok, Soroti Normalisasi dan Mitigasi",
+        "ringkasan": "Wamendagri Bima Arya meninjau posko darurat banjir bandang di Kabupaten Solok, Kamis 1 Oktober 2026, dan menyatakan dukungan pusat bagi kelanjutan tanggap darurat, termasuk alat berat, personel, dan normalisasi.",
+        "isiHtml": "<p>Wakil Menteri Dalam Negeri Bima Arya Sugiarto menyatakan pemerintah pusat siap mendukung penanganan banjir bandang di Kabupaten Solok, Sumatera Barat. Pernyataan itu disampaikan saat ia meninjau Posko Darurat Bencana Hidrometeorologi di Solok, Kamis (1/10/2026), sekitar sepuluh hari setelah banjir bandang menerjang Nagari Batang Barus.</p><h2>Dukungan lintas kementerian</h2><p>Menurut Bima, dukungan akan dikoordinasikan bersama kementerian dan lembaga terkait, terutama untuk menjamin keberlanjutan masa tanggap darurat. Ia menyebut kebutuhan di lapangan masih besar, mulai dari pekerjaan fisik untuk normalisasi wilayah terdampak, ketersediaan alat berat, hingga kecukupan personel. Ia juga menyinggung sejauh mana BNPB dapat mengalokasikan tenaga dan sumber dayanya.</p><blockquote><p>Kami melihat langkah-langkah taktis di lapangan sudah dilakukan.</p></blockquote><p>Demikian ujar Bima menanggapi kesiapsiagaan Bupati, Wakil Bupati, dan jajaran Pemerintah Kabupaten Solok.</p><h2>Perpanjangan tanggap darurat</h2><p>Pemkab Solok sebelumnya menyampaikan rencana memperpanjang masa tanggap darurat selama tujuh hari ke depan. Menurut Bima, kelanjutan penanganan perlu ditopang sumber daya yang memadai agar pemulihan dapat berjalan sesuai kebutuhan.</p><h2>Dokumen, arsip, dan anggaran daerah</h2><p>Berdasarkan keterangan yang dilaporkan sejumlah media, Bima juga meminta perhatian pada kondisi dokumen dan arsip penting agar tidak menghambat pelayanan publik. Ia turut menyoroti realisasi Transfer ke Daerah (TKD) yang menurutnya perlu dimaksimalkan agar berdampak bagi warga Kabupaten Solok. Menteri Pekerjaan Umum dikabarkan juga meninjau lokasi dan menyarankan kantor di kawasan Dinas PU direlokasi serta disiapkan desain baru. Informasi ini perlu dikonfirmasi lebih lanjut.</p><h2>Kondisi pengungsi</h2><p>Menurut data BPBD Kabupaten Solok yang disampaikan Bupati Jon Firman Pandu, sebagian besar warga yang mengungsi telah kembali ke rumah. Empat kepala keluarga masih bertahan di pengungsian karena rumah mereka rusak berat. Sebelumnya, 570 jiwa terdampak dan mengungsi, dengan 62 jiwa di empat lokasi pengungsian terpusat dan 508 jiwa mengungsi mandiri di sekitar Arosuka.</p><h2>Yang perlu dicermati</h2><ul><li>Kejelasan bentuk dukungan: jumlah alat berat, personel, dan anggaran belum dirinci ke publik.</li><li>Kepastian rencana relokasi dan rehabilitasi bangunan pemerintah.</li><li>Dukungan bagi warga yang rumahnya rusak berat agar dapat segera kembali ke hunian layak.</li></ul><p>Pemerintah daerah dan pusat diharapkan menyampaikan perkembangan secara terbuka agar masyarakat mengetahui tahapan pemulihan pascabencana.</p>",
+        "kategoriSlug": "kebijakan-publik",
+        "tag": [
+          "tanggap darurat",
+          "Solok",
+          "Kemendagri",
+          "mitigasi bencana",
+          "normalisasi sungai"
+        ],
+        "kueriGambar": [
+          "emergency command post disaster Indonesia",
+          "heavy equipment clearing mud",
+          "disaster relief logistics"
+        ],
+        "catatanVerifikasi": [
+          "Kutipan Wamendagri harus dicocokkan dengan keterangan resmi Puspen Kemendagri.",
+          "Klaim kunjungan dan saran Menteri PU hanya tampil sebagai judul berita lain; belum dibaca isinya. Verifikasi sebelum dimuat atau hapus paragraf tersebut.",
+          "Konfirmasi ke Pemkab Solok apakah tanggap darurat resmi diperpanjang tujuh hari, beserta dasar hukum dan tanggalnya.",
+          "Bentuk dukungan konkret pusat (alat berat, anggaran, BNPB) belum dirinci; minta keterangan Kemendagri dan BNPB.",
+          "Konteks TKD: tidak jelas apakah ada pemangkasan atau kendala realisasi; jangan berspekulasi, minta klarifikasi pemda.",
+          "Angka pengungsi (570 jiwa) berbeda dengan data awal; cek pembaruan BPBD."
+        ],
+        "sumberRiset": [
+          {
+            "judul": "Wamendagri Tinjau Banjir Bandang Solok, Tegaskan Dukungan Penuh (CNN Indonesia)",
+            "url": "https://www.cnnindonesia.com/nasional/20261002162853-25-1411031/wamendagri-tinjau-banjir-bandang-solok-tegaskan-dukungan-penuh"
+          },
+          {
+            "judul": "Tinjau Banjir Bandang Solok, Wamendagri Pastikan Dukungan Darurat (detik)",
+            "url": "https://news.detik.com/berita/d-8690051/tinjau-banjir-bandang-solok-wamendagri-pastikan-dukungan-darurat"
+          },
+          {
+            "judul": "Wamendagri Bima Pastikan Dukungan Tanggap Darurat Banjir Bandang di Solok (HarianIndonesia)",
+            "url": "https://www.harianindonesia.id/berita-utama/wamendagri-bima-pastikan-dukungan-tanggap-darurat-banjir-bandang-di-solok.html"
+          },
+          {
+            "judul": "Tinjau Banjir Bandang Solok, Wamendagri Bima Soroti Hal Ini (HeadTopics)",
+            "url": "https://id.headtopics.com/news/tinjau-banjir-bandang-solok-wamendagri-bima-soroti-hal-ini-88376289"
+          }
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "status": "baru",
+      "topik": "banjir",
+      "dibuat_pada": "2026-10-06T17:58:18.125Z",
+      "muatan": {
+        "judul": "Banjir Berulang di Sumatera Sepanjang 2026: Dari Padang hingga Sumut, Kesiapsiagaan Jadi Sorotan",
+        "ringkasan": "Sepanjang 2026 banjir berulang di sejumlah daerah Sumatera, termasuk Padang, Sumut, dan Solok. BNPB mencatat banjir sebagai bencana paling sering terjadi; warga diminta waspada menjelang musim hujan.",
+        "isiHtml": "<p>Banjir kembali berulang di sejumlah daerah di Sumatera sepanjang 2026, dari Kota Padang pada Agustus, enam kabupaten/kota di Sumatera Utara pada September, hingga banjir bandang di Kabupaten Solok pada 21 September. Pola ini menambah sorotan terhadap kesiapsiagaan daerah menjelang musim hujan.</p><h2>Rangkaian kejadian</h2><p>Menurut BNPB, banjir yang melanda Kota Padang, Sumatera Barat, pada Senin (3/8/2026) merendam tiga kecamatan. BPBD Kota Padang mencatat 15 titik banjir dan tim gabungan mengevakuasi warga yang terjebak. Pada Selasa (4/8) pukul 14.30 WIB, banjir dilaporkan berangsur surut dan warga mulai membersihkan rumah. Di Kabupaten Agam, BPBD melaporkan banjir merendam dua jorong akibat curah hujan tinggi dan pendangkalan Sungai Batang Kumayo.</p><p>Di Sumatera Utara, Kepala Bidang Penanganan Darurat, Peralatan dan Logistik BPBD Sumut, Sri Wahyuni Pancasilawati, menyampaikan pada Selasa (8/9/2026) bahwa enam kabupaten/kota dilanda banjir berdasarkan laporan Pusdalops. Menurut laporan media nasional, Kabupaten Langkat menjadi wilayah terdampak paling parah dengan 2.678 keluarga.</p><h2>Banjir sebagai bencana paling sering</h2><p>Data BNPB yang dirujuk media nasional menyebut banjir sebagai bencana yang paling sering terjadi, dengan rata-rata 464 kejadian per tahun. Faktor yang kerap disebut dalam laporan kejadian meliputi curah hujan tinggi, luapan sungai, dan pendangkalan sungai.</p><h2>Imbauan kesiapsiagaan</h2><p>BNPB dalam imbauan sebelumnya meminta pemerintah daerah dan masyarakat meningkatkan kesiapsiagaan terhadap bencana hidrometeorologi basah. Warga di wilayah rawan diharapkan rutin memantau tinggi muka air, membersihkan saluran drainase, dan segera mengungsi secara mandiri bila debit air naik signifikan.</p><h2>Catatan cuaca ekstrem dan kemarau</h2><p>Sementara itu, tidak semua daerah menghadapi banjir. BPBD Banjarnegara, Jawa Tengah, masih menyalurkan air bersih ke 60 desa dan delapan kelurahan akibat kekeringan hingga awal Oktober 2026. Kontras ini menunjukkan kondisi cuaca yang beragam antardaerah menjelang peralihan musim.</p><ul><li>Pemerintah daerah perlu memastikan normalisasi sungai dan drainase sebelum puncak musim hujan.</li><li>Sistem peringatan dini dan jalur evakuasi perlu disosialisasikan kepada warga.</li><li>Data kerusakan dan kebutuhan pemulihan sebaiknya dibuka agar dapat dipantau publik.</li></ul><p>Redaksi akan terus memantau perkembangan penanganan banjir di berbagai daerah.</p>",
+        "kategoriSlug": "lingkungan",
+        "tag": [
+          "banjir",
+          "Sumatera",
+          "kesiapsiagaan bencana",
+          "musim hujan",
+          "BNPB"
+        ],
+        "kueriGambar": [
+          "river overflow flooded houses Indonesia",
+          "flood water residential area",
+          "heavy rain"
+        ],
+        "catatanVerifikasi": [
+          "Data Langkat (2.678 keluarga) berasal dari ringkasan halaman tag media, bukan teks lengkap. Verifikasi ke BPBD Sumut.",
+          "Angka rata-rata 464 kejadian per tahun berasal dari kutipan sekunder; cek periode data di BNPB (DIBI).",
+          "Imbauan BNPB berasal dari rilis April 2026 (terkait bibit siklon 92S); jangan disajikan seolah imbauan terbaru. Cari rilis BMKG/BNPB terbaru soal prakiraan musim hujan 2026/2027.",
+          "Faktor penyebab (pendangkalan sungai, dsb.) hanya dari laporan BPBD lokal; jangan disimpulkan sebagai penyebab umum tanpa kajian.",
+          "Kekeringan Banjarnegara dimasukkan sebagai kontras; putuskan redaksi apakah relevan.",
+          "Pembaruan status banjir Sumut dan Padang setelah tanggal-tanggal tersebut belum dicari; cek kondisi terkini.",
+          "Tidak ada data korban jiwa untuk Sumut di sumber yang dibaca; minta konfirmasi."
+        ],
+        "sumberRiset": [
+          {
+            "judul": "Berita Terbaru Banjir Hari Ini (Media Indonesia)",
+            "url": "https://mediaindonesia.com/tag/banjir"
+          },
+          {
+            "judul": "Banjir di Kota Padang Berangsur Surut (BNPB)",
+            "url": "https://www.bnpb.go.id/berita/banjir-di-kota-padang-berangsur-surut-warga-mulai-bersihkan-rumah"
+          },
+          {
+            "judul": "BPBD catat enam daerah di Sumut dilanda bencana banjir (ANTARA)",
+            "url": "https://www.antaranews.com/berita/5731468/bpbd-catat-enam-daerah-di-sumut-dilanda-bencana-banjir"
+          },
+          {
+            "judul": "Banjir Melanda Kota Solo dan Kabupaten Bandung (BNPB)",
+            "url": "https://bnpb.go.id/berita/banjir-melanda-kota-solo-dan-kabupaten-bandung-dampak-bibit-siklon-92s-masih-eksis"
+          },
+          {
+            "judul": "Kumpulan berita Banjir terkini (Espos)",
+            "url": "https://www.espos.id/tag/banjir"
+          },
+          {
+            "judul": "60 Desa dan 8 Kelurahan Terdampak Kekeringan (Radar Banyumas)",
+            "url": "https://radarbanyumas.disway.id/banjarnegara/read/156853/60-desa-dan-8-kelurahan-terdampak-kekeringan-bpbd-banjarnegara-terus-droping-air"
+          }
+        ]
+      }
+    }
+  ],
+  "model": "claude-sonnet-5-5",
+  "usage": {
+    "token_masuk": 68673,
+    "token_keluar": 8097,
+    "cache_baca": 0,
+    "cache_tulis": 0,
+    "pencarian": 3
+  },
+  "ditolak": [],
+  "terpotong": false,
+  "durasiMs": 56743,
+  "kuota": {
+    "dipakai": 2,
+    "maks": 10
+  },
+  "dicatat": "2026-10-06T17:58:18.127Z",
+  "durasiKlienDetik": "58.2"
+}

@@ -1,0 +1,17 @@
+# RUN AI-1 E — UI konsol & tangkapan — http://localhost:3000 — 2026-10-06T18:03:19.390Z
+# artikel asal-AI untuk editor/pratinjau: 21
+  OK    375 /staf/artikel/asisten (kartu 5, aktif ["Asisten AI"]) -> lokal-375-artikel-asisten.png
+  OK    375 /staf/artikel (kartu 0, aktif ["Kelola Artikel"]) -> lokal-375-artikel.png
+  OK    375 /staf/artikel/21 (kartu 0, aktif ["Kelola Artikel"]) -> lokal-375-artikel-21.png
+  OK    375 /staf/artikel/21/pratinjau (kartu 0, aktif ["Kelola Artikel"]) -> lokal-375-artikel-21-pratinjau.png
+  OK    768 /staf/artikel/asisten (kartu 5, aktif ["Asisten AI"]) -> lokal-768-artikel-asisten.png
+  OK    768 /staf/artikel (kartu 0, aktif ["Kelola Artikel"]) -> lokal-768-artikel.png
+  OK    768 /staf/artikel/21 (kartu 0, aktif ["Kelola Artikel"]) -> lokal-768-artikel-21.png
+  OK    768 /staf/artikel/21/pratinjau (kartu 0, aktif ["Kelola Artikel"]) -> lokal-768-artikel-21-pratinjau.png
+  OK    1280 /staf/artikel/asisten (kartu 5, aktif ["Asisten AI"]) -> lokal-1280-artikel-asisten.png
+  OK    1280 /staf/artikel (kartu 0, aktif ["Kelola Artikel"]) -> lokal-1280-artikel.png
+  OK    1280 /staf/artikel/21 (kartu 0, aktif ["Kelola Artikel"]) -> lokal-1280-artikel-21.png
+  OK    1280 /staf/artikel/21/pratinjau (kartu 0, aktif ["Kelola Artikel"]) -> lokal-1280-artikel-21-pratinjau.png
+  OK    tombol Cari nonaktif pada 2 karakter, aktif pada "banjir" (tidak dikirim)
+
+RINGKASAN UI konsol (lokal): 13 sel, 0 gagal -> LULUS

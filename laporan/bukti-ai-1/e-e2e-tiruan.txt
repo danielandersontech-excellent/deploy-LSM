@@ -1,0 +1,31 @@
+# RUN AI-1 E — uji end-to-end lokal (tiruan) — http://localhost:3000 — 2026-10-06T18:02:39.993Z
+login: superadmin=ok redaktur=ok penulis=ok verifikator=ok pimpinan_wilayah=ok
+
+## C. pembersihan: malas (buka halaman pertama kali) + tombol superadmin; artikel & saran dipakai tak tersentuh
+   1. pembersihan MALAS saat /staf/artikel/asisten dibuka pertama kali: saran 8 hari -> dibersihkan + berkas terhapus; 2 hari & dipakai utuh -> lama=dibersihkan (berkas hilang), 2 hari=baru (berkas ada), dipakai=dipakai (berkas ada)
+   2. tombol "Bersihkan sekarang": penulis/redaktur 403, superadmin 200 {dibersihkan:1, berkasDihapus:1} -> 403/403/200 {"diperiksa":1,"dibersihkan":1,"berkasDihapus":1,"galat":[],"hari":7}
+
+## A. pagar peran & validasi (tanpa panggilan API)
+   3. POST /api/staf/ai/saran: tanpa login 401; verifikator 403; pimpinan_wilayah 403 -> 401/403/403
+   4. halaman /staf/artikel/asisten: tanpa login -> /login; verifikator -> /tanpa-akses; penulis 200 dengan form -> 307->http://localhost:3000/login?lanjut=%2Fstaf%2Fartikel%2Fasisten | 307->/tanpa-akses | 200
+   5. validasi topik: {} 422 TOPIK_PENDEK; 121 karakter 422 TOPIK_PANJANG; "<b>ab</b>" 422 -> 422 TOPIK_PENDEK / 422 TOPIK_PANJANG / 422
+   6. kuota 10/hari: 10 kelompok hari ini (disisipkan langsung) -> POST 429 AI_KUOTA_HABIS tanpa baris/audit baru -> 429 AI_KUOTA_HABIS; baris ai_saran 15=15; audit tidak bertambah; halaman menampilkan sisa kuota ada
+   7. kunci 1 serentak/pengguna: dua POST paralel (tiruan 3 s) -> satu 201 + satu 429 AI_SEDANG_DIPROSES; pengguna lain tidak terkunci -> penulis 201 + 429 AI_SEDANG_DIPROSES; redaktur paralel 201
+
+## A/B. hasil tiruan lewat parser/validasi/sanitasi route
+   8. balasan: 2 saran diterima, 1 ditolak (<a>), <script>/<iframe> hilang, kategori ngawur -> nasional + catatan, model=tiruan -> 2 diterima, ditolak[0]="badan artikel tidak bersih: memuat tag tautan <a>", DB status baru model tiruan
+   9. pakai: verifikator 403; penulis memakai saran redaktur 403 (bukan milik); id 999999 404 -> 403/403 BUKAN_MILIK/404
+  10. pakai saran[0] (penulis): 201 artikelId; artikel DRAF, penulis=budi, kategori lingkungan, ai_saran_id terisi, tag tersimpan, saran -> dipakai -> artikel 22 draf, tag 2, gambar /unggahan/ai/844f29778a9147a49938ea0ae51544fe.jpg dari pixabay
+  11. gambar: berkas ada di public/unggahan/ai, lebar >= 1200 (sharp), gambar_sumber internal memuat penyedia/lisensi/urlAsal/pembuat -> 1280x853 jpeg; sumber: pixabay | Pixabay Content License (bebas, tanpa atribusi) | pembuat=ada | statistik={"pixabay":{"mentah":36,"lolos":35,"galat":0},"openverse":{"mentah":24,"lolos":1,"galat":0},"wikimedia":{"mentah":7,"lolos":5,"galat":0}}
+  12. pakai ganda saran yang sama -> 409 SUDAH_DIPAKAI -> 409 SUDAH_DIPAKAI
+  13. redaktur memakai saran miliknya (kategori nasional dari fallback) -> 201 -> artikel 23
+
+## D. editor berpita, pratinjau, publik 404, render publik tanpa jejak
+  14. editor /staf/artikel/[id] (penulis): 200 + pita "Draf AI: verifikasi redaksi sebelum terbit" + catatan + sumber riset + asal foto -> pita + catatan + sumber + asal foto + pesan tersimpan
+  15. artikel BIASA (seed id 1) di editor TIDAK berpita -> tanpa pita
+  16. pratinjau /staf/artikel/[id]/pratinjau 200 dan NOL kata bocor (sumber riset/penyedia/lisensi/URL sumber) -> 200, bocor=0
+  17. publik /berita/[slug] saat DRAF -> 404; /api/artikel/[slug] -> 404 -> 404/404
+  18. terbit SEMENTARA (lokal) -> render publik 200 TANPA jejak: sumber riset, nama penyedia, lisensi, URL asal, "Draf AI"; JSON publik tanpa ai_saran -> 200 bocor=0; JSON publik bersih; gambar AI tampil tanpa kredit; dikembalikan ke draf
+  19. hapus kedua artikel uji (redaktur) -> ai_saran.artikel_id NULL (FK SET NULL), status tetap dipakai; berkas gambar uji dihapus -> dihapus; FK SET NULL terbukti; baris tiruan dibersihkan
+
+RINGKASAN e2e lokal (tiruan): 19 langkah, 0 gagal -> LULUS

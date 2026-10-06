@@ -224,3 +224,21 @@ KEPUTUSAN PEMILIK: setiap blok berkelompok pada /struktur disusun piramida berda
 
 ### Posisi terakhir RUN QA-5
 RUN QA-5 SELESAI (6 Sep 2026 ±10:40 WIB). Produksi: image 967864e HEALTHY, health 200, https://warkopnusantara.id/struktur 200 dengan bagan piramida terverifikasi terprogram (198 butir 0 gagal) dan tangkapan 1280/768/375. Laporan `laporan/LAPORAN-QA-5.md`. Run BERHENTI. Bila prompt dikirim ulang: tidak ada butir tersisa; hanya MENUNGGU PEMILIK run sebelumnya.
+
+## RUN AI-1 (mulai 7 Okt 2026 sekitar 00:00 WIB) — ASISTEN BERITA AI (Claude API + web search + mesin gambar berlisensi)
+
+Status: SEDANG. Amandemen K1 (keputusan pemilik): draf boleh ditulis AI dengan syarat status selalu DRAF, catatan verifikasi + sumber riset
+untuk redaksi (internal), badan artikel bersih dari tautan/daftar sumber, foto dari mesin berlisensi tanpa label/kredit, asal foto internal.
+
+| Butir | Status | Catatan |
+|---|---|---|
+| P Prasyarat | SELESAI | kunci Anthropic sah (GET /v1/models, gratis), claude-sonnet-5-5 ADA; Pixabay OK; Openverse & Wikimedia OK tanpa kunci; Pexels tanpa kunci (nonaktif). MariaDB lokal dibuat ulang (port 13306; lihat `bukti-ai-1/p-db-lokal.txt`) |
+| A Backend /api/staf/ai/saran | SEDANG | lib/ai/anthropic.js (fetch, tanpa paket baru), lib/ai/saranBerita.js, lib/db/aiSaran.js, migrasi 20261007-0010 |
+| B Mesin gambar + pakai | SEDANG | lib/gambarBerlisensi.js (Pexels/Pixabay/Openverse/Wikimedia CC0-PD), POST /api/staf/ai/saran/[id]/pakai |
+| C Pembersihan | SEDANG | lib/ai/pembersihan.js (malas + tombol superadmin) |
+| D UI | SEDANG | /staf/artikel/asisten, sidebar "Asisten AI", tombol di Kelola Artikel, pita Draf AI di editor |
+| E Uji | SEDANG | unit parse 19/19, unit mesin gambar 12/12 LULUS; e2e lokal tiruan/nyata, UI, regresi, produksi menyusul |
+| F Penutup | BELUM | |
+
+### Posisi terakhir RUN AI-1
+SEDANG: kode A-D ditulis, build hijau, uji unit lulus; e2e lokal sedang dijalankan. Bila terputus: lanjutkan dari uji E (skrip di `laporan/bukti-ai-1/skrip/`).
