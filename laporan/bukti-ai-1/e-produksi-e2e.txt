@@ -1,0 +1,11 @@
+# RUN AI-1 E — verifikasi PRODUKSI end-to-end — 2026-10-06T18:25:34.962Z — topik "banjir"
+   1. sesi akun uji: GET /api/auth/saya 200 (redaktur) -> id 10 peran redaktur
+   2. halaman /staf/artikel/asisten 200 (form topik, sisa kuota) + tombol Asisten AI di /staf/artikel -> 200 + 200
+   3. pagar: tanpa sesi POST /api/staf/ai/saran 401; validasi {} 422 -> 401/422
+   4. SATU panggilan Anthropic produksi: POST saran {topik:"banjir"} -> 201 (token dicatat) -> 3 saran, ditolak 0, model claude-sonnet-5-5, token masuk 30868 keluar 7822, pencarian 2, 53.0 s; judul[0]="Banjir Bandang Solok: 542 Penyintas Masih Mengungsi, Rumah Rusak dan A"
+   5. pakai saran[0] -> 201 artikelId; draf terbaca lewat GET /api/staf/artikel/[id] (status draf, ringkasan, isi bersih) -> artikel 14 draf, slug banjir-bandang-solok-542-penyintas-masih-mengungsi-rumah-rusak-dan-akses-terputus, kategori daerah, tag 5, gambar /unggahan/ai/9bf38d6a781acf2ad5b2729f168802fb.jpg dari pixabay
+   6. gambar tersaji 200 dari /unggahan/ai (bila ada) + editor berpita Draf AI + pratinjau 200 tanpa kata bocor -> gambar 200 image/jpeg null B; editor berpita; pratinjau 200 bocor=0
+   7. publik: /berita/[slug] 404 dan /api/artikel/[slug] 404 (draf TIDAK tampil; tidak ada yang diterbitkan) -> 404/404
+   8. bersih-bersih: DELETE artikel (API) -> saran + audit uji + berkas gambar dihapus (SSH, objek warkop) -> verifikasi nihil -> artikel 14 dihapus; 3 saran dihapus; 1 berkas dihapus; sisa=0
+
+RINGKASAN verifikasi produksi: 8 langkah, 0 gagal -> LULUS

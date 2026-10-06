@@ -81,7 +81,7 @@ for (const [w, h, mobile] of [[375, 812, true], [768, 1024, true], [1280, 900, f
     const masalah = [];
     if (!r) masalah.push('tidak terbaca'); else {
       if (r.teksGalat) masalah.push('TEKS GALAT'); if (r.gulirMendatar) masalah.push('gulir mendatar'); if (r.tumpang.length) masalah.push('tumpang: ' + r.tumpang.join(' | ')); if (r.dash) masalah.push('em/en dash tampil');
-      if (p === '/staf/artikel/asisten') { if (!r.form) masalah.push('form topik tidak ada'); if (w >= 768 && JSON.stringify(r.aktif) !== JSON.stringify(['Asisten AI'])) masalah.push('sidebar aktif: ' + JSON.stringify(r.aktif)); if (r.kartu < 1) masalah.push('tidak ada kartu riwayat'); }
+      if (p === '/staf/artikel/asisten') { if (!r.form) masalah.push('form topik tidak ada'); if (w >= 768 && JSON.stringify(r.aktif) !== JSON.stringify(['Asisten AI'])) masalah.push('sidebar aktif: ' + JSON.stringify(r.aktif)); if (r.kartu < 1 && !PROD) masalah.push('tidak ada kartu riwayat'); } // produksi: data uji sudah dihapus oleh langkah bersih-bersih e2e
       if (p === '/staf/artikel') { if (!r.tombolAsisten) masalah.push('tombol Asisten AI tidak ada'); if (w >= 768 && JSON.stringify(r.aktif) !== JSON.stringify(['Kelola Artikel'])) masalah.push('sidebar aktif: ' + JSON.stringify(r.aktif)); }
       if (/^\/staf\/artikel\/\d+$/.test(p) && !r.pita) masalah.push('pita Draf AI tidak tampil');
       if (/pratinjau$/.test(p) && r.pita) masalah.push('pita Draf AI BOCOR ke pratinjau');

@@ -1,0 +1,51 @@
+# Redeploy produksi RUN AI-1 (commit 764f40b) — 2026-10-06T18:05:03Z
+$ ssh deployer@server 'read TK; curl -s http://localhost:8000/api/v1/deploy?uuid=<uuid>&force=… -H "Authorization: Bearer $TK"'
+{"deployments":[{"message":"Application warkop-app deployment queued.","resource_uuid":"re8snqu8jwyxdqg2wmzrbm3w","deployment_uuid":"vkabia3luwxdlg3jgb06gb5r"}]}
+HTTP 200
+$ tunggu 120 s, lalu pantau tiap 30 s (maks 12x)
+[18:07:07Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:07:40Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:08:12Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:08:43Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:09:16Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:10:02Z] health=200  container: 
+[18:10:34Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:11:06Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:11:39Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:12:11Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:12:43Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:13:17Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+$ curl.exe -s https://warkopnusantara.id/api/health
+{"status":"sehat","waktu":"2026-10-07T01:13:53+07:00","basisData":"terhubung","versi":"0.1.0"}
+HASIL: image belum 764f40b setelah pemantauan — perlu Redeploy manual
+# Pemantauan lanjutan redeploy RUN AI-1 (deployment vkabia3luwxdlg3jgb06gb5r) — 2026-10-06T18:14:16Z
+[18:14:18Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:14:51Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:15:24Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:15:58Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:16:30Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:17:02Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:17:35Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:18:08Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:18:41Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:19:14Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:19:52Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:20:25Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:20:59Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:21:32Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:22:04Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:22:42Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:23:16Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+[18:23:49Z] health=200  container: re8snqu8jwyxdqg2wmzrbm3w:967864e72052aca3e50229b32d72cc0e1c51884b Up 11 days (healthy) 
+{"status":"sehat","waktu":"2026-10-07T01:24:25+07:00","basisData":"terhubung","versi":"0.1.0"}
+[18:25:07Z] container baru:
+re8snqu8jwyxdqg2wmzrbm3w-180510814747 re8snqu8jwyxdqg2wmzrbm3w:764f40b8ae78ef47dfafaf385725161359226ac2 Up 47 seconds (healthy)
+HASIL: image 764f40b HEALTHY, health 200
+$ env container BARU (hanya nama kunci + panjang nilai):
+ANTHROPIC_API_KEY=<106 karakter>
+NEXT_PUBLIC_APP_URL=<26 karakter>
+PIXABAY_API_KEY=<34 karakter>
+--- /staf/artikel/asisten tanpa sesi (harap 307 ke /login):
+307 https://staf.warkopnusantara.id/login?lanjut=%2Fstaf%2Fartikel%2Fasisten
+--- POST /api/staf/ai/saran tanpa sesi (harap 401):
+{"galat":"Belum masuk","kode":"BELUM_MASUK"} HTTP 401

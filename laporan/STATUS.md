@@ -227,18 +227,25 @@ RUN QA-5 SELESAI (6 Sep 2026 ±10:40 WIB). Produksi: image 967864e HEALTHY, heal
 
 ## RUN AI-1 (mulai 7 Okt 2026 sekitar 00:00 WIB) — ASISTEN BERITA AI (Claude API + web search + mesin gambar berlisensi)
 
-Status: SEDANG. Amandemen K1 (keputusan pemilik): draf boleh ditulis AI dengan syarat status selalu DRAF, catatan verifikasi + sumber riset
-untuk redaksi (internal), badan artikel bersih dari tautan/daftar sumber, foto dari mesin berlisensi tanpa label/kredit, asal foto internal.
+Status: SELESAI (7 Okt 2026 sekitar 01:40 WIB). Amandemen K1 (keputusan pemilik, dicatat di laporan): draf boleh ditulis AI dengan syarat
+status selalu DRAF, catatan verifikasi + sumber riset untuk redaksi (internal), badan artikel bersih dari tautan/daftar sumber, foto dari
+mesin berlisensi tanpa label/kredit, asal foto internal. Laporan: `laporan/LAPORAN-AI-1.md`; bukti: `laporan/bukti-ai-1/`.
 
 | Butir | Status | Catatan |
 |---|---|---|
-| P Prasyarat | SELESAI | kunci Anthropic sah (GET /v1/models, gratis), claude-sonnet-5-5 ADA; Pixabay OK; Openverse & Wikimedia OK tanpa kunci; Pexels tanpa kunci (nonaktif). MariaDB lokal dibuat ulang (port 13306; lihat `bukti-ai-1/p-db-lokal.txt`) |
-| A Backend /api/staf/ai/saran | SEDANG | lib/ai/anthropic.js (fetch, tanpa paket baru), lib/ai/saranBerita.js, lib/db/aiSaran.js, migrasi 20261007-0010 |
-| B Mesin gambar + pakai | SEDANG | lib/gambarBerlisensi.js (Pexels/Pixabay/Openverse/Wikimedia CC0-PD), POST /api/staf/ai/saran/[id]/pakai |
-| C Pembersihan | SEDANG | lib/ai/pembersihan.js (malas + tombol superadmin) |
-| D UI | SEDANG | /staf/artikel/asisten, sidebar "Asisten AI", tombol di Kelola Artikel, pita Draf AI di editor |
-| E Uji | SEDANG | unit parse 19/19, unit mesin gambar 12/12 LULUS; e2e lokal tiruan/nyata, UI, regresi, produksi menyusul |
-| F Penutup | BELUM | |
+| P Prasyarat | SELESAI | kunci Anthropic sah (GET /v1/models, gratis), `claude-sonnet-5-5` ADA; Pixabay OK; Openverse & Wikimedia OK tanpa kunci; Pexels tanpa kunci (nonaktif, dicatat). TEMUAN: MariaDB lokal hilang -> dibuat ulang port 13306 (`bukti-ai-1/p-db-lokal.txt`) |
+| A Backend /api/staf/ai/saran | SELESAI (764f40b) | `lib/ai/anthropic.js` (fetch bawaan, tanpa paket npm baru = KEPUTUSAN BARU), `lib/ai/saranBerita.js`, `lib/db/aiSaran.js`, migrasi `20261007-0010-ai-saran.sql` (lokal + produksi, 2x idempoten); kuota 10/hari dari DB + 1 serentak; audit `ai_saran_buat` |
+| B Mesin gambar + pakai | SELESAI (764f40b) | `lib/gambarBerlisensi.js` (Pexels/Pixabay/Openverse cc0+pdm/Wikimedia CC0-PD saja; Wikimedia CC BY terbukti terbuang 11/11 + 7/7), `/api/staf/ai/saran/[id]/pakai` -> artikel DRAF lewat validasi lama, asal foto internal |
+| C Pembersihan | SELESAI (764f40b) | `lib/ai/pembersihan.js`: malas (maks 1x/10 menit/proses) + tombol superadmin; dipakai & artikel tak tersentuh (terbukti) |
+| D UI | SELESAI (764f40b) | `/staf/artikel/asisten`, menu "Asisten AI", tombol di Kelola Artikel, pita + panel internal di editor; render publik + pratinjau NOL jejak (uji eksplisit) |
+| E Uji | SELESAI | unit parse 20/20, unit mesin gambar 14/14, e2e tiruan 19/19, e2e nyata 2x 7/7 (2 panggilan Anthropic lokal), UI 13 sel 0 gagal, B1 264/264, penjaga dash (+DB) bersih, lint & build hijau; PRODUKSI e2e 8/8 (1 panggilan) + UI 7 sel 0 gagal; artikel/saran/gambar uji produksi dihapus sampai bersih; tidak ada yang diterbitkan |
+| F Penutup | SELESAI | biaya terukur: ~USD 0,40 (pengukuran 1), ~0,25 (pengukuran 2, effort medium), ~0,16 (produksi) per generasi; `LAPORAN-AI-1.md`; MENUNGGU PEMILIK di bawah |
+
+### MENUNGGU PEMILIK (RUN AI-1)
+1. Konfirmasi ejaan "Podcash" vs "Podcast" (kategori slug `podcash`; AI diberi tahu persis ejaan pemilik).
+2. Kuota 10 panggilan/pengguna/hari: pas atau tidak? (~USD 0,16-0,40 per panggilan terukur; `KUOTA_HARIAN` di `lib/ai/saranBerita.js`).
+3. Pastikan `ANTHROPIC_API_KEY`/`PIXABAY_API_KEY` di Coolify TIDAK "Available at Buildtime" (`docker history --no-trunc <image> | grep -c ANTHROPIC_API_KEY` = 0); konfirmasi tarif resmi `claude-sonnet-5-5`; opsional: kunci Pexels, izin `@anthropic-ai/sdk`, effort `high` (draf lebih panjang, biaya naik).
+4. Butir MENUNGGU PEMILIK RUN QA-1..QA-5 dan DAFTAR TINDAKAN PEMILIK Tahap 9 tetap berlaku.
 
 ### Posisi terakhir RUN AI-1
-SEDANG: kode A-D ditulis, build hijau, uji unit lulus; e2e lokal sedang dijalankan. Bila terputus: lanjutkan dari uji E (skrip di `laporan/bukti-ai-1/skrip/`).
+RUN AI-1 SELESAI (7 Okt 2026 sekitar 01:40 WIB). Produksi: image 764f40b HEALTHY (redeploy 01:24 WIB, `bukti-server/25-redeploy-ai-1.txt`), health 200, verifikasi end-to-end akun uji LULUS lalu dibersihkan. Run BERHENTI. Bila prompt dikirim ulang: tidak ada butir tersisa; hanya MENUNGGU PEMILIK di atas.
